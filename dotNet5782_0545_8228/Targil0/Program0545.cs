@@ -16,9 +16,7 @@ namespace Targil0
             string name = Console.ReadLine();
             Console.WriteLine($"{name}, welcome to my first console application!\n");
         }
-        private static void Welcome8228()
-        {
-            Welcome0545();
-        }
+        static partial void Welcome8228();
+    
     }
 }
