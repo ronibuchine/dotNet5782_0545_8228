@@ -3,4 +3,4 @@ Here is a new line
 
 Private repository for work in Windows Project in C# and .NET framework
 
-tlinke dingus
+tlinke Github is cool!
