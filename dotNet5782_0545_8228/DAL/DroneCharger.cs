@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IDAL
 {
@@ -10,6 +6,14 @@ namespace IDAL
     {
         struct DroneCharger
         {
+            public int DroneId { get; set; }
+            public int StationId { get; set; }
+
+            public override string ToString()
+            {
+                // do DateTimes need a toString()?
+                return String.Format("Drone(DroneId = {0}, StationId = {1}", DroneId, StationId);
+            }
         }
     }
 }
