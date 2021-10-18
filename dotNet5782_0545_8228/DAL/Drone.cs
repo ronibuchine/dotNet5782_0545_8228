@@ -4,13 +4,16 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// a public struct object for Drones which contains all drone fields anf methods
+        /// </summary>
         public struct Drone
         {
-            public int id { get; set; }
-            public string model { get; set; }
-            double battery { get; set; }
-            WeightCategories maxWeight { get; set; }
-            DroneStatuses status { get; set; }
+            public int Id { get; set; }
+            public string Model { get; set; }
+            public double Battery { get; set; }
+            public WeightCategories MaxWeight { get; set; }
+            public DroneStatuses Status { get; set; }
             
 
         }
