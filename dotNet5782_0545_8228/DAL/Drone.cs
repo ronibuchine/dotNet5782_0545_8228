@@ -7,13 +7,36 @@ namespace IDAL
         /// <summary>
         /// a public struct object for Drones which contains all drone fields and methods
         /// </summary>
-        public struct Drone
+        public struct Drone : DalStruct
         {
             public int ID { get; set; }
             public string Model { get; set; }
             public double Battery { get; set; }
             public WeightCategories MaxWeight { get; set; }
             public DroneStatuses Status { get; set; }
+
+            public Drone(
+                    int ID,
+                    string Model,
+                    double Battery,
+                    WeightCategories MaxWeight,
+                    DroneStatuses Status)
+            {
+                this.ID = ID;
+                this.Model = Model;
+                this.Battery = Battery;
+                this.MaxWeight = MaxWeight;
+                this.Status = Status;
+            }
+
+            public Drone(int i, Random rand)
+            {
+                this.ID = i + 1;
+                this.Model = "Drone_" + (i + 1).ToString();
+                this.Battery = rand.NextDouble() * 100;
+                this.MaxWeight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
+                this.Status = (IDAL.DO.DroneStatuses) rand.Next(Enum.GetNames(typeof(IDAL.DO.DroneStatuses)).Length - 1);
+            }
 
             public override string ToString()
             {

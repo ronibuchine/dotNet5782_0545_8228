@@ -4,10 +4,16 @@ namespace IDAL
 {
     namespace DO
     {
-        struct DroneCharger
+        public struct DroneCharger : DalStruct
         {
             public int DroneId { get; set; }
             public int StationId { get; set; }
+
+            public DroneCharger(int DroneId, int StationId)
+            {
+                this.DroneId = DroneId;
+                this.StationId = StationId;
+            }
 
             public override string ToString()
             {
