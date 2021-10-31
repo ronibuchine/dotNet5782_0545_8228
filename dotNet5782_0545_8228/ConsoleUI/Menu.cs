@@ -1,5 +1,6 @@
 ﻿using System;
 using DalObject;
+using System.Diagnostics;
 
 namespace ConsoleUI
 {
@@ -9,8 +10,8 @@ namespace ConsoleUI
     class Menu
     {
         /// <summary>
-	/// The Main function which displays the menu to the user in the console interface
-	/// </summary>
+        /// The Main function which displays the menu to the user in the console interface
+        /// </summary>
         /// <param name="args">arguments passed to the CLI</param>
         static void Main(string[] args)
         {
@@ -19,20 +20,21 @@ namespace ConsoleUI
             bool running = true;
             while (running)
             {
-                DisplayMenu(new string[]{"Add", "Update", "Display", "List Display", "Exit"},
-                        new Action[]{ 
+                DisplayMenu(new string[] { "Add", "Update", "DisplayAll", "Display One", "Exit" },
+                        new Action[]{
                             () => DisplayAddMenu(data),
                             () => DisplayUpdateMenu(data),
-                            () => DisplayDisplayMenu(data),
-                            () => DisplayListDisplayMenu(data),
-                            () => running = false 
+                            () => DisplayOneMenu(data),
+                            () => DisplayAllMenu(data),
+                            () => running = false
                         });
             }
 
         }
-        
+
         static void DisplayMenu(string[] choices, Action[] actions)
         {
+            Trace.Assert(choices.Length == actions.Length); // ensure that there is an action for each choice
             for (int i = 0; i < choices.Length; i++)
             {
                 Console.WriteLine(String.Format("{0}: {1}", i, choices[i]));
@@ -48,8 +50,8 @@ namespace ConsoleUI
 
         static void DisplayAddMenu(DataSource data)
         {
-            DisplayMenu(new string[] { "Add Base Station", "Add Drone", "Add Customer", "Add Package", "Cancel"},
-                    new Action[]{ 
+            DisplayMenu(new string[] { "Add Base Station", "Add Drone", "Add Customer", "Add Package", "Cancel" },
+                    new Action[]{
                         () => data.AddDroneStation(),
                         () => data.AddDrone(),
                         () => data.AddCustomer(),
@@ -60,42 +62,44 @@ namespace ConsoleUI
 
         static void DisplayUpdateMenu(DataSource data)
         {
-            /* DisplayMenu(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer", */
-            /*         "Send a drone to charge", "Release a drone from charging", "Cancel"}, */
-            /*         new Action[]{ */ 
-            /*             () => data.AssignPackageToDrone(), */
-            /*             () => data.CollectPackageFromDrone(), */
-            /*             () => data.ProvidePackageToCustomer(), */
-            /*             () => data.SendDroneToCharge(), */
-            /*             () => data.ReleaseDroneFromCharge(), */
-            /*             () => {} */
-            /*         }); */
+            DisplayMenu(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer",
+                    "Send a drone to charge", "Release a drone from charging", "Cancel"},
+                    new Action[]{
+                        () => data.AssignPackageToDrone(),
+                        () => data.CollectPackageFromDrone(),
+                        () => data.ProvidePackageToCustomer(),
+                        () => data.SendDroneToCharge(),
+                        () => data.ReleaseDroneFromCharge(),
+                        () => {}
+                    });
         }
 
-        static void DisplayDisplayMenu(DataSource data)
+
+        static void DisplayOneMenu(DataSource data)
         {
-            /* DisplayMenu(new string[] {"Display a base station", "Display a base drone", "Display a Customer", "Display a package", "Cancel"}, */
-            /*         new Action[]{ */ 
-            /*             () => data.DisplayDroneStation(), */
-            /*             () => data.DisplayDrone(), */
-            /*             () => data.DisplayCustomer(), */
-            /*             () => data.DisplayParcel(), */
-            /*             () => {} */
-            /*         }); */
+            DisplayMenu(new string[] {"Display a base station", "Display a base drone", "Display a Customer", "Display a package", "Cancel"},
+                    new Action[]{
+                        () => data.DisplayDroneStation(),
+                        () => data.DisplayDrone(),
+                        () => data.DisplayCustomer(),
+                        () => data.DisplayParcel(),
+                        () => {}
+                    });
         }
 
-        static void DisplayListDisplayMenu(DataSource data)
+        static void DisplayAllMenu(DataSource data)
         {
-            /* DisplayMenu(new string[] {"Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Cancel"}, */
-            /*         new Action[]{ */ 
-            /*             () => data.DisplayDroneStationList(), */
-            /*             () => data.DisplayDroneList(), */
-            /*             () => data.DisplayCustomerList(), */
-            /*             () => data.DisplayParcelList(), */
-            /*             () => data.DisplayNonAssignedPackages(), */
-            /*             () => data.DisplayAvailableDroneStations(), */
-            /*             () => {} */
-            /*         }); */
+            // TODO: add the rest of the things
+            DisplayMenu(new string[] {"Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Display all packages not assigned to a drone", "Display all base stations with unoccupied charging stations", "Cancel"},
+                    new Action[]{
+                        () => data.DisplayAllDroneStations(),
+                        () => data.DisplayAllDrones(),
+                        () => data.DisplayAllCustomers(),
+                        () => data.DisplayAllParcels(),
+                        () => data.DisplayAllNotAssignedParcels(),
+                        () => data.DisplayAllUnoccupiedStations(),
+                        () => {}
+                    });
         }
     }
 }

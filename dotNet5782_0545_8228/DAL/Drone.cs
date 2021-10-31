@@ -43,6 +43,7 @@ namespace IDAL
                 return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4})",
                         ID, Model, Battery, MaxWeight.ToString(), Status.ToString());
             }
+
         }
     }
 }

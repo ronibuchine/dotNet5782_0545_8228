@@ -1,5 +1,4 @@
-﻿
-namespace IDAL
+﻿namespace IDAL
 {
     namespace DO
     {

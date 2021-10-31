@@ -46,7 +46,7 @@ namespace IDAL
                 this.Weight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
                 this.Priority = (IDAL.DO.Priorities) rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length - 1);
                 this.Requested = rdt.Next();
-                this.DroneId =  i + 5000;
+                this.DroneId = 0;
                 this.Scheduled = rdt.Next();
                 this.PickedUp = rdt.Next();
                 this.Delivered = rdt.Next();
@@ -73,7 +73,7 @@ namespace IDAL
 
             public DateTime Next()
             {
-                return this.last = last.AddDays(rand.Next(10));
+                return this.last = last.AddDays(rand.Next(20));
             }
         }
     }

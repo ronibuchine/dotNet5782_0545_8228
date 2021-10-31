@@ -4,7 +4,7 @@ namespace DalObject
 {
     public class DataSource
     {
-        internal enum IdalDoType { Drone, DroneStation, Customer, Parcel};
+        internal enum IdalDoType { Drone, DroneStation, Customer, Parcel };
 
         const int MIN_DRONES = 5;
         const int MIN_DRONE_STATIONS = 2;
@@ -52,36 +52,33 @@ namespace DalObject
             /* Config.NextAvailableDroneIndex = Config.SetNextAvailable(numDrone, MAX_DRONE_STATIONS); */
         }
 
-        private void AddDalObject<T>(
-                ref int nextAvailableIndex,
-                int max,
-                T[] list,
-                IdalDoType type) 
-            where T : IDAL.DO.DalStruct
-        {
-            if (nextAvailableIndex != -1)
-            {
-                list[nextAvailableIndex] = (T)IdalDoFactory(nextAvailableIndex, this.rand, type);
-                nextAvailableIndex = Config.SetNextAvailable(nextAvailableIndex + 1, max);
-                Console.WriteLine(String.Format("{0} added sucesfully", Enum.GetName(typeof(IdalDoType), (int)type)));
-            }
-            else
-            {
-                Console.WriteLine(String.Format("Max {0} already", Enum.GetName(typeof(IdalDoType), (int)type)));
-            }
-        }
-
-        public void AddDrone() => 
+        public void AddDrone() =>
             AddDalObject(ref Config.NextAvailableDroneIndex, MAX_DRONES, Drones, IdalDoType.Drone);
-
-        public void AddDroneStation() => 
+        public void AddDroneStation() =>
             AddDalObject(ref Config.NextAvailableDroneStationIndex, MAX_DRONE_STATIONS, DroneStations, IdalDoType.DroneStation);
-
-        public void AddCustomer() => 
+        public void AddCustomer() =>
             AddDalObject(ref Config.NextAvailableCustomerIndex, MAX_CUSTOMERS, Customers, IdalDoType.Customer);
-
-        public void AddParcel() => 
+        public void AddParcel() =>
             AddDalObject(ref Config.NextAvailableParcelsIndex, MAX_PARCELS, Parcels, IdalDoType.Parcel);
+
+        public void DisplayAllDrones() => DisplayAllObjects(Drones, Config.NextAvailableDroneIndex);
+        public void DisplayAllDroneStations() => DisplayAllObjects(DroneStations, Config.NextAvailableDroneStationIndex);
+        public void DisplayAllCustomers() => DisplayAllObjects(Customers, Config.NextAvailableCustomerIndex);
+        public void DisplayAllParcels() => DisplayAllObjects(Parcels, Config.NextAvailableParcelsIndex);
+        public void DisplayAllNotAssignedParcels() =>
+            DisplayAllObjects(Parcels, Config.NextAvailableParcelsIndex, (IDAL.DO.Parcel p) => p.DroneId == 0);
+        public void DisplayAllUnoccupiedStations() =>
+            DisplayAllObjects(DroneStations, Config.NextAvailableDroneStationIndex, (IDAL.DO.DroneStation ds) => ds.ChargeSlots == 0); // what even is going on here
+
+        public void DisplayDrone() => DisplayOneObject(Drones, Config.NextAvailableDroneIndex);
+        public void DisplayDroneStation() => DisplayOneObject(DroneStations, Config.NextAvailableDroneStationIndex);
+        public void DisplayCustomer() => DisplayOneObject(Customers, Config.NextAvailableCustomerIndex);
+        public void DisplayParcel() => DisplayOneObject(Parcels, Config.NextAvailableParcelsIndex);
+
+        /* public void AssignPackageToDrone() */
+        /* { */
+
+        /* } */
 
         internal static IDAL.DO.DalStruct IdalDoFactory(int i, Random rand, IdalDoType type)
         {
@@ -106,7 +103,7 @@ namespace DalObject
                 T[] list,
                 IdalDoType type,
                 ref int nextAvailableIndex,
-                Random rand) 
+                Random rand)
             where T : IDAL.DO.DalStruct
         {
             int num = rand.Next(min, max + 1);
@@ -116,5 +113,60 @@ namespace DalObject
             }
             nextAvailableIndex = Config.SetNextAvailable(num, max);
         }
+
+        private void AddDalObject<T>(
+                ref int nextAvailableIndex,
+                int max,
+                T[] list,
+                IdalDoType type)
+            where T : IDAL.DO.DalStruct
+        {
+            if (nextAvailableIndex != -1)
+            {
+                list[nextAvailableIndex] = (T)IdalDoFactory(nextAvailableIndex, this.rand, type);
+                nextAvailableIndex = Config.SetNextAvailable(nextAvailableIndex + 1, max);
+                Console.WriteLine(String.Format("{0} added sucesfully", Enum.GetName(typeof(IdalDoType), (int)type)));
+            }
+            else
+            {
+                Console.WriteLine(String.Format("Max {0} already", Enum.GetName(typeof(IdalDoType), (int)type)));
+            }
+        }
+
+        public void DisplayAllObjects<T>(T[] list, int nextAvailableIndex) where T : IDAL.DO.DalStruct
+        {
+            for (int i = 0; i < nextAvailableIndex; i++)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", i, list[i].ToString()));
+            }
+        }
+
+
+        public void DisplayAllObjects<T>(T[] list, int nextAvailableIndex, Func<T, bool> pred) where T : IDAL.DO.DalStruct
+        {
+            for (int i = 0; i < nextAvailableIndex; i++)
+            {
+                if (pred(list[i]))
+                {
+                    Console.WriteLine(String.Format("{0}: {1}", i, list[i].ToString()));
+                }
+            }
+        }
+
+        public void DisplayOneObject<T>(T[] list, int nextAvailableIndex) where T : IDAL.DO.DalStruct
+        {
+            Console.WriteLine("Please enter a number: ");
+            string input = Console.ReadLine();
+            if (Int32.TryParse(input, out int choice) &&
+                    choice >= 0 && choice < nextAvailableIndex)
+            {
+                Console.WriteLine(list[choice].ToString());
+            }
+            else
+            {
+                Console.WriteLine("Input not valid");
+            }
+        }
+
     }
 }
