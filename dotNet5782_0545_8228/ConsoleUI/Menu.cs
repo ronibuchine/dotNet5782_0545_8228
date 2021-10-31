@@ -20,16 +20,15 @@ namespace ConsoleUI
             bool running = true;
             while (running)
             {
-                DisplayMenu(new string[] { "Add", "Update", "DisplayAll", "Display One", "Exit" },
+                DisplayMenu(new string[] { "Add", "Update", "Display All", "Display One", "Exit" },
                         new Action[]{
                             () => DisplayAddMenu(data),
                             () => DisplayUpdateMenu(data),
-                            () => DisplayOneMenu(data),
                             () => DisplayAllMenu(data),
+                            () => DisplayOneMenu(data),
                             () => running = false
                         });
             }
-
         }
 
         static void DisplayMenu(string[] choices, Action[] actions)
@@ -62,27 +61,40 @@ namespace ConsoleUI
 
         static void DisplayUpdateMenu(DataSource data)
         {
-            DisplayMenu(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer",
-                    "Send a drone to charge", "Release a drone from charging", "Cancel"},
-                    new Action[]{
-                        () => data.AssignPackageToDrone(),
-                        () => data.CollectPackageFromDrone(),
-                        () => data.ProvidePackageToCustomer(),
-                        () => data.SendDroneToCharge(),
-                        () => data.ReleaseDroneFromCharge(),
-                        () => {}
-                    });
+            /* DisplayMenu(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer", */
+            /*         "Send a drone to charge", "Release a drone from charging", "Cancel"}, */
+            /*         new Action[]{ */
+            /*             () => data.AssignPackageToDrone(), */
+            /*             () => data.CollectPackageFromDrone(), */
+            /*             () => data.ProvidePackageToCustomer(), */
+            /*             () => data.SendDroneToCharge(), */
+            /*             () => data.ReleaseDroneFromCharge(), */
+            /*             () => {} */
+            /*         }); */
         }
 
 
         static void DisplayOneMenu(DataSource data)
         {
+            int GetChoice() {
+                Console.WriteLine("Please enter a number: ");
+                string input = Console.ReadLine();
+                if (Int32.TryParse(input, out int choice))
+                {
+                    return choice;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+
             DisplayMenu(new string[] {"Display a base station", "Display a base drone", "Display a Customer", "Display a package", "Cancel"},
                     new Action[]{
-                        () => data.DisplayDroneStation(),
-                        () => data.DisplayDrone(),
-                        () => data.DisplayCustomer(),
-                        () => data.DisplayParcel(),
+                        () => data.DisplayDroneStation(GetChoice()),
+                        () => data.DisplayDrone(GetChoice()),
+                        () => data.DisplayCustomer(GetChoice()),
+                        () => data.DisplayParcel(GetChoice()),
                         () => {}
                     });
         }

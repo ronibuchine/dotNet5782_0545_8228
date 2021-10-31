@@ -68,12 +68,12 @@ namespace DalObject
         public void DisplayAllNotAssignedParcels() =>
             DisplayAllObjects(Parcels, Config.NextAvailableParcelsIndex, (IDAL.DO.Parcel p) => p.DroneId == 0);
         public void DisplayAllUnoccupiedStations() =>
-            DisplayAllObjects(DroneStations, Config.NextAvailableDroneStationIndex, (IDAL.DO.DroneStation ds) => ds.ChargeSlots == 0); // what even is going on here
+            DisplayAllObjects(DroneStations, Config.NextAvailableDroneStationIndex, (IDAL.DO.DroneStation ds) => ds.ChargeSlots > 0);
 
-        public void DisplayDrone() => DisplayOneObject(Drones, Config.NextAvailableDroneIndex);
-        public void DisplayDroneStation() => DisplayOneObject(DroneStations, Config.NextAvailableDroneStationIndex);
-        public void DisplayCustomer() => DisplayOneObject(Customers, Config.NextAvailableCustomerIndex);
-        public void DisplayParcel() => DisplayOneObject(Parcels, Config.NextAvailableParcelsIndex);
+        public void DisplayDrone(int choice) => DisplayOneObject(Drones, Config.NextAvailableDroneIndex, choice);
+        public void DisplayDroneStation(int choice) => DisplayOneObject(DroneStations, Config.NextAvailableDroneStationIndex, choice);
+        public void DisplayCustomer(int choice) => DisplayOneObject(Customers, Config.NextAvailableCustomerIndex, choice);
+        public void DisplayParcel(int choice) => DisplayOneObject(Parcels, Config.NextAvailableParcelsIndex, choice);
 
         /* public void AssignPackageToDrone() */
         /* { */
@@ -133,15 +133,6 @@ namespace DalObject
             }
         }
 
-        public void DisplayAllObjects<T>(T[] list, int nextAvailableIndex) where T : IDAL.DO.DalStruct
-        {
-            for (int i = 0; i < nextAvailableIndex; i++)
-            {
-                Console.WriteLine(String.Format("{0}: {1}", i, list[i].ToString()));
-            }
-        }
-
-
         public void DisplayAllObjects<T>(T[] list, int nextAvailableIndex, Func<T, bool> pred) where T : IDAL.DO.DalStruct
         {
             for (int i = 0; i < nextAvailableIndex; i++)
@@ -153,18 +144,22 @@ namespace DalObject
             }
         }
 
-        public void DisplayOneObject<T>(T[] list, int nextAvailableIndex) where T : IDAL.DO.DalStruct
+        private bool AlwaysTrue<T>(T dalStruct) where T : IDAL.DO.DalStruct => true;
+
+        public void DisplayAllObjects<T>(T[] list, int nextAvailableIndex) where T : IDAL.DO.DalStruct
         {
-            Console.WriteLine("Please enter a number: ");
-            string input = Console.ReadLine();
-            if (Int32.TryParse(input, out int choice) &&
-                    choice >= 0 && choice < nextAvailableIndex)
+            DisplayAllObjects(list, nextAvailableIndex, AlwaysTrue);
+        }
+
+        public void DisplayOneObject<T>(T[] list, int nextAvailableIndex, int choice) where T : IDAL.DO.DalStruct
+        {
+            if (choice >= 0 && choice < nextAvailableIndex)
             {
                 Console.WriteLine(list[choice].ToString());
             }
             else
             {
-                Console.WriteLine("Input not valid");
+                Console.WriteLine("Input not valid, please enter a valid index. STUPID.");
             }
         }
 
