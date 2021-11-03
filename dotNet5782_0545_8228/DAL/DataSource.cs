@@ -53,33 +53,36 @@ namespace DalObject
         }
 
         public void AddDrone() =>
-            AddDalObject(ref Config.NextAvailableDroneIndex, MAX_DRONES, Drones, IdalDoType.Drone);
+            AddDalItems(ref Config.NextAvailableDroneIndex, MAX_DRONES, Drones, IdalDoType.Drone);
         public void AddDroneStation() =>
-            AddDalObject(ref Config.NextAvailableDroneStationIndex, MAX_DRONE_STATIONS, DroneStations, IdalDoType.DroneStation);
+            AddDalItems(ref Config.NextAvailableDroneStationIndex, MAX_DRONE_STATIONS, DroneStations, IdalDoType.DroneStation);
         public void AddCustomer() =>
-            AddDalObject(ref Config.NextAvailableCustomerIndex, MAX_CUSTOMERS, Customers, IdalDoType.Customer);
+            AddDalItems(ref Config.NextAvailableCustomerIndex, MAX_CUSTOMERS, Customers, IdalDoType.Customer);
         public void AddParcel() =>
-            AddDalObject(ref Config.NextAvailableParcelsIndex, MAX_PARCELS, Parcels, IdalDoType.Parcel);
+            AddDalItems(ref Config.NextAvailableParcelsIndex, MAX_PARCELS, Parcels, IdalDoType.Parcel);
 
-        public void DisplayAllDrones() => DisplayAllObjects(Drones, Config.NextAvailableDroneIndex);
-        public void DisplayAllDroneStations() => DisplayAllObjects(DroneStations, Config.NextAvailableDroneStationIndex);
-        public void DisplayAllCustomers() => DisplayAllObjects(Customers, Config.NextAvailableCustomerIndex);
-        public void DisplayAllParcels() => DisplayAllObjects(Parcels, Config.NextAvailableParcelsIndex);
+        public void DisplayAllDrones() => DisplayAllItems(Drones, Config.NextAvailableDroneIndex);
+        public void DisplayAllDroneStations() => DisplayAllItems(DroneStations, Config.NextAvailableDroneStationIndex);
+        public void DisplayAllCustomers() => DisplayAllItems(Customers, Config.NextAvailableCustomerIndex);
+        public void DisplayAllParcels() => DisplayAllItems(Parcels, Config.NextAvailableParcelsIndex);
         public void DisplayAllNotAssignedParcels() =>
-            DisplayAllObjects(Parcels, Config.NextAvailableParcelsIndex, (IDAL.DO.Parcel p) => p.DroneId == 0);
+            DisplayAllItems(Parcels, Config.NextAvailableParcelsIndex, (IDAL.DO.Parcel p) => p.DroneId == 0);
         public void DisplayAllUnoccupiedStations() =>
-            DisplayAllObjects(DroneStations, Config.NextAvailableDroneStationIndex, (IDAL.DO.DroneStation ds) => ds.ChargeSlots > 0);
+            DisplayAllItems(DroneStations, Config.NextAvailableDroneStationIndex, (IDAL.DO.DroneStation ds) => ds.ChargeSlots > 0);
 
-        public void DisplayDrone(int choice) => DisplayOneObject(Drones, Config.NextAvailableDroneIndex, choice);
-        public void DisplayDroneStation(int choice) => DisplayOneObject(DroneStations, Config.NextAvailableDroneStationIndex, choice);
-        public void DisplayCustomer(int choice) => DisplayOneObject(Customers, Config.NextAvailableCustomerIndex, choice);
-        public void DisplayParcel(int choice) => DisplayOneObject(Parcels, Config.NextAvailableParcelsIndex, choice);
+        public void DisplayDrone(int choice) => DisplayOneItem(Drones, Config.NextAvailableDroneIndex, choice);
+        public void DisplayDroneStation(int choice) => DisplayOneItem(DroneStations, Config.NextAvailableDroneStationIndex, choice);
+        public void DisplayCustomer(int choice) => DisplayOneItem(Customers, Config.NextAvailableCustomerIndex, choice);
+        public void DisplayParcel(int choice) => DisplayOneItem(Parcels, Config.NextAvailableParcelsIndex, choice);
 
-        /* public void AssignPackageToDrone() */
-        /* { */
 
-        /* } */
 
+        /// <summary>
+        /// A factory function that returns a new DalStruct based on what type is requested
+        /// </summary>
+        /// <param name="i">seed integer, generally the index in the array where the struct is stored</param>
+        /// <param name="rand">A Random struct</param>
+        /// <param name="type">An instance of IdalDoType</param>
         internal static IDAL.DO.DalStruct IdalDoFactory(int i, Random rand, IdalDoType type)
         {
             switch (type)
@@ -97,6 +100,14 @@ namespace DalObject
             }
         }
 
+        /// <summary>
+        /// Initializes an array of IdalDoStructs
+        /// </summary>
+        /// <param name="min">Minimum number of items allowed</param>
+        /// <param name="max">Maximum number of items allowed</param>
+        /// <param name="list">An array of IdalDoStructs</param>
+        /// <param name="nextAvailableIndex">Reference to the next available index in the array</param>
+        /// <param name="rand">A Random object</param>
         internal static void InitializeList<T>(
                 int min,
                 int max,
@@ -114,7 +125,14 @@ namespace DalObject
             nextAvailableIndex = Config.SetNextAvailable(num, max);
         }
 
-        private void AddDalObject<T>(
+        /// <summary>
+        /// Adds a new IdalDoStruct to the array given
+        /// </summary>
+        /// <param name="nextAvailableIndex">Reference to the next available index in the array</param>
+        /// <param name="max">Maximum number of items allowed</param>
+        /// <param name="list">An array of IdalDoStructs</param>
+        /// <param name="rand">A Random object</param>
+        private void AddDalItems<T>(
                 ref int nextAvailableIndex,
                 int max,
                 T[] list,
@@ -133,7 +151,13 @@ namespace DalObject
             }
         }
 
-        public void DisplayAllObjects<T>(T[] list, int nextAvailableIndex, Func<T, bool> pred) where T : IDAL.DO.DalStruct
+        /// <summary>
+        /// Displays all the items in the array that pred returns true on
+        /// </summary>
+        /// <param name="nextAvailableIndex">The next available index in the array</param>
+        /// <param name="list">An array of IdalDoStructs</param>
+        /// <param name="pred">A predicate taking an item of the same type as list, that returns whether or not it should be displayed</param>
+        public void DisplayAllItems<T>(T[] list, int nextAvailableIndex, Func<T, bool> pred) where T : IDAL.DO.DalStruct
         {
             for (int i = 0; i < nextAvailableIndex; i++)
             {
@@ -146,12 +170,23 @@ namespace DalObject
 
         private bool AlwaysTrue<T>(T dalStruct) where T : IDAL.DO.DalStruct => true;
 
-        public void DisplayAllObjects<T>(T[] list, int nextAvailableIndex) where T : IDAL.DO.DalStruct
+        /// <summary>
+        /// Displays all the items in the array unconditionally
+        /// </summary>
+        /// <param name="nextAvailableIndex">The next available index in the array</param>
+        /// <param name="list">An array of IdalDoStructs</param>
+        public void DisplayAllItems<T>(T[] list, int nextAvailableIndex) where T : IDAL.DO.DalStruct
         {
-            DisplayAllObjects(list, nextAvailableIndex, AlwaysTrue);
+            DisplayAllItems(list, nextAvailableIndex, AlwaysTrue);
         }
 
-        public void DisplayOneObject<T>(T[] list, int nextAvailableIndex, int choice) where T : IDAL.DO.DalStruct
+        /// <summary>
+        /// Displays one item in the list
+        /// </summary>
+        /// <param name="nextAvailableIndex">The next available index in the array</param>
+        /// <param name="list">An array of IdalDoStructs</param>
+        /// <param name="choice">The index of which item to display</param>
+        public void DisplayOneItem<T>(T[] list, int nextAvailableIndex, int choice) where T : IDAL.DO.DalStruct
         {
             if (choice >= 0 && choice < nextAvailableIndex)
             {
