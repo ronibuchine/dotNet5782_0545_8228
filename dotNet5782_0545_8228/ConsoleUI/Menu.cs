@@ -59,35 +59,40 @@ namespace ConsoleUI
                     });
         }
 
+        static int GetChoice(string prompt = "Please enter a choice: ")
+        {
+            Console.WriteLine(prompt);
+            string input = Console.ReadLine();
+            if (Int32.TryParse(input, out int choice))
+            {
+                return choice;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
         static void DisplayUpdateMenu(DataSource data)
         {
-            /* DisplayMenu(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer", */
-            /*         "Send a drone to charge", "Release a drone from charging", "Cancel"}, */
-            /*         new Action[]{ */
-            /*             () => data.AssignPackageToDrone(), */
-            /*             () => data.CollectPackageFromDrone(), */
-            /*             () => data.ProvidePackageToCustomer(), */
-            /*             () => data.SendDroneToCharge(), */
-            /*             () => data.ReleaseDroneFromCharge(), */
-            /*             () => {} */
-            /*         }); */
+            DisplayMenu(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer",
+                     "Send a drone to charge", "Release a drone from charging", "Cancel"},
+                     new Action[]{
+                         () => data.AssignPackageToDrone(GetChoice()),
+                         () => data.CollectPackageFromDrone(GetChoice()),
+                         () => data.ProvidePackageToCustomer(GetChoice()),
+                         () => data.SendDroneToCharge(GetChoice("Please enter a drone station number:"), GetChoice("Please enter a drone number:")),
+                         () => data.ReleaseDroneFromCharge(GetChoice()),
+                         () => {}
+                     });
         }
+
+        
 
 
         static void DisplayOneMenu(DataSource data)
         {
-            int GetChoice() {
-                Console.WriteLine("Please enter a number: ");
-                string input = Console.ReadLine();
-                if (Int32.TryParse(input, out int choice))
-                {
-                    return choice;
-                }
-                else
-                {
-                    return -1;
-                }
-            }
+            
 
             DisplayMenu(new string[] {"Display a base station", "Display a base drone", "Display a Customer", "Display a package", "Cancel"},
                     new Action[]{
