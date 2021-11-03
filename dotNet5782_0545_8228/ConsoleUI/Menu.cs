@@ -31,6 +31,11 @@ namespace ConsoleUI
             }
         }
 
+        /// <summary>
+        /// The Main function which displays the menu to the user in the console interface
+        /// </summary>
+        /// <param name="strings">An array of strings, each one corresponding to an option in the menu</param>
+        /// <param name="actions">An array of Actions, each one corresponding to the appropiate string. Note: The order strings and actions matters and must match up</param>
         static void DisplayMenu(string[] choices, Action[] actions)
         {
             Trace.Assert(choices.Length == actions.Length); // ensure that there is an action for each choice
