@@ -35,7 +35,7 @@ namespace IDAL
                 this.Model = "Drone_" + (i + 1).ToString();
                 this.Battery = rand.NextDouble() * 100;
                 this.MaxWeight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
-                this.Status = (IDAL.DO.DroneStatuses) rand.Next(Enum.GetNames(typeof(IDAL.DO.DroneStatuses)).Length - 1);
+                this.Status = IDAL.DO.DroneStatuses.free;
             }
 
             public override string ToString()

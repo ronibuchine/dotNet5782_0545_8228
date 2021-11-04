@@ -9,13 +9,13 @@ namespace DalObject
         const int MIN_DRONES = 5;
         const int MIN_DRONE_STATIONS = 2;
         const int MIN_CUSTOMERS = 10;
-        const int MIN_PARCELS = 10;
+        const int MIN_PARCELS = 2;
         const int MIN_DRONE_CHARGE = 0;
 
         const int MAX_DRONES = 10;
         const int MAX_DRONE_STATIONS = 5;
         const int MAX_CUSTOMERS = 100;
-        const int MAX_PARCELS = 1000;
+        const int MAX_PARCELS = 10;
         const int MAX_DRONE_CHARGES = MAX_DRONES;
 
 
@@ -58,33 +58,33 @@ namespace DalObject
 
         // Adding objects section
         public void AddDrone() =>
-            AddDalObject(ref Config.NextAvailableDroneIndex, MAX_DRONES, drones, IdalDoType.Drone);
+            AddDalItem(ref Config.NextAvailableDroneIndex, MAX_DRONES, drones, IdalDoType.Drone);
         public void AddDroneStation() =>
-            AddDalObject(ref Config.NextAvailableDroneStationIndex, MAX_DRONE_STATIONS, droneStations, IdalDoType.DroneStation);
+            AddDalItem(ref Config.NextAvailableDroneStationIndex, MAX_DRONE_STATIONS, droneStations, IdalDoType.DroneStation);
         public void AddCustomer() =>
-            AddDalObject(ref Config.NextAvailableCustomerIndex, MAX_CUSTOMERS, customers, IdalDoType.Customer);
+            AddDalItem(ref Config.NextAvailableCustomerIndex, MAX_CUSTOMERS, customers, IdalDoType.Customer);
         public void AddParcel() =>
-            AddDalObject(ref Config.NextAvailableParcelIndex, MAX_PARCELS, parcels, IdalDoType.Parcel);
+            AddDalItem(ref Config.NextAvailableParcelIndex, MAX_PARCELS, parcels, IdalDoType.Parcel);
 
         // Displaying all objects section
 
-        public void DisplayAllDrones() => DisplayAllObjects(drones, Config.NextAvailableDroneIndex);
-        public void DisplayAllDroneStations() => DisplayAllObjects(droneStations, Config.NextAvailableDroneStationIndex);
-        public void DisplayAllCustomers() => DisplayAllObjects(customers, Config.NextAvailableCustomerIndex);
-        public void DisplayAllParcels() => DisplayAllObjects(parcels, Config.NextAvailableParcelIndex);
+        public void DisplayAllDrones() => DisplayAllItems(drones, Config.NextAvailableDroneIndex, MAX_DRONES);
+        public void DisplayAllDroneStations() => DisplayAllItems(droneStations, Config.NextAvailableDroneStationIndex, MAX_DRONE_STATIONS);
+        public void DisplayAllCustomers() => DisplayAllItems(customers, Config.NextAvailableCustomerIndex, MAX_CUSTOMERS);
+        public void DisplayAllParcels() => DisplayAllItems(parcels, Config.NextAvailableParcelIndex, MAX_PARCELS);
         public void DisplayAllNotAssignedParcels() =>
-            DisplayAllObjects(parcels, Config.NextAvailableParcelIndex, (IDAL.DO.Parcel p) => p.DroneId == 0);
+            DisplayAllItems(parcels, Config.NextAvailableParcelIndex, MAX_PARCELS, (IDAL.DO.Parcel p) => p.DroneId == 0);
         public void DisplayAllUnoccupiedStations() =>
-            DisplayAllObjects(droneStations, Config.NextAvailableDroneStationIndex, (IDAL.DO.DroneStation ds) => ds.ChargeSlots > 0);
+            DisplayAllItems(droneStations, Config.NextAvailableDroneStationIndex, MAX_DRONE_STATIONS, (IDAL.DO.DroneStation ds) => ds.ChargeSlots > 0);
 
         // Displaying one object section
 
-        public void DisplayDrone(int choice) => DisplayOneObject(drones, Config.NextAvailableDroneIndex, choice);
-        public void DisplayDroneStation(int choice) => DisplayOneObject(droneStations, Config.NextAvailableDroneStationIndex, choice);
-        public void DisplayCustomer(int choice) => DisplayOneObject(customers, Config.NextAvailableCustomerIndex, choice);
-        public void DisplayParcel(int choice) => DisplayOneObject(parcels, Config.NextAvailableParcelIndex, choice);
+        public void DisplayDrone(int choice) => DisplayOneItem(drones, Config.NextAvailableDroneIndex, MAX_DRONES, choice);
+        public void DisplayDroneStation(int choice) => DisplayOneItem(droneStations, Config.NextAvailableDroneStationIndex, MAX_DRONE_STATIONS, choice);
+        public void DisplayCustomer(int choice) => DisplayOneItem(customers, Config.NextAvailableCustomerIndex, MAX_CUSTOMERS, choice);
+        public void DisplayParcel(int choice) => DisplayOneItem(parcels, Config.NextAvailableParcelIndex, MAX_PARCELS, choice);
 
-        
+
 
         /// <summary>
         /// A factory function that returns a new DalStruct based on what type is requested
@@ -141,7 +141,7 @@ namespace DalObject
         /// <param name="max">Maximum number of items allowed</param>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="rand">A Random object</param>
-        private void AddDalItems<T>(
+        private void AddDalItem<T>(
                 ref int nextAvailableIndex,
                 int max,
                 T[] list,
@@ -166,8 +166,14 @@ namespace DalObject
         /// <param name="nextAvailableIndex">The next available index in the array</param>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="pred">A predicate taking an item of the same type as list, that returns whether or not it should be displayed</param>
-        public void DisplayAllItems<T>(T[] list, int nextAvailableIndex, Func<T, bool> pred) where T : IDAL.DO.DalStruct
+        public void DisplayAllItems<T>(
+                T[] list,
+                int nextAvailableIndex,
+                int max,
+                Func<T, bool> pred)
+            where T : IDAL.DO.DalStruct
         {
+            nextAvailableIndex = (nextAvailableIndex != -1) ? nextAvailableIndex : max;
             for (int i = 0; i < nextAvailableIndex; i++)
             {
                 if (pred(list[i]))
@@ -184,9 +190,9 @@ namespace DalObject
         /// </summary>
         /// <param name="nextAvailableIndex">The next available index in the array</param>
         /// <param name="list">An array of IdalDoStructs</param>
-        public void DisplayAllItems<T>(T[] list, int nextAvailableIndex) where T : IDAL.DO.DalStruct
+        public void DisplayAllItems<T>(T[] list, int nextAvailableIndex, int max) where T : IDAL.DO.DalStruct
         {
-            DisplayAllItems(list, nextAvailableIndex, AlwaysTrue);
+            DisplayAllItems(list, nextAvailableIndex, max, AlwaysTrue);
         }
 
         /// <summary>
@@ -195,8 +201,9 @@ namespace DalObject
         /// <param name="nextAvailableIndex">The next available index in the array</param>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="choice">The index of which item to display</param>
-        public void DisplayOneItem<T>(T[] list, int nextAvailableIndex, int choice) where T : IDAL.DO.DalStruct
+        public void DisplayOneItem<T>(T[] list, int nextAvailableIndex, int max, int choice) where T : IDAL.DO.DalStruct
         {
+            nextAvailableIndex = (nextAvailableIndex != -1) ? nextAvailableIndex : max;
             if (choice >= 0 && choice < nextAvailableIndex)
             {
                 Console.WriteLine(list[choice].ToString());
@@ -208,7 +215,7 @@ namespace DalObject
         }
 
         // Update objects section
-        
+
         /// <summary>
         /// Given a package we want the drone that is assigned to it
         /// </summary>
@@ -216,7 +223,13 @@ namespace DalObject
         /// <returns>the drone that is assigned to the package</returns>
         private IDAL.DO.Drone GetParcelDrone(IDAL.DO.Parcel package)
         {
-            foreach (IDAL.DO.Drone drone in drones) if (drone.ID == package.DroneId) return drone;            
+            foreach (IDAL.DO.Drone drone in drones)
+            {
+                if (drone.ID == package.DroneId) 
+                {
+                    return drone;
+                }
+            }
             throw new FieldAccessException($"There is no drone assigned to this package: {package.ID}\n");
         }
 
@@ -225,21 +238,27 @@ namespace DalObject
         /// Updates the scheduled time.
         /// </summary>
         /// <param name="choice">index of the package to assign</param>
-        public void AssignPackageToDrone(int choice) 
+        public void AssignPackageToDrone(int choice)
         {
-            if (choice < 0 || choice > Config.NextAvailableParcelIndex) throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
+            int amount = (Config.NextAvailableParcelIndex != -1) ? Config.NextAvailableParcelIndex : MAX_PARCELS;
+            if (choice < 0 || choice > amount)
+            {
+                throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
+            }
             for (int i = 0; i < Config.NextAvailableDroneIndex; i++)
             {
-               
-                if (drones[i].MaxWeight >= parcels[choice].Weight && drones[i].Status == IDAL.DO.DroneStatuses.free && drones[i].Battery > 20)
+
+                if (drones[i].MaxWeight >= parcels[choice].Weight &&
+                    drones[i].Status == IDAL.DO.DroneStatuses.free &&
+                    drones[i].Battery > 20)
                 {
                     parcels[choice].DroneId = drones[i].ID;
                     drones[i].Status = IDAL.DO.DroneStatuses.delivery;
-                    parcels[choice].Requested = DateTime.Now;
+                    parcels[choice].Scheduled = DateTime.Now;
                     return;
                 }
             }
-            throw new ApplicationException("Error, no available drones. Try again later.\n");           
+            throw new ApplicationException("Error, no available drones. Try again later.\n");
         }
 
         /// <summary>
@@ -248,8 +267,12 @@ namespace DalObject
         /// <param name="choice">index of the parcel</param>
         public void CollectPackageFromDrone(int choice)
         {
-            if (choice < 0 || choice > Config.NextAvailableParcelIndex) throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
-            IDAL.DO.Drone currentDrone = GetParcelDrone(parcels[choice]);           
+            int amount = (Config.NextAvailableParcelIndex != -1) ? Config.NextAvailableParcelIndex : MAX_PARCELS;
+            if (choice < 0 || choice > amount)
+            { 
+                throw new IndexOutOfRangeException("Invalid index, please try again later.\n"); 
+            }
+            IDAL.DO.Drone currentDrone = GetParcelDrone(parcels[choice]);
             if (currentDrone.Status == IDAL.DO.DroneStatuses.delivery)
             {
                 parcels[choice].PickedUp = DateTime.Now;
@@ -257,26 +280,34 @@ namespace DalObject
             }
             throw new ApplicationException("Error, you must first assign the Drone before it can collect a package.\n");
         }
-        public void ProvidePackageToCustomer(int choice) 
+
+        public void ProvidePackageToCustomer(int choice)
         {
-            if (choice < 0 || choice > Config.NextAvailableParcelIndex) throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
+            int amount = (Config.NextAvailableParcelIndex != -1) ? Config.NextAvailableParcelIndex : MAX_PARCELS;
+            if (choice < 0 || choice > amount) 
+            {
+                throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
+            }
             for (int i = 0; i < Config.NextAvailableDroneIndex; i++)
             {
                 if (parcels[choice].DroneId == drones[i].ID) drones[i].Status = IDAL.DO.DroneStatuses.free;
-            }            
+            }
             parcels[choice].Delivered = DateTime.Now;
         }
-        public void SendDroneToCharge(int stationChoice, int droneChoice) 
+
+        public void SendDroneToCharge(int stationChoice, int droneChoice)
         {
+            int droneAmount = (Config.NextAvailableDroneIndex != -1) ? Config.NextAvailableDroneIndex : MAX_DRONES;
+            int stationAmount = (Config.NextAvailableDroneStationIndex != -1) ? Config.NextAvailableDroneStationIndex : MAX_DRONE_STATIONS;
             if (droneChoice < 0 ||
-                droneChoice > Config.NextAvailableDroneIndex ||
+                droneChoice > droneAmount ||
                 stationChoice < 0 ||
-                stationChoice > Config.NextAvailableDroneStationIndex)
+                stationChoice > stationAmount)
             {
                 throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
             }
             if (drones[droneChoice].Battery != 100 && droneStations[stationChoice].ChargeSlots > 0)
-            { 
+            {
                 droneCharges[Config.NextAvailableDroneChargeIndex] = new IDAL.DO.DroneCharge(drones[droneChoice].ID, droneStations[stationChoice].ID);
                 drones[droneChoice].Status = IDAL.DO.DroneStatuses.maintenance;
                 Config.NextAvailableDroneChargeIndex = Config.SetNextAvailable(Config.NextAvailableDroneChargeIndex + 1, MAX_DRONE_CHARGES);
@@ -284,24 +315,26 @@ namespace DalObject
             }
         }
 
-        
-        public void ReleaseDroneFromCharge(int stationChoice, int droneChoice) 
+        public void ReleaseDroneFromCharge(int stationChoice, int droneChoice)
         {
+            int droneAmount = (Config.NextAvailableDroneIndex != -1) ? Config.NextAvailableDroneIndex : MAX_DRONES;
+            int stationAmount = (Config.NextAvailableDroneStationIndex != -1) ? Config.NextAvailableDroneStationIndex : MAX_DRONE_STATIONS;
             if (droneChoice < 0 ||
-               droneChoice > Config.NextAvailableDroneIndex ||
+               droneChoice > droneAmount ||
                stationChoice < 0 ||
-               stationChoice > Config.NextAvailableDroneStationIndex)
+               stationChoice > stationAmount)
             {
                 throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
             }
             for (int i = 0; i < droneCharges.Length; i++)
             {
-                if (droneCharges[i].DroneId == drones[droneChoice].ID && droneCharges[i].StationId == droneStations[stationChoice].ID)
+                if (droneCharges[i].DroneId == drones[droneChoice].ID &&
+                        droneCharges[i].StationId == droneStations[stationChoice].ID)
                 {
                     drones[droneChoice].Status = IDAL.DO.DroneStatuses.free;
                     Config.NextAvailableDroneChargeIndex = Config.SetNextAvailable(Config.NextAvailableDroneChargeIndex - 1, MAX_DRONE_CHARGES);
                 }
-            }  
+            }
         }
     }
 }

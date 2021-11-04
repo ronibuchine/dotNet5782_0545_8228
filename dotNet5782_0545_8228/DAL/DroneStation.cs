@@ -37,7 +37,7 @@ namespace IDAL
 
             public override string ToString()
             {
-                return String.Format("Drone(ID = {0}, Name = {1}, Longitude = {2}, Latitude = {3}, ChargeSlots = {4})",
+                return String.Format("DroneStation(ID = {0}, Name = {1}, Longitude = {2}, Latitude = {3}, ChargeSlots = {4})",
                         ID, Name, Longitude, Latitude, ChargeSlots);
             }
         }
