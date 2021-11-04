@@ -30,7 +30,7 @@ namespace IDAL
             {
                 this.ID = i + 1;
                 this.Name = "Drone_" + (i + 1).ToString();
-                this.ChargeSlots = rand.Next(50);
+                this.ChargeSlots = rand.Next(5);
                 this.Longitude = (rand.NextDouble() * 360) - 180;
                 this.Latitude = (rand.NextDouble() * 180) - 90;
             }
