@@ -32,24 +32,23 @@ namespace IDAL
                 this.Weight = Weight;
                 this.Priority = Priority;
                 this.Requested = Requested;
-                this.DroneId =  DroneId;;
-                this.Scheduled = Scheduled;;
-                this.PickedUp = PickedUp;;
-                this.Delivered = Delivered;;
+                this.DroneId =  DroneId;
+                this.Scheduled = Scheduled;
+                this.PickedUp = PickedUp;
+                this.Delivered = Delivered;
             }
 
             public Parcel(int i, Random rand)
             {
-                RandomDateTime rdt = new RandomDateTime(rand);
                 this.ID = i;
                 this.SenderId = i + 1000;
                 this.Weight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
                 this.Priority = (IDAL.DO.Priorities) rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length - 1);
-                this.Requested = rdt.Next();
+                this.Requested = DateTime.Today;
                 this.DroneId = 0;
-                this.Scheduled = rdt.Next();
-                this.PickedUp = rdt.Next();
-                this.Delivered = rdt.Next();
+                this.Scheduled = DateTime.MinValue;
+                this.PickedUp = DateTime.MinValue;
+                this.Delivered = DateTime.MinValue;
             }
 
             public override string ToString()
@@ -59,22 +58,6 @@ namespace IDAL
                         ID, SenderId, Weight.ToString(), Priority.ToString(), Requested, DroneId, Scheduled, PickedUp, Delivered);
             }
 
-        }
-
-        class RandomDateTime
-        {
-            DateTime last;
-            Random rand;
-            public RandomDateTime(Random rand)
-            {
-                this.last = DateTime.Today;
-                this.rand = rand;
-            }
-
-            public DateTime Next()
-            {
-                return this.last = last.AddDays(rand.Next(20));
-            }
         }
     }
 }
