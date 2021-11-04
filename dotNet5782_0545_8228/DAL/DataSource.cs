@@ -283,10 +283,25 @@ namespace DalObject
                 droneStations[stationChoice].ChargeSlots--;
             }
         }
-        public void ReleaseDroneFromCharge(int choice) 
+
+        
+        public void ReleaseDroneFromCharge(int stationChoice, int droneChoice) 
         {
-
+            if (droneChoice < 0 ||
+               droneChoice > Config.NextAvailableDroneIndex ||
+               stationChoice < 0 ||
+               stationChoice > Config.NextAvailableDroneStationIndex)
+            {
+                throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
+            }
+            for (int i = 0; i < droneCharges.Length; i++)
+            {
+                if (droneCharges[i].DroneId == drones[droneChoice].ID && droneCharges[i].StationId == droneStations[stationChoice].ID)
+                {
+                    drones[droneChoice].Status = IDAL.DO.DroneStatuses.free;
+                    Config.NextAvailableDroneChargeIndex = Config.SetNextAvailable(Config.NextAvailableDroneChargeIndex - 1, MAX_DRONE_CHARGES);
+                }
+            }  
         }
-
     }
 }

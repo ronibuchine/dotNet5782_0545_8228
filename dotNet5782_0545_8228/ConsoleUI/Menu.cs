@@ -87,7 +87,7 @@ namespace ConsoleUI
                          () => data.CollectPackageFromDrone(GetChoice()),
                          () => data.ProvidePackageToCustomer(GetChoice()),
                          () => data.SendDroneToCharge(GetChoice("Please enter a drone station number:"), GetChoice("Please enter a drone number:")),
-                         () => data.ReleaseDroneFromCharge(GetChoice()),
+                         () => data.ReleaseDroneFromCharge(GetChoice("Please enter a drone station number:"), GetChoice("Please enter a drone number"))),
                          () => {}
                      });
         }
