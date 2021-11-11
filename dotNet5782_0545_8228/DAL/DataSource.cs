@@ -333,6 +333,7 @@ namespace DalObject
                 {
                     drones[droneChoice].Status = IDAL.DO.DroneStatuses.free;
                     Config.NextAvailableDroneChargeIndex = Config.SetNextAvailable(Config.NextAvailableDroneChargeIndex - 1, MAX_DRONE_CHARGES);
+                    droneStations[stationChoice].ChargeSlots++;
                 }
             }
         }

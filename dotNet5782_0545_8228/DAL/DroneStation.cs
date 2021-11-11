@@ -4,6 +4,10 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// An object representing a Drone Charging station. It contains an ID, Name, the number of remaining available charging slots and its location
+        /// denoted by la
+        /// </summary>
         public struct DroneStation : DalStruct
         {
             public int ID { get; set; }
@@ -30,7 +34,7 @@ namespace IDAL
             {
                 this.ID = i + 1;
                 this.Name = "Drone_" + (i + 1).ToString();
-                this.ChargeSlots = rand.Next(5);
+                this.ChargeSlots = 5;
                 this.Longitude = (rand.NextDouble() * 360) - 180;
                 this.Latitude = (rand.NextDouble() * 180) - 90;
             }
