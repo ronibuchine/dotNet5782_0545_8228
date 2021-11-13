@@ -10,10 +10,11 @@ namespace IDAL
         public class Drone : DalStruct
         {
             public int ID { get; set; }
-            public string Model { get; set; }
             public double Battery { get; set; }
-            public WeightCategories MaxWeight { get; set; }
+            public string Model { get; set; }
             public DroneStatuses Status { get; set; }
+            public WeightCategories MaxWeight { get; set; }
+            
 
             public Drone(
                     int ID,
@@ -24,24 +25,20 @@ namespace IDAL
             {
                 this.ID = ID;
                 this.Model = Model;
-                this.Battery = Battery;
                 this.MaxWeight = MaxWeight;
-                this.Status = Status;
             }
 
             public Drone(int i, Random rand)
             {
                 this.ID = i + 1;
                 this.Model = "Drone_" + (i + 1).ToString();
-                this.Battery = rand.NextDouble() * 100;
                 this.MaxWeight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
-                this.Status = IDAL.DO.DroneStatuses.free;
             }
 
             public override string ToString()
             {
                 return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4})",
-                        ID, Model, Battery, MaxWeight.ToString(), Status.ToString());
+                        ID, Model, MaxWeight.ToString());
             }
 
         }
