@@ -183,12 +183,13 @@ namespace DalObject
             {
                 list.Add((T)IdalDoFactory(list.Count - 1, this.rand, type));
                 Console.WriteLine(String.Format("{0} added sucesfully", Enum.GetName(typeof(IdalDoType), (int)type)));
+            }
 
 
             else
-                {
-                    Console.WriteLine(String.Format("Max {0} already", Enum.GetName(typeof(IdalDoType), (int)type)));
-                }
+            {
+                Console.WriteLine(String.Format("Max {0} already", Enum.GetName(typeof(IdalDoType), (int)type)));
+            }
             }
 
 
