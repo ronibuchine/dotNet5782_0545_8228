@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DalObject
 {
@@ -19,11 +20,11 @@ namespace DalObject
         const int MAX_DRONE_CHARGES = MAX_DRONES;
 
 
-        public IDAL.DO.Drone[] drones = new IDAL.DO.Drone[MAX_DRONES];
-        public IDAL.DO.DroneStation[] droneStations = new IDAL.DO.DroneStation[MAX_DRONE_STATIONS];
-        public IDAL.DO.Customer[] customers = new IDAL.DO.Customer[MAX_CUSTOMERS];
-        public IDAL.DO.Parcel[] parcels = new IDAL.DO.Parcel[MAX_PARCELS];
-        public IDAL.DO.DroneCharge[] droneCharges = new IDAL.DO.DroneCharge[MAX_DRONE_CHARGES];
+        public List<IDAL.DO.Drone> drones = new List<IDAL.DO.Drone>(MAX_DRONES);
+        public List<IDAL.DO.DroneStation> droneStations = new List<IDAL.DO.DroneStation>(MAX_DRONE_STATIONS);
+        public List<IDAL.DO.Customer> customers = new List<IDAL.DO.Customer>(MAX_CUSTOMERS);
+        public List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>(MAX_PARCELS);
+        public List<IDAL.DO.DroneCharge> droneCharges = new List<IDAL.DO.DroneCharge>(MAX_DRONE_CHARGES);
 
         internal Random rand;
 
@@ -120,7 +121,7 @@ namespace DalObject
         internal static void InitializeList<T>(
                 int min,
                 int max,
-                T[] list,
+                List<T> list,
                 IdalDoType type,
                 ref int nextAvailableIndex,
                 Random rand)
@@ -144,7 +145,7 @@ namespace DalObject
         private void AddDalItem<T>(
                 ref int nextAvailableIndex,
                 int max,
-                T[] list,
+                List<T> list,
                 IdalDoType type)
             where T : IDAL.DO.DalStruct
         {
@@ -167,7 +168,7 @@ namespace DalObject
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="pred">A predicate taking an item of the same type as list, that returns whether or not it should be displayed</param>
         public void DisplayAllItems<T>(
-                T[] list,
+                List<T> list,
                 int nextAvailableIndex,
                 int max,
                 Func<T, bool> pred)
@@ -190,7 +191,7 @@ namespace DalObject
         /// </summary>
         /// <param name="nextAvailableIndex">The next available index in the array</param>
         /// <param name="list">An array of IdalDoStructs</param>
-        public void DisplayAllItems<T>(T[] list, int nextAvailableIndex, int max) where T : IDAL.DO.DalStruct
+        public void DisplayAllItems<T>(List<T> list, int nextAvailableIndex, int max) where T : IDAL.DO.DalStruct
         {
             DisplayAllItems(list, nextAvailableIndex, max, AlwaysTrue);
         }
@@ -201,7 +202,7 @@ namespace DalObject
         /// <param name="nextAvailableIndex">The next available index in the array</param>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="choice">The index of which item to display</param>
-        public void DisplayOneItem<T>(T[] list, int nextAvailableIndex, int max, int choice) where T : IDAL.DO.DalStruct
+        public void DisplayOneItem<T>(List<T> list, int nextAvailableIndex, int max, int choice) where T : IDAL.DO.DalStruct
         {
             nextAvailableIndex = (nextAvailableIndex != -1) ? nextAvailableIndex : max;
             if (choice >= 0 && choice < nextAvailableIndex)
@@ -326,7 +327,7 @@ namespace DalObject
             {
                 throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
             }
-            for (int i = 0; i < droneCharges.Length; i++)
+            for (int i = 0; i < droneCharges.Count; i++)
             {
                 if (droneCharges[i].DroneId == drones[droneChoice].ID &&
                         droneCharges[i].StationId == droneStations[stationChoice].ID)

@@ -4,7 +4,7 @@ namespace IDAL
 {
     namespace DO
     {
-        public struct Customer : DalStruct
+        public class Customer : DalStruct
         {
             public int ID { get; set; }
             public string Name { get; set; }

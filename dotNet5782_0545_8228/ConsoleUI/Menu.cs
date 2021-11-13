@@ -1,6 +1,7 @@
 ﻿using System;
 using DalObject;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace ConsoleUI
 {
@@ -15,7 +16,7 @@ namespace ConsoleUI
         /// <param name="args">arguments passed to the CLI</param>
         static void Main(string[] args)
         {
-            // TODO: write console UI with switch statement for options and outputs
+           
             DataSource data = new();
             bool running = true;
             while (running)
@@ -27,7 +28,7 @@ namespace ConsoleUI
                             () => DisplayAllMenu(data),
                             () => DisplayOneMenu(data),
                             () => running = false
-                        });
+                        }) ;
             }
         }
 

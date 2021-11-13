@@ -4,7 +4,7 @@ namespace IDAL
 {
     namespace DO
     {
-        public struct DroneCharge : DalStruct
+        public class DroneCharge : DalStruct
         {
             public int DroneId { get; set; }
             public int StationId { get; set; }
