@@ -141,7 +141,7 @@ namespace DalObject
                 case IdalDoType.Parcel:
                     return new IDAL.DO.Parcel(i, rand);
                 default:
-                    throw new NotSupportedException();
+                    throw new IDAL.DO.InvalidDalObjectException();
             }
         }
 
@@ -187,9 +187,9 @@ namespace DalObject
 
             else
             {
-                Console.WriteLine(String.Format("Max {0} already", Enum.GetName(typeof(IdalDoType), (int)type)));
+                throw new IDAL.DO.DataSourceException();
             }
-            }
+        }
 
 
             // Update objects section
@@ -208,7 +208,7 @@ namespace DalObject
                         return drone;
                     }
                 }
-                throw new FieldAccessException($"There is no drone assigned to this package: {package.ID}\n");
+                throw new IDAL.DO.DalObjectAccessException($"There is no drone assigned to this package: {package.ID}\n");
             }
 
             /// <summary>
@@ -220,7 +220,7 @@ namespace DalObject
             {
                 if (choice < 0 || choice > drones.Count)
                 {
-                    throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
+                    throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
                 }
                 for (int i = 0; i < drones.Count; i++)
                 {
@@ -232,7 +232,7 @@ namespace DalObject
                         return;
                     }
                 }
-                throw new ApplicationException("Error, no available drones. Try again later.\n");
+                throw new IDAL.DO.DalObjectAccessException("Error, no available drones. Try again later.\n");
             }
 
             /// <summary>
@@ -243,7 +243,7 @@ namespace DalObject
             {
                 if (choice < 0 || choice > parcels.Count)
                 {
-                    throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
+                    throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
                 }
                 IDAL.DO.Drone currentDrone = GetParcelDrone(parcels[choice]);
                 if (currentDrone.Status == IDAL.DO.DroneStatuses.delivery)
@@ -251,7 +251,7 @@ namespace DalObject
                     parcels[choice].PickedUp = DateTime.Now;
                     return;
                 }
-                throw new ApplicationException("Error, you must first assign the Drone before it can collect a package.\n");
+                throw new IDAL.DO.DalObjectAccessException("Error, you must first assign the Drone before it can collect a package.\n");
             }
 
             public void ProvidePackageToCustomer(int choice)
@@ -259,7 +259,7 @@ namespace DalObject
 
                 if (choice < 0 || choice > parcels.Count)
                 {
-                    throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
+                    throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
                 }
                 for (int i = 0; i < drones.Count; i++)
                 {
@@ -276,7 +276,7 @@ namespace DalObject
                     stationChoice < 0 ||
                     stationChoice > droneStations.Count)
                 {
-                    throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
+                    throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
                 }
                 if (drones[droneChoice].Battery != 100 && droneStations[stationChoice].ChargeSlots > 0)
                 {
@@ -293,7 +293,7 @@ namespace DalObject
                    stationChoice < 0 ||
                    stationChoice > droneStations.Count)
                 {
-                    throw new IndexOutOfRangeException("Invalid index, please try again later.\n");
+                    throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
                 }
                 for (int i = 0; i < droneCharges.Count; i++)
                 {

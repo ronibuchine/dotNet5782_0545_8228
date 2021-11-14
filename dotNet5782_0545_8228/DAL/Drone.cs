@@ -34,13 +34,15 @@ namespace IDAL
             {
                 this.ID = i + 1;
                 this.Model = "Drone_" + (i + 1).ToString();
+                this.Battery = 100;
                 this.MaxWeight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
+                this.Status = DroneStatuses.free;
             }
 
             public override string ToString()
             {
                 return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4})",
-                        ID, Model, MaxWeight.ToString());
+                        ID, Model, Battery, MaxWeight.ToString(), Status);
             }
 
         }
