@@ -25,7 +25,9 @@ namespace IDAL
             {
                 this.ID = ID;
                 this.Model = Model;
+                this.Battery = Battery;
                 this.MaxWeight = MaxWeight;
+                this.Status = Status;
             }
 
             public Drone(int i, Random rand)
