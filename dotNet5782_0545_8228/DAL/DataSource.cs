@@ -77,13 +77,13 @@ namespace DalObject
         }
 
         public void AddDrone() =>
-            AddDalItem(MAX_DRONES, drones, IdalDoType.Drone);
+            AddDalItem(drones, IdalDoType.Drone);
         public void AddDroneStation() =>
-            AddDalItem(MAX_DRONE_STATIONS, droneStations, IdalDoType.DroneStation);
+            AddDalItem(droneStations, IdalDoType.DroneStation);
         public void AddCustomer() =>
-            AddDalItem(MAX_CUSTOMERS, customers, IdalDoType.Customer);
+            AddDalItem(customers, IdalDoType.Customer);
         public void AddParcel() =>
-            AddDalItem(MAX_PARCELS, parcels, IdalDoType.Parcel);
+            AddDalItem(parcels, IdalDoType.Parcel);
 
         // Displaying all objects section
 
@@ -174,7 +174,6 @@ namespace DalObject
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="rand">A Random object</param>
         private void AddDalItem<T>(
-                int max,
                 List<T> list,
                 IdalDoType type)
             where T : IDAL.DO.DalStruct
