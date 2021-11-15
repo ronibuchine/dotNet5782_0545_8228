@@ -7,7 +7,7 @@ namespace IDAL
         /// <summary>
         /// a public struct object for Drones which contains all drone fields and methods
         /// </summary>
-        public class Drone : DalStruct
+        public class Drone : ABCDalObject
         {
             public int ID { get; set; }
             public double Battery { get; set; }

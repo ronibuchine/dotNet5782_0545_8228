@@ -3,6 +3,6 @@ namespace IDAL
 {
     namespace DO
     {
-        public interface DalStruct {}
+        public abstract class ABCDalObject {}
     }
 }

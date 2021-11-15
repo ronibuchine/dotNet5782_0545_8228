@@ -16,20 +16,42 @@ namespace ConsoleUI
         /// <param name="args">arguments passed to the CLI</param>
         static void Main(string[] args)
         {
-           
+
             DataSource data = new();
             bool running = true;
             while (running)
             {
-                DisplayMenu(new string[] { "Add", "Update", "Display All", "Display One", "Exit" },
+                DisplayMenuNoPrint(new string[] { "Add", "Update", "Display All", "Display One", "Exit" },
                         new Action[]{
                             () => DisplayAddMenu(data),
                             () => DisplayUpdateMenu(data),
                             () => DisplayAllMenu(data),
                             () => DisplayOneMenu(data),
                             () => running = false
-                        }) ;
+                        });
             }
+        }
+
+        static int GetUserInput(string[] choices, int numActions)
+        {
+            Trace.Assert(choices.Length == numActions); // ensure that there is an action for each choice
+            for (int i = 0; i < choices.Length; i++)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", i, choices[i]));
+            }
+            string input = Console.ReadLine();
+            if (Int32.TryParse(input, out int choice))
+            {
+                if (choice >= 0 && choice < numActions)
+                {
+                    return choice;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("Choice out of bounds");
+                }
+            }
+            throw new IndexOutOfRangeException("Invalid input");
         }
 
         /// <summary>
@@ -37,25 +59,40 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="strings">An array of strings, each one corresponding to an option in the menu</param>
         /// <param name="actions">An array of Actions, each one corresponding to the appropiate string. Note: The order strings and actions matters and must match up</param>
-        static void DisplayMenu(string[] choices, Action[] actions)
+        static void DisplayMenuNoPrint(string[] choices, Action[] actions)
         {
-            Trace.Assert(choices.Length == actions.Length); // ensure that there is an action for each choice
-            for (int i = 0; i < choices.Length; i++)
+            try
             {
-                Console.WriteLine(String.Format("{0}: {1}", i, choices[i]));
-            }
-            string input = Console.ReadLine();
-            if (Int32.TryParse(input, out int choice) &&
-                choice < actions.Length &&
-                choice >= 0)
-            {
+                int choice = GetUserInput(choices, actions.Length);
                 actions[choice]();
+            }
+            catch (IndexOutOfRangeException e) 
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        /// <summary>
+        /// The Main function which displays the menu to the user in the console interface
+        /// </summary>
+        /// <param name="strings">An array of strings, each one corresponding to an option in the menu</param>
+        /// <param name="funcs">An array of Actions, each one corresponding to the appropiate string. Note: The order strings and actions matters and must match up</param>
+        static void DisplayMenuYesPrint<T>(string[] choices, Func<List<T>>[] funcs) where T : IDAL.DO.ABCDalObject
+        {
+            try
+            {
+                int choice = GetUserInput(choices, funcs.Length);
+                funcs[choice]().ForEach((dalObj) => Console.WriteLine(dalObj.ToString()));
+            }
+            catch (IndexOutOfRangeException e) 
+            {
+                Console.WriteLine(e.ToString());
             }
         }
 
         static void DisplayAddMenu(DataSource data)
         {
-            DisplayMenu(new string[] { "Add Base Station", "Add Drone", "Add Customer", "Add Package", "Cancel" },
+            DisplayMenuNoPrint(new string[] { "Add Base Station", "Add Drone", "Add Customer", "Add Package", "Cancel" },
                     new Action[]{
                         () => data.AddDroneStation(),
                         () => data.AddDrone(),
@@ -65,7 +102,7 @@ namespace ConsoleUI
                     });
         }
 
-        static int GetChoice(string prompt = "Please enter a choice: ")
+        internal static int GetChoice(string prompt = "Please enter a choice: ")
         {
             Console.WriteLine(prompt);
             string input = Console.ReadLine();
@@ -81,7 +118,7 @@ namespace ConsoleUI
 
         static void DisplayUpdateMenu(DataSource data)
         {
-            DisplayMenu(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer",
+            DisplayMenuNoPrint(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer",
                      "Send a drone to charge", "Release a drone from charging", "Cancel"},
                      new Action[]{
                          () => data.AssignPackageToDrone(GetChoice("Please choose which package to assign:")),
@@ -93,35 +130,30 @@ namespace ConsoleUI
                      });
         }
 
-        
-
-
         static void DisplayOneMenu(DataSource data)
         {
-            
-
-            DisplayMenu(new string[] {"Display a base station", "Display a base drone", "Display a Customer", "Display a package", "Cancel"},
-                    new Action[]{
-                        () => data.DisplayDroneStation(GetChoice()),
-                        () => data.DisplayDrone(GetChoice()),
-                        () => data.DisplayCustomer(GetChoice()),
-                        () => data.DisplayParcel(GetChoice()),
-                        () => {}
+            DisplayMenuYesPrint(new string[] { "Display a base station", "Display a base drone", "Display a Customer", "Display a package", "Cancel" },
+                    new Func<List<IDAL.DO.ABCDalObject>>[]{
+                        () => data.DisplayDroneStation(GetChoice()).ConvertAll(d => (IDAL.DO.ABCDalObject)d),
+                        () => data.DisplayDrone(GetChoice()).ConvertAll(d => (IDAL.DO.ABCDalObject)d),
+                        () => data.DisplayCustomer(GetChoice()).ConvertAll(d => (IDAL.DO.ABCDalObject)d),
+                        () => data.DisplayParcel(GetChoice()).ConvertAll(d => (IDAL.DO.ABCDalObject)d),
+                        () => new List<IDAL.DO.ABCDalObject>()
                     });
         }
 
         static void DisplayAllMenu(DataSource data)
         {
             // TODO: add the rest of the things
-            DisplayMenu(new string[] {"Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Display all packages not assigned to a drone", "Display all base stations with unoccupied charging stations", "Cancel"},
-                    new Action[]{
-                        () => data.DisplayAllDroneStations(),
-                        () => data.DisplayAllDrones(),
-                        () => data.DisplayAllCustomers(),
-                        () => data.DisplayAllParcels(),
-                        () => data.DisplayAllNotAssignedParcels(),
-                        () => data.DisplayAllUnoccupiedStations(),
-                        () => {}
+            DisplayMenuYesPrint(new string[] { "Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Display all packages not assigned to a drone", "Display all base stations with unoccupied charging stations", "Cancel" },
+                    new Func<List<IDAL.DO.ABCDalObject>>[]{
+                        () => data.DisplayAllDroneStations().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
+                        () => data.DisplayAllDrones().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
+                        () => data.DisplayAllCustomers().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
+                        () => data.DisplayAllParcels().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
+                        () => data.DisplayAllNotAssignedParcels().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
+                        () => data.DisplayAllUnoccupiedStations().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
+                        () => new List<IDAL.DO.ABCDalObject>()
                     });
         }
     }

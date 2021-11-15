@@ -4,7 +4,7 @@ namespace IDAL
 {
     namespace DO
     {
-        public class Customer : DalStruct
+        public class Customer : ABCDalObject
         {
             public int ID { get; set; }
             public string Name { get; set; }
