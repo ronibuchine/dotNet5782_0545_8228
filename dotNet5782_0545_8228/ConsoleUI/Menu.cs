@@ -2,6 +2,7 @@
 using DalObject;
 using System.Diagnostics;
 using System.Collections.Generic;
+using IDAL.DO;
 
 namespace ConsoleUI
 {
@@ -77,7 +78,7 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="strings">An array of strings, each one corresponding to an option in the menu</param>
         /// <param name="funcs">An array of Actions, each one corresponding to the appropiate string. Note: The order strings and actions matters and must match up</param>
-        static void DisplayMenuYesPrint<T>(string[] choices, Func<List<T>>[] funcs) where T : IDAL.DO.ABCDalObject
+        static void DisplayMenuYesPrint<T>(string[] choices, Func<List<T>>[] funcs) where T : ABCDalObject
         {
             try
             {
@@ -132,13 +133,13 @@ namespace ConsoleUI
 
         static void DisplayOneMenu(DataSource data)
         {
-            DisplayMenuYesPrint(new string[] { "Display a base station", "Display a base drone", "Display a Customer", "Display a package", "Cancel" },
-                    new Func<List<IDAL.DO.ABCDalObject>>[]{
-                        () => data.DisplayDroneStation(GetChoice()).ConvertAll(d => (IDAL.DO.ABCDalObject)d),
-                        () => data.DisplayDrone(GetChoice()).ConvertAll(d => (IDAL.DO.ABCDalObject)d),
-                        () => data.DisplayCustomer(GetChoice()).ConvertAll(d => (IDAL.DO.ABCDalObject)d),
-                        () => data.DisplayParcel(GetChoice()).ConvertAll(d => (IDAL.DO.ABCDalObject)d),
-                        () => new List<IDAL.DO.ABCDalObject>()
+            DisplayMenuYesPrint(new string[] { "Display a base station", "Display a drone", "Display a Customer", "Display a package", "Cancel" },
+                    new Func<List<ABCDalObject>>[]{
+                        () => data.DisplayDroneStation(GetChoice()).ConvertAll(d => (ABCDalObject)d),
+                        () => data.DisplayDrone(GetChoice()).ConvertAll(d => (ABCDalObject)d),
+                        () => data.DisplayCustomer(GetChoice()).ConvertAll(d => (ABCDalObject)d),
+                        () => data.DisplayParcel(GetChoice()).ConvertAll(d => (ABCDalObject)d),
+                        () => new List<ABCDalObject>()
                     });
         }
 
@@ -146,14 +147,14 @@ namespace ConsoleUI
         {
             // TODO: add the rest of the things
             DisplayMenuYesPrint(new string[] { "Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Display all packages not assigned to a drone", "Display all base stations with unoccupied charging stations", "Cancel" },
-                    new Func<List<IDAL.DO.ABCDalObject>>[]{
-                        () => data.DisplayAllDroneStations().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
-                        () => data.DisplayAllDrones().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
-                        () => data.DisplayAllCustomers().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
-                        () => data.DisplayAllParcels().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
-                        () => data.DisplayAllNotAssignedParcels().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
-                        () => data.DisplayAllUnoccupiedStations().ConvertAll(d => (IDAL.DO.ABCDalObject)d),
-                        () => new List<IDAL.DO.ABCDalObject>()
+                    new Func<List<ABCDalObject>>[]{
+                        () => data.DisplayAllDroneStations().ConvertAll(d => (ABCDalObject)d),
+                        () => data.DisplayAllDrones().ConvertAll(d => (ABCDalObject)d),
+                        () => data.DisplayAllCustomers().ConvertAll(d => (ABCDalObject)d),
+                        () => data.DisplayAllParcels().ConvertAll(d => (ABCDalObject)d),
+                        () => data.DisplayAllNotAssignedParcels().ConvertAll(d => (ABCDalObject)d),
+                        () => data.DisplayAllUnoccupiedStations().ConvertAll(d => (ABCDalObject)d),
+                        () => new List<ABCDalObject>()
                     });
         }
     }
