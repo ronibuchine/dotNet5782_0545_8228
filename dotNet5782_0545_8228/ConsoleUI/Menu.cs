@@ -22,7 +22,7 @@ namespace ConsoleUI
             bool running = true;
             while (running)
             {
-                DisplayMenuNoPrint(new string[] { "Add", "Update", "Display All", "Display One", "Exit" },
+                DisplayMenuNoOutput(new string[] { "Add", "Update", "Display All", "Display One", "Exit" },
                         new Action[]{
                             () => DisplayAddMenu(data),
                             () => DisplayUpdateMenu(data),
@@ -60,7 +60,7 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="strings">An array of strings, each one corresponding to an option in the menu</param>
         /// <param name="actions">An array of Actions, each one corresponding to the appropiate string. Note: The order strings and actions matters and must match up</param>
-        static void DisplayMenuNoPrint(string[] choices, Action[] actions)
+        static void DisplayMenuNoOutput(string[] choices, Action[] actions)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="strings">An array of strings, each one corresponding to an option in the menu</param>
         /// <param name="funcs">An array of Actions, each one corresponding to the appropiate string. Note: The order strings and actions matters and must match up</param>
-        static void DisplayMenuYesPrint<T>(string[] choices, Func<List<T>>[] funcs) where T : ABCDalObject
+        static void DisplayMenuWithOutput<T>(string[] choices, Func<List<T>>[] funcs) where T : ABCDalObject
         {
             try
             {
@@ -93,7 +93,7 @@ namespace ConsoleUI
 
         static void DisplayAddMenu(DataSource data)
         {
-            DisplayMenuNoPrint(new string[] { "Add Base Station", "Add Drone", "Add Customer", "Add Package", "Cancel" },
+            DisplayMenuNoOutput(new string[] { "Add Base Station", "Add Drone", "Add Customer", "Add Package", "Cancel" },
                     new Action[]{
                         () => data.AddDroneStation(),
                         () => data.AddDrone(),
@@ -119,7 +119,7 @@ namespace ConsoleUI
 
         static void DisplayUpdateMenu(DataSource data)
         {
-            DisplayMenuNoPrint(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer",
+            DisplayMenuNoOutput(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer",
                      "Send a drone to charge", "Release a drone from charging", "Cancel"},
                      new Action[]{
                          () => data.AssignPackageToDrone(GetChoice("Please choose which package to assign:")),
@@ -133,7 +133,7 @@ namespace ConsoleUI
 
         static void DisplayOneMenu(DataSource data)
         {
-            DisplayMenuYesPrint(new string[] { "Display a base station", "Display a drone", "Display a Customer", "Display a package", "Cancel" },
+            DisplayMenuWithOutput(new string[] { "Display a base station", "Display a drone", "Display a Customer", "Display a package", "Cancel" },
                     new Func<List<ABCDalObject>>[]{
                         () => data.DisplayDroneStation(GetChoice()).ConvertAll(d => (ABCDalObject)d),
                         () => data.DisplayDrone(GetChoice()).ConvertAll(d => (ABCDalObject)d),
@@ -146,7 +146,7 @@ namespace ConsoleUI
         static void DisplayAllMenu(DataSource data)
         {
             // TODO: add the rest of the things
-            DisplayMenuYesPrint(new string[] { "Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Display all packages not assigned to a drone", "Display all base stations with unoccupied charging stations", "Cancel" },
+            DisplayMenuWithOutput(new string[] { "Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Display all packages not assigned to a drone", "Display all base stations with unoccupied charging stations", "Cancel" },
                     new Func<List<ABCDalObject>>[]{
                         () => data.DisplayAllDroneStations().ConvertAll(d => (ABCDalObject)d),
                         () => data.DisplayAllDrones().ConvertAll(d => (ABCDalObject)d),
