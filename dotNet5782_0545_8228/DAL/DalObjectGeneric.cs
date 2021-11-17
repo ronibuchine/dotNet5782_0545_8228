@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    public partial class ABCDalObject : IDAL.IdalInterface
+    public partial class DalObject : IDAL.IdalInterface
     {
-        public ABCDalObject()
+        public DalObject()
         {
             DataSource.Initialize();
         }
 
+        public enum IdalDoType { Drone, DroneStation, Customer, Parcel };
         // Adding objects section
 
         /// <summary>

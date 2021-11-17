@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DalObject
 {
-    public partial class ABCDalObject : IDAL.IdalInterface
+    public partial class DalObject : IDAL.IdalInterface
     {
        
 

@@ -18,7 +18,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
 
-            IDAL.IdalInterface data = new ABCDalObject();
+            IDAL.IdalInterface data = new DalObject.DalObject();
             bool running = true;
             while (running)
             {

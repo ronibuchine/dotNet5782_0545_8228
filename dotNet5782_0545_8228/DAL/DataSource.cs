@@ -6,7 +6,7 @@ namespace DalObject
 {
     public class DataSource
     {
-        public enum IdalDoType { Drone, DroneStation, Customer, Parcel };
+        
 
         const int MIN_DRONES = 5;
         const int MIN_DRONE_STATIONS = 2;

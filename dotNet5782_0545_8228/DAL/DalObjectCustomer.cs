@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    public partial class ABCDalObject : IDAL.IdalInterface
+    public partial class DalObject : IDAL.IdalInterface
     {
 
         public void AddCustomer() =>
