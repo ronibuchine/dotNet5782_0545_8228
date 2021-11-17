@@ -18,7 +18,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
 
-            DataSource data = new();
+            IDAL.IdalInterface data = new DalObject.DalObject();
             bool running = true;
             while (running)
             {
@@ -78,7 +78,7 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="strings">An array of strings, each one corresponding to an option in the menu</param>
         /// <param name="funcs">An array of Actions, each one corresponding to the appropiate string. Note: The order strings and actions matters and must match up</param>
-        static void DisplayMenuWithOutput<T>(string[] choices, Func<List<T>>[] funcs) where T : ABCDalObject
+        static void DisplayMenuWithOutput<T>(string[] choices, Func<List<T>>[] funcs) where T : DalEntity
         {
             try
             {
@@ -91,7 +91,7 @@ namespace ConsoleUI
             }
         }
 
-        static void DisplayAddMenu(DataSource data)
+        static void DisplayAddMenu(IDAL.IdalInterface data)
         {
             DisplayMenuNoOutput(new string[] { "Add Base Station", "Add Drone", "Add Customer", "Add Package", "Cancel" },
                     new Action[]{
@@ -117,7 +117,7 @@ namespace ConsoleUI
             }
         }
 
-        static void DisplayUpdateMenu(DataSource data)
+        static void DisplayUpdateMenu(IDAL.IdalInterface data)
         {
             DisplayMenuNoOutput(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer",
                      "Send a drone to charge", "Release a drone from charging", "Cancel"},
@@ -131,30 +131,30 @@ namespace ConsoleUI
                      });
         }
 
-        static void DisplayOneMenu(DataSource data)
+        static void DisplayOneMenu(IDAL.IdalInterface data)
         {
             DisplayMenuWithOutput(new string[] { "Display a base station", "Display a drone", "Display a Customer", "Display a package", "Cancel" },
-                    new Func<List<ABCDalObject>>[]{
-                        () => data.DisplayDroneStation(GetChoice()).ConvertAll(d => (ABCDalObject)d),
-                        () => data.DisplayDrone(GetChoice()).ConvertAll(d => (ABCDalObject)d),
-                        () => data.DisplayCustomer(GetChoice()).ConvertAll(d => (ABCDalObject)d),
-                        () => data.DisplayParcel(GetChoice()).ConvertAll(d => (ABCDalObject)d),
-                        () => new List<ABCDalObject>()
+                    new Func<List<DalEntity>>[]{
+                        () => data.DisplayDroneStation(GetChoice()).ConvertAll(d => (DalEntity)d),
+                        () => data.DisplayDrone(GetChoice()).ConvertAll(d => (DalEntity)d),
+                        () => data.DisplayCustomer(GetChoice()).ConvertAll(d => (DalEntity)d),
+                        () => data.DisplayParcel(GetChoice()).ConvertAll(d => (DalEntity)d),
+                        () => new List<DalEntity>()
                     });
         }
 
-        static void DisplayAllMenu(DataSource data)
+        static void DisplayAllMenu(IDAL.IdalInterface data)
         {
             // TODO: add the rest of the things
             DisplayMenuWithOutput(new string[] { "Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Display all packages not assigned to a drone", "Display all base stations with unoccupied charging stations", "Cancel" },
-                    new Func<List<ABCDalObject>>[]{
-                        () => data.DisplayAllDroneStations().ConvertAll(d => (ABCDalObject)d),
-                        () => data.DisplayAllDrones().ConvertAll(d => (ABCDalObject)d),
-                        () => data.DisplayAllCustomers().ConvertAll(d => (ABCDalObject)d),
-                        () => data.DisplayAllParcels().ConvertAll(d => (ABCDalObject)d),
-                        () => data.DisplayAllNotAssignedParcels().ConvertAll(d => (ABCDalObject)d),
-                        () => data.DisplayAllUnoccupiedStations().ConvertAll(d => (ABCDalObject)d),
-                        () => new List<ABCDalObject>()
+                    new Func<List<DalEntity>>[]{
+                        () => data.DisplayAllDroneStations().ConvertAll(d => (DalEntity)d),
+                        () => data.DisplayAllDrones().ConvertAll(d => (DalEntity)d),
+                        () => data.DisplayAllCustomers().ConvertAll(d => (DalEntity)d),
+                        () => data.DisplayAllParcels().ConvertAll(d => (DalEntity)d),
+                        () => data.DisplayAllNotAssignedParcels().ConvertAll(d => (DalEntity)d),
+                        () => data.DisplayAllUnoccupiedStations().ConvertAll(d => (DalEntity)d),
+                        () => new List<DalEntity>()
                     });
         }
     }

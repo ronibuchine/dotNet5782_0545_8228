@@ -4,7 +4,7 @@ namespace IDAL
 {
     namespace DO
     {
-        public class DroneCharge : ABCDalObject
+        public class DroneCharge
         {
             public int DroneId { get; set; }
             public int StationId { get; set; }

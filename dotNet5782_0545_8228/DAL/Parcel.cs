@@ -4,7 +4,7 @@ namespace IDAL
 {
     namespace DO
     {
-        public class Parcel : ABCDalObject
+        public class Parcel : IDAL.DO.DalEntity
         {
             public int ID { get; set; }
             public int SenderId { get; set; }
