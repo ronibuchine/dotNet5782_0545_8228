@@ -29,7 +29,7 @@ namespace DalObject
 
         internal static Random rand;
 
-        internal class Config
+        public class Config
         {
             public static double free;
             public static double lightWeight;
