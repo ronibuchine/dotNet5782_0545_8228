@@ -54,7 +54,7 @@ namespace DalObject
         /// <param name="rand">A Random object</param>
         internal void AddDalItem<T>(
                 List<T> list,
-                DataSource.IdalDoType type)
+                IdalDoType type)
             where T : IDAL.DO.DalEntity
         {
             if (list.Count + 1 > list.Capacity)
