@@ -17,6 +17,12 @@ namespace IBL
             public DroneStatuses status { get; set; }
             public Location location { get; set; }
             public int packageNumber { get; set; }
+
+            public override string ToString()
+            {
+                return String.Format("ID = {0}, Model = {1}, WeightCategory = {2}, Battery = {3}, Drone Status = {4}, Location = {5}, Package Number = {6}", 
+                    ID, model, weightCategory, battery, status, location.ToString(), packageNumber);
+            }
         }
     }
     

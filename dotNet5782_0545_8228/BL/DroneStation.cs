@@ -15,6 +15,11 @@ namespace IBL
             public Location location { get; set; }
             public int chargeSlots { get; set; }
             public List<Drone> chargingDrones { get; set; }
+            public override string ToString()
+            {
+                return String.Format("ID = {0}, Name = {1}, Location = {2}, Charge Slots = {3}, Charging Drones = {4}",
+                    ID, name, location.ToString(), chargeSlots, chargingDrones.ToString());
+            }
         }
     }
     

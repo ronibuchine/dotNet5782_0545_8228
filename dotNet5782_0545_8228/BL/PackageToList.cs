@@ -16,6 +16,11 @@ namespace IBL
             public WeightCategories weightCategory { get; set; }
             public Priorities priority { get; set; }
             public PackageStatuses status { get; set; }
+
+            public override string ToString()
+            {
+                return $"ID = {ID}, Sender = {senderName}, Recevier = {receiverName}, WeightCategory = {weightCategory}, Priority = {priority}, Package Status = {status}";
+            }
         }
     }
    

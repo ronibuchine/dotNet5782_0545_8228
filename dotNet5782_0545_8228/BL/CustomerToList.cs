@@ -17,7 +17,13 @@ namespace IBL
             public int numberPackagesUndelivered { get; set; }
             public int numberReceivedPackages { get; set; }
             public int numberExpectedPackages { get; set; }
-        }
+
+            public override string ToString()
+            {
+                return String.Format("ID = {0}, Name = {1}, Phone Number = {2}, Packages Delivered = {3}, Packages Not Delivered = {4}, Received Packages = {5}, Expected Packages = {6}",
+                    ID, name, phoneNumber, numberPackagesDelivered, numberPackagesUndelivered, numberReceivedPackages, numberExpectedPackages);
+            }
+    }
     }
 
 }

@@ -20,6 +20,11 @@ namespace IBL
             public DateTime assigningTime { get; set; }
             public DateTime collectionTime { get; set; }
             public DateTime deliveringTime { get; set; }
+            public override string ToString()
+            {
+                return String.Format("ID = {0}, Sender = {1}, Receiver = {2}, Weight Category = {3}, Priority = {4}, Drone = {5}, Creation Time = {6}, Assignment Time = {7}, Collection Time = {8}, Delivering Time = {9}",
+                    ID, sender.ToString(), receiver.ToString(), weightCategory, priority, drone.ToString(), creationTime.ToString(), assigningTime.ToString(), collectionTime.ToString(), deliveringTime.ToString());
+            }
         }
     }
 }

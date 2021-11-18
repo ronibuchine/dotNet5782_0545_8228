@@ -14,6 +14,11 @@ namespace IBL
             public string name { get; set; }
             public int availableChargeSlots { get; set; }
             public int occupiedSlots { get; set; }
+            public override string ToString()
+            {
+                return String.Format("ID = {0}, Name = {1}, Current Available Charge Slots = {2}, Current Occupied Charge Slots = {3}",
+                    ID, name, availableChargeSlots, occupiedSlots);
+            }
         }
     }
 
