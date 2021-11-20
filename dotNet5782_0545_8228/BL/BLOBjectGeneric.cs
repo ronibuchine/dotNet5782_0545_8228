@@ -15,7 +15,13 @@ namespace BLOBject
         public BLOBject()
         {
             IDAL.IdalInterface dal = new DalObject.DalObject();
-            List<Drone> drones = dal.DisplayAllDrones();
+
+            double free = DalObject.DataSource.Config.free;
+            double lightWeight = DalObject.DataSource.Config.lightWeight;
+            double midWeight = DalObject.DataSource.Config.midWeight;
+            double heavyWeight = DalObject.DataSource.Config.heavyWeight;
+            double chargingRate = DalObject.DataSource.Config.chargingRate;
+
         }
 
     }

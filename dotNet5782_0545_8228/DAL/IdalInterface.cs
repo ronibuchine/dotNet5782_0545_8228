@@ -16,6 +16,7 @@ namespace IDAL
         public List<IDAL.DO.Parcel> DisplayAllNotAssignedParcels();
         public List<IDAL.DO.DroneStation> DisplayAllUnoccupiedStations();
 
+
         public List<IDAL.DO.Drone> DisplayDrone(int choice);
         public List<IDAL.DO.DroneStation> DisplayDroneStation(int choice);
         public List<IDAL.DO.Customer> DisplayCustomer(int choice);
