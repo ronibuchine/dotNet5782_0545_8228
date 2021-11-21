@@ -1,8 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IBL
 {
@@ -10,6 +7,16 @@ namespace IBL
     {
         public class DroneToList
         {
+            public DroneToList(Drone drone)
+            {
+                ID = drone.ID;
+                model = drone.model;
+                weightCategory = drone.weightCategory;
+                battery = drone.battery;
+                status = drone.status;
+                location = drone.currentLocation;
+                packageNumber = drone.packageInTransfer.ID;
+            }
             public int ID { get; set; }
             public string model { get; set; }
             public WeightCategories weightCategory { get; set; }

@@ -10,7 +10,6 @@ namespace IDAL
         /// </summary>
         public class DroneStation : IDAL.DO.DalEntity
         {
-            public int ID { get; set; }
             public string Name { get; set; }
             public int ChargeSlots { get; set; }
             public double Longitude { get; set; }

@@ -21,7 +21,7 @@ namespace DalObject
         {
             foreach (IDAL.DO.Drone drone in DataSource.drones)
             {
-                if (drone.ID == package.DroneId)
+                if (drone.ID == package.droneId)
                 {
                     return drone;
                 }
@@ -32,17 +32,30 @@ namespace DalObject
         
         
         public void AddParcel() =>
-            AddDalItem(DataSource.parcels, DataSource.IdalDoType.Parcel);
+            AddDalItem(DataSource.parcels, IdalDoType.Parcel);
+
+        public void AddParcel(IDAL.DO.Parcel parcel)
+        {
+            List<IDAL.DO.Parcel> list = DataSource.parcels;
+            if (list.Count + 1 > list.Capacity)
+            {
+                list.Add(parcel);
+            }
+            else
+            {
+                throw new IDAL.DO.DataSourceException();
+            }
+        }
 
         // Displaying all objects section
 
        
-        public List<IDAL.DO.Parcel> DisplayAllParcels() => DisplayAllItems(DataSource.parcels);
-        public List<IDAL.DO.Parcel> DisplayAllNotAssignedParcels() =>
-            DisplayAllItems(DataSource.parcels, (IDAL.DO.Parcel p) => p.DroneId == 0);
+        public List<IDAL.DO.Parcel> GetAllParcels() => DisplayAllItems(DataSource.parcels);
+        public List<IDAL.DO.Parcel> GetAllNotAssignedParcels() =>
+            DisplayAllItems(DataSource.parcels, (IDAL.DO.Parcel p) => p.droneId == 0);
         
        
-        public List<IDAL.DO.Parcel> DisplayParcel(int choice) => DisplayOneItem(DataSource.parcels, choice);
+        public IDAL.DO.Parcel GetParcel(int ID) => DisplayOneItem(DataSource.parcels, ID);
        
 
        

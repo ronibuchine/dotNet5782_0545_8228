@@ -10,6 +10,14 @@ namespace IBL
     {
         public class PackageToList
         {
+            public PackageToList(Package package)
+            {
+                ID = package.ID;
+                senderName = package.sender.name;
+                receiverName = package.receiver.name;
+                weightCategory = package.weightCategory;
+                priority = package.priority;
+            }
             public int ID { get; set; }
             public string senderName { get; set; }
             public string receiverName { get; set; }

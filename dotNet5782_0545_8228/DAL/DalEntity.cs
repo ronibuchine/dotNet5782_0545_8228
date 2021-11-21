@@ -8,7 +8,10 @@ namespace IDAL
 {
     namespace DO
     {
-        public class DalEntity { }
+        public class DalEntity 
+        {
+            public int ID { get; set; }
+        }
         
     }
 }

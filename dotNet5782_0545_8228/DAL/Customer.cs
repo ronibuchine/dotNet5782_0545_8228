@@ -6,7 +6,6 @@ namespace IDAL
     {
         public class Customer : IDAL.DO.DalEntity
         {
-            public int ID { get; set; }
             public string Name { get; set; }
             public string Phone { get; set; }
             public double Longitude { get; set; }

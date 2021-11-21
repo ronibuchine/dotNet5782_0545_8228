@@ -9,7 +9,26 @@ namespace BLOBject
     public partial class BLOBject : IBL.IBLInterface
     {
 
-        public void SendDroneToCharge(int droneID);
+        public void SendDroneToCharge(int droneID)
+        {
+            IBL.BO.Drone drone = GetDrone(droneID);
+            if (drone.status != IBL.BO.DroneStatuses.free) // is this always initialized?
+            {
+                throw new IBL.BO.InvalidBlObjectException("Drone is not free currently");
+            }
+            /* IBL.BO.DroneStation */
+            IBL.BO.DroneStation closestAvailable = GetClosestStation(drone.currentLocation, GetAvailableStations());
+            if (!CanArriveToLocation(drone, closestAvailable.location))
+            {
+                throw new IBL.BO.InvalidBlObjectException("Drone does not have enough battery to reach closest available station");
+            }
+            dal.GetDroneStation(closestAvailable.ID).ChargeSlots--;
+
+
+
+
+
+        }
         public void ReleaseDroneFromCharge(int droneID, DateTime chargeTime);
         public void AssignPackageToDrone(int droneID);
         public void CollectPackage(int droneID);

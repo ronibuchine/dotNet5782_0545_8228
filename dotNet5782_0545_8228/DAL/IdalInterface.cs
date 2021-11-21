@@ -8,25 +8,31 @@ namespace IDAL
         public void AddDroneStation();
         public void AddCustomer();
         public void AddParcel();
+        public void AddDrone(IDAL.DO.Drone drone);
+        public void AddDroneStation(IDAL.DO.DroneStation droneStation);
+        public void AddCustomer(IDAL.DO.Customer customer);
+        public void AddParcel(IDAL.DO.Parcel parcel);
 
-        public List<IDAL.DO.Drone> DisplayAllDrones();
-        public List<IDAL.DO.DroneStation> DisplayAllDroneStations();
-        public List<IDAL.DO.Customer> DisplayAllCustomers();
-        public List<IDAL.DO.Parcel> DisplayAllParcels();
-        public List<IDAL.DO.Parcel> DisplayAllNotAssignedParcels();
-        public List<IDAL.DO.DroneStation> DisplayAllUnoccupiedStations();
+        public List<IDAL.DO.Drone> GetAllDrones();
+        public List<IDAL.DO.DroneStation> GetAllDroneStations();
+        public List<IDAL.DO.Customer> GetAllCustomers();
+        public List<IDAL.DO.Parcel> GetAllParcels();
+        public List<IDAL.DO.DroneCharge> GetAllCharges();
+        public List<IDAL.DO.Parcel> GetAllNotAssignedParcels();
+        public List<IDAL.DO.DroneStation> GetAllUnoccupiedStations();
 
 
-        public List<IDAL.DO.Drone> DisplayDrone(int choice);
-        public List<IDAL.DO.DroneStation> DisplayDroneStation(int choice);
-        public List<IDAL.DO.Customer> DisplayCustomer(int choice);
-        public List<IDAL.DO.Parcel> DisplayParcel(int choice);
+        public IDAL.DO.Drone GetDrone(int ID);
+        public IDAL.DO.DroneStation GetDroneStation(int ID);
+        public IDAL.DO.Customer GetCustomer(int ID);
+        public IDAL.DO.Parcel GetParcel(int ID);
 
-        public void AssignPackageToDrone(int choice);
-        public void CollectPackageFromDrone(int choice);
-        public void ProvidePackageToCustomer(int choice);
-        public void SendDroneToCharge(int stationChoice, int droneChoice);
-        public void ReleaseDroneFromCharge(int stationChoice, int droneChoice);
+
+        public void AssignPackageToDrone(int packageID);
+        public void CollectPackageFromDrone(int packageID);
+        public void ProvidePackageToCustomer(int packageID);
+        public void SendDroneToCharge(int stationID, int droneID);
+        public void ReleaseDroneFromCharge(int stationID, int droneID);
 
         // Should this have any paramters?
         public double[] PowerConsumptionRequest();

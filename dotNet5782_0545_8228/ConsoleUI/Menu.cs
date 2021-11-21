@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DalObject;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -135,10 +135,10 @@ namespace ConsoleUI
         {
             DisplayMenuWithOutput(new string[] { "Display a base station", "Display a drone", "Display a Customer", "Display a package", "Cancel" },
                     new Func<List<DalEntity>>[]{
-                        () => data.DisplayDroneStation(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayDrone(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayCustomer(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayParcel(GetChoice()).ConvertAll(d => (DalEntity)d),
+                        () => data.GetDroneStation(GetChoice()).ConvertAll(d => (DalEntity)d),
+                        () => data.GetDrone(GetChoice()).ConvertAll(d => (DalEntity)d),
+                        () => data.GetCustomer(GetChoice()).ConvertAll(d => (DalEntity)d),
+                        () => data.GetParcel(GetChoice()).ConvertAll(d => (DalEntity)d),
                         () => new List<DalEntity>()
                     });
         }
@@ -148,12 +148,12 @@ namespace ConsoleUI
             // TODO: add the rest of the things
             DisplayMenuWithOutput(new string[] { "Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Display all packages not assigned to a drone", "Display all base stations with unoccupied charging stations", "Cancel" },
                     new Func<List<DalEntity>>[]{
-                        () => data.DisplayAllDroneStations().ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayAllDrones().ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayAllCustomers().ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayAllParcels().ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayAllNotAssignedParcels().ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayAllUnoccupiedStations().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllDroneStations().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllDrones().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllCustomers().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllParcels().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllNotAssignedParcels().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllUnoccupiedStations().ConvertAll(d => (DalEntity)d),
                         () => new List<DalEntity>()
                     });
         }

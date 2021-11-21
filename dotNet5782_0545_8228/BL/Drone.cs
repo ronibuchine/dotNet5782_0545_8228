@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
+using IDAL;
 
 namespace IBL
 {
@@ -10,12 +7,25 @@ namespace IBL
     { 
         public class Drone
         {
+            public Drone(int ID, string model, WeightCategories weightCategory)
+            {
+                this.ID = ID;
+                this.model = model;
+                this.weightCategory = weightCategory;
+            }
+            public Drone(IDAL.DO.Drone drone)
+            {
+                ID = drone.ID;
+                model = drone.Model;
+                weightCategory = (IBL.BO.WeightCategories)drone.MaxWeight;
+            }
             public int ID { get; set; }
-            public double Battery { get; set; }
-            public string Model { get; set; }
-            public DroneStatuses Status { get; set; }
-            public WeightCategories WeightCategory { get; set; }
-            public Location CurrentLocation { get; set; }
+            public double battery { get; set; }
+            public string model { get; set; }
+            public DroneStatuses status { get; set; }
+            public WeightCategories weightCategory { get; set; }
+            public Location currentLocation { get; set; }
+            public PackageInTransfer packageInTransfer {get; set;}
 
 
             public Drone(
@@ -24,41 +34,32 @@ namespace IBL
                 double battery,
                 WeightCategories category,
                 DroneStatuses status,
-                Location location)
+                Location location,
+                PackageInTransfer packageInTransfer)
             {
                 this.ID = ID;
-                this.Model = model;
-                this.Battery = battery;
-                this.WeightCategory = category;
-                this.Status = status;
-                this.CurrentLocation = location;
+                this.model = model;
+                this.battery = battery;
+                this.weightCategory = category;
+                this.status = status;
+                this.currentLocation = location;
             }
 
             public Drone(int i, Random rand)
             {
                 this.ID = i + 1;
-                this.Model = "Drone_" + (i + 1).ToString();
-                this.Battery = 100;
-                this.WeightCategory = (IBL.BO.WeightCategories)rand.Next(Enum.GetNames(typeof(IBL.BO.WeightCategories)).Length - 1);
-                this.Status = DroneStatuses.free;
-                this.CurrentLocation = new Location(); // TODO: fix
-            }
-
-            public Drone(IDAL.DO.Drone dalDrone)
-            {
-                this.ID = dalDrone.ID;
-                this.Model = dalDrone.Model;
-                this.Battery =  ;// TODODODODODOD
-                this.WeightCategory = ;// TODODODODODOD 
-                this.Status = ;// TODODODODODOD 
-                this.CurrentLocation =;// TODODODODODOD   // TODO: fix
-
+                this.model = "Drone_" + (i + 1).ToString();
+                this.battery = 100;
+                this.weightCategory = (IBL.BO.WeightCategories)rand.Next(Enum.GetNames(typeof(IBL.BO.WeightCategories)).Length - 1);
+                this.status = DroneStatuses.free;
+                this.currentLocation = new Location(i, i); // TODO: fix
+                this.packageInTransfer = new PackageInTransfer();
             }
 
             public override string ToString()
             {
-                return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4}, Current Location = {5})",
-                    ID, Model, Battery, WeightCategory.ToString(), Status, CurrentLocation);
+                return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4}, Current Location = {5}, Package = {6})",
+                    ID, model, battery, weightCategory.ToString(), status, currentLocation, packageInTransfer);
             }
         }
     }

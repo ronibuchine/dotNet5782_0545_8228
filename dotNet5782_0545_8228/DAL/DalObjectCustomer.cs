@@ -10,24 +10,35 @@ namespace DalObject
     {
 
         public void AddCustomer() =>
-            AddDalItem(DataSource.customers, DataSource.IdalDoType.Customer);
+            AddDalItem(DataSource.customers, IdalDoType.Customer);
 
-        public List<IDAL.DO.Customer> DisplayAllCustomers() => DisplayAllItems(DataSource.customers);
+        public void AddCustomer(IDAL.DO.Customer customer)
+        {
+            List<IDAL.DO.Customer> list = DataSource.customers;
+            if (list.Count + 1 > list.Capacity)
+            {
+                list.Add(customer);
+            }
+            else
+            {
+                throw new IDAL.DO.DataSourceException();
+            }
+        }
+            
 
-        public List<IDAL.DO.Customer> DisplayCustomer(int choice) => DisplayOneItem(DataSource.customers, choice);
+        public List<IDAL.DO.Customer> GetAllCustomers() => DisplayAllItems(DataSource.customers);
 
-        public void ProvidePackageToCustomer(int choice)
+        public IDAL.DO.Customer GetCustomer(int ID) => DisplayOneItem(DataSource.customers, ID);
+
+        public void ProvidePackageToCustomer(int packageID)
         {
 
-            if (choice < 0 || choice > DataSource.parcels.Count)
+            if (packageID < 0 || packageID > DataSource.parcels.Count)
             {
                 throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
             }
-            for (int i = 0; i < DataSource.drones.Count; i++)
-            {
-                if (DataSource.parcels[choice].DroneId == DataSource.drones[i].ID) DataSource.drones[i].Status = IDAL.DO.DroneStatuses.free;
-            }
-            DataSource.parcels[choice].Delivered = DateTime.Now;
+            
+            DataSource.parcels[packageID].delivered = DateTime.Now;
         }
     }
 }

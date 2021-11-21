@@ -10,6 +10,13 @@ namespace IBL
     {
         public class BaseStationToList
         {
+            public BaseStationToList(DroneStation droneStation)
+            {
+                ID = droneStation.ID;
+                name = droneStation.name;
+                availableChargeSlots = droneStation.chargeSlots - droneStation.chargingDrones.Count;
+                occupiedSlots = droneStation.chargingDrones.Count;
+            }
             public int ID { get; set; }
             public string name { get; set; }
             public int availableChargeSlots { get; set; }

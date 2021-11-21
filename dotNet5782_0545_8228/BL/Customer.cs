@@ -10,9 +10,24 @@ namespace IBL
     {
         public class Customer
         {
+            public Customer(int ID, string name, string phone, Location location)
+            {
+                this.ID = ID;
+                this.name = name;
+                this.phone = phone;
+                this.currentLocation = location;
+            }
+            public Customer(IDAL.DO.Customer customer)
+            {
+                ID = customer.ID;
+                name = customer.Name;
+                phone = customer.Phone;
+                currentLocation.longitude = customer.Longitude;
+                currentLocation.latitude = customer.Latitude;
+            }
             public int ID { get; set; }
             public string name { get; set; }
-            public int phone { get; set; }
+            public string phone { get; set; }
             public Location currentLocation { get; set; }
             public List<Package> packagesFromCustomer { get; set; }
             public List<Package> packagesToCustomer { get; set; }

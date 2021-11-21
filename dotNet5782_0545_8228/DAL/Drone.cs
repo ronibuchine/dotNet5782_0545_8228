@@ -9,7 +9,6 @@ namespace IDAL
         /// </summary>
         public class Drone : IDAL.DO.DalEntity
         {
-            public int ID { get; set; }
             public string Model { get; set; }
             public WeightCategories MaxWeight { get; set; }
             

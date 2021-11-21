@@ -9,16 +9,16 @@ namespace DalObject
     {
         
 
-        const int MIN_DRONES = 5;
-        const int MIN_DRONE_STATIONS = 2;
-        const int MIN_CUSTOMERS = 10;
-        const int MIN_PARCELS = 2;
+        public const int MIN_DRONES = 5;
+        public const int MIN_DRONE_STATIONS = 2;
+        public const int MIN_CUSTOMERS = 10;
+        public const int MIN_PARCELS = 2;
 
-        const int MAX_DRONES = 10;
-        const int MAX_DRONE_STATIONS = 5;
-        const int MAX_CUSTOMERS = 100;
-        const int MAX_PARCELS = 10;
-        const int MAX_DRONE_CHARGES = MAX_DRONES;
+        public const int MAX_DRONES = 10;
+        public const int MAX_DRONE_STATIONS = 5;
+        public const int MAX_CUSTOMERS = 100;
+        public const int MAX_PARCELS = 10;
+        public const int MAX_DRONE_CHARGES = MAX_DRONES;
 
 
         public static List<IDAL.DO.Drone> drones = new List<IDAL.DO.Drone>(MAX_DRONES);
@@ -31,12 +31,12 @@ namespace DalObject
 
         public class Config
         {
-            public static double free;
-            public static double lightWeight;
-            public static double midWeight;
-            public static double heavyWeight;
-            public static double chargingRate; // in % per hour
-            public static int packageCount; 
+            public static double free = 0;
+            public static double lightWeight = 150;
+            public static double midWeight = 100;
+            public static double heavyWeight = 75;
+            public static double chargingRate = 50; // in % per hour
+            public static int packageCount = 0;
         }
 
         public static void Initialize()

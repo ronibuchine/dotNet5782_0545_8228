@@ -6,15 +6,14 @@ namespace IDAL
     {
         public class Parcel : IDAL.DO.DalEntity
         {
-            public int ID { get; set; }
-            public int SenderId { get; set; }
-            public WeightCategories Weight { get; set; }
-            public Priorities Priority { get; set; }
-            public DateTime Requested { get; set; }
-            public int DroneId { get; set; }
-            public DateTime Scheduled { get; set; }
-            public DateTime PickedUp { get; set; }
-            public DateTime Delivered { get; set; }
+            public int senderId { get; set; }
+            public WeightCategories weight { get; set; }
+            public Priorities priority { get; set; }
+            public DateTime requested { get; set; }
+            public int droneId { get; set; }
+            public DateTime scheduled { get; set; }
+            public DateTime pickedUp { get; set; }
+            public DateTime delivered { get; set; }
 
             public Parcel(
                     int ID,
@@ -28,34 +27,34 @@ namespace IDAL
                     DateTime Delivered)
             {
                 this.ID = ID;
-                this.SenderId = SenderId;
-                this.Weight = Weight;
-                this.Priority = Priority;
-                this.Requested = Requested;
-                this.DroneId =  DroneId;
-                this.Scheduled = Scheduled;
-                this.PickedUp = PickedUp;
-                this.Delivered = Delivered;
+                this.senderId = SenderId;
+                this.weight = Weight;
+                this.priority = Priority;
+                this.requested = Requested;
+                this.droneId =  DroneId;
+                this.scheduled = Scheduled;
+                this.pickedUp = PickedUp;
+                this.delivered = Delivered;
             }
 
             public Parcel(int i, Random rand)
             {
                 this.ID = i;
-                this.SenderId = i + 1000;
-                this.Weight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
-                this.Priority = (IDAL.DO.Priorities) rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length - 1);
-                this.Requested = DateTime.Now;
-                this.DroneId = 0;
-                this.Scheduled = DateTime.MinValue;
-                this.PickedUp = DateTime.MinValue;
-                this.Delivered = DateTime.MinValue;
+                this.senderId = i + 1000;
+                this.weight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
+                this.priority = (IDAL.DO.Priorities) rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length - 1);
+                this.requested = DateTime.Now;
+                this.droneId = 0;
+                this.scheduled = DateTime.MinValue;
+                this.pickedUp = DateTime.MinValue;
+                this.delivered = DateTime.MinValue;
             }
 
             public override string ToString()
             {
                 // do DateTimes need a toString()?
                 return String.Format("Parcel(ID = {0}, SenderId = {1}, Weight = {2}, Priority = {3}, Requested = {4}, DroneId = {5}, Scheduled = {6}, PickedUp = {7}, Delivered = {8}",
-                        ID, SenderId, Weight.ToString(), Priority.ToString(), Requested, DroneId, Scheduled, PickedUp, Delivered);
+                        ID, senderId, weight.ToString(), priority.ToString(), requested, droneId, scheduled, pickedUp, delivered);
             }
 
         }

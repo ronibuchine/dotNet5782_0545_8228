@@ -10,49 +10,70 @@ namespace DalObject
     {
 
         public void AddDroneStation() =>
-            AddDalItem(DataSource.droneStations, DataSource.IdalDoType.DroneStation);
+            AddDalItem(DataSource.droneStations, IdalDoType.DroneStation);
+        public void AddDroneStation(IDAL.DO.DroneStation droneStation)
+        {
+            List<IDAL.DO.DroneStation> list = DataSource.droneStations;
+            if (list.Count + 1 > list.Capacity)
+            {
+                list.Add(droneStation);
+            }
+            else
+            {
+                throw new IDAL.DO.DataSourceException();
+            }
+        }
+            
 
-        public List<IDAL.DO.DroneStation> DisplayAllDroneStations() => DisplayAllItems(DataSource.droneStations);
+        public List<IDAL.DO.DroneStation> GetAllDroneStations() => DisplayAllItems(DataSource.droneStations);
 
-        public List<IDAL.DO.DroneStation> DisplayAllUnoccupiedStations() =>
+        public List<IDAL.DO.DroneStation> GetAllUnoccupiedStations() =>
             DisplayAllItems(DataSource.droneStations, (IDAL.DO.DroneStation ds) => ds.ChargeSlots > 0);
 
-        public List<IDAL.DO.DroneStation> DisplayDroneStation(int choice) => DisplayOneItem(DataSource.droneStations, choice);
+        public IDAL.DO.DroneStation GetDroneStation(int ID) => DisplayOneItem(DataSource.droneStations, ID);
 
-        public void SendDroneToCharge(int stationChoice, int droneChoice)
+        public void SendDroneToCharge(int stationID, int droneID)
         {
 
-            if (droneChoice < 0 ||
-                droneChoice > DataSource.drones.Count ||
-                stationChoice < 0 ||
-                stationChoice > DataSource.droneStations.Count)
+            if (droneID < 0 ||
+                droneID > DataSource.drones.Count ||
+                stationID < 0 ||
+                stationID > DataSource.droneStations.Count)
             {
                 throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
             }
-            if (DataSource.drones[droneChoice].Battery != 100 && DataSource.droneStations[stationChoice].ChargeSlots > 0)
+            if (DataSource.droneStations[stationID].ChargeSlots > 0)
             {
-                DataSource.droneCharges.Add(new IDAL.DO.DroneCharge(DataSource.drones[droneChoice].ID, DataSource.droneStations[stationChoice].ID));
-                DataSource.drones[droneChoice].Status = IDAL.DO.DroneStatuses.maintenance;
-                DataSource.droneStations[stationChoice].ChargeSlots--;
+                DataSource.droneCharges.Add(
+                    new IDAL.DO.DroneCharge(DataSource.drones[droneID].ID,
+                    DataSource.droneStations[stationID].ID));
+                
+                DataSource.droneStations[stationID].ChargeSlots--;
             }
         }
 
-        public void ReleaseDroneFromCharge(int stationChoice, int droneChoice)
+        public List<IDAL.DO.DroneCharge> GetAllCharges()
         {
-            if (droneChoice < 0 ||
-               droneChoice > DataSource.drones.Count ||
-               stationChoice < 0 ||
-               stationChoice > DataSource.droneStations.Count)
+            return DataSource.droneCharges;
+        }
+        
+
+        public void ReleaseDroneFromCharge(int stationID, int droneID)
+        {
+            if (droneID < 0 ||
+               droneID > DataSource.drones.Count ||
+               stationID < 0 ||
+               stationID > DataSource.droneStations.Count)
             {
                 throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
             }
             for (int i = 0; i < DataSource.droneCharges.Count; i++)
             {
-                if (DataSource.droneCharges[i].DroneId == DataSource.drones[droneChoice].ID &&
-                         DataSource.droneCharges[i].StationId == DataSource.droneStations[stationChoice].ID)
+                if (DataSource.droneCharges[i].DroneId == DataSource.drones[droneID].ID &&
+                         DataSource.droneCharges[i].StationId == DataSource.droneStations[stationID].ID)
                 {
-                    DataSource.drones[droneChoice].Status = IDAL.DO.DroneStatuses.free;
-                    DataSource.droneStations[stationChoice].ChargeSlots++;
+                    
+                    DataSource.droneStations[stationID].ChargeSlots++;
                 }
             }
         }

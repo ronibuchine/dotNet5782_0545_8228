@@ -37,14 +37,18 @@ namespace DalObject
         /// Displays one item in the list
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
-        /// <param name="choice">The index of which item to display</param>
-        internal List<T> DisplayOneItem<T>(List<T> list, int choice) where T : IDAL.DO.DalEntity
+        /// <param name="ID">The index of which item to display</param>
+        internal T DisplayOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
         {
-            /* if (choice < 0 || choice >= list.Count) */
-            /* { */
-            /*     throw new IDAL.DO.DalObjectAccessException("The requested object does not exist"); */
-            /* } */
-            return new List<T> { list[choice] };
+            T ret = list.Find((t) => {return t.ID == ID;});
+            if (ret != null)
+            {
+                return ret;
+            }
+            else
+            {
+                throw new IDAL.DO.InvalidDalObjectException();
+            }
         }
 
         /// <summary>

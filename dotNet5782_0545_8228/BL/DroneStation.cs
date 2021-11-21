@@ -10,6 +10,21 @@ namespace IBL
     {
         public class DroneStation
         {
+            public DroneStation(int ID, string name, Location location, int chargeSlots)
+            {
+                this.ID = ID;
+                this.name = name;
+                this.location = location;
+                this.chargeSlots = chargeSlots; // available chargeSlots
+                this.chargingDrones = new List<Drone>(chargeSlots);
+            }
+            public DroneStation(IDAL.DO.DroneStation droneStation)
+            {
+                ID = droneStation.ID;
+                name = droneStation.Name;
+                location.longitude = droneStation.Longitude;
+                location.latitude = droneStation.Latitude;
+            }
             public int ID { get; set; }
             public string name { get; set;}
             public Location location { get; set; }
