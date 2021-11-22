@@ -18,7 +18,7 @@ namespace IDAL
             public DroneStation(
                     int ID,
                     string Name,
-                    int ChargeSlots,
+                    int ChargeSlots, // current available charge slots
                     double Longitude,
                     double Latitude)
             {

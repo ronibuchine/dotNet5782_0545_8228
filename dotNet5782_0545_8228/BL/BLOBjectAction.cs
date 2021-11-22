@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace BLOBject
 {
+    /// <summary>
+    /// The Main function which displays the menu to the user in the console interface
+    /// </summary>
+    /// <param name="args">arguments passed to the CLI</param>
     public partial class BLOBject : IBL.IBLInterface
     {
 
@@ -16,18 +20,12 @@ namespace BLOBject
             {
                 throw new IBL.BO.InvalidBlObjectException("Drone is not free currently");
             }
-            /* IBL.BO.DroneStation */
             IBL.BO.DroneStation closestAvailable = GetClosestStation(drone.currentLocation, GetAvailableStations());
             if (!CanArriveToLocation(drone, closestAvailable.location))
             {
                 throw new IBL.BO.InvalidBlObjectException("Drone does not have enough battery to reach closest available station");
             }
             dal.GetDroneStation(closestAvailable.ID).ChargeSlots--;
-
-
-
-
-
         }
         public void ReleaseDroneFromCharge(int droneID, DateTime chargeTime);
         public void AssignPackageToDrone(int droneID);
