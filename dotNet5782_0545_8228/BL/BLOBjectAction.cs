@@ -12,7 +12,6 @@ namespace BLOBject
     /// <param name="args">arguments passed to the CLI</param>
     public partial class BLOBject : IBL.IBLInterface
     {
-
         public void SendDroneToCharge(int droneID)
         {
             IBL.BO.Drone drone = GetDrone(droneID);
@@ -25,9 +24,15 @@ namespace BLOBject
             {
                 throw new IBL.BO.InvalidBlObjectException("Drone does not have enough battery to reach closest available station");
             }
-            dal.GetDroneStation(closestAvailable.ID).ChargeSlots--;
+            drone.status = IBL.BO.DroneStatuses.maintenance;
+            dal.SendDroneToCharge(closestAvailable.ID, droneID);
         }
-        public void ReleaseDroneFromCharge(int droneID, DateTime chargeTime);
+
+        public void ReleaseDroneFromCharge(int droneID, DateTime chargeTime)
+        {
+            IBL.BO.Drone drone = GetDrone(droneID);
+
+        }
         public void AssignPackageToDrone(int droneID);
         public void CollectPackage(int droneID);
         public void DeliverPackage(int droneID);
