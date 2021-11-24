@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using IBL.BO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLOBject
 {
@@ -93,7 +90,8 @@ namespace BLOBject
         }
         public List<DroneStation> GetAvailableStations()
         {
-            return dal.GetAllDroneStations().FindAll((s) => GetCountChargingDrones(s.ID) < s.ChargeSlots)
+            return dal.GetAllDroneStations().FindAll(
+                    (s) => GetCountChargingDrones(s.ID) < s.ChargeSlots)
                 .ConvertAll((s) => new DroneStation(s));
         }
     }

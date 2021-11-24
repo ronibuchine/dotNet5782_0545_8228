@@ -44,9 +44,16 @@ namespace BLOBject
         public void AssignPackageToDrone(int droneID)
         {
             IBL.BO.Drone drone = GetDrone(droneID);
+            throw new NotImplementedException();
         }
-        public void CollectPackage(int droneID);
-        public void DeliverPackage(int droneID);
+        public void CollectPackage(int droneID)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeliverPackage(int droneID)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

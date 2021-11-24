@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using IBL.BO;
 
 namespace BLOBject
@@ -24,6 +23,7 @@ namespace BLOBject
             return null;
             
         }
+
         public Drone AddDrone(int ID, string model, WeightCategories maxWeight, int stationID)
         {
             try
@@ -51,6 +51,7 @@ namespace BLOBject
             
 
         }
+
         public Customer AddCustomer(int customerID, string name, string phone, Location location)
         {
             try 
@@ -65,6 +66,7 @@ namespace BLOBject
             catch (Exception e) {throw new InvalidBlObjectException(e.Message);}
             return null;
         }
+
         public Package AddPackage(int packageID, int senderID, int receiverID, WeightCategories weight, Priorities priority)
         {
             try 

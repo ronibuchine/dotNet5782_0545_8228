@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DalObject;
 using IDAL;
 using IBL.BO;
 using static UTIL.Distances;

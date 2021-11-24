@@ -1,5 +1,4 @@
 using System;
-using IDAL;
 
 namespace IBL
 {

@@ -10,7 +10,7 @@ namespace IBL
         public DroneStation AddBaseStation(int stationID, string name, Location location, int availableChargers);
         public Drone AddDrone(int ID, string model, WeightCategories maxWeight, int stationID);
         public Customer AddCustomer(int customerID, string name, string phone, Location location);
-        public Package AddPackage(int senderID, int receiverID, WeightCategories weight, Priorities priority);
+        public Package AddPackage(int packageID, int senderID, int receiverID, WeightCategories weight, Priorities priority);
 
         // Update methods
         public void UpdateDrone(int ID, string newModel);
@@ -35,7 +35,7 @@ namespace IBL
         public Drone GetDrone(int ID);
         public Customer GetCustomer(int ID);
         public Package GetPackage(int ID);
-        public List<DroneStation> GetStationList();
+        public List<BaseStationToList> GetStationList();
         public List<DroneToList> GetDroneList();
         public List<CustomerToList> GetCustomerList();
         public List<PackageToList> GetPackageList();
