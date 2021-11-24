@@ -17,9 +17,9 @@ namespace IBL
             public Customer(IDAL.DO.Customer customer)
             {
                 ID = customer.ID;
-                name = customer.Name;
-                phone = customer.Phone;
-                currentLocation = new Location(customer.Longitude, customer.Latitude);
+                name = customer.name;
+                phone = customer.phone;
+                currentLocation = new Location(customer.longitude, customer.latitude);
                 packagesFromCustomer = new();
                 packagesToCustomer = new();
             }

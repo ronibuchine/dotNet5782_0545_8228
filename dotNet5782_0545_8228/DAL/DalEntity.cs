@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IDAL
+﻿namespace IDAL
 {
     namespace DO
     {
-        public class DalEntity 
+        public abstract class DalEntity
         {
+            protected static int nextID = 1;
             public int ID { get; set; }
+
+            protected DalEntity()
+            {
+                this.ID = nextID++;
+            }
+
+            public abstract object Clone();
         }
-        
+
     }
 }

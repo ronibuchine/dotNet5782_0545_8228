@@ -93,10 +93,10 @@ namespace ConsoleUI
         {
             DisplayMenuNoOutput(new string[] { "Add Base Station", "Add Drone", "Add Customer", "Add Package", "Cancel" },
                     new Action[]{
-                        () => data.AddDroneStation(),
+                        () => data.AddStation(),
                         () => data.AddDrone(),
                         () => data.AddCustomer(),
-                        () => data.AddParcel(),
+                        () => data.AddPackage(),
                         () => {}
                     });
         }
@@ -147,7 +147,7 @@ namespace ConsoleUI
             // TODO: add the rest of the things
             DisplayMenuWithOutput(new string[] { "Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Display all packages not assigned to a drone", "Display all base stations with unoccupied charging stations", "Cancel" },
                     new Func<List<DalEntity>>[]{
-                        () => data.GetAllDroneStations().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllStations().ConvertAll(d => (DalEntity)d),
                         () => data.GetAllDrones().ConvertAll(d => (DalEntity)d),
                         () => data.GetAllCustomers().ConvertAll(d => (DalEntity)d),
                         () => data.GetAllParcels().ConvertAll(d => (DalEntity)d),

@@ -12,7 +12,7 @@ namespace BLOBject
             try
             {
                 CheckStationID(ID);
-                DroneStation droneStation = new DroneStation(dal.GetDroneStation(ID));
+                DroneStation droneStation = new DroneStation(dal.GetStation(ID));
                 if (droneStation != null) return droneStation;
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
             }
@@ -70,7 +70,7 @@ namespace BLOBject
         }
         public List<BaseStationToList> GetStationList()
         {
-            return dal.GetAllDroneStations().ConvertAll<BaseStationToList>((ds) => new BaseStationToList(new DroneStation(ds)));
+            return dal.GetAllStations().ConvertAll<BaseStationToList>((ds) => new BaseStationToList(new DroneStation(ds)));
         }
         public List<DroneToList> GetDroneList()
         {
@@ -86,8 +86,8 @@ namespace BLOBject
         }
         public List<PackageToList> GetUnassignedPackages()
         {
-            List<PackageToList> unassignedPackages = new List<PackageToList>(DalObject.DataSource.parcels.Count);
-            foreach (IDAL.DO.Parcel package in DalObject.DataSource.parcels)
+            List<PackageToList> unassignedPackages = new List<PackageToList>(DalObject.DataSource.packages.Count);
+            foreach (IDAL.DO.Package package in DalObject.DataSource.packages)
             {
                 if (package.droneId == 0) unassignedPackages.Add(new PackageToList(new Package(package)));
             }
@@ -95,8 +95,8 @@ namespace BLOBject
         }
         public List<DroneStation> GetAvailableStations()
         {
-            return dal.GetAllDroneStations().FindAll(
-                    (s) => GetCountChargingDrones(s.ID) < s.ChargeSlots)
+            return dal.GetAllStations().FindAll(
+                    (s) => GetCountChargingDrones(s.ID) < s.chargeSlots)
                 .ConvertAll((s) => new DroneStation(s));
         }
     }

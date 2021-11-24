@@ -24,7 +24,7 @@ namespace BLOBject
         {
             try
             {
-                dal.GetDroneStation(stationID).Name = stationName;
+                dal.GetStation(stationID).name = stationName;
             }
             catch (IDAL.DO.InvalidDalObjectException e)
             {
@@ -40,7 +40,7 @@ namespace BLOBject
             }
             try
             {
-                dal.GetDroneStation(stationID).ChargeSlots = numChargers;
+                dal.GetStation(stationID).chargeSlots = numChargers;
             }
             catch (IDAL.DO.InvalidDalObjectException e)
             {
@@ -56,7 +56,7 @@ namespace BLOBject
         {
             try
             {
-                dal.GetCustomer(ID).Name = name;
+                dal.GetCustomer(ID).name = name;
             }
             catch (IDAL.DO.InvalidDalObjectException e)
             {
@@ -68,7 +68,7 @@ namespace BLOBject
             try
             {
                 // TODO validate phone number
-                dal.GetCustomer(ID).Phone = phone;
+                dal.GetCustomer(ID).phone = phone;
             }
             catch (IDAL.DO.InvalidDalObjectException e)
             {

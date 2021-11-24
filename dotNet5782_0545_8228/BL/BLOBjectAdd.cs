@@ -12,7 +12,7 @@ namespace BLOBject
                 if (CheckStationID(stationID))
                 {
                     DroneStation station = new(stationID, name, location, availableChargers);
-                    dal.AddDroneStation(new IDAL.DO.DroneStation(stationID, name, availableChargers,  location.longitude, location.latitude));
+                    dal.AddStation(new IDAL.DO.Station(stationID, name, availableChargers,  location.longitude, location.latitude));
                     return station;
                 }
             }
@@ -33,11 +33,11 @@ namespace BLOBject
                     Drone drone = new Drone(ID, model, maxWeight);
                     drone.status = DroneStatuses.maintenance;
                     drone.battery = new Random().NextDouble() * 20 + 20;
-                    foreach (IDAL.DO.DroneStation station in dal.GetAllDroneStations())
+                    foreach (IDAL.DO.Station station in dal.GetAllStations())
                     {
-                        if (station.ChargeSlots != 0) 
+                        if (station.chargeSlots != 0) 
                         {
-                            drone.currentLocation = new Location(station.Longitude, station.Latitude);
+                            drone.currentLocation = new Location(station.longitude, station.latitude);
                             // break; ?
                         }
                         

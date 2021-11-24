@@ -5,34 +5,23 @@ namespace DalObject
     public partial class DalObject : IDAL.IdalInterface
     {
 
-        public void AddDroneStation() =>
-            AddDalItem(DataSource.droneStations, IdalDoType.DroneStation);
+        public void AddStation() =>
+            AddDalItem(DataSource.stations, IdalDoType.STATION);
 
-        public void AddDroneStation(IDAL.DO.DroneStation droneStation)
-        {
-            List<IDAL.DO.DroneStation> list = DataSource.droneStations;
-            if (list.Count + 1 > list.Capacity)
-            {
-                list.Add(droneStation);
-            }
-            else
-            {
-                throw new IDAL.DO.DataSourceException();
-            }
-        }
-            
+        public void AddStation(IDAL.DO.Station station) =>
+            AddDalItem(DataSource.stations, station, IdalDoType.STATION);
 
-        public List<IDAL.DO.DroneStation> GetAllDroneStations() => DisplayAllItems(DataSource.droneStations);
+        public List<IDAL.DO.Station> GetAllStations() => GetAllItems(DataSource.stations);
 
-        public List<IDAL.DO.DroneStation> GetAllUnoccupiedStations() =>
-            DisplayAllItems(DataSource.droneStations, (IDAL.DO.DroneStation ds) => ds.ChargeSlots > 0);
+        public List<IDAL.DO.Station> GetAllUnoccupiedStations() =>
+            GetAllItems(DataSource.stations, (IDAL.DO.Station ds) => ds.chargeSlots > 0);
 
-        public IDAL.DO.DroneStation GetDroneStation(int ID) => DisplayOneItem(DataSource.droneStations, ID);
+        public IDAL.DO.Station GetStation(int ID) => GetOneItem(DataSource.stations, ID);
 
         public void SendDroneToCharge(int stationID, int droneID)
         {
             DataSource.droneCharges.Add(new IDAL.DO.DroneCharge(droneID, stationID));
-            GetDroneStation(stationID).ChargeSlots--;
+            GetStation(stationID).chargeSlots--;
         }
 
         public List<IDAL.DO.DroneCharge> GetAllCharges()
@@ -43,7 +32,7 @@ namespace DalObject
         public void ReleaseDroneFromCharge(int stationID, int droneID)
         {
             DataSource.droneCharges.Remove(DataSource.droneCharges.Find((dc) => {return dc.DroneId == droneID;}));
-            GetDroneStation(stationID).ChargeSlots++;
+            GetStation(stationID).chargeSlots++;
         }
     }
 }

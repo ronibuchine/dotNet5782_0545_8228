@@ -15,11 +15,11 @@ namespace IBL
                 this.chargeSlots = chargeSlots; // available chargeSlots
                 this.chargingDrones = new List<Drone>(chargeSlots);
             }
-            public DroneStation(IDAL.DO.DroneStation droneStation)
+            public DroneStation(IDAL.DO.Station droneStation)
             {
                 ID = droneStation.ID;
-                name = droneStation.Name;
-                location = new Location(droneStation.Longitude, droneStation.Latitude);
+                name = droneStation.name;
+                location = new Location(droneStation.longitude, droneStation.latitude);
             }
             public int ID { get; set; }
             public string name { get; set;}

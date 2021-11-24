@@ -13,7 +13,7 @@ namespace IBL
                 this.priority = priority;
                 this.drone = null;
                 
-                foreach (IDAL.DO.Customer customer in DalObject.DataSource.customers)
+                foreach (IDAL.DO.Customer customer in DalObject.DalObject.GetAllCustomers())
                 {
                     if (customer.ID == senderID) 
                         this.sender = new Customer(customer);
@@ -21,7 +21,7 @@ namespace IBL
                         this.receiver = new Customer(customer);
                 }
             }
-            public Package(IDAL.DO.Parcel parcel)
+            public Package(IDAL.DO.Package parcel)
             {
                 ID = parcel.ID;
                 weightCategory = (IBL.BO.WeightCategories)parcel.weight;
