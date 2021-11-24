@@ -1,5 +1,4 @@
 using System;
-using DalObject;
 using System.Diagnostics;
 using System.Collections.Generic;
 using IDAL.DO;
@@ -17,7 +16,6 @@ namespace ConsoleUI
         /// <param name="args">arguments passed to the CLI</param>
         static void Main(string[] args)
         {
-
             IDAL.IdalInterface data = new DalObject.DalObject();
             bool running = true;
             while (running)

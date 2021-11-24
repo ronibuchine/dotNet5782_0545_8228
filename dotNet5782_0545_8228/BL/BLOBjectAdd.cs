@@ -6,8 +6,6 @@ namespace BLOBject
 {
     public partial class BLOBject : IBL.IBLInterface
     {
-        
-
         public DroneStation AddBaseStation(int stationID, string name, Location location, int availableChargers)
         {
             try

@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{A2EB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUI_BL", "ConsoleUI_BL\ConsoleUI_BL.csproj", "{85516E19-4019-47F3-8DF5-F2B7D2DA79BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL_UnitTests", "BL_UnitTests\BL_UnitTests.csproj", "{09EE9A70-B984-4F73-9438-6B15A41E50D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{85516E19-4019-47F3-8DF5-F2B7D2DA79BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85516E19-4019-47F3-8DF5-F2B7D2DA79BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85516E19-4019-47F3-8DF5-F2B7D2DA79BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09EE9A70-B984-4F73-9438-6B15A41E50D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09EE9A70-B984-4F73-9438-6B15A41E50D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09EE9A70-B984-4F73-9438-6B15A41E50D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09EE9A70-B984-4F73-9438-6B15A41E50D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
