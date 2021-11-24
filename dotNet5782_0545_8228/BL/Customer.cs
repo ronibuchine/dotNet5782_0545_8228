@@ -19,8 +19,9 @@ namespace IBL
                 ID = customer.ID;
                 name = customer.Name;
                 phone = customer.Phone;
-                currentLocation.longitude = customer.Longitude;
-                currentLocation.latitude = customer.Latitude;
+                currentLocation = new Location(customer.Longitude, customer.Latitude);
+                packagesFromCustomer = new();
+                packagesToCustomer = new();
             }
             public int ID { get; set; }
             public string name { get; set; }

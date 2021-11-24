@@ -9,15 +9,15 @@ namespace DalObject
     {
         
 
-        public const int MIN_DRONES = 5;
+        public const int MIN_DRONES = 2;
         public const int MIN_DRONE_STATIONS = 2;
-        public const int MIN_CUSTOMERS = 10;
+        public const int MIN_CUSTOMERS = 2;
         public const int MIN_PARCELS = 2;
 
-        public const int MAX_DRONES = 10;
+        public const int MAX_DRONES = 5;
         public const int MAX_DRONE_STATIONS = 5;
-        public const int MAX_CUSTOMERS = 100;
-        public const int MAX_PARCELS = 10;
+        public const int MAX_CUSTOMERS = 5;
+        public const int MAX_PARCELS = 5;
         public const int MAX_DRONE_CHARGES = MAX_DRONES;
 
 

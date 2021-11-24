@@ -15,8 +15,10 @@ namespace IBL
                 
                 foreach (IDAL.DO.Customer customer in DalObject.DataSource.customers)
                 {
-                    if (customer.ID == senderID) this.sender = new Customer(customer);
-                    if (customer.ID == receiverID) this.receiver = new Customer(customer);
+                    if (customer.ID == senderID) 
+                        this.sender = new Customer(customer);
+                    if (customer.ID == receiverID) 
+                        this.receiver = new Customer(customer);
                 }
             }
             public Package(IDAL.DO.Parcel parcel)
@@ -33,12 +35,14 @@ namespace IBL
                 
                 foreach (IDAL.DO.Drone drone in DalObject.DataSource.drones)
                 {
-                    if (drone.ID == parcel.ID) this.drone = new IBL.BO.Drone(drone);
+                    if (drone.ID == parcel.droneId) 
+                        this.drone = new IBL.BO.Drone(drone);
                 }
 
                 foreach (IDAL.DO.Customer customer in DalObject.DataSource.customers)
                 {
-                    if (customer.ID == parcel.senderId) this.sender = new IBL.BO.Customer(customer);
+                    if (customer.ID == parcel.senderId)
+                        this.sender = new IBL.BO.Customer(customer);
                 }
             }
             

@@ -77,76 +77,84 @@ namespace BLOBject
         public BLOBject()
         {
             this.dal = new DalObject.DalObject();
-
             this.free = DalObject.DataSource.Config.free;
             this.lightWeight = DalObject.DataSource.Config.lightWeight;
             this.midWeight = DalObject.DataSource.Config.midWeight;
             this.heavyWeight = DalObject.DataSource.Config.heavyWeight;
             this.chargingRate = DalObject.DataSource.Config.chargingRate;
 
-            drones = dal.GetAllDrones().ConvertAll((d) =>
+            drones = dal.GetAllDrones().ConvertAll(d => new Drone(d));
+            List<Package> packages = dal.GetAllParcels().ConvertAll(p => new Package(p));
+            List<Customer> customers = dal.GetAllCustomers().ConvertAll(c => new Customer(c));
+            // set customers send list. How to do recieve list?
+            customers.ForEach((c) =>
             {
-                return new Drone(d);
+                foreach (Package package in packages)
+                {
+                    if (package.sender.ID == c.ID)
+                        c.packagesToCustomer.Add(package);
+                }
             });
+            List<DroneStation> stations = dal.GetAllDroneStations().ConvertAll(ds => new DroneStation(ds));
 
-            List<Customer> customers = dal.GetAllCustomers().ConvertAll((c) =>
-            {
-                return new Customer(c);
-            });
-
-            List<DroneStation> stations = dal.GetAllDroneStations().ConvertAll((ds) =>
-            {
-                return new DroneStation(ds);
-            });
             Random rand = new Random();
-            foreach (IDAL.DO.Parcel package in dal.GetAllParcels())
+            foreach (Drone drone in drones)
             {
-                Drone thisDrone = drones.Find((d) => { return d.ID == package.droneId; });
-                Customer sender = customers.Find((c) => { return c.ID == package.senderId; });
-
-                // in delivery
-                if (thisDrone != null)
+                Package package = packages.Find(p => p.drone != null && p.drone.ID == drone.ID);
+                if (package != null)
                 {
-                    thisDrone.status = DroneStatuses.delivery;
-                    Location closestStationLoc = GetClosestStationLocation(sender.currentLocation, stations);
-                    double minRequired = GetDistance(closestStationLoc, sender.currentLocation) * GetConsumptionRate(thisDrone.weightCategory);
-                    thisDrone.battery = rand.NextDouble() * (100 - minRequired);
-                    // not collected
-                    if (DateTime.Compare(package.pickedUp, DateTime.Now) > 0)
+                    drone.packageInTransfer = new PackageInTransfer(package);
+                    if (DateTime.Compare(package.deliveryTime, DateTime.Now) < 0 && package.drone.ID == drone.ID)
                     {
-                        thisDrone.currentLocation = closestStationLoc;
-                    }
-                    else // collected
-                    {
-                        thisDrone.currentLocation = sender.currentLocation;
+                        drone.status = DroneStatuses.delivery;
+                        Location closestStationLoc = GetClosestStationLocation(package.sender.currentLocation, stations);
+                        double minRequired = GetDistance(closestStationLoc, package.sender.currentLocation) * GetConsumptionRate(drone.weightCategory);
+                        drone.battery = rand.NextDouble() * (100 - minRequired);
+                        if (DateTime.Compare(package.pickedUpTime, DateTime.Now) < 0) // not collected
+                            drone.currentLocation = closestStationLoc;
+                        else //collected
+                            drone.currentLocation = package.sender.currentLocation;
+                        break;
                     }
                 }
-                else thisDrone.status = (DroneStatuses)rand.Next(Enum.GetNames(typeof(DroneStatuses)).Length - 1);
+                else // drone has no associated package
+                {
+                    int randChoice = rand.Next(2);
+                    if (randChoice == 0) // free
+                    {
+                        drone.status = DroneStatuses.free;
+                        drone.currentLocation = stations[rand.Next(stations.Count)].location;
+                        drone.battery = rand.NextDouble() * 20;
 
-                if (thisDrone.status == DroneStatuses.free)
-                {
-                    List<Customer> customersThatRecievedPackaged =
-                        customers.FindAll((c) => { return c.packagesToCustomer.Count != 0; });
-                    thisDrone.currentLocation = customersThatRecievedPackaged[rand.Next(customersThatRecievedPackaged.Count)].currentLocation;
-                    Location closestStationLoc = GetClosestStationLocation(thisDrone.currentLocation, stations);
-                    double minRequired = GetDistance(closestStationLoc, thisDrone.currentLocation) * GetConsumptionRate(thisDrone.weightCategory);
-                    thisDrone.battery = rand.NextDouble() * (100 - minRequired);
-                }
-                else if (thisDrone.status == DroneStatuses.maintenance)
-                {
-                    thisDrone.currentLocation = stations[rand.Next(stations.Count)].location;
-                    thisDrone.battery = rand.NextDouble() * (20);
+                    }
+                    else // maintenance
+                    {
+                        drone.status = DroneStatuses.maintenance;
+                        List<Customer> recievingCustomers = customers.FindAll(c => c.packagesToCustomer.Count != 0);
+                        Customer customer = recievingCustomers[rand.Next(recievingCustomers.Count)];
+                        drone.currentLocation = customer.currentLocation;
+                        Location closestStationLoc = GetClosestStationLocation(customer.currentLocation, stations);
+                        double minRequired = GetDistance(closestStationLoc, customer.currentLocation) * GetConsumptionRate(drone.weightCategory);
+                        drone.battery = rand.NextDouble() * (100 - minRequired);
+
+                    }
                 }
             }
-
         }
 
-        private Boolean CheckDroneID(int ID)
+        private Boolean IsValidID(int ID)
         {
-            if (ID < 0) throw new InvalidIDException("ERROR: ID cannot be negative");
+            if (ID < 0) // other conditions here?
+                return false;
+            else
+                return true;
+        }
+        private Boolean IsUniqueDroneID(int ID)
+        {
             foreach (IDAL.DO.Drone drone in dal.GetAllDrones())
             {
-                if (drone.ID == ID) throw new InvalidIDException("ERROR: This entity already exists.");
+                if (drone.ID == ID) 
+                    return false;
             }
             return true;
         }

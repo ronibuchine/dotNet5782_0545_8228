@@ -19,8 +19,7 @@ namespace IBL
             {
                 ID = droneStation.ID;
                 name = droneStation.Name;
-                location.longitude = droneStation.Longitude;
-                location.latitude = droneStation.Latitude;
+                location = new Location(droneStation.Longitude, droneStation.Latitude);
             }
             public int ID { get; set; }
             public string name { get; set;}

@@ -28,7 +28,7 @@ namespace BLOBject
         {
             try
             {
-                if (CheckDroneID(ID))
+                if (IsValidID(ID))
                 {
                     Drone drone = new Drone(ID, model, maxWeight);
                     drone.status = DroneStatuses.maintenance;
@@ -37,8 +37,8 @@ namespace BLOBject
                     {
                         if (station.ChargeSlots != 0) 
                         {
-                            drone.currentLocation.longitude = station.Longitude;
-                            drone.currentLocation.latitude = station.Latitude;
+                            drone.currentLocation = new Location(station.Longitude, station.Latitude);
+                            // break; ?
                         }
                         
                     }
@@ -48,8 +48,6 @@ namespace BLOBject
             }
             catch (Exception e) {throw new InvalidBlObjectException(e.Message);}
             return null;
-            
-
         }
 
         public Customer AddCustomer(int customerID, string name, string phone, Location location)

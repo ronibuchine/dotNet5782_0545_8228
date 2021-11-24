@@ -23,12 +23,17 @@ namespace BLOBject
         }
         public Drone GetDrone(int ID)
         {
+            dal.GetDrone(ID);
             try
             {
-                CheckDroneID(ID);
-                Drone drone = drones.Find((d) => {return d.ID == ID;});
-                if (drone != null) return drone;
-                throw new InvalidBlObjectException("ERROR: This entity does not exist.");
+                if (IsValidID(ID) && IsUniqueDroneID(ID))
+                {
+                    Drone drone = drones.Find((d) => {return d.ID == ID;});
+                    if (drone != null)
+                        return drone;
+                    else
+                        throw new InvalidBlObjectException("ERROR: This entity does not exist.");
+                }
             }
             catch (InvalidIDException e) { throw e; }
             catch (InvalidBlObjectException i) { throw i; }

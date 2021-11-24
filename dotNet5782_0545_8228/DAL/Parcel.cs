@@ -40,9 +40,9 @@ namespace IDAL
             public Parcel(int i, Random rand)
             {
                 this.ID = i;
-                this.senderId = i + 1000;
-                this.weight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
-                this.priority = (IDAL.DO.Priorities) rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length - 1);
+                this.senderId = i;
+                this.weight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length);
+                this.priority = (IDAL.DO.Priorities) rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length);
                 this.requested = DateTime.Now;
                 this.droneId = 0;
                 this.scheduled = DateTime.MinValue;
