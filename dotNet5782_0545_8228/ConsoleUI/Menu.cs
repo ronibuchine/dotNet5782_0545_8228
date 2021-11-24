@@ -131,14 +131,15 @@ namespace ConsoleUI
 
         static void DisplayOneMenu(IDAL.IdalInterface data)
         {
-            DisplayMenuWithOutput(new string[] { "Display a base station", "Display a drone", "Display a Customer", "Display a package", "Cancel" },
-                    new Func<List<DalEntity>>[]{
-                        () => data.GetDroneStation(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => data.GetDrone(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => data.GetCustomer(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => data.GetParcel(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => new List<DalEntity>()
-                    });
+            //DisplayMenuWithOutput(new string[] { "Display a base station", "Display a drone", "Display a Customer", "Display a package", "Cancel" },
+            //        new Func<List<DalEntity>>[]{
+            //            () => data.GetDroneStation(GetChoice()).ConvertAll(d => (DalEntity)d),
+            //            () => data.GetDrone(GetChoice()).ConvertAll(d => (DalEntity)d),
+            //            () => data.GetCustomer(GetChoice()).ConvertAll(d => (DalEntity)d),
+            //            () => data.GetParcel(GetChoice()).ConvertAll(d => (DalEntity)d),
+            //            () => new List<DalEntity>()
+            //        });
+            throw new Exception();
         }
 
         static void DisplayAllMenu(IDAL.IdalInterface data)
