@@ -9,31 +9,32 @@ namespace IDAL
         /// </summary>
         public class Drone : IDAL.DO.DalEntity
         {
-            public string Model { get; set; }
-            public WeightCategories MaxWeight { get; set; }
+            private static int nextID = 0;
+            public string model { get; set; }
+            public WeightCategories maxWeight { get; set; }
             
 
             public Drone(
                     int ID,
-                    string Model,
-                    WeightCategories MaxWeight)
+                    string model,
+                    WeightCategories maxWeight)
             {
                 this.ID = ID;
-                this.Model = Model;
-                this.MaxWeight = MaxWeight;
+                this.model = model;
+                this.maxWeight = maxWeight;
             }
 
-            public Drone(int i, Random rand)
+            public Drone(string model, WeightCategories maxWeight)
             {
-                this.ID = i + 1;
-                this.Model = "Drone_" + (i + 1).ToString();
-                this.MaxWeight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
+                this.ID = nextID++;
+                this.model = model;
+                this.maxWeight = maxWeight;
             }
 
             public override string ToString()
             {
                 return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4})",
-                        ID, Model, MaxWeight.ToString());
+                        ID, model, maxWeight.ToString());
             }
 
         }
