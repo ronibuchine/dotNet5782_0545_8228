@@ -9,7 +9,7 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            BLOBject.BLOBject bl = new();
+            BLOBjectNamespace.BLOBject bl = new();
             bool running = true;
             //while (running)
             //{
@@ -83,7 +83,7 @@ namespace ConsoleUI_BL
         //    }
         //}
 
-        static void DisplayAddMenu(BLOBject.BLOBject bl)
+        static void DisplayAddMenu(BLOBjectNamespace.BLOBject bl)
         {
             //DisplayMenuNoOutput(new string[] { "Add Base Station", "Add Drone", "Add Customer", "Add Package", "Cancel" },
             //        new Action[]{

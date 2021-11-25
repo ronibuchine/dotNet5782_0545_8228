@@ -1,7 +1,7 @@
 ﻿using System;
 using IBL.BO;
 
-namespace BLOBject
+namespace BLOBjectNamespace
 {
     public partial class BLOBject : IBL.IBLInterface
     {

@@ -7,7 +7,7 @@ using static UTIL.Distances;
 
 
 
-namespace BLOBject
+namespace BLOBjectNamespace
 {
     public partial class BLOBject : IBL.IBLInterface
     {

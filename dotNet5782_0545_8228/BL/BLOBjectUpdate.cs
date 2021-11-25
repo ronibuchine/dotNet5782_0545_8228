@@ -1,6 +1,6 @@
 using System;
 
-namespace BLOBject
+namespace BLOBjectNamespace
 {
     public partial class BLOBject : IBL.IBLInterface
     {
