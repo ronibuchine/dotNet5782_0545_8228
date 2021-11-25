@@ -73,9 +73,9 @@ namespace BLOBject
                 {
                     if (senderID != receiverID) throw new InvalidIDException("ERROR: Sender ID cannot be the same as the receiver ID");
                     Package package = new Package(0, senderID, receiverID, weight, priority); // what should ID for package be here?
-                    package.deliveryTime = package.scheduledTime = package.pickedUpTime = DateTime.MinValue;
-                    package.requestedTime = DateTime.Now;
-                    dal.AddParcel(new IDAL.DO.Parcel(0, senderID, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)priority, package.requestedTime, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue));
+                    package.delivered = package.scheduled = package.pickedUp = DateTime.MinValue;
+                    package.requested = DateTime.Now;
+                    dal.AddParcel(new IDAL.DO.Parcel(0, senderID, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)priority, package.requested, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue));
                     return package;
                 }
             }

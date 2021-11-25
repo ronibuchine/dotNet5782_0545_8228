@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using IDAL;
+using DalObject;
 using IBL.BO;
 using static UTIL.Distances;
 
@@ -76,23 +77,33 @@ namespace BLOBject
 
         public BLOBject()
         {
-            this.dal = new DalObject.DalObject();
-            this.free = DalObject.DataSource.Config.free;
-            this.lightWeight = DalObject.DataSource.Config.lightWeight;
-            this.midWeight = DalObject.DataSource.Config.midWeight;
-            this.heavyWeight = DalObject.DataSource.Config.heavyWeight;
-            this.chargingRate = DalObject.DataSource.Config.chargingRate;
+            this.dal = DalObject.DalObject.GetInstance();
+            double[] powerConsumption = dal.PowerConsumptionRequest();
+            this.free = powerConsumption[0];
+            this.lightWeight = powerConsumption[1];
+            this.midWeight = powerConsumption[2];
+            this.heavyWeight = powerConsumption[3];
+            this.chargingRate = powerConsumption[4];
 
             drones = dal.GetAllDrones().ConvertAll(d => new Drone(d));
-            List<Package> packages = dal.GetAllParcels().ConvertAll(p => new Package(p));
+            List<IDAL.DO.Package> dalPackages = dal.GetAllPackages();
+            List<Package> packages = dalPackages.ConvertAll(p => new Package(p));
             List<Customer> customers = dal.GetAllCustomers().ConvertAll(c => new Customer(c));
-            // set customers send list. How to do recieve list?
+            drones.ForEach(drone => {
+                for (int i = 0; i < packages.Count; i++)
+                {
+                    if (drone.ID == dalPackages[i].droneId)
+                        packages[i].drone = drone;
+                }
+            });
             customers.ForEach((c) =>
             {
-                foreach (Package package in packages)
+                for (int i = 0; i < packages.Count; i++)
                 {
-                    if (package.sender.ID == c.ID)
-                        c.packagesToCustomer.Add(package);
+                    if (dalPackages[i].senderId == c.ID)
+                        c.packagesToCustomer.Add(packages[i]);
+                    if (dalPackages[i].recieverId == c.ID)
+                        c.packagesToCustomer.Add(packages[i]);
                 }
             });
             List<DroneStation> stations = dal.GetAllStations().ConvertAll(ds => new DroneStation(ds));
@@ -104,13 +115,13 @@ namespace BLOBject
                 if (package != null)
                 {
                     drone.packageInTransfer = new PackageInTransfer(package);
-                    if (DateTime.Compare(package.deliveryTime, DateTime.Now) < 0 && package.drone.ID == drone.ID)
+                    if (DateTime.Compare(package.delivered, DateTime.Now) < 0 && package.drone.ID == drone.ID)
                     {
                         drone.status = DroneStatuses.delivery;
                         Location closestStationLoc = GetClosestStationLocation(package.sender.currentLocation, stations);
                         double minRequired = GetDistance(closestStationLoc, package.sender.currentLocation) * GetConsumptionRate(drone.weightCategory);
                         drone.battery = rand.NextDouble() * (100 - minRequired);
-                        if (DateTime.Compare(package.pickedUpTime, DateTime.Now) < 0) // not collected
+                        if (DateTime.Compare(package.pickedUp, DateTime.Now) > 0) // not collected
                             drone.currentLocation = closestStationLoc;
                         else //collected
                             drone.currentLocation = package.sender.currentLocation;
@@ -153,7 +164,7 @@ namespace BLOBject
         {
             foreach (IDAL.DO.Drone drone in dal.GetAllDrones())
             {
-                if (drone.ID == ID) 
+                if (drone.ID == ID)
                     return false;
             }
             return true;

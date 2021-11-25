@@ -15,8 +15,8 @@ namespace IBL
             public Drone(IDAL.DO.Drone drone)
             {
                 ID = drone.ID;
-                model = drone.Model;
-                weightCategory = (IBL.BO.WeightCategories)drone.MaxWeight;
+                model = drone.model;
+                weightCategory = (IBL.BO.WeightCategories)drone.maxWeight;
             }
             public int ID { get; set; }
             public double battery { get; set; }

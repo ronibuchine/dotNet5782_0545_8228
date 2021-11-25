@@ -8,20 +8,20 @@ namespace IDAL
         {
             public int senderId { get; set; }
             public int recieverId { get; set; }
+            public int droneId { get; set; }
             public WeightCategories weight { get; set; }
             public Priorities priority { get; set; }
-            public int? droneId { get; set; }
             public DateTime requested { get; set; }
-            public DateTime? scheduled { get; set; }
-            public DateTime? pickedUp { get; set; }
-            public DateTime? delivered { get; set; }
+            public DateTime scheduled { get; set; }
+            public DateTime pickedUp { get; set; }
+            public DateTime delivered { get; set; }
 
             public Package(
                     int senderId,
                     int recieverId,
+                    int droneId,
                     WeightCategories weight,
                     Priorities priority,
-                    int droneId,
                     DateTime requested,
                     DateTime scheduled,
                     DateTime pickedUp,
@@ -29,10 +29,10 @@ namespace IDAL
             {
                 this.senderId = senderId;
                 this.recieverId = recieverId;
+                this.droneId =  droneId;
                 this.weight = weight;
                 this.priority = priority;
                 this.requested = requested;
-                this.droneId =  droneId;
                 this.scheduled = scheduled;
                 this.pickedUp = pickedUp;
                 this.delivered = delivered;
@@ -51,18 +51,18 @@ namespace IDAL
             /*     this.delivered = DateTime.MinValue; */
             /* } */
 
-            public Package(int senderId, int recieverId, int? droneId = null)
+            public Package(int senderId, int recieverId, int droneId = 0)
             {
                 Random rand = new();
                 this.senderId = senderId;
                 this.recieverId = recieverId;
+                this.droneId = droneId;
                 this.weight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length);
                 this.priority = (IDAL.DO.Priorities) rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length);
                 this.requested = DateTime.Now;
-                this.droneId = droneId;
-                this.scheduled = null;
-                this.pickedUp = null;
-                this.delivered = null;
+                this.scheduled = DateTime.Now;
+                this.pickedUp = DateTime.Now;
+                this.delivered = DateTime.Now;
             }
 
             public override Package Clone() => this.MemberwiseClone() as Package;

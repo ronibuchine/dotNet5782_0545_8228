@@ -5,9 +5,18 @@ namespace DalObject
 {
     public partial class DalObject : IDAL.IdalInterface
     {
-        public DalObject()
+        private static DalObject dalInstance = null;
+
+        private DalObject()
         {
             DataSource.Initialize();
+        }
+
+        public static DalObject GetInstance()
+        {
+            if (dalInstance == null)
+                dalInstance = new();
+            return dalInstance;
         }
 
         public enum IdalDoType { DRONE, STATION, CUSTOMER, PACKAGE };
