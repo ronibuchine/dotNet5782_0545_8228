@@ -28,6 +28,7 @@ namespace BLOBject
                     IDAL.DO.Station station = dal.GetAllStations().Find(s => s.chargeSlots != 0);
                     Location location = new Location(station.longitude, station.latitude);
                     Drone drone = new Drone(model, maxWeight, rand.NextDouble() * 20 + 20, DroneStatuses.maintenance, location);
+                    drones.Add(drone);
                     dal.AddDrone(new IDAL.DO.Drone(drone.ID, model, (IDAL.DO.WeightCategories)maxWeight));
                     return drone;
             }
