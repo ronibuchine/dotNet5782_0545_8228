@@ -5,16 +5,22 @@ namespace IBL
 {
     namespace BO
     {
-        public class Customer
+        public class Customer : BLEntity
         {
-            public Customer(int ID, string name, string phone, Location location)
+            public string name { get; set; }
+            public string phone { get; set; }
+            public Location currentLocation { get; set; }
+            public List<Package> packagesFromCustomer { get; set; }
+            public List<Package> packagesToCustomer { get; set; }
+
+            public Customer(string name, string phone, Location location)
             {
-                this.ID = ID;
                 this.name = name;
                 this.phone = phone;
                 this.currentLocation = location;
             }
-            public Customer(IDAL.DO.Customer customer)
+
+            public Customer(IDAL.DO.Customer customer) : base(null)
             {
                 ID = customer.ID;
                 name = customer.name;
@@ -23,12 +29,7 @@ namespace IBL
                 packagesFromCustomer = new();
                 packagesToCustomer = new();
             }
-            public int ID { get; set; }
-            public string name { get; set; }
-            public string phone { get; set; }
-            public Location currentLocation { get; set; }
-            public List<Package> packagesFromCustomer { get; set; }
-            public List<Package> packagesToCustomer { get; set; }
+
             public override string ToString()
             {
                 return String.Format("ID = {0}, Name = {1}, Current Location = {2}, Packages from Customer = {3}, Packages to Customer = {4}}",

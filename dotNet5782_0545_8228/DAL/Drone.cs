@@ -13,13 +13,13 @@ namespace IDAL
             public WeightCategories maxWeight { get; set; }
             
 
-            public Drone(string model, WeightCategories maxWeight)
+            public Drone(int ID, string model, WeightCategories maxWeight) : base(ID)
             {
                 this.model = model;
                 this.maxWeight = maxWeight;
             }
 
-            public Drone()
+            public Drone(int ID) : base(ID)
             {
                 Random rand = new();
                 this.model = "Drone_" + (ID + 1).ToString();

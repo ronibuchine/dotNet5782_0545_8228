@@ -4,12 +4,11 @@
     {
         public abstract class DalEntity
         {
-            protected static int nextID = 1;
             public int ID { get; set; }
 
-            protected DalEntity()
+            protected DalEntity(int ID)
             {
-                this.ID = nextID++;
+                this.ID = ID;
             }
 
             public abstract object Clone();

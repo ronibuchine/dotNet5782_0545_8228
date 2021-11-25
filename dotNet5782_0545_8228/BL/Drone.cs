@@ -4,9 +4,8 @@ namespace IBL
 {
     namespace BO
     { 
-        public class Drone
+        public class Drone : BLEntity
         {
-            public int ID { get; set; }
             public string model { get; set; }
             public WeightCategories weightCategory { get; set; }
             public double? battery { get; set; }
@@ -14,15 +13,7 @@ namespace IBL
             public Location currentLocation { get; set; }
             public PackageInTransfer packageInTransfer {get; set;}
 
-            public Drone(IDAL.DO.Drone drone)
-            {
-                ID = drone.ID;
-                model = drone.model;
-                weightCategory = (IBL.BO.WeightCategories)drone.maxWeight;
-            }
-
             public Drone(
-                int ID,
                 string model,
                 WeightCategories category,
                 double? battery = null,
@@ -30,13 +21,19 @@ namespace IBL
                 Location location = null,
                 PackageInTransfer packageInTransfer = null)
             {
-                this.ID = ID;
                 this.model = model;
                 this.battery = battery;
                 this.weightCategory = category;
                 this.status = status;
                 this.currentLocation = location;
                 this.packageInTransfer = packageInTransfer;
+            }
+
+            public Drone(IDAL.DO.Drone drone) : base(null)
+            {
+                ID = drone.ID;
+                model = drone.model;
+                weightCategory = (IBL.BO.WeightCategories)drone.maxWeight;
             }
 
             public override string ToString()

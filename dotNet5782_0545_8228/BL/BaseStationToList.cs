@@ -6,7 +6,7 @@ namespace IBL
     {
         public class BaseStationToList
         {
-            public BaseStationToList(DroneStation droneStation)
+            public BaseStationToList(Station droneStation)
             {
                 ID = droneStation.ID;
                 name = droneStation.name;

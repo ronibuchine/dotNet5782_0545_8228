@@ -7,12 +7,12 @@ namespace BLOBject
     public partial class BLOBject : IBL.IBLInterface
     {
 
-        public DroneStation GetBaseStation(int ID)
+        public Station GetBaseStation(int ID)
         {
             try
             {
                 CheckStationID(ID);
-                DroneStation droneStation = new DroneStation(dal.GetStation(ID));
+                Station droneStation = new Station(dal.GetStation(ID));
                 if (droneStation != null) return droneStation;
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
             }
@@ -70,7 +70,7 @@ namespace BLOBject
         }
         public List<BaseStationToList> GetStationList()
         {
-            return dal.GetAllStations().ConvertAll<BaseStationToList>((ds) => new BaseStationToList(new DroneStation(ds)));
+            return dal.GetAllStations().ConvertAll<BaseStationToList>((ds) => new BaseStationToList(new Station(ds)));
         }
         public List<DroneToList> GetDroneList()
         {
@@ -93,11 +93,11 @@ namespace BLOBject
             }
             return unassignedPackages;
         }
-        public List<DroneStation> GetAvailableStations()
+        public List<Station> GetAvailableStations()
         {
             return dal.GetAllStations().FindAll(
                     (s) => GetCountChargingDrones(s.ID) < s.chargeSlots)
-                .ConvertAll((s) => new DroneStation(s));
+                .ConvertAll((s) => new Station(s));
         }
     }
 }

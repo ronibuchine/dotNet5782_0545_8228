@@ -9,7 +9,7 @@ namespace BLOBject
         {
             try
             {
-                dal.GetDrone(ID).Model = newModel;
+                dal.GetDrone(ID).model = newModel;
                 IBL.BO.Drone drone = drones.Find((d) => d.ID == ID);
                 if (drone == null) throw new Exception("drone in datalayer but not business layer");
                 drone.model = newModel;

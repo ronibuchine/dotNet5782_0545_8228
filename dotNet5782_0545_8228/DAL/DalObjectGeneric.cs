@@ -6,8 +6,13 @@ namespace DalObjectNamespace
     public partial class DalObject : IDAL.IdalInterface
     {
         private static DalObject dalInstance = null;
+        public static int nextID;
 
-        private DalObject() => DataSource.Initialize();
+        private DalObject() 
+        {
+            DataSource.Initialize();
+            nextID = DataSource.nextID;
+        }
 
         public static DalObject GetInstance()
         {
@@ -15,6 +20,8 @@ namespace DalObjectNamespace
                 dalInstance = new();
             return dalInstance;
         }
+
+        public int GetNextID() => DataSource.nextID;
 
         public enum IdalDoType { DRONE, STATION, CUSTOMER, PACKAGE };
 

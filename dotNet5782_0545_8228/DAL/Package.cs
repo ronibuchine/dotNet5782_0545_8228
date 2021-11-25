@@ -17,6 +17,7 @@ namespace IDAL
             public DateTime delivered { get; set; }
 
             public Package(
+                    int ID,
                     int senderId,
                     int recieverId,
                     int droneId,
@@ -26,10 +27,11 @@ namespace IDAL
                     DateTime scheduled,
                     DateTime pickedUp,
                     DateTime delivered)
+            : base(ID)
             {
                 this.senderId = senderId;
                 this.recieverId = recieverId;
-                this.droneId =  droneId;
+                this.droneId = droneId;
                 this.weight = weight;
                 this.priority = priority;
                 this.requested = requested;
@@ -38,27 +40,15 @@ namespace IDAL
                 this.delivered = delivered;
             }
 
-            /* public Package(int i, Random rand) */
-            /* { */
-            /*     this.senderId = i; */
-            /*     this.recieverId = i; */
-            /*     this.weight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length); */
-            /*     this.priority = (IDAL.DO.Priorities) rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length); */
-            /*     this.requested = DateTime.Now; */
-            /*     this.droneId = 0; */
-            /*     /1* this.scheduled = DateTime.MinValue; *1/ */
-            /*     this.pickedUp = DateTime.MinValue; */
-            /*     this.delivered = DateTime.MinValue; */
-            /* } */
 
-            public Package(int senderId, int recieverId, int droneId = 0)
+            public Package(int ID, int senderId, int recieverId, int droneId = 0) : base(ID)
             {
                 Random rand = new();
                 this.senderId = senderId;
                 this.recieverId = recieverId;
                 this.droneId = droneId;
-                this.weight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length);
-                this.priority = (IDAL.DO.Priorities) rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length);
+                this.weight = (IDAL.DO.WeightCategories)rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length);
+                this.priority = (IDAL.DO.Priorities)rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length);
                 this.requested = DateTime.Now;
                 this.scheduled = DateTime.Now;
                 this.pickedUp = DateTime.Now;

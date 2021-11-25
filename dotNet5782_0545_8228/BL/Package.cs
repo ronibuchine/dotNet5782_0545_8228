@@ -5,9 +5,8 @@ namespace IBL
 {
     namespace BO
     {
-        public class Package
+        public class Package : BLEntity
         {
-            public int ID { get; set; }
             public Customer sender { get; set; }
             public Customer receiver { get; set; } // TODO set this somewhere
             public WeightCategories weightCategory { get; set; }
@@ -20,14 +19,13 @@ namespace IBL
 
             public Package(int senderID, int receiverID, WeightCategories weight, Priorities priority)
             {
-                this.ID = ID;
                 this.sender = new Customer(DalObject.GetInstance().GetCustomer(senderID));
                 this.receiver = new Customer(DalObject.GetInstance().GetCustomer(receiverID));
                 this.weightCategory = weight;
                 this.priority = priority;
             }
 
-            public Package(IDAL.DO.Package package)
+            public Package(IDAL.DO.Package package) : base(null)
             {
                 ID = package.ID;
                 weightCategory = (IBL.BO.WeightCategories)package.weight;
@@ -37,7 +35,7 @@ namespace IBL
                 pickedUp = package.pickedUp;
                 delivered = package.delivered;
             }
-            
+
 
             public override string ToString()
             {

@@ -33,5 +33,6 @@ namespace IDAL
         public void ReleaseDroneFromCharge(int stationID, int droneID);
 
         public double[] PowerConsumptionRequest();
+        public int GetNextID();
     }
 }

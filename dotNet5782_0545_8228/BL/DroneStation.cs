@@ -6,30 +6,28 @@ namespace IBL
 {
     namespace BO
     {
-        public class DroneStation
+        public class Station : BLEntity
         {
-            public int ID { get; set; }
             public string name { get; set;}
             public Location location { get; set; }
             public int chargeSlots { get; set; }
             public List<Drone> chargingDrones { get; set; }
 
-            public DroneStation(int ID, string name, Location location, int chargeSlots)
+            public Station(string name, Location location, int chargeSlots)
             {
-                this.ID = ID;
                 this.name = name;
                 this.location = location;
                 this.chargeSlots = chargeSlots; // available chargeSlots
                 this.chargingDrones = new List<Drone>(chargeSlots);
             }
             
-            public DroneStation(IDAL.DO.Station droneStation)
+            public Station(IDAL.DO.Station station)
             {
                 IDAL.IdalInterface dal = DalObject.GetInstance();
-                ID = droneStation.ID;
-                name = droneStation.name;
-                location = new Location(droneStation.longitude, droneStation.latitude);
-                chargeSlots = droneStation.chargeSlots;
+                ID = station.ID;
+                name = station.name;
+                location = new Location(station.longitude, station.latitude);
+                chargeSlots = station.chargeSlots;
             }
             public override string ToString()
             {

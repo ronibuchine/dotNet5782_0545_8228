@@ -12,10 +12,12 @@ namespace IDAL
             public double latitude { get; set; }
 
             public Customer(
+                    int ID,
                     string Name,
                     string Phone,
                     double Longitude,
-                    Double Latitude)
+                    Double Latitude) 
+                : base(ID)
             {
                 this.name = Name;
                 this.phone = Phone;
@@ -23,7 +25,7 @@ namespace IDAL
                 this.latitude = Latitude;
             }
 
-            public Customer()
+            public Customer(int ID) : base(ID)
             {
                 Random rand = new();
                 this.name = "custName_" + ID.ToString();

@@ -15,7 +15,7 @@ namespace IDAL
             public double longitude { get; set; }
             public double latitude { get; set; }
 
-            public Station(int ID, string name, int chargeSlots, double longitude, double latitude)
+            public Station(int ID, string name, int chargeSlots, double longitude, double latitude) : base(ID)
             {
                 this.name = name;
                 this.chargeSlots = chargeSlots;
@@ -23,9 +23,9 @@ namespace IDAL
                 this.latitude = latitude;
             }
 
-            public Station(string name = null, int initialChargeSlots = 5)
+            public Station(int ID, string name = null, int initialChargeSlots = 5) : base(ID)
             {
-                this.name = "station_Name_" + ID.ToString(); 
+                this.name = "station_Name_" + ID.ToString();
                 this.chargeSlots = initialChargeSlots;
                 Random rand = new();
                 this.longitude = (rand.NextDouble() * 360) - 180;

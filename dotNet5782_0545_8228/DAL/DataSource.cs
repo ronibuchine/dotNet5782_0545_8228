@@ -23,6 +23,8 @@ namespace DalObjectNamespace
         public static List<IDAL.DO.Package> packages = new List<IDAL.DO.Package>(MAX_PACKAGES);
         public static List<IDAL.DO.DroneCharge> droneCharges = new List<IDAL.DO.DroneCharge>(MAX_DRONE_CHARGES);
 
+        public static int nextID { get; set; } = 1;
+
         private static Random rand;
 
         internal class Config
@@ -55,19 +57,31 @@ namespace DalObjectNamespace
             switch (type)
             {
                 case IdalDoType.DRONE:
-                    return new IDAL.DO.Drone();
+                    return new IDAL.DO.Drone(nextID++);
                 case IdalDoType.STATION:
-                    return new IDAL.DO.Station();
+                    return new IDAL.DO.Station(nextID++);
                 case IdalDoType.CUSTOMER:
-                    return new IDAL.DO.Customer();
+                    return new IDAL.DO.Customer(nextID++);
                 case IdalDoType.PACKAGE:
-                    int senderID = customers[rand.Next(customers.Count)].ID;
-                    int recieverID = customers[rand.Next(customers.Count)].ID;
+                    int randX = rand.Next(customers.Count);
+                    int randY = RandomExceptX(customers.Count, randX, rand);
+                    int senderID = customers[randX].ID;
+                    int recieverID = customers[randY].ID;
                     int droneID = drones[rand.Next(drones.Count)].ID;
-                    return new IDAL.DO.Package(senderID, recieverID, droneID);
+                    return new IDAL.DO.Package(nextID++, senderID, recieverID, droneID);
                 default:
                     throw new IDAL.DO.InvalidDalObjectException();
             }
+        }
+
+        // n > 1 
+        // 0 <= x < n
+        private static int RandomExceptX(int n, int x, Random rand) 
+        {
+            int result = rand.Next(n);
+            if (result != x)
+                return result;
+            return (result + 1) % n;
         }
 
         /// <summary>
