@@ -14,7 +14,8 @@ namespace DalObjectNamespace
         public List<IDAL.DO.Customer> GetAllCustomers() => GetAllItems(DataSource.customers);
 
         public IDAL.DO.Customer GetCustomer(int ID) => GetOneItem(DataSource.customers, ID);
-        private IDAL.DO.Customer _GetCustomer(int ID) => _GetOneItem(DataSource.customers, ID);
+
+        public IDAL.DO.Customer GetActualCustomer(int ID) => GetActualOneItem(DataSource.customers, ID);
 
         public void ProvidePackageToCustomer(int packageID)
         {

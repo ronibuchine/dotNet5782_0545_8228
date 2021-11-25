@@ -56,8 +56,6 @@ namespace DalObjectNamespace
         /// <param name="ID">The index of which item to display</param>
         private T GetOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
         {
-            if (ID == 0)
-                return null;
             T ret = list.Find((t) => { return t.ID == ID; });
             if (ret != null)
                 return (T)ret.Clone();
@@ -65,7 +63,7 @@ namespace DalObjectNamespace
                 throw new IDAL.DO.InvalidDalObjectException();
         }
         
-        private T _GetOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
+        private T GetActualOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
         {
             if (ID == 0)
                 return null;

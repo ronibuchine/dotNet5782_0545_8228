@@ -34,6 +34,6 @@ namespace DalObjectNamespace
 
         public IDAL.DO.Package GetPackage(int ID) => GetOneItem(DataSource.packages, ID);
 
-        private IDAL.DO.Package _GetPackage(int ID) => _GetOneItem(DataSource.packages, ID);
+        public IDAL.DO.Package GetActualPackage(int ID) => GetActualOneItem(DataSource.packages, ID);
     }
 }

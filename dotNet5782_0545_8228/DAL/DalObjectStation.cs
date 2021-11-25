@@ -19,12 +19,12 @@ namespace DalObjectNamespace
 
         public Station GetStation(int ID) => GetOneItem(DataSource.stations, ID);
 
-        private Station _GetStation(int ID) => _GetOneItem(DataSource.stations, ID);
+        public Station GetActualStation(int ID) => GetActualOneItem(DataSource.stations, ID);
 
         public void SendDroneToCharge(int stationID, int droneID)
         {
             DataSource.droneCharges.Add(new IDAL.DO.DroneCharge(droneID, stationID));
-            _GetStation(stationID).chargeSlots--;
+            GetActualStation(stationID).chargeSlots--;
         }
 
         public List<DroneCharge> GetAllCharges()
@@ -37,7 +37,7 @@ namespace DalObjectNamespace
         public void ReleaseDroneFromCharge(int stationID, int droneID)
         {
             DataSource.droneCharges.Remove(DataSource.droneCharges.Find((dc) => {return dc.DroneId == droneID;}));
-            _GetStation(stationID).chargeSlots++;
+            GetActualStation(stationID).chargeSlots++;
         }
     }
 }

@@ -19,7 +19,9 @@ namespace BL_TestSuite
         }
 
         [Theory]
-        public void AddBaseStationTest(string name, Location location, int availableChargers) { }
+        public void AddBaseStationTest(string name, Location location, int availableChargers) 
+        {
+        }
 
         [Theory]
         public void AddCustomerTest(string name, string phone, Location location) { }

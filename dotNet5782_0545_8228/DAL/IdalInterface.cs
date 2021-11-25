@@ -8,23 +8,28 @@ namespace IDAL
         public void AddStation();
         public void AddCustomer();
         public void AddPackage();
-        public void AddDrone(IDAL.DO.Drone drone);
-        public void AddStation(IDAL.DO.Station droneStation);
-        public void AddCustomer(IDAL.DO.Customer customer);
-        public void AddPackage(IDAL.DO.Package package);
+        public void AddDrone(DO.Drone drone);
+        public void AddStation(DO.Station droneStation);
+        public void AddCustomer(DO.Customer customer);
+        public void AddPackage(DO.Package package);
 
-        public List<IDAL.DO.Drone> GetAllDrones();
-        public List<IDAL.DO.Station> GetAllStations();
-        public List<IDAL.DO.Customer> GetAllCustomers();
-        public List<IDAL.DO.Package> GetAllPackages();
-        public List<IDAL.DO.DroneCharge> GetAllCharges();
-        public List<IDAL.DO.Package> GetAllNotAssignedPackages();
-        public List<IDAL.DO.Station> GetAllUnoccupiedStations();
+        public List<DO.Drone> GetAllDrones();
+        public List<DO.Station> GetAllStations();
+        public List<DO.Customer> GetAllCustomers();
+        public List<DO.Package> GetAllPackages();
+        public List<DO.DroneCharge> GetAllCharges();
+        public List<DO.Package> GetAllNotAssignedPackages();
+        public List<DO.Station> GetAllUnoccupiedStations();
 
-        public IDAL.DO.Drone GetDrone(int ID);
-        public IDAL.DO.Station GetStation(int ID);
-        public IDAL.DO.Customer GetCustomer(int ID);
-        public IDAL.DO.Package GetPackage(int ID);
+        public DO.Drone GetDrone(int ID);
+        public DO.Station GetStation(int ID);
+        public DO.Customer GetCustomer(int ID);
+        public DO.Package GetPackage(int ID);
+
+        public DO.Drone GetActualDrone(int ID);
+        public DO.Station GetActualStation(int ID);
+        public DO.Customer GetActualCustomer(int ID);
+        public DO.Package GetActualPackage(int ID);
 
         public void AssignPackageToDrone(int packageID, int droneID);
         public void CollectPackageToDrone(int packageID);

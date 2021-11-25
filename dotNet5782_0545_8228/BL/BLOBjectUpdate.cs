@@ -9,11 +9,9 @@ namespace BLOBjectNamespace
         {
             try
             {
-                dal.GetDrone(ID).model = newModel;
-                IBL.BO.Drone drone = drones.Find((d) => d.ID == ID);
-                if (drone == null) throw new Exception("drone in datalayer but not business layer");
+                dal.GetActualDrone(ID).model = newModel;
+                IBL.BO.Drone drone = GetDrone(ID);
                 drone.model = newModel;
-
             }
             catch (IDAL.DO.InvalidDalObjectException e)
             {
@@ -25,7 +23,7 @@ namespace BLOBjectNamespace
         {
             try
             {
-                dal.GetStation(stationID).name = stationName;
+                dal.GetActualStation(stationID).name = stationName;
             }
             catch (IDAL.DO.InvalidDalObjectException e)
             {
@@ -41,7 +39,7 @@ namespace BLOBjectNamespace
             }
             try
             {
-                dal.GetStation(stationID).chargeSlots = numChargers;
+                dal.GetActualStation(stationID).chargeSlots = numChargers;
             }
             catch (IDAL.DO.InvalidDalObjectException e)
             {
@@ -59,7 +57,7 @@ namespace BLOBjectNamespace
         {
             try
             {
-                dal.GetCustomer(ID).name = name;
+                dal.GetActualCustomer(ID).name = name;
             }
             catch (IDAL.DO.InvalidDalObjectException e)
             {
@@ -72,7 +70,7 @@ namespace BLOBjectNamespace
             try
             {
                 // TODO validate phone number
-                dal.GetCustomer(ID).phone = phone;
+                dal.GetActualCustomer(ID).phone = phone;
             }
             catch (IDAL.DO.InvalidDalObjectException e)
             {

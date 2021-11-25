@@ -16,7 +16,8 @@ namespace DalObjectNamespace
         public List<Drone> GetAllDrones() => GetAllItems(DataSource.drones);
 
         public Drone GetDrone(int ID) => GetOneItem(DataSource.drones, ID);
-        private Drone _GetDrone(int ID) => _GetOneItem(DataSource.drones, ID);
+
+        public Drone GetActualDrone(int ID) => GetActualOneItem(DataSource.drones, ID);
 
         /// <summary>
         /// Takes index of a parcel and assigns to next available drone which can support the parcel weight
@@ -25,7 +26,7 @@ namespace DalObjectNamespace
         /// <param name="droneID">index of the package to assign</param>
         public void AssignPackageToDrone(int packageID, int droneID)
         {
-            Package package = _GetPackage(packageID);
+            Package package = GetActualPackage(packageID);
             package.scheduled = DateTime.Now;
             package.droneId = droneID;
         }
@@ -36,7 +37,7 @@ namespace DalObjectNamespace
         /// <param name="packageID">index of the package</param>
         public void CollectPackageToDrone(int packageID)
         {
-            _GetPackage(packageID).pickedUp = DateTime.Now;
+            GetActualPackage(packageID).pickedUp = DateTime.Now;
         }
 
     }
