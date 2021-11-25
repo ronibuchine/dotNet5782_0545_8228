@@ -8,7 +8,6 @@ namespace BL_TestSuite
         // example
         [Theory]
         [InlineData("model1", IBL.BO.WeightCategories.heavy, 1)]
-        [InlineData("model1", IBL.BO.WeightCategories.heavy, 1)]
         public void AddDroneTest(string model, WeightCategories maxWeight, int stationID)
         {
             BLOBject.BLOBject bl = new();

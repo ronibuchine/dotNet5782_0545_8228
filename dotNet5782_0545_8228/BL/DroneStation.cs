@@ -21,7 +21,7 @@ namespace IBL
                 this.chargingDrones = new List<Drone>(chargeSlots);
             }
             
-            public Station(IDAL.DO.Station station)
+            public Station(IDAL.DO.Station station) : base(null)
             {
                 IDAL.IdalInterface dal = DalObject.GetInstance();
                 ID = station.ID;
