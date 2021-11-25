@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using static DalObject.DalObject;
+using static DalObjectNamespace.DalObject;
 
-namespace DalObject
+namespace DalObjectNamespace
 {
     internal class DataSource
     {

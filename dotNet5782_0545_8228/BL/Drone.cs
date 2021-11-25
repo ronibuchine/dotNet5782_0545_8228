@@ -6,35 +6,29 @@ namespace IBL
     { 
         public class Drone
         {
-            public Drone(int ID, string model, WeightCategories weightCategory)
-            {
-                this.ID = ID;
-                this.model = model;
-                this.weightCategory = weightCategory;
-            }
+            public int ID { get; set; }
+            public string model { get; set; }
+            public WeightCategories weightCategory { get; set; }
+            public double? battery { get; set; }
+            public DroneStatuses? status { get; set; }
+            public Location currentLocation { get; set; }
+            public PackageInTransfer packageInTransfer {get; set;}
+
             public Drone(IDAL.DO.Drone drone)
             {
                 ID = drone.ID;
                 model = drone.model;
                 weightCategory = (IBL.BO.WeightCategories)drone.maxWeight;
             }
-            public int ID { get; set; }
-            public double battery { get; set; }
-            public string model { get; set; }
-            public DroneStatuses status { get; set; }
-            public WeightCategories weightCategory { get; set; }
-            public Location currentLocation { get; set; }
-            public PackageInTransfer packageInTransfer {get; set;}
-
 
             public Drone(
                 int ID,
                 string model,
-                double battery,
                 WeightCategories category,
-                DroneStatuses status,
-                Location location,
-                PackageInTransfer packageInTransfer)
+                double? battery = null,
+                DroneStatuses? status = null,
+                Location location = null,
+                PackageInTransfer packageInTransfer = null)
             {
                 this.ID = ID;
                 this.model = model;
@@ -42,17 +36,7 @@ namespace IBL
                 this.weightCategory = category;
                 this.status = status;
                 this.currentLocation = location;
-            }
-
-            public Drone(int i, Random rand)
-            {
-                this.ID = i + 1;
-                this.model = "Drone_" + (i + 1).ToString();
-                this.battery = 100;
-                this.weightCategory = (IBL.BO.WeightCategories)rand.Next(Enum.GetNames(typeof(IBL.BO.WeightCategories)).Length - 1);
-                this.status = DroneStatuses.free;
-                this.currentLocation = new Location(i, i); // TODO: fix
-                this.packageInTransfer = new PackageInTransfer();
+                this.packageInTransfer = packageInTransfer;
             }
 
             public override string ToString()

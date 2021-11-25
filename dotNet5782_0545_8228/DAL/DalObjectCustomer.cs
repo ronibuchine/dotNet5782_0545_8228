@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DalObject
+namespace DalObjectNamespace
 {
     public partial class DalObject : IDAL.IdalInterface
     {

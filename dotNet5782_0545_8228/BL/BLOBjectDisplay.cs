@@ -86,8 +86,8 @@ namespace BLOBject
         }
         public List<PackageToList> GetUnassignedPackages()
         {
-            List<PackageToList> unassignedPackages = new List<PackageToList>(DalObject.DataSource.packages.Count);
-            foreach (IDAL.DO.Package package in DalObject.DataSource.packages)
+            List<PackageToList> unassignedPackages = new List<PackageToList>(DalObjectNamespace.DataSource.packages.Count);
+            foreach (IDAL.DO.Package package in DalObjectNamespace.DataSource.packages)
             {
                 if (package.droneId == 0) unassignedPackages.Add(new PackageToList(new Package(package)));
             }

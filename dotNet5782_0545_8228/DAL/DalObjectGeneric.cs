@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DalObject
+namespace DalObjectNamespace
 {
     public partial class DalObject : IDAL.IdalInterface
     {
         private static DalObject dalInstance = null;
 
-        private DalObject()
-        {
-            DataSource.Initialize();
-        }
+        private DalObject() => DataSource.Initialize();
 
         public static DalObject GetInstance()
         {
@@ -52,15 +49,13 @@ namespace DalObject
         /// <param name="ID">The index of which item to display</param>
         private T GetOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
         {
+            if (ID == 0)
+                return null;
             T ret = list.Find((t) => { return t.ID == ID; });
             if (ret != null)
-            {
                 return (T)ret.Clone();
-            }
             else
-            {
                 throw new IDAL.DO.InvalidDalObjectException();
-            }
         }
 
         /// <summary>
@@ -74,13 +69,9 @@ namespace DalObject
             where T : IDAL.DO.DalEntity
         {
             if (list.Count + 1 > list.Capacity)
-            {
                 list.Add((T)DataSource.Insert(type));
-            }
             else
-            {
                 throw new IDAL.DO.DataSourceException();
-            }
         }
 
         private void AddDalItem<T>(
@@ -90,13 +81,9 @@ namespace DalObject
             where T : IDAL.DO.DalEntity
         {
             if (list.Count + 1 > list.Capacity)
-            {
                 list.Add(item);
-            }
             else
-            {
                 throw new IDAL.DO.DataSourceException();
-            }
         }
 
         public double[] PowerConsumptionRequest()

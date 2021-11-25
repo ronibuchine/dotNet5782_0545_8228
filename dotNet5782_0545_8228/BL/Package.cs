@@ -1,4 +1,5 @@
 ﻿using System;
+using DalObjectNamespace;
 
 namespace IBL
 {
@@ -17,44 +18,24 @@ namespace IBL
             public DateTime pickedUp { get; set; }
             public DateTime delivered { get; set; }
 
-            public Package(int ID, int senderID, int receiverID, WeightCategories weight, Priorities priority)
+            public Package(int senderID, int receiverID, WeightCategories weight, Priorities priority)
             {
                 this.ID = ID;
+                this.sender = new Customer(DalObject.GetInstance().GetCustomer(senderID));
+                this.receiver = new Customer(DalObject.GetInstance().GetCustomer(receiverID));
                 this.weightCategory = weight;
                 this.priority = priority;
-                this.drone = null;
-
-                
-                /* foreach (IDAL.DO.Customer customer in DalObject.DalObject.GetAllCustomers()) */
-                /* { */
-                /*     if (customer.ID == senderID) */ 
-                /*         this.sender = new Customer(customer); */
-                /*     if (customer.ID == receiverID) */ 
-                /*         this.receiver = new Customer(customer); */
-                /* } */
             }
-            public Package(IDAL.DO.Package parcel)
-            {
-                ID = parcel.ID;
-                weightCategory = (IBL.BO.WeightCategories)parcel.weight;
-                priority = (IBL.BO.Priorities)parcel.priority;
-                requested = parcel.requested;
-                scheduled = parcel.scheduled;
-                pickedUp = parcel.pickedUp;
-                delivered = parcel.delivered;
-                
-                
-                /* foreach (IDAL.DO.Drone drone in DalObject.DataSource.drones) */
-                /* { */
-                /*     if (drone.ID == parcel.droneId) */ 
-                /*         this.drone = new IBL.BO.Drone(drone); */
-                /* } */
 
-                /* foreach (IDAL.DO.Customer customer in DalObject.DataSource.customers) */
-                /* { */
-                /*     if (customer.ID == parcel.senderId) */
-                /*         this.sender = new IBL.BO.Customer(customer); */
-                /* } */
+            public Package(IDAL.DO.Package package)
+            {
+                ID = package.ID;
+                weightCategory = (IBL.BO.WeightCategories)package.weight;
+                priority = (IBL.BO.Priorities)package.priority;
+                requested = package.requested;
+                scheduled = package.scheduled;
+                pickedUp = package.pickedUp;
+                delivered = package.delivered;
             }
             
 

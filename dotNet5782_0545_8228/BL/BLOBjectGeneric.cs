@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using IDAL;
-using DalObject;
+using DalObjectNamespace;
 using IBL.BO;
 using static UTIL.Distances;
 
@@ -75,9 +75,40 @@ namespace BLOBject
             return GetMinBatteryRequired(drone, location) < drone.battery;
         }
 
+        private void CompleteStations(List<DroneStation> stations)
+        {
+            // for each drone charge record that data in station.chargingDrones
+            foreach (IDAL.DO.DroneCharge droneCharge in dal.GetAllCharges())
+                stations.Find(s => s.ID == droneCharge.StationId).chargingDrones.Add(drones.Find(d => d.ID == droneCharge.DroneId));
+        }
+
+        private void CompletePackages(List<Package> packages, List<Customer> customers)
+        {
+            // Find the sender and reciever for each package based on what is in dal
+            // Find drone that is carrying package
+            List<IDAL.DO.Package> dalPackages = dal.GetAllPackages();
+            for (int i = 0; i < packages.Count; i++)
+            {
+                packages[i].sender = customers.Find(c => c.ID == dalPackages[i].senderId);
+                packages[i].receiver = customers.Find(c => c.ID == dalPackages[i].recieverId);
+                if (dalPackages[i].droneId != 0)
+                    packages[i].drone = drones.Find(d => d.ID == dalPackages[i].droneId);
+            }
+        }
+
+        private void CompleteCustomersPackageList(List<Package> packages)
+        {
+            // get each sent/recieved package into the customers sent/recieved list
+            foreach (Package package in packages)
+            {
+                package.receiver.packagesToCustomer.Add(package); // a bit circular
+                package.sender.packagesFromCustomer.Add(package); 
+            }
+        }
+
         public BLOBject()
         {
-            this.dal = DalObject.DalObject.GetInstance();
+            this.dal = DalObject.GetInstance();
             double[] powerConsumption = dal.PowerConsumptionRequest();
             this.free = powerConsumption[0];
             this.lightWeight = powerConsumption[1];
@@ -86,28 +117,15 @@ namespace BLOBject
             this.chargingRate = powerConsumption[4];
 
             drones = dal.GetAllDrones().ConvertAll(d => new Drone(d));
-            List<IDAL.DO.Package> dalPackages = dal.GetAllPackages();
-            List<Package> packages = dalPackages.ConvertAll(p => new Package(p));
+            List<Package> packages = dal.GetAllPackages().ConvertAll(p => new Package(p));
             List<Customer> customers = dal.GetAllCustomers().ConvertAll(c => new Customer(c));
-            drones.ForEach(drone => {
-                for (int i = 0; i < packages.Count; i++)
-                {
-                    if (drone.ID == dalPackages[i].droneId)
-                        packages[i].drone = drone;
-                }
-            });
-            customers.ForEach((c) =>
-            {
-                for (int i = 0; i < packages.Count; i++)
-                {
-                    if (dalPackages[i].senderId == c.ID)
-                        c.packagesToCustomer.Add(packages[i]);
-                    if (dalPackages[i].recieverId == c.ID)
-                        c.packagesToCustomer.Add(packages[i]);
-                }
-            });
-            List<DroneStation> stations = dal.GetAllStations().ConvertAll(ds => new DroneStation(ds));
+            List<DroneStation> stations = dal.GetAllStations().ConvertAll(s => new DroneStation(s));
 
+            CompleteStations(stations);
+            CompletePackages(packages, customers);
+            CompleteCustomersPackageList(packages);
+
+            // complete drones based on all other information
             Random rand = new Random();
             foreach (Drone drone in drones)
             {
@@ -115,7 +133,7 @@ namespace BLOBject
                 if (package != null)
                 {
                     drone.packageInTransfer = new PackageInTransfer(package);
-                    if (DateTime.Compare(package.delivered, DateTime.Now) < 0 && package.drone.ID == drone.ID)
+                    if (DateTime.Compare(package.delivered, DateTime.Now) < 0)
                     {
                         drone.status = DroneStatuses.delivery;
                         Location closestStationLoc = GetClosestStationLocation(package.sender.currentLocation, stations);
@@ -125,7 +143,8 @@ namespace BLOBject
                             drone.currentLocation = closestStationLoc;
                         else //collected
                             drone.currentLocation = package.sender.currentLocation;
-                        break;
+
+                        drone.packageInTransfer = new(package);
                     }
                 }
                 else // drone has no associated package
@@ -147,7 +166,6 @@ namespace BLOBject
                         Location closestStationLoc = GetClosestStationLocation(customer.currentLocation, stations);
                         double minRequired = GetDistance(closestStationLoc, customer.currentLocation) * GetConsumptionRate(drone.weightCategory);
                         drone.battery = rand.NextDouble() * (100 - minRequired);
-
                     }
                 }
             }
