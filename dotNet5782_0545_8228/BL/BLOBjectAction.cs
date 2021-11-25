@@ -40,7 +40,7 @@ namespace BLOBject
                 .FindAll(p => p.weight <= (IDAL.DO.WeightCategories)drone.weightCategory)
                 .OrderByDescending(p => p.priority)
                 .ThenByDescending(p => p.weight)
-                .ThenByDescending(p =>
+                .ThenBy(p =>
                 {
                     Location senderLocation = GetCustomer(p.senderId).currentLocation;
                     return Distances.GetDistance(senderLocation, drone.currentLocation);
