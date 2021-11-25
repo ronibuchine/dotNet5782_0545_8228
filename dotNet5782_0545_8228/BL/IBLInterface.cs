@@ -7,10 +7,10 @@ namespace IBL
     public interface IBLInterface
     {
         // Adder methods
-        public Station AddBaseStation(int stationID, string name, Location location, int availableChargers);
-        public Drone AddDrone(int ID, string model, WeightCategories maxWeight, int stationID);
-        public Customer AddCustomer(int customerID, string name, string phone, Location location);
-        public Package AddPackage(int packageID, int senderID, int receiverID, WeightCategories weight, Priorities priority);
+        public Station AddBaseStation(string name, Location location, int availableChargers);
+        public Drone AddDrone(string model, WeightCategories maxWeight, int stationID);
+        public Customer AddCustomer(string name, string phone, Location location);
+        public Package AddPackage(int senderID, int receiverID, WeightCategories weight, Priorities priority);
 
         // Update methods
         public void UpdateDrone(int ID, string newModel);

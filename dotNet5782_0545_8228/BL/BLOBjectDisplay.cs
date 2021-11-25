@@ -59,7 +59,7 @@ namespace BLOBject
             try
             {
                 CheckPackageID(ID);
-                Package package = new Package(dal.GetParcel(ID));
+                Package package = new Package(dal.GetPackage(ID));
                 if (package != null) return package;
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
             }
@@ -82,15 +82,13 @@ namespace BLOBject
         }
         public List<PackageToList> GetPackageList()
         {
-            return dal.GetAllParcels().ConvertAll((p) => new PackageToList(new Package(p)));
+            return dal.GetAllPackages().ConvertAll((p) => new PackageToList(new Package(p)));
         }
         public List<PackageToList> GetUnassignedPackages()
         {
-            List<PackageToList> unassignedPackages = new List<PackageToList>(DalObjectNamespace.DataSource.packages.Count);
-            foreach (IDAL.DO.Package package in DalObjectNamespace.DataSource.packages)
-            {
-                if (package.droneId == 0) unassignedPackages.Add(new PackageToList(new Package(package)));
-            }
+            List<PackageToList> unassignedPackages = new List<PackageToList>();
+            dal.GetAllNotAssignedPackages()
+                .ForEach(p => unassignedPackages.Add(new PackageToList(new Package(p))));
             return unassignedPackages;
         }
         public List<Station> GetAvailableStations()

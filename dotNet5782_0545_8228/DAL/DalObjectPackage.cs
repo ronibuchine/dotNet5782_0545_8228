@@ -27,9 +27,11 @@ namespace DalObjectNamespace
         public void AddPackage(IDAL.DO.Package package) =>
             AddDalItem(DataSource.packages, package, IdalDoType.PACKAGE);
 
-        public List<IDAL.DO.Package> GetAllParcels() => GetAllItems(DataSource.packages);
-        public List<IDAL.DO.Package> GetAllNotAssignedParcels() =>
+        public List<IDAL.DO.Package> GetAllPackages() => GetAllItems(DataSource.packages);
+
+        public List<IDAL.DO.Package> GetAllNotAssignedPackages() =>
             GetAllItems(DataSource.packages, (IDAL.DO.Package p) => p.droneId == 0);
-        public IDAL.DO.Package GetParcel(int ID) => GetOneItem(DataSource.packages, ID);
+
+        public IDAL.DO.Package GetPackage(int ID) => GetOneItem(DataSource.packages, ID);
     }
 }

@@ -208,7 +208,7 @@ namespace BLOBject
         private Boolean CheckPackageID(int ID)
         {
             if (ID < 0) throw new InvalidIDException("ERROR: ID cannot be negative");
-            foreach (IDAL.DO.Package package in dal.GetAllParcels())
+            foreach (IDAL.DO.Package package in dal.GetAllPackages())
             {
                 if (package.ID == ID) throw new InvalidIDException("ERROR: This entity already exists.");
             }
