@@ -58,34 +58,38 @@ namespace BLOBject
             catch (InvalidBlObjectException i) { throw i; }
             throw new Exception("UNKNOWN ERROR OCCURED. WHOOPS.");
         }
+
         public List<BaseStationToList> GetStationList()
         {
-            return dal.GetAllStations().ConvertAll<BaseStationToList>((ds) => new BaseStationToList(new Station(ds)));
+            return dal.GetAllStations().ConvertAll((ds) => new BaseStationToList(new Station(ds)));
         }
+
         public List<DroneToList> GetDroneList()
         {
             return drones.ConvertAll((d) => new DroneToList(d));
         }
+
         public List<CustomerToList> GetCustomerList()
         {
             return dal.GetAllCustomers().ConvertAll((c) => new CustomerToList(new Customer(c)));
         }
+
         public List<PackageToList> GetPackageList()
         {
             return dal.GetAllPackages().ConvertAll((p) => new PackageToList(new Package(p)));
         }
+
         public List<PackageToList> GetUnassignedPackages()
         {
-            List<PackageToList> unassignedPackages = new List<PackageToList>();
+            List<PackageToList> unassignedPackages = new();
             dal.GetAllNotAssignedPackages()
                 .ForEach(p => unassignedPackages.Add(new PackageToList(new Package(p))));
             return unassignedPackages;
         }
+
         public List<Station> GetAvailableStations()
         {
-            return dal.GetAllStations().FindAll(
-                    (s) => GetCountChargingDrones(s.ID) < s.chargeSlots)
-                .ConvertAll((s) => new Station(s));
+            return dal.GetAllUnoccupiedStations().ConvertAll((s) => new Station(s));
         }
     }
 }

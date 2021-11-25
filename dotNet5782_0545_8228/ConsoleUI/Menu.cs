@@ -121,7 +121,7 @@ namespace ConsoleUI
                      "Send a drone to charge", "Release a drone from charging", "Cancel"},
                      new Action[]{
                          () => data.AssignPackageToDrone(GetChoice("Please choose which package to assign:")),
-                         () => data.CollectPackageFromDrone(GetChoice("Please choose which package to collect:")),
+                         () => data.CollectPackageToDrone(GetChoice("Please choose which package to collect:")),
                          () => data.ProvidePackageToCustomer(GetChoice("Please choose which package to provide:")),
                          () => data.SendDroneToCharge(GetChoice("Please enter a drone station number:"), GetChoice("Please enter a drone number:")),
                          () => data.ReleaseDroneFromCharge(GetChoice("Please enter a drone station number:"), GetChoice("Please enter a drone number")),

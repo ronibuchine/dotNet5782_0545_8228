@@ -20,6 +20,7 @@ namespace BLOBject
                 throw new IBL.BO.InvalidBlObjectException(e.Message);
             }
         }
+
         public void UpdateStation(int stationID, string stationName) // either one of the last two parameters must be entered or both of them
         {
             try
@@ -47,11 +48,13 @@ namespace BLOBject
                 throw new IBL.BO.InvalidBlObjectException(e.Message);
             }
         }
+
         public void UpdateStation(int stationID, string stationName, int numChargers)
         {
             UpdateStation(stationID, stationName);
             UpdateStation(stationID, numChargers);
         }
+
         public void UpdateCustomerName(int ID, string name)
         {
             try
@@ -63,6 +66,7 @@ namespace BLOBject
                 throw new IBL.BO.InvalidBlObjectException(e.Message);
             }
         }
+
         public void UpdateCustomerPhone(int ID, String phone)
         {
             try
@@ -75,6 +79,7 @@ namespace BLOBject
                 throw new IBL.BO.InvalidBlObjectException(e.Message);
             }
         }
+
         public void UpdateCustomer(int ID, string name, String phone)
         {
             UpdateCustomerName(ID, name);

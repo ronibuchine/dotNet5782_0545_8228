@@ -31,19 +31,12 @@ namespace DalObjectNamespace
         }
 
         /// <summary>
-        /// Updates the pickup time for the package after checking to make sure the parcel is assigned to a drone
+        /// Updates the pickup time for the package to now
         /// </summary>
-        /// <param name="packageID">index of the parcel</param>
-        public void CollectPackageFromDrone(int packageID)
+        /// <param name="packageID">index of the package</param>
+        public void CollectPackageToDrone(int packageID)
         {
-            if (packageID < 0 || packageID > DataSource.packages.Count)
-            {
-                throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
-            }
-            IDAL.DO.Drone currentDrone = GetParcelDrone(DataSource.packages[packageID]);
-            
-            DataSource.packages[packageID].pickedUp = DateTime.Now;
-            
+            _GetPackage(packageID).pickedUp = DateTime.Now;
         }
 
     }

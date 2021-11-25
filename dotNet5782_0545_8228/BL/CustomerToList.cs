@@ -11,11 +11,11 @@ namespace IBL
                 ID = customer.ID;
                 name = customer.name;
                 phoneNumber = customer.phone;
+                // TODO do these package numbers
                 numberExpectedPackages = 0;
                 numberPackagesDelivered = 0;
                 numberPackagesUndelivered = 0;
                 numberReceivedPackages = 0;
-
             }
             public int ID {get; set;}
             public string name { get; set; }

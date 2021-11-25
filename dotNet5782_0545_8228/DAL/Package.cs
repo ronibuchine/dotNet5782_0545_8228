@@ -50,9 +50,9 @@ namespace IDAL
                 this.weight = (IDAL.DO.WeightCategories)rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length);
                 this.priority = (IDAL.DO.Priorities)rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length);
                 this.requested = DateTime.Now;
-                this.scheduled = DateTime.Now;
-                this.pickedUp = DateTime.Now;
-                this.delivered = DateTime.Now;
+                this.scheduled = DateTime.MinValue;
+                this.pickedUp = DateTime.MinValue;
+                this.delivered = DateTime.MinValue;
             }
 
             public override Package Clone() => this.MemberwiseClone() as Package;
