@@ -13,16 +13,16 @@ namespace IDAL
 
             public Customer(
                     int ID,
-                    string Name,
-                    string Phone,
-                    double Longitude,
-                    Double Latitude) 
+                    string name,
+                    string phone,
+                    double longitude,
+                    Double latitude) 
                 : base(ID)
             {
-                this.name = Name;
-                this.phone = Phone;
-                this.longitude = Longitude;
-                this.latitude = Latitude;
+                this.name = name;
+                this.phone = phone;
+                this.longitude = longitude;
+                this.latitude = latitude;
             }
 
             public Customer(int ID) : base(ID)

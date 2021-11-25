@@ -15,6 +15,8 @@ namespace IDAL
                 this.StationId = StationId;
             }
 
+            public DroneCharge Clone() => this.MemberwiseClone() as DroneCharge;
+
             public override string ToString()
             {
                 // do DateTimes need a toString()?

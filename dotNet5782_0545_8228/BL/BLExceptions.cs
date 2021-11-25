@@ -23,10 +23,17 @@ namespace IBL
             public BlObjectAccessException(string message) : base(message) { }
             public BlObjectAccessException() : base() { }
         }
+
         public class InvalidIDException : Exception
         {
             public InvalidIDException(string message) : base(message) {}
             public InvalidIDException() : base() {}
+        }
+
+        public class OperationNotPossibleException : Exception
+        {
+            public OperationNotPossibleException(string message) : base(message) {}
+            public OperationNotPossibleException() : base() {}
         }
     }
 }

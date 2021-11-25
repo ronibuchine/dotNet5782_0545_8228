@@ -26,7 +26,7 @@ namespace IDAL
         public IDAL.DO.Customer GetCustomer(int ID);
         public IDAL.DO.Package GetPackage(int ID);
 
-        public void AssignPackageToDrone(int packageID);
+        public void AssignPackageToDrone(int packageID, int droneID);
         public void CollectPackageFromDrone(int packageID);
         public void ProvidePackageToCustomer(int packageID);
         public void SendDroneToCharge(int stationID, int droneID);

@@ -64,6 +64,17 @@ namespace DalObjectNamespace
             else
                 throw new IDAL.DO.InvalidDalObjectException();
         }
+        
+        private T _GetOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
+        {
+            if (ID == 0)
+                return null;
+            T ret = list.Find((t) => { return t.ID == ID; });
+            if (ret != null)
+                return (T)ret;
+            else
+                throw new IDAL.DO.InvalidDalObjectException();
+        }
 
         /// <summary>
         /// Adds a new IdalDoStruct to the array given

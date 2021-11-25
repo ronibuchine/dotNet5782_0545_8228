@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using IDAL.DO;
 
 namespace DalObjectNamespace
 {
@@ -11,28 +12,32 @@ namespace DalObjectNamespace
         public void AddStation(IDAL.DO.Station station) =>
             AddDalItem(DataSource.stations, station, IdalDoType.STATION);
 
-        public List<IDAL.DO.Station> GetAllStations() => GetAllItems(DataSource.stations);
+        public List<Station> GetAllStations() => GetAllItems(DataSource.stations);
 
-        public List<IDAL.DO.Station> GetAllUnoccupiedStations() =>
+        public List<Station> GetAllUnoccupiedStations() =>
             GetAllItems(DataSource.stations, (IDAL.DO.Station ds) => ds.chargeSlots > 0);
 
-        public IDAL.DO.Station GetStation(int ID) => GetOneItem(DataSource.stations, ID);
+        public Station GetStation(int ID) => GetOneItem(DataSource.stations, ID);
+
+        private Station _GetStation(int ID) => _GetOneItem(DataSource.stations, ID);
 
         public void SendDroneToCharge(int stationID, int droneID)
         {
             DataSource.droneCharges.Add(new IDAL.DO.DroneCharge(droneID, stationID));
-            GetStation(stationID).chargeSlots--;
+            _GetStation(stationID).chargeSlots--;
         }
 
-        public List<IDAL.DO.DroneCharge> GetAllCharges()
+        public List<DroneCharge> GetAllCharges()
         {
-            return DataSource.droneCharges;
+            List<DroneCharge> newList = new();
+            DataSource.droneCharges.ForEach(dc => newList.Add(dc.Clone()));
+            return newList;
         }
         
         public void ReleaseDroneFromCharge(int stationID, int droneID)
         {
             DataSource.droneCharges.Remove(DataSource.droneCharges.Find((dc) => {return dc.DroneId == droneID;}));
-            GetStation(stationID).chargeSlots++;
+            _GetStation(stationID).chargeSlots++;
         }
     }
 }

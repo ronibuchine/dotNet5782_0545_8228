@@ -11,11 +11,11 @@ namespace BLOBject
 {
     public partial class BLOBject : IBL.IBLInterface
     {
-        public double chargingRate { get; set; }
-        public double free { get; set; }
-        public double lightWeight { get; set; }
-        public double midWeight { get; set; }
-        public double heavyWeight { get; set; }
+        public static double chargingRate { get; set; }
+        public static double free { get; set; }
+        public static double lightWeight { get; set; }
+        public static double midWeight { get; set; }
+        public static double heavyWeight { get; set; }
         public IdalInterface dal { get; }
         private List<Drone> drones;
 
@@ -24,11 +24,11 @@ namespace BLOBject
             this.dal = DalObject.GetInstance();
             IBL.BO.BLEntity.nextID = dal.GetNextID();
             double[] powerConsumption = dal.PowerConsumptionRequest();
-            this.free = powerConsumption[0];
-            this.lightWeight = powerConsumption[1];
-            this.midWeight = powerConsumption[2];
-            this.heavyWeight = powerConsumption[3];
-            this.chargingRate = powerConsumption[4];
+            free = powerConsumption[0];
+            lightWeight = powerConsumption[1];
+            midWeight = powerConsumption[2];
+            heavyWeight = powerConsumption[3];
+            chargingRate = powerConsumption[4];
 
             drones = dal.GetAllDrones().ConvertAll(d => new Drone(d));
             List<Package> packages = dal.GetAllPackages().ConvertAll(p => new Package(p));

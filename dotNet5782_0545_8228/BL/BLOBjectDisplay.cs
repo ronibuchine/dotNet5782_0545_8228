@@ -6,7 +6,6 @@ namespace BLOBject
 {
     public partial class BLOBject : IBL.IBLInterface
     {
-
         public Station GetBaseStation(int ID)
         {
             try
@@ -21,23 +20,13 @@ namespace BLOBject
             catch (IDAL.DO.InvalidDalObjectException e) {throw new InvalidBlObjectException(e.Message);}
             throw new Exception("UNKNOWN ERROR OCCURED. WHOOPS.");
         }
+
         public Drone GetDrone(int ID)
         {
-            dal.GetDrone(ID);
-            try
-            {
-                if (IsValidID(ID) && IsUniqueDroneID(ID))
-                {
-                    Drone drone = drones.Find((d) => {return d.ID == ID;});
-                    if (drone != null)
-                        return drone;
-                    else
-                        throw new InvalidBlObjectException("ERROR: This entity does not exist.");
-                }
-            }
-            catch (InvalidIDException e) { throw e; }
-            catch (InvalidBlObjectException i) { throw i; }
-            throw new Exception("UNKNOWN ERROR OCCURED. WHOOPS.");
+            Drone drone = drones.Find(d => d.ID == ID);
+            if (drone == null)
+                throw new InvalidBlObjectException("ERROR: This entity does not exist.");
+            return drone;
         }
           
         public Customer GetCustomer(int ID)
@@ -46,7 +35,8 @@ namespace BLOBject
             {
                 CheckCustomerID(ID);
                 Customer customer = new Customer(dal.GetCustomer(ID));
-                if (customer != null) return customer;
+                if (customer != null) 
+                    return customer;
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
             }
             catch (InvalidIDException e) { throw e; }

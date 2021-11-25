@@ -30,9 +30,9 @@ namespace DalObjectNamespace
         internal class Config
         {
             internal static double free = 0;
-            internal static double lightWeight = 150;
-            internal static double midWeight = 100;
-            internal static double heavyWeight = 75;
+            internal static double lightWeight = 1/90;
+            internal static double midWeight = 1/80;
+            internal static double heavyWeight = 1/70;
             internal static double chargingRate = 50; // in % per hour
             internal static int packageCount = 0;
         }

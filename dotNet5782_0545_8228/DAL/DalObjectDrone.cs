@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IDAL.DO;
 
 namespace DalObjectNamespace
 {
@@ -9,34 +10,24 @@ namespace DalObjectNamespace
         public void AddDrone() =>
             AddDalItem(DataSource.drones, IdalDoType.DRONE);
 
-        public void AddDrone(IDAL.DO.Drone drone) =>
+        public void AddDrone(Drone drone) =>
             AddDalItem(DataSource.drones, drone, IdalDoType.DRONE);
 
-        public List<IDAL.DO.Drone> GetAllDrones() => GetAllItems(DataSource.drones);
-        public IDAL.DO.Drone GetDrone(int ID) => GetOneItem(DataSource.drones, ID);
+        public List<Drone> GetAllDrones() => GetAllItems(DataSource.drones);
+
+        public Drone GetDrone(int ID) => GetOneItem(DataSource.drones, ID);
+        private Drone _GetDrone(int ID) => _GetOneItem(DataSource.drones, ID);
 
         /// <summary>
         /// Takes index of a parcel and assigns to next available drone which can support the parcel weight
         /// Updates the scheduled time.
         /// </summary>
-        /// <param name="choice">index of the package to assign</param>
-        public void AssignPackageToDrone(int choice)
+        /// <param name="droneID">index of the package to assign</param>
+        public void AssignPackageToDrone(int packageID, int droneID)
         {
-            if (choice < 0 || choice > DataSource.drones.Count)
-            {
-                throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
-            }
-            for (int i = 0; i < DataSource.drones.Count; i++)
-            {
-
-                if (DataSource.drones[i].maxWeight >= DataSource.packages[choice].weight)
-                {
-                    DataSource.packages[choice].droneId = DataSource.drones[i].ID;
-                    DataSource.packages[choice].scheduled = DateTime.Now;
-                    return;
-                }
-            }
-            throw new IDAL.DO.DalObjectAccessException("Error, no available drones. Try again later.\n");
+            Package package = _GetPackage(packageID);
+            package.scheduled = DateTime.Now;
+            package.droneId = droneID;
         }
 
         /// <summary>

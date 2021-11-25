@@ -33,5 +33,7 @@ namespace DalObjectNamespace
             GetAllItems(DataSource.packages, (IDAL.DO.Package p) => p.droneId == 0);
 
         public IDAL.DO.Package GetPackage(int ID) => GetOneItem(DataSource.packages, ID);
+
+        private IDAL.DO.Package _GetPackage(int ID) => _GetOneItem(DataSource.packages, ID);
     }
 }
