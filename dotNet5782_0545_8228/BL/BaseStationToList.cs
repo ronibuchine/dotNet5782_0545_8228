@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IBL
 {
@@ -10,6 +6,13 @@ namespace IBL
     {
         public class BaseStationToList
         {
+            public BaseStationToList(Station droneStation)
+            {
+                ID = droneStation.ID;
+                name = droneStation.name;
+                availableChargeSlots = droneStation.chargeSlots;
+                occupiedSlots = droneStation.chargingDrones.Count;
+            }
             public int ID { get; set; }
             public string name { get; set; }
             public int availableChargeSlots { get; set; }

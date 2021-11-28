@@ -1,60 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using IDAL.DO;
 
-namespace DalObject
+namespace DalObjectNamespace
 {
     public partial class DalObject : IDAL.IdalInterface
     {
 
-        public void AddDroneStation() =>
-            AddDalItem(DataSource.droneStations, DataSource.IdalDoType.DroneStation);
+        public void AddStation() =>
+            AddDalItem(DataSource.stations, IdalDoType.STATION);
 
-        public List<IDAL.DO.DroneStation> DisplayAllDroneStations() => DisplayAllItems(DataSource.droneStations);
+        public void AddStation(IDAL.DO.Station station) =>
+            AddDalItem(DataSource.stations, station, IdalDoType.STATION);
 
-        public List<IDAL.DO.DroneStation> DisplayAllUnoccupiedStations() =>
-            DisplayAllItems(DataSource.droneStations, (IDAL.DO.DroneStation ds) => ds.ChargeSlots > 0);
+        public List<Station> GetAllStations() => GetAllItems(DataSource.stations);
 
-        public List<IDAL.DO.DroneStation> DisplayDroneStation(int choice) => DisplayOneItem(DataSource.droneStations, choice);
+        public List<Station> GetAllUnoccupiedStations() =>
+            GetAllItems(DataSource.stations, (IDAL.DO.Station ds) => ds.chargeSlots > 0);
 
-        public void SendDroneToCharge(int stationChoice, int droneChoice)
+        public Station GetStation(int ID) => GetOneItem(DataSource.stations, ID);
+
+        public Station GetActualStation(int ID) => GetActualOneItem(DataSource.stations, ID);
+
+        public void SendDroneToCharge(int stationID, int droneID)
         {
-
-            if (droneChoice < 0 ||
-                droneChoice > DataSource.drones.Count ||
-                stationChoice < 0 ||
-                stationChoice > DataSource.droneStations.Count)
-            {
-                throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
-            }
-            if (DataSource.drones[droneChoice].Battery != 100 && DataSource.droneStations[stationChoice].ChargeSlots > 0)
-            {
-                DataSource.droneCharges.Add(new IDAL.DO.DroneCharge(DataSource.drones[droneChoice].ID, DataSource.droneStations[stationChoice].ID));
-                DataSource.drones[droneChoice].Status = IDAL.DO.DroneStatuses.maintenance;
-                DataSource.droneStations[stationChoice].ChargeSlots--;
-            }
+            DataSource.droneCharges.Add(new IDAL.DO.DroneCharge(droneID, stationID));
+            GetActualStation(stationID).chargeSlots--;
         }
 
-        public void ReleaseDroneFromCharge(int stationChoice, int droneChoice)
+        public List<DroneCharge> GetAllCharges()
         {
-            if (droneChoice < 0 ||
-               droneChoice > DataSource.drones.Count ||
-               stationChoice < 0 ||
-               stationChoice > DataSource.droneStations.Count)
-            {
-                throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
-            }
-            for (int i = 0; i < DataSource.droneCharges.Count; i++)
-            {
-                if (DataSource.droneCharges[i].DroneId == DataSource.drones[droneChoice].ID &&
-                         DataSource.droneCharges[i].StationId == DataSource.droneStations[stationChoice].ID)
-                {
-                    DataSource.drones[droneChoice].Status = IDAL.DO.DroneStatuses.free;
-                    DataSource.droneStations[stationChoice].ChargeSlots++;
-                }
-            }
+            List<DroneCharge> newList = new();
+            DataSource.droneCharges.ForEach(dc => newList.Add(dc.Clone()));
+            return newList;
+        }
+        
+        public void ReleaseDroneFromCharge(int stationID, int droneID)
+        {
+            DataSource.droneCharges.Remove(DataSource.droneCharges.Find((dc) => {return dc.DroneId == droneID;}));
+            GetActualStation(stationID).chargeSlots++;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using DalObject;
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using IDAL.DO;
@@ -17,8 +16,7 @@ namespace ConsoleUI
         /// <param name="args">arguments passed to the CLI</param>
         static void Main(string[] args)
         {
-
-            IDAL.IdalInterface data = new DalObject.DalObject();
+            IDAL.IdalInterface data = new DalObjectNamespace.DalObject();
             bool running = true;
             while (running)
             {
@@ -95,10 +93,10 @@ namespace ConsoleUI
         {
             DisplayMenuNoOutput(new string[] { "Add Base Station", "Add Drone", "Add Customer", "Add Package", "Cancel" },
                     new Action[]{
-                        () => data.AddDroneStation(),
+                        () => data.AddStation(),
                         () => data.AddDrone(),
                         () => data.AddCustomer(),
-                        () => data.AddParcel(),
+                        () => data.AddPackage(),
                         () => {}
                     });
         }
@@ -123,7 +121,7 @@ namespace ConsoleUI
                      "Send a drone to charge", "Release a drone from charging", "Cancel"},
                      new Action[]{
                          () => data.AssignPackageToDrone(GetChoice("Please choose which package to assign:")),
-                         () => data.CollectPackageFromDrone(GetChoice("Please choose which package to collect:")),
+                         () => data.CollectPackageToDrone(GetChoice("Please choose which package to collect:")),
                          () => data.ProvidePackageToCustomer(GetChoice("Please choose which package to provide:")),
                          () => data.SendDroneToCharge(GetChoice("Please enter a drone station number:"), GetChoice("Please enter a drone number:")),
                          () => data.ReleaseDroneFromCharge(GetChoice("Please enter a drone station number:"), GetChoice("Please enter a drone number")),
@@ -133,14 +131,15 @@ namespace ConsoleUI
 
         static void DisplayOneMenu(IDAL.IdalInterface data)
         {
-            DisplayMenuWithOutput(new string[] { "Display a base station", "Display a drone", "Display a Customer", "Display a package", "Cancel" },
-                    new Func<List<DalEntity>>[]{
-                        () => data.DisplayDroneStation(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayDrone(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayCustomer(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayParcel(GetChoice()).ConvertAll(d => (DalEntity)d),
-                        () => new List<DalEntity>()
-                    });
+            //DisplayMenuWithOutput(new string[] { "Display a base station", "Display a drone", "Display a Customer", "Display a package", "Cancel" },
+            //        new Func<List<DalEntity>>[]{
+            //            () => data.GetDroneStation(GetChoice()).ConvertAll(d => (DalEntity)d),
+            //            () => data.GetDrone(GetChoice()).ConvertAll(d => (DalEntity)d),
+            //            () => data.GetCustomer(GetChoice()).ConvertAll(d => (DalEntity)d),
+            //            () => data.GetParcel(GetChoice()).ConvertAll(d => (DalEntity)d),
+            //            () => new List<DalEntity>()
+            //        });
+            throw new Exception();
         }
 
         static void DisplayAllMenu(IDAL.IdalInterface data)
@@ -148,12 +147,12 @@ namespace ConsoleUI
             // TODO: add the rest of the things
             DisplayMenuWithOutput(new string[] { "Display all base stations", "Display all drones", "Display all Customers", "Display all packages", "Display all packages not assigned to a drone", "Display all base stations with unoccupied charging stations", "Cancel" },
                     new Func<List<DalEntity>>[]{
-                        () => data.DisplayAllDroneStations().ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayAllDrones().ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayAllCustomers().ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayAllParcels().ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayAllNotAssignedParcels().ConvertAll(d => (DalEntity)d),
-                        () => data.DisplayAllUnoccupiedStations().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllStations().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllDrones().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllCustomers().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllParcels().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllNotAssignedParcels().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllUnoccupiedStations().ConvertAll(d => (DalEntity)d),
                         () => new List<DalEntity>()
                     });
         }

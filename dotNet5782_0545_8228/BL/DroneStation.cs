@@ -1,20 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DalObjectNamespace;
 
 namespace IBL
 {
     namespace BO
     {
-        public class DroneStation
+        public class Station : BLEntity
         {
-            public int ID { get; set; }
             public string name { get; set;}
             public Location location { get; set; }
             public int chargeSlots { get; set; }
             public List<Drone> chargingDrones { get; set; }
+
+            public Station(string name, Location location, int chargeSlots)
+            {
+                this.name = name;
+                this.location = location;
+                this.chargeSlots = chargeSlots; // available chargeSlots
+                this.chargingDrones = new List<Drone>(chargeSlots);
+            }
+            
+            public Station(IDAL.DO.Station station) : base(null)
+            {
+                IDAL.IdalInterface dal = DalObject.GetInstance();
+                ID = station.ID;
+                name = station.name;
+                location = new Location(station.longitude, station.latitude);
+                chargeSlots = station.chargeSlots;
+            }
             public override string ToString()
             {
                 return String.Format("ID = {0}, Name = {1}, Location = {2}, Charge Slots = {3}, Charging Drones = {4}",

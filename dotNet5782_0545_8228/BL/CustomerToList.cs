@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IBL
 {
@@ -10,9 +6,20 @@ namespace IBL
     {
         public class CustomerToList
         {
+            public CustomerToList(Customer customer)
+            {
+                ID = customer.ID;
+                name = customer.name;
+                phoneNumber = customer.phone;
+                // TODO do these package numbers
+                numberExpectedPackages = 0;
+                numberPackagesDelivered = 0;
+                numberPackagesUndelivered = 0;
+                numberReceivedPackages = 0;
+            }
             public int ID {get; set;}
             public string name { get; set; }
-            public int phoneNumber { get; set; }
+            public string phoneNumber { get; set; }
             public int numberPackagesDelivered { get; set; }
             public int numberPackagesUndelivered { get; set; }
             public int numberReceivedPackages { get; set; }

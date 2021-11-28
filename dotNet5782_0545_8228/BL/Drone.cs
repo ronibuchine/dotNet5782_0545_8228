@@ -1,53 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace IBL
 {
     namespace BO
     { 
-        public class Drone
+        public class Drone : BLEntity
         {
-            public int ID { get; set; }
-            public double battery { get; set; }
             public string model { get; set; }
-            public DroneStatuses status { get; set; }
             public WeightCategories weightCategory { get; set; }
+            public double? battery { get; set; }
+            public DroneStatuses? status { get; set; }
             public Location currentLocation { get; set; }
-
+            public PackageInTransfer packageInTransfer {get; set;}
 
             public Drone(
-                int ID,
                 string model,
-                double battery,
                 WeightCategories category,
-                DroneStatuses status,
-                Location location)
+                double? battery = null,
+                DroneStatuses? status = null,
+                Location location = null,
+                PackageInTransfer packageInTransfer = null)
             {
-                this.ID = ID;
                 this.model = model;
                 this.battery = battery;
                 this.weightCategory = category;
                 this.status = status;
                 this.currentLocation = location;
+                this.packageInTransfer = packageInTransfer;
             }
 
-            public Drone(int i, Random rand)
+            public Drone(IDAL.DO.Drone drone) : base(null)
             {
-                this.ID = i + 1;
-                this.model = "Drone_" + (i + 1).ToString();
-                this.battery = 100;
-                this.weightCategory = (IBL.BO.WeightCategories)rand.Next(Enum.GetNames(typeof(IBL.BO.WeightCategories)).Length - 1);
-                this.status = DroneStatuses.free;
-                this.currentLocation = new Location(); // TODO: fix
+                ID = drone.ID;
+                model = drone.model;
+                weightCategory = (IBL.BO.WeightCategories)drone.maxWeight;
             }
 
             public override string ToString()
             {
-                return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4}, Current Location = {5})",
-                    ID, model, battery, weightCategory.ToString(), status, currentLocation);
+                return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4}, Current Location = {5}, Package = {6})",
+                    ID, model, battery, weightCategory.ToString(), status, currentLocation, packageInTransfer);
             }
         }
     }

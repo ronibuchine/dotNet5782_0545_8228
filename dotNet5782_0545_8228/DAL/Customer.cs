@@ -4,41 +4,42 @@ namespace IDAL
 {
     namespace DO
     {
-        public class Customer : IDAL.DO.DalEntity
+        public class Customer : DalEntity
         {
-            public int ID { get; set; }
-            public string Name { get; set; }
-            public string Phone { get; set; }
-            public double Longitude { get; set; }
-            public double Latitude { get; set; }
+            public string name { get; set; }
+            public string phone { get; set; }
+            public double longitude { get; set; }
+            public double latitude { get; set; }
 
             public Customer(
                     int ID,
-                    string Name,
-                    string Phone,
-                    double Longitude,
-                    Double Latitude)
+                    string name,
+                    string phone,
+                    double longitude,
+                    Double latitude) 
+                : base(ID)
             {
-                this.ID = ID;
-                this.Name = Name;
-                this.Phone = Phone;
-                this.Longitude = Longitude;
-                this.Latitude = Latitude;
+                this.name = name;
+                this.phone = phone;
+                this.longitude = longitude;
+                this.latitude = latitude;
             }
 
-            public Customer( int i, Random rand)
+            public Customer(int ID) : base(ID)
             {
-                this.ID = i;
-                this.Name = "custName_" + i.ToString();
-                this.Phone = (i * rand.Next()).ToString();
-                this.Longitude = (rand.NextDouble() * 360) - 180;
-                this.Latitude = (rand.NextDouble() * 180) - 90;
+                Random rand = new();
+                this.name = "custName_" + ID.ToString();
+                this.phone = (ID * rand.Next(1000000,9999999)).ToString();
+                this.longitude = (rand.NextDouble() * 360) - 180;
+                this.latitude = (rand.NextDouble() * 180) - 90;
             }
+
+            public override Customer Clone() => this.MemberwiseClone() as Customer;
 
             public override string ToString()
             {
                 return String.Format("Customer(ID = {0}, Name = {1}, Phone = {2}, Longitude = {3}, Latitude = {4})",
-                        ID, Name, Phone, Longitude, Latitude);
+                        ID, name, phone, longitude, latitude);
             }
         }
     }

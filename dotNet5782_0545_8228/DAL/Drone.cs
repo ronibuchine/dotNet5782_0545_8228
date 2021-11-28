@@ -9,32 +9,29 @@ namespace IDAL
         /// </summary>
         public class Drone : IDAL.DO.DalEntity
         {
-            public int ID { get; set; }
-            public string Model { get; set; }
-            public WeightCategories MaxWeight { get; set; }
+            public string model { get; set; }
+            public WeightCategories maxWeight { get; set; }
             
 
-            public Drone(
-                    int ID,
-                    string Model,
-                    WeightCategories MaxWeight)
+            public Drone(int ID, string model, WeightCategories maxWeight) : base(ID)
             {
-                this.ID = ID;
-                this.Model = Model;
-                this.MaxWeight = MaxWeight;
+                this.model = model;
+                this.maxWeight = maxWeight;
             }
 
-            public Drone(int i, Random rand)
+            public Drone(int ID) : base(ID)
             {
-                this.ID = i + 1;
-                this.Model = "Drone_" + (i + 1).ToString();
-                this.MaxWeight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
+                Random rand = new();
+                this.model = "Drone_" + (ID + 1).ToString();
+                this.maxWeight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
             }
+
+            public override Drone Clone() => this.MemberwiseClone() as Drone;
 
             public override string ToString()
             {
                 return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4})",
-                        ID, Model, MaxWeight.ToString());
+                        ID, model, maxWeight.ToString());
             }
 
         }

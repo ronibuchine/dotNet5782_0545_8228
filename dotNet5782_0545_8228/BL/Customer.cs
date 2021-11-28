@@ -1,21 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IBL
 {
     namespace BO
     {
-        public class Customer
+        public class Customer : BLEntity
         {
-            public int ID { get; set; }
             public string name { get; set; }
-            public int phone { get; set; }
+            public string phone { get; set; }
             public Location currentLocation { get; set; }
             public List<Package> packagesFromCustomer { get; set; }
             public List<Package> packagesToCustomer { get; set; }
+
+            public Customer(string name, string phone, Location location)
+            {
+                this.name = name;
+                this.phone = phone;
+                this.currentLocation = location;
+            }
+
+            public Customer(IDAL.DO.Customer customer) : base(null)
+            {
+                ID = customer.ID;
+                name = customer.name;
+                phone = customer.phone;
+                currentLocation = new Location(customer.longitude, customer.latitude);
+                packagesFromCustomer = new();
+                packagesToCustomer = new();
+            }
+
             public override string ToString()
             {
                 return String.Format("ID = {0}, Name = {1}, Current Location = {2}, Packages from Customer = {3}, Packages to Customer = {4}}",
