@@ -14,12 +14,21 @@ namespace DalObjectNamespace
             nextID = DataSource.nextID;
         }
 
+        // for debugging/test only
+        public DalObject(Object o) 
+        {
+            DataSource.EmptyInitialize();
+            nextID = DataSource.nextID;
+            dalInstance = this;
+        }
+
         public static DalObject GetInstance()
         {
             if (dalInstance == null)
                 dalInstance = new();
             return dalInstance;
         }
+
 
         public int GetNextID() => DataSource.nextID;
 
