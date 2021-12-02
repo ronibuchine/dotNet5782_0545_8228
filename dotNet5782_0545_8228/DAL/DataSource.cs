@@ -30,9 +30,9 @@ namespace DalObjectNamespace
         internal class Config
         {
             internal static double free = 0;
-            internal static double lightWeight = 1/90;
-            internal static double midWeight = 1/80;
-            internal static double heavyWeight = 1/70;
+            internal static double lightWeight = 1d/90;
+            internal static double midWeight = 1d/80;
+            internal static double heavyWeight = 1d/70;
             internal static double chargingRate = 50; // in % per hour
             internal static int packageCount = 0;
         }
@@ -44,6 +44,14 @@ namespace DalObjectNamespace
             stations = InitializeList<IDAL.DO.Station>(MIN_DRONE_STATIONS, MAX_DRONE_STATIONS, IdalDoType.STATION);
             customers = InitializeList<IDAL.DO.Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER);
             packages = InitializeList<IDAL.DO.Package>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.PACKAGE);
+        }
+
+        public static void EmptyInitialize()
+        {
+            drones = new List<IDAL.DO.Drone>();
+            stations = new List<IDAL.DO.Station>();
+            customers = new List<IDAL.DO.Customer>();
+            packages = new List<IDAL.DO.Package>();
         }
 
         /// <summary>

@@ -19,9 +19,20 @@ namespace BLOBjectNamespace
         public IdalInterface dal { get; }
         private List<Drone> drones;
 
+        public BLOBject(Object _)
+        {
+            this.dal = new DalObject(null);
+            CommonCtor(this.dal);
+        }
+
         public BLOBject()
         {
             this.dal = DalObject.GetInstance();
+            CommonCtor(this.dal);
+        }
+
+        private void CommonCtor(IdalInterface dal)
+        {
             IBL.BO.BLEntity.nextID = dal.GetNextID();
             double[] powerConsumption = dal.PowerConsumptionRequest();
             free = powerConsumption[0];
@@ -112,7 +123,7 @@ namespace BLOBjectNamespace
             foreach (Package package in packages)
             {
                 package.receiver.packagesToCustomer.Add(package); // a bit circular
-                package.sender.packagesFromCustomer.Add(package); 
+                package.sender.packagesFromCustomer.Add(package);
             }
         }
 
