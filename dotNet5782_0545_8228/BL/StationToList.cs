@@ -4,14 +4,14 @@ namespace IBL
 {
     namespace BO
     {
-        public class BaseStationToList
+        public class StationToList
         {
-            public BaseStationToList(Station droneStation)
+            public StationToList(Station droneStation)
             {
                 ID = droneStation.ID;
                 name = droneStation.name;
                 availableChargeSlots = droneStation.chargeSlots;
-                occupiedSlots = droneStation.chargingDrones.Count;
+                occupiedSlots = droneStation.chargingDrones != null ? droneStation.chargingDrones.Count : 0;
             }
             public int ID { get; set; }
             public string name { get; set; }

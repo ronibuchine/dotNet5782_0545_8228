@@ -28,6 +28,7 @@ namespace IBL
                 name = station.name;
                 location = new Location(station.longitude, station.latitude);
                 chargeSlots = station.chargeSlots;
+                chargingDrones = new(chargeSlots);
             }
             public override string ToString()
             {

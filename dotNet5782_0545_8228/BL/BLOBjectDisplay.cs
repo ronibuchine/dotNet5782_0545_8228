@@ -6,11 +6,11 @@ namespace BLOBjectNamespace
 {
     public partial class BLOBject : IBL.IBLInterface
     {
-        public Station GetBaseStation(int ID)
+        public Station GetStation(int ID)
         {
             try
             {
-                CheckStationID(ID);
+                if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
                 Station droneStation = new Station(dal.GetStation(ID));
                 if (droneStation != null) return droneStation;
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
@@ -33,7 +33,7 @@ namespace BLOBjectNamespace
         {
             try
             {
-                CheckCustomerID(ID);
+                if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
                 Customer customer = new Customer(dal.GetCustomer(ID));
                 if (customer != null) 
                     return customer;
@@ -48,7 +48,7 @@ namespace BLOBjectNamespace
         {
             try
             {
-                CheckPackageID(ID);
+                if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
                 Package package = new Package(dal.GetPackage(ID));
                 if (package != null) return package;
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
@@ -59,9 +59,9 @@ namespace BLOBjectNamespace
             throw new Exception("UNKNOWN ERROR OCCURED. WHOOPS.");
         }
 
-        public List<BaseStationToList> GetStationList()
+        public List<StationToList> GetStationList()
         {
-            return dal.GetAllStations().ConvertAll((ds) => new BaseStationToList(new Station(ds)));
+            return dal.GetAllStations().ConvertAll((ds) => new StationToList(new Station(ds)));
         }
 
         public List<DroneToList> GetDroneList()

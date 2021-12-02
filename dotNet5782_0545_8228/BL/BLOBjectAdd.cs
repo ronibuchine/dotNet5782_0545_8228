@@ -5,7 +5,7 @@ namespace BLOBjectNamespace
 {
     public partial class BLOBject : IBL.IBLInterface
     {
-        public Station AddBaseStation(string name, Location location, int availableChargers)
+        public Station AddStation(string name, Location location, int availableChargers)
         {
             try
             {

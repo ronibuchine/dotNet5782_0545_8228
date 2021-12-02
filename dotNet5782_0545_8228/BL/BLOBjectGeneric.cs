@@ -187,33 +187,7 @@ namespace BLOBjectNamespace
             }
             return true;
         }
-        private Boolean CheckStationID(int ID)
-        {
-            if (ID < 0) throw new InvalidIDException("ERROR: ID cannot be negative");
-            foreach (IDAL.DO.Station station in dal.GetAllStations())
-            {
-                if (station.ID == ID) throw new InvalidIDException("ERROR: This entity already exists.");
-            }
-            return true;
-        }
-        private Boolean CheckCustomerID(int ID)
-        {
-            if (ID < 0) throw new InvalidIDException("ERROR: ID cannot be negative");
-            foreach (IDAL.DO.Customer customer in dal.GetAllCustomers())
-            {
-                if (customer.ID == ID) throw new InvalidIDException("ERROR: This entity already exists.");
-            }
-            return true;
-        }
-        private Boolean CheckPackageID(int ID)
-        {
-            if (ID < 0) throw new InvalidIDException("ERROR: ID cannot be negative");
-            foreach (IDAL.DO.Package package in dal.GetAllPackages())
-            {
-                if (package.ID == ID) throw new InvalidIDException("ERROR: This entity already exists.");
-            }
-            return true;
-        }
+        
 
     }
 }

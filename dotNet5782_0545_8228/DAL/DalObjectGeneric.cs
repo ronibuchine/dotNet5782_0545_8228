@@ -96,7 +96,7 @@ namespace DalObjectNamespace
                 IdalDoType type)
             where T : IDAL.DO.DalEntity
         {
-            if (list.Count + 1 > list.Capacity)
+            if (list.Count + 1 <= list.Capacity)
                 list.Add(item);
             else
                 throw new IDAL.DO.DataSourceException();
