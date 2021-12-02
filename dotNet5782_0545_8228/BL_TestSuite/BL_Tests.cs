@@ -8,21 +8,16 @@ namespace BL_TestSuite
     public class BL_Tests
     {
 
-        private T GetFirstIDFromList<T>(List<T> entityList) => entityList[0];       
-
-
-        
+               
         [Theory]
         [InlineData("model1", IBL.BO.WeightCategories.heavy)]
         public void AddGetDroneTest(string model, WeightCategories maxWeight)
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject();
-            int stationId = GetFirstIDFromList(bl.GetStationList()).ID;
+            int stationId = bl.GetStationList()[0].ID;
             Drone drone = bl.AddDrone(model, maxWeight, stationId);
             Drone d = bl.GetDrone(drone.ID);
-            Assert.True(d.battery == drone.battery && d.ID == drone.ID && d.currentLocation == drone.currentLocation, "Drone ID is incorrect");
-
-            
+            Assert.True(d.battery == drone.battery && d.ID == drone.ID && d.currentLocation == drone.currentLocation, "Assertion for AddDrone failed");            
         }
 
         [Fact]        
@@ -62,10 +57,17 @@ namespace BL_TestSuite
         }
 
         [Theory]
-        [InlineData(1, 2, IBL.BO.WeightCategories.heavy, IBL.BO.Priorities.emergency)]
-        public void AddGetPackageTest(int senderID, int receiverID, WeightCategories weight, Priorities priority)
-        {
-            Assert.True(false, "Test not yet implemented");
+        [InlineData(IBL.BO.WeightCategories.heavy, IBL.BO.Priorities.emergency)]
+        public void AddGetPackageTest(WeightCategories weight, Priorities priority)
+        {            
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject();
+            int senderID = bl.GetCustomerList()[0].ID;
+            int receiverID = bl.GetCustomerList()[1].ID;
+            Package package = bl.AddPackage(senderID, receiverID, weight, priority);
+            Package p = bl.GetPackage(package.ID);
+            Assert.True(package.ID == p.ID &&
+                package.priority == p.priority &&
+                package.weightCategory == p.weightCategory, "Assertion for AddGetPackage failed");
         }
 
         [Theory]

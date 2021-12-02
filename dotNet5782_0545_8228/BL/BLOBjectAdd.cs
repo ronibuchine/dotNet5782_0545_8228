@@ -50,7 +50,7 @@ namespace BLOBjectNamespace
         {
             try 
             {
-                if (senderID != receiverID) throw new InvalidIDException("ERROR: Sender ID cannot be the same as the receiver ID");
+                if (senderID == receiverID) throw new InvalidIDException("ERROR: Sender ID cannot be the same as the receiver ID");
                 Package package = new Package(senderID, receiverID, weight, priority);
                 package.delivered = package.scheduled = package.pickedUp = DateTime.MinValue;
                 package.requested = DateTime.Now;

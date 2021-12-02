@@ -43,9 +43,7 @@ namespace DalObjectNamespace
         /// Displays all the items in the array unconditionally
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
-        private List<T> GetAllItems<T>(List<T> list) where T : IDAL.DO.DalEntity => GetAllItems(list, AlwaysTrue);
-
-        private bool AlwaysTrue<T>(T dalStruct) where T : IDAL.DO.DalEntity => true;
+        private List<T> GetAllItems<T>(List<T> list) where T : IDAL.DO.DalEntity => GetAllItems(list, (x) => true);
 
         // Displaying one object section
 
