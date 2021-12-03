@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using static DalObjectNamespace.DalObject;
+using IDAL.DO;
 
 namespace DalObjectNamespace
 {
@@ -17,11 +18,11 @@ namespace DalObjectNamespace
         private const int MAX_PACKAGES = 5;
         private const int MAX_DRONE_CHARGES = MAX_DRONES;
 
-        public static List<IDAL.DO.Drone> drones = new List<IDAL.DO.Drone>(MAX_DRONES);
-        public static List<IDAL.DO.Station> stations = new List<IDAL.DO.Station>(MAX_DRONE_STATIONS);
-        public static List<IDAL.DO.Customer> customers = new List<IDAL.DO.Customer>(MAX_CUSTOMERS);
-        public static List<IDAL.DO.Package> packages = new List<IDAL.DO.Package>(MAX_PACKAGES);
-        public static List<IDAL.DO.DroneCharge> droneCharges = new List<IDAL.DO.DroneCharge>(MAX_DRONE_CHARGES);
+        public static List<Drone> drones = new List<Drone>(MAX_DRONES);
+        public static List<Station> stations = new List<Station>(MAX_DRONE_STATIONS);
+        public static List<Customer> customers = new List<Customer>(MAX_CUSTOMERS);
+        public static List<Package> packages = new List<Package>(MAX_PACKAGES);
+        public static List<DroneCharge> droneCharges = new List<DroneCharge>(MAX_DRONE_CHARGES);
 
         public static int nextID { get; set; } = 1;
 
@@ -40,19 +41,12 @@ namespace DalObjectNamespace
         public static void Initialize()
         {
             rand = new Random();
-            drones = InitializeList<IDAL.DO.Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE);
-            stations = InitializeList<IDAL.DO.Station>(MIN_DRONE_STATIONS, MAX_DRONE_STATIONS, IdalDoType.STATION);
-            customers = InitializeList<IDAL.DO.Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER);
-            packages = InitializeList<IDAL.DO.Package>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.PACKAGE);
+            InitializeList<Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE, drones);
+            InitializeList<Station>(MIN_DRONE_STATIONS, MAX_DRONE_STATIONS, IdalDoType.STATION, stations);
+            InitializeList<Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER, customers);
+            InitializeList<Package>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.PACKAGE, packages);
         }
-
-        public static void EmptyInitialize()
-        {
-            drones = new List<IDAL.DO.Drone>();
-            stations = new List<IDAL.DO.Station>();
-            customers = new List<IDAL.DO.Customer>();
-            packages = new List<IDAL.DO.Package>();
-        }
+        
 
         /// <summary>
         /// A factory function that returns a new DalStruct based on what type is requested
@@ -60,25 +54,25 @@ namespace DalObjectNamespace
         /// <param name="i">seed integer, generally the index in the array where the struct is stored</param>
         /// <param name="rand">A Random struct</param>
         /// <param name="type">An instance of IdalDoType</param>
-        public static IDAL.DO.DalEntity Insert(IdalDoType type)
+        public static DalEntity Insert(IdalDoType type)
         {
             switch (type)
             {
                 case IdalDoType.DRONE:
-                    return new IDAL.DO.Drone(nextID++);
+                    return new Drone(nextID++);
                 case IdalDoType.STATION:
-                    return new IDAL.DO.Station(nextID++);
+                    return new Station(nextID++);
                 case IdalDoType.CUSTOMER:
-                    return new IDAL.DO.Customer(nextID++);
+                    return new Customer(nextID++);
                 case IdalDoType.PACKAGE:
                     int randX = rand.Next(customers.Count);
                     int randY = RandomExceptX(customers.Count, randX, rand);
                     int senderID = customers[randX].ID;
                     int recieverID = customers[randY].ID;
                     int droneID = drones[rand.Next(drones.Count)].ID;
-                    return new IDAL.DO.Package(nextID++, senderID, recieverID, droneID);
+                    return new Package(nextID++, senderID, recieverID, droneID);
                 default:
-                    throw new IDAL.DO.InvalidDalObjectException();
+                    throw new InvalidDalObjectException();
             }
         }
 
@@ -100,22 +94,18 @@ namespace DalObjectNamespace
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="nextAvailableIndex">Reference to the next available index in the array</param>
         /// <param name="rand">A Random object</param>
-        private static List<T> InitializeList<T>(
+        private static void InitializeList<T>(
                 int min,
                 int max,
-                IdalDoType type)
-            where T : IDAL.DO.DalEntity
+                IdalDoType type, 
+                List<T> list)
+            where T : DalEntity
         {
-            List<T> list = new();
             int num = rand.Next(min, max + 1);
             for (int i = 0; i < num; ++i)
             {
                 list.Add((T)Insert(type));
-            }
-            return list;
+            }            
         }
-
-
-
     }
 }

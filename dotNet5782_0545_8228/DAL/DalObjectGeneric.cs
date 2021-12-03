@@ -17,7 +17,6 @@ namespace DalObjectNamespace
         // for debugging/test only
         public DalObject(Object o) 
         {
-            DataSource.EmptyInitialize();
             nextID = DataSource.nextID;
             dalInstance = this;
         }
