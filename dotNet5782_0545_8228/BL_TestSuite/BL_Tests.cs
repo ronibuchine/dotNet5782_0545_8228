@@ -117,15 +117,23 @@ namespace BL_TestSuite
         public void UpdateDroneTest(int ID, string newModel) 
         {
             // add -> update -> get -> check
-            Assert.True(false, "Test not yet implemented"); 
-            // exception testing: test faulty ID exception
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Station s = bl.AddStation("name", new Location(1,1), 5);
+            Drone d = bl.AddDrone("model", WeightCategories.heavy, s.ID);
+            bl.UpdateDrone(d.ID, "newModel");
+            d = bl.GetDrone(d.ID);
+            Assert.True(d.model == "newModel", "drone model not updated"); 
         }
 
         [Theory]
         [InlineData(1, "testname")]
         public void UpdateStationNameTest(int stationID, string stationName) 
         {
-            Assert.True(false, "Test not yet implemented"); 
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Station s = bl.AddStation("name", new Location(1,1), 5);
+            bl.UpdateStation(s.ID, "newName");
+            s = bl.GetStation(s.ID);
+            Assert.True(s.name == "newName", "station model not updated"); 
         }
 
         [Theory]
@@ -155,7 +163,12 @@ namespace BL_TestSuite
         [InlineData(1)]
         public void SendDroneToChargeTest(int droneID) 
         { 
-            Assert.True(false, "Test not yet implemented");
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            //  test for non-existent ID
+            Assert.Throws(typeof(IBL.BO.InvalidBlObjectException), () => bl.SendDroneToCharge(1));
+            Station s = bl.AddStation("station", new Location(1,1), 5);
+            Drone d = bl.AddDrone("model", WeightCategories.light, s.ID);
+            
         }
 
         [Fact]
