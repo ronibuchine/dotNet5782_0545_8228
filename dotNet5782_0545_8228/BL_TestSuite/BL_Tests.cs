@@ -112,9 +112,8 @@ namespace BL_TestSuite
 
         }
 
-        [Theory]
-        [InlineData(1, "newmodel")]
-        public void UpdateDroneTest(int ID, string newModel) 
+        [Fact]
+        public void UpdateDroneTest() 
         {
             // add -> update -> get -> check
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
@@ -125,9 +124,8 @@ namespace BL_TestSuite
             Assert.True(d.model == "newModel", "drone model not updated"); 
         }
 
-        [Theory]
-        [InlineData(1, "testname")]
-        public void UpdateStationNameTest(int stationID, string stationName) 
+        [Fact]
+        public void UpdateStationNameTest() 
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Station s = bl.AddStation("name", new Location(1,1), 5);
@@ -136,11 +134,16 @@ namespace BL_TestSuite
             Assert.True(s.name == "newName", "station model not updated"); 
         }
 
-        [Theory]
-        [InlineData(1, 5)]
-        public void UpdateStationChargersTest(int stationID, int numChargers) 
+        [Fact]
+        public void UpdateStationChargersTest() 
         {
-            Assert.True(false, "Test not yet implemented"); 
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Station s = bl.AddStation("name", new Location(1,1), 2);
+            Drone d = bl.AddDrone("droneModel", WeightCategories.heavy, s.ID);
+            bl.SendDroneToCharge(d.ID);
+            Assert.Throws(typeof(InvalidBlObjectException), () => bl.UpdateStation(s.ID, 1));
+            s = bl.GetStation(s.ID);
+            Assert.True(s.chargeSlots == 3, "station model not updated"); 
         }
 
         [Theory]

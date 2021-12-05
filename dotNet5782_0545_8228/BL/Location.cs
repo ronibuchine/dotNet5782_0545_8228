@@ -25,6 +25,11 @@ namespace IBL
                 Location other = (Location)obj;
                 return other.longitude == longitude && other.latitude == latitude;
             }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(longitude, latitude);
+            }
         }
     }
 }

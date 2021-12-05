@@ -168,11 +168,6 @@ namespace BLOBjectNamespace
             }
         }
 
-        private int GetCountChargingDrones(int stationID)
-        {
-            return dal.GetAllCharges().FindAll((c) => c.StationId == stationID).Count;
-        }
-
         private double GetMinBatteryRequired(Drone drone, Location location)
         {
             return GetDistance(location, drone.currentLocation) * GetConsumptionRate(drone.weightCategory);

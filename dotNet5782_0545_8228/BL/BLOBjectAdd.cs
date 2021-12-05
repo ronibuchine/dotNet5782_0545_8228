@@ -10,7 +10,7 @@ namespace BLOBjectNamespace
             try
             {
                 Station station = new(name, location, availableChargers);
-                dal.AddStation(new IDAL.DO.Station(station.ID,name, availableChargers,location.longitude, location.latitude));
+                dal.AddStation(new IDAL.DO.Station(station.ID, name, availableChargers, location.longitude, location.latitude));
                 return station;
             }
             catch (Exception e)
@@ -23,32 +23,40 @@ namespace BLOBjectNamespace
         {
             try
             {
+                if (GetStation(stationID).AvailableChargeSlots() > 0)
+                {
                     Random rand = new();
                     double battery = rand.NextDouble() * 20 + 20;
                     IDAL.DO.Station station = dal.GetStation(stationID);
                     Location location = new Location(station.longitude, station.latitude);
-                    Drone drone = new Drone(model, maxWeight, rand.NextDouble() * 20 + 20, DroneStatuses.maintenance, location);
-                    drones.Add(drone);
-                    dal.AddDrone(new IDAL.DO.Drone(drone.ID, model, (IDAL.DO.WeightCategories)maxWeight));
+                    Drone drone = new Drone(model, maxWeight, rand.NextDouble() * 20 + 20, DroneStatuses.free, location);
+                    drones.Add(drone); // for bl
+                    dal.AddDrone(new IDAL.DO.Drone(drone.ID, model, (IDAL.DO.WeightCategories)maxWeight)); // for dl
+                    SendDroneToCharge(drone.ID);
                     return drone;
+                }
+                else
+                {
+                    throw new OperationNotPossibleException("Station is full already");
+                }
             }
-            catch (Exception e) {throw new InvalidBlObjectException(e.Message);}
+            catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
         }
 
         public Customer AddCustomer(string name, string phone, Location location)
         {
-            try 
+            try
             {
                 Customer customer = new Customer(name, phone, location);
                 dal.AddCustomer(new IDAL.DO.Customer(customer.ID, name, phone, location.longitude, location.latitude));
                 return customer;
             }
-            catch (Exception e) {throw new InvalidBlObjectException(e.Message);}
+            catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
         }
 
         public Package AddPackage(int senderID, int receiverID, WeightCategories weight, Priorities priority)
         {
-            try 
+            try
             {
                 if (senderID == receiverID) throw new InvalidIDException("ERROR: Sender ID cannot be the same as the receiver ID");
                 Package package = new Package(senderID, receiverID, weight, priority);
@@ -67,7 +75,7 @@ namespace BLOBjectNamespace
                             DateTime.MinValue));
                 return package;
             }
-            catch (Exception e) {throw new InvalidBlObjectException(e.Message);}
+            catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
         }
     }
 }

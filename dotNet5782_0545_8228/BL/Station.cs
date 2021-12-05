@@ -17,8 +17,8 @@ namespace IBL
             {
                 this.name = name;
                 this.location = location;
-                this.chargeSlots = chargeSlots; // available chargeSlots
-                this.chargingDrones = new List<Drone>(chargeSlots);
+                this.chargeSlots = chargeSlots; // total chargeSlots
+                this.chargingDrones = new List<Drone>(chargeSlots); // currently charging drones
             }
             
             public Station(IDAL.DO.Station station) : base(null)
@@ -30,6 +30,9 @@ namespace IBL
                 chargeSlots = station.chargeSlots;
                 chargingDrones = new(chargeSlots);
             }
+
+            public int AvailableChargeSlots() =>  chargeSlots - chargingDrones.Count;
+
             public override string ToString()
             {
                 return String.Format("ID = {0}, Name = {1}, Location = {2}, Charge Slots = {3}, Charging Drones = {4}",

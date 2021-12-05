@@ -6,12 +6,12 @@ namespace IBL
     {
         public class StationToList
         {
-            public StationToList(Station droneStation)
+            public StationToList(Station station)
             {
-                ID = droneStation.ID;
-                name = droneStation.name;
-                availableChargeSlots = droneStation.chargeSlots;
-                occupiedSlots = droneStation.chargingDrones != null ? droneStation.chargingDrones.Count : 0;
+                ID = station.ID;
+                name = station.name;
+                availableChargeSlots = station.chargeSlots - station.chargingDrones.Count;
+                occupiedSlots = station.chargingDrones.Count;
             }
             public int ID { get; set; }
             public string name { get; set; }
