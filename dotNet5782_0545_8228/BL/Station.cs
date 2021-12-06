@@ -29,6 +29,9 @@ namespace IBL
                 location = new Location(station.longitude, station.latitude);
                 chargeSlots = station.chargeSlots;
                 chargingDrones = new(chargeSlots);
+                dal.GetAllCharges()
+                    .FindAll(dc => dc.StationId == ID)
+                    .ForEach(dc => chargingDrones.Add(new Drone(dal.GetDrone(dc.DroneId))));
             }
 
             public int AvailableChargeSlots() =>  chargeSlots - chargingDrones.Count;

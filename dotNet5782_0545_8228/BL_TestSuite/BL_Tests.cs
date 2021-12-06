@@ -140,15 +140,16 @@ namespace BL_TestSuite
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Station s = bl.AddStation("name", new Location(1,1), 2);
             Drone d = bl.AddDrone("droneModel", WeightCategories.heavy, s.ID);
-            bl.SendDroneToCharge(d.ID);
-            Assert.Throws(typeof(InvalidBlObjectException), () => bl.UpdateStation(s.ID, 1));
+            s = bl.GetStation(s.ID);
+            /* bl.SendDroneToCharge(d.ID); */
+            Assert.Throws(typeof(InvalidBlObjectException), () => bl.UpdateStation(s.ID, 0));
+            bl.UpdateStation(s.ID, 3);
             s = bl.GetStation(s.ID);
             Assert.True(s.chargeSlots == 3, "station model not updated"); 
         }
 
-        [Theory]
-        [InlineData(1, "testname", 5)]
-        public void UpdateStationNameChargersTest(int stationID, string stationName, int numChargers) { Assert.True(false, "Test not yet implemented"); }
+        [Fact]
+        public void UpdateStationNameChargersTest() { Assert.True(false, "Test not yet implemented"); }
 
         [Theory]
         [InlineData(1, "testname")]
