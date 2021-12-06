@@ -23,7 +23,7 @@ namespace BLOBjectNamespace
         {
             try
             {
-                if (GetStation(stationID).AvailableChargeSlots() > 0)
+                if (GetStation(stationID).chargeSlots > 0)
                 {
                     Random rand = new();
                     double battery = rand.NextDouble() * 20 + 20;

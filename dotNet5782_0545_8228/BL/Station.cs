@@ -17,7 +17,7 @@ namespace IBL
             {
                 this.name = name;
                 this.location = location;
-                this.chargeSlots = chargeSlots; // total chargeSlots
+                this.chargeSlots = chargeSlots; // available chargeSlots
                 this.chargingDrones = new List<Drone>(chargeSlots); // currently charging drones
             }
             
@@ -33,8 +33,6 @@ namespace IBL
                     .FindAll(dc => dc.StationId == ID)
                     .ForEach(dc => chargingDrones.Add(new Drone(dal.GetDrone(dc.DroneId))));
             }
-
-            public int AvailableChargeSlots() =>  chargeSlots - chargingDrones.Count;
 
             public override string ToString()
             {
