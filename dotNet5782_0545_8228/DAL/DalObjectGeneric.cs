@@ -118,5 +118,14 @@ namespace DalObjectNamespace
                 DataSource.Config.chargingRate};
             return ret;
         }
+
+        public void Clear()
+        {
+            DataSource.customers.Clear();
+            DataSource.drones.Clear();
+            DataSource.stations.Clear();
+            DataSource.packages.Clear();
+            DataSource.droneCharges.Clear();
+        }
     }
 }

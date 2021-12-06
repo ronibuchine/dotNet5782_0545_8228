@@ -160,10 +160,6 @@ namespace BL_TestSuite
         public void UpdateCustomerPhoneTest(int ID, String phone) { Assert.True(false, "Test not yet implemented"); }
 
         [Theory]
-        [InlineData(1, "testname", "0586693748")]
-        public void UpdateCustomerTest(int ID, string name, String phone) { Assert.True(false, "Test not yet implemented"); }
-
-        [Theory]
         [InlineData(1)]
         public void SendDroneToChargeTest(int droneID) 
         { 

@@ -23,6 +23,7 @@ namespace BLOBjectNamespace
         {
             this.dal = new DalObject(null);
             CommonCtor(this.dal);
+            dal.Clear();
         }
 
         public BLOBject()
@@ -193,6 +194,8 @@ namespace BLOBjectNamespace
             }
             return true;
         }
+
+       
         
 
     }
