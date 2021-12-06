@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using IBL.BO;
 using Xunit;
 
@@ -185,8 +183,6 @@ namespace BL_TestSuite
         [Fact]
         public void ReleaseDroneFromChargeTest()
         {
-            int droneID = 1;
-            DateTime chargeTime = DateTime.Now;
             Assert.True(false, "Test not yet implemented");
         }
 
