@@ -39,5 +39,7 @@ namespace IDAL
 
         public double[] PowerConsumptionRequest();
         public int GetNextID();
+
+        public void Clear();
     }
 }
