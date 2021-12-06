@@ -79,19 +79,27 @@ namespace BLOBjectNamespace
                     if (randChoice == 0) // free
                     {
                         drone.status = DroneStatuses.free;
-                        drone.currentLocation = stations[rand.Next(stations.Count)].location;
+                        List<Customer> recievingCustomers = customers.FindAll(c => c.packagesToCustomer.Count != 0);
+                        if (recievingCustomers.Count == 0)
+                        {
+                            drone.currentLocation = new Location(1,1);
+                        }
+                        else 
+                        {
+                            Customer customer = recievingCustomers[rand.Next(recievingCustomers.Count)];
+                            drone.currentLocation = customer.currentLocation;
+                        }
+                        /* drone.currentLocation = stations[rand.Next(stations.Count)].location; */
                         drone.battery = rand.NextDouble() * 20;
-
+                        Location closestStation = GetClosestStationLocation(drone.currentLocation, stations);
+                        double minRequired = GetDistance(drone.currentLocation, closestStation) * GetConsumptionRate(drone.weightCategory);
+                        drone.battery = rand.NextDouble() * (100 - minRequired);
                     }
                     else // maintenance
                     {
                         drone.status = DroneStatuses.maintenance;
-                        List<Customer> recievingCustomers = customers.FindAll(c => c.packagesToCustomer.Count != 0);
-                        Customer customer = recievingCustomers[rand.Next(recievingCustomers.Count)];
-                        drone.currentLocation = customer.currentLocation;
-                        Location closestStationLoc = GetClosestStationLocation(customer.currentLocation, stations);
-                        double minRequired = GetDistance(closestStationLoc, customer.currentLocation) * GetConsumptionRate(drone.weightCategory);
-                        drone.battery = rand.NextDouble() * (100 - minRequired);
+                        drone.currentLocation = stations[rand.Next(stations.Count - 1)].location;
+                        drone.battery = rand.NextDouble() * 20;
                     }
                 }
             }

@@ -174,11 +174,11 @@ namespace BL_TestSuite
         [InlineData(1)]
         public void SendDroneToChargeTest(int droneID) 
         { 
-            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
-            //  test for non-existent ID
-            Assert.Throws(typeof(IBL.BO.InvalidBlObjectException), () => bl.SendDroneToCharge(1));
-            Station s = bl.AddStation("station", new Location(1,1), 5);
-            Drone d = bl.AddDrone("model", WeightCategories.light, s.ID);
+            /* IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null); */
+            /* Assert.Throws(typeof(IBL.BO.InvalidBlObjectException), () => bl.SendDroneToCharge(1)); */
+            /* Station s = bl.AddStation("station", new Location(1,1), 5); */
+            /* Drone d = bl.AddDrone("model", WeightCategories.light, s.ID); */
+            Assert.True(false, "Test not yet implemented");
             
         }
 
