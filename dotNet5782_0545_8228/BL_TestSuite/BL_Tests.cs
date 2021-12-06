@@ -152,12 +152,22 @@ namespace BL_TestSuite
         public void UpdateStationNameChargersTest() { Assert.True(false, "Test not yet implemented"); }
 
         [Theory]
-        [InlineData(1, "testname")]
-        public void UpdateCustomerNameTest(int ID, string name) { Assert.True(false, "Test not yet implemented"); }
+        [InlineData("testname")]
+        public void UpdateCustomerNameTest(string name) 
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Customer customer = bl.AddCustomer("different name", "0586693748", new Location(1, 1));
+            bl.UpdateCustomerName(customer.ID, name);
+            Customer c = bl.GetCustomer(customer.ID);
+            Assert.True(c.name == name && c.ID == customer.ID, "Update customer name assertion failed!");
+        }
 
         [Theory]
         [InlineData(1, "0586693748")]
-        public void UpdateCustomerPhoneTest(int ID, String phone) { Assert.True(false, "Test not yet implemented"); }
+        public void UpdateCustomerPhoneTest(int ID, String phone)
+        {
+            Assert.True(false, "Test not yet implemented"); 
+        }
 
         [Theory]
         [InlineData(1)]
