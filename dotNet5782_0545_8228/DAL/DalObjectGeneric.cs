@@ -126,6 +126,7 @@ namespace DalObjectNamespace
             DataSource.stations.Clear();
             DataSource.packages.Clear();
             DataSource.droneCharges.Clear();
+            nextID = 1;
         }
     }
 }

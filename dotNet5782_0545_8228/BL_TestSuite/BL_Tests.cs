@@ -148,9 +148,6 @@ namespace BL_TestSuite
             Assert.True(s.chargeSlots == 3, "station model not updated"); 
         }
 
-        [Fact]
-        public void UpdateStationNameChargersTest() { Assert.True(false, "Test not yet implemented"); }
-
         [Theory]
         [InlineData("testname")]
         public void UpdateCustomerNameTest(string name) 
