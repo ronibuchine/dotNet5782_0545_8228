@@ -163,10 +163,14 @@ namespace BL_TestSuite
         }
 
         [Theory]
-        [InlineData(1, "0586693748")]
-        public void UpdateCustomerPhoneTest(int ID, String phone)
+        [InlineData("0586693748")]
+        public void UpdateCustomerPhoneTest(string phone)
         {
-            Assert.True(false, "Test not yet implemented"); 
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Customer customer = bl.AddCustomer("name", "111111111", new Location(1, 1));
+            bl.UpdateCustomerPhone(customer.ID, phone);
+            Customer c = bl.GetCustomer(customer.ID);
+            Assert.True(c.phone == phone && c.ID == customer.ID, "Update customer phone assertion failed!");
         }
 
         [Theory]
