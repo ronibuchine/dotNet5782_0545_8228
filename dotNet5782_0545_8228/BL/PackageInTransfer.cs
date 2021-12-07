@@ -1,4 +1,6 @@
 ﻿using System;
+using IDAL.DO;
+using DalObjectNamespace;
 
 namespace IBL
 {
@@ -31,6 +33,17 @@ namespace IBL
 
             public PackageInTransfer(IDAL.DO.Package package)
             { 
+                ID = package.ID;
+                weightCategory = (WeightCategories)package.weight;
+                priority = (Priorities)package.priority;
+                /* delivered????? */
+                IDAL.DO.Customer dalSender = DalObjectNamespace.DalObject.GetInstance().GetCustomer(package.senderId);
+                IDAL.DO.Customer dalReciever = DalObjectNamespace.DalObject.GetInstance().GetCustomer(package.recieverId);
+                sender = new(dalSender);
+                receiver = new(dalReciever);
+                collectionLocation = new Location(dalSender.longitude, dalSender.latitude);
+                deliveringLocation = new Location(dalReciever.longitude, dalReciever.latitude);
+                deliveryDistance = UTIL.Distances.GetDistance(collectionLocation, deliveringLocation);
             }
 
         }

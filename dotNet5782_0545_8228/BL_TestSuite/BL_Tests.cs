@@ -200,15 +200,7 @@ namespace BL_TestSuite
             Assert.Throws(typeof(IBL.BO.InvalidBlObjectException), () => bl.SendDroneToCharge(d.ID));
         }
 
-        [Fact]
-        public void RecursionIsBad()
-        {
-            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
-            Customer eli = bl.AddCustomer("eli", "222", new Location(1,1));
-            Customer roni = bl.AddCustomer("roni", "222", new Location(1,1));
-            Package p = bl.AddPackage(eli.ID, roni.ID, WeightCategories.heavy, Priorities.fast);
-            bl.GetPackage(p.ID);
-        }
+
         [Fact]
         public void NoAvailableChargersTest()
         {

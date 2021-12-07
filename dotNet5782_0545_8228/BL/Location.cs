@@ -22,8 +22,9 @@ namespace IBL
 
             public override bool Equals(object obj)
             {
-                Location other = (Location)obj;
-                return other.longitude == longitude && other.latitude == latitude;
+                return obj is Location location &&
+                       longitude == location.longitude &&
+                       latitude == location.latitude;
             }
 
             public override int GetHashCode()
