@@ -79,11 +79,11 @@ namespace BLOBjectNamespace
             return dal.GetAllPackages().ConvertAll((p) => new PackageToList(new Package(p)));
         }
 
-        public List<PackageToList> GetUnassignedPackages()
+        public List<Package> GetUnassignedPackages()
         {
-            List<PackageToList> unassignedPackages = new();
+            List<Package> unassignedPackages = new();
             dal.GetAllNotAssignedPackages()
-                .ForEach(p => unassignedPackages.Add(new PackageToList(new Package(p))));
+                .ForEach(p => unassignedPackages.Add(new Package(p)));
             return unassignedPackages;
         }
 

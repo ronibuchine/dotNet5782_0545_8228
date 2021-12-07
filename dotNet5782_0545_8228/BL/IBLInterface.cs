@@ -39,7 +39,7 @@ namespace IBL
         public List<DroneToList> GetDroneList();
         public List<CustomerToList> GetCustomerList();
         public List<PackageToList> GetPackageList();
-        public List<PackageToList> GetUnassignedPackages();
+        public List<Package> GetUnassignedPackages();
         public List<Station> GetAvailableStations();
 
         
