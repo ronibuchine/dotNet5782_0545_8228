@@ -22,8 +22,8 @@ namespace BLOBjectNamespace
         public BLOBject(Object _)
         {
             this.dal = new DalObject(null);
-            CommonCtor(this.dal);
             dal.Clear();
+            CommonCtor(this.dal);
         }
 
         public BLOBject()

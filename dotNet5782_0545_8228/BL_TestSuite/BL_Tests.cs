@@ -1,6 +1,7 @@
 using IBL.BO;
-using Xunit;
 using System.Collections.Generic;
+using System.Threading;
+using Xunit;
 
 namespace BL_TestSuite
 {
@@ -251,7 +252,7 @@ namespace BL_TestSuite
         }
 
         [Fact]
-        public void GetDroneList() 
+        public void GetDroneList()
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Station station = bl.AddStation("name", new Location(1, 1), 10);
@@ -269,7 +270,7 @@ namespace BL_TestSuite
         }
 
         [Fact]
-        public void GetCustomerList() 
+        public void GetCustomerList()
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             for (int i = 0; i < 5; i++)
@@ -286,7 +287,7 @@ namespace BL_TestSuite
         }
 
         [Fact]
-        public void GetPackageList() 
+        public void GetPackageList()
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Customer sender = bl.AddCustomer("roni", "0000000000", new Location(1, 1));
@@ -307,7 +308,7 @@ namespace BL_TestSuite
         }
 
         [Fact]
-        public void GetUnassignedPackagesTest() 
+        public void GetUnassignedPackagesTest()
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Station station = bl.AddStation("name", new(1, 1), 5);
@@ -315,13 +316,13 @@ namespace BL_TestSuite
             bl.ReleaseDroneFromCharge(drone.ID, 1);
             Customer roni = bl.AddCustomer("roni", "00000000", new(1, 1));
             Customer eli = bl.AddCustomer("eli", "00000000", new Location(2, 2));
-            Package package1 = bl.AddPackage(roni.ID, eli.ID, WeightCategories.heavy, Priorities.emergency);            
+            Package package1 = bl.AddPackage(roni.ID, eli.ID, WeightCategories.heavy, Priorities.emergency);
             bl.AssignPackageToDrone(drone.ID);
             Package package2 = bl.AddPackage(roni.ID, eli.ID, WeightCategories.heavy, Priorities.emergency);
             List<Package> unassignedPackages = bl.GetUnassignedPackages();
 
             Assert.True(unassignedPackages[0].ID == package2.ID && unassignedPackages.Count == 1, "Assertion for GetAllUnassignedPackages failed");
-            
+
         }
 
         [Fact]
