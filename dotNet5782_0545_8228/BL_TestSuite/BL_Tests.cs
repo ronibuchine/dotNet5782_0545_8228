@@ -1,5 +1,6 @@
 using IBL.BO;
 using Xunit;
+using System.Collections.Generic;
 
 namespace BL_TestSuite
 {
@@ -242,24 +243,88 @@ namespace BL_TestSuite
         [Fact]
         public void GetStationList()
         {
-            // add a bunch -> check all IDs
+            // add a bunch -> check all names
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            for (int i = 0; i < 5; i++)
+            {
+                bl.AddStation($"name_{i}", new Location(i + 1, i + 1), 5);
+            }
+            List<StationToList> list = bl.GetStationList();
+            int j = 0;
+            foreach (StationToList station in list)
+            {
+                Assert.True(station.name == $"name_{j}");
+                j++;
+            }
+        }
+
+        [Fact]
+        public void GetDroneList() 
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Station station = bl.AddStation("name", new Location(1, 1), 10);
+            for (int i = 0; i < 5; i++)
+            {
+                bl.AddDrone($"model_{i}", WeightCategories.light, station.ID);
+            }
+            List<DroneToList> list = bl.GetDroneList();
+            int j = 0;
+            foreach (DroneToList drone in list)
+            {
+                Assert.True(drone.model == $"model_{j}");
+                j++;
+            }
+        }
+
+        [Fact]
+        public void GetCustomerList() 
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            for (int i = 0; i < 5; i++)
+            {
+                bl.AddCustomer($"name_{i}", $"000000000{i}", new Location(i + 1, i + 1));
+            }
+            List<CustomerToList> list = bl.GetCustomerList();
+            int j = 0;
+            foreach (CustomerToList customer in list)
+            {
+                Assert.True(customer.name == $"name_{j}");
+                j++;
+            }
+        }
+
+        [Fact]
+        public void GetPackageList() 
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Customer sender = bl.AddCustomer("roni", "0000000000", new Location(1, 1));
+            Customer receiver = bl.AddCustomer("eli", "1111111111", new Location(2, 2));
+            List<int> idList = new(5);
+
+            for (int i = 0; i < 5; i++)
+            {
+                idList.Add(bl.AddPackage(sender.ID, receiver.ID, WeightCategories.light, Priorities.regular).ID);
+            }
+            List<PackageToList> list = bl.GetPackageList();
+            int j = 0;
+            foreach (PackageToList package in list)
+            {
+                Assert.True(package.ID == idList[j]);
+                j++;
+            }
+        }
+
+        [Fact]
+        public void GetUnassignedPackagesTest() 
+        {
             Assert.True(false, "Test not yet implemented");
         }
 
         [Fact]
-        public void GetDroneList() { Assert.True(false, "Test not yet implemented"); }
-
-        [Fact]
-        public void GetCustomerList() { Assert.True(false, "Test not yet implemented"); }
-
-        [Fact]
-        public void GetPackageList() { Assert.True(false, "Test not yet implemented"); }
-
-        [Fact]
-        public void GetUnassignedPackages() { Assert.True(false, "Test not yet implemented"); }
-
-        [Fact]
-        public void GetAvailableStations() { Assert.True(false, "Test not yet implemented"); }
+        public void GetAvailableStationsTest()
+        {
+            Assert.True(false, "Test not yet implemented"); 
+        }
 
     }
 }
