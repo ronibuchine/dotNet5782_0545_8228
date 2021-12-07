@@ -16,7 +16,7 @@ namespace BL_TestSuite
             int stationID = bl.AddStation("name", new Location(1, 1), 5).ID;
             Drone drone = bl.AddDrone(model, maxWeight, stationID);
             Drone d = bl.GetDrone(drone.ID);
-            Assert.True(d.battery == drone.battery && d.ID == drone.ID && d.currentLocation == drone.currentLocation, "Assertion for AddDrone failed");
+            Assert.True(d.ID == drone.ID, "Assertion for AddDrone failed");
 
             for (int i = 0; i < 4; i++)
             {
