@@ -12,7 +12,7 @@ namespace IBL
             public double? battery { get; set; }
             public DroneStatuses? status { get; set; }
             public Location location { get; set; }
-            public int packageNumber { get; set; }
+            public int? packageNumber { get; set; }
 
             public DroneToList(Drone drone)
             {
@@ -22,7 +22,7 @@ namespace IBL
                 battery = drone.battery;
                 status = drone.status;
                 location = drone.currentLocation;
-                packageNumber = drone.packageInTransfer.ID;
+                packageNumber = drone.packageInTransfer != null ?  drone.packageInTransfer.ID : null;
             }
             public override string ToString()
             {
