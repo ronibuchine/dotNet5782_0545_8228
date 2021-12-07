@@ -317,13 +317,32 @@ namespace BL_TestSuite
         [Fact]
         public void GetUnassignedPackagesTest() 
         {
-            Assert.True(false, "Test not yet implemented");
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Station station = bl.AddStation("name", new(1, 1), 5);
+            Drone drone = bl.AddDrone("model", WeightCategories.heavy, station.ID);
+            bl.ReleaseDroneFromCharge(drone.ID, 1);
+            Customer roni = bl.AddCustomer("roni", "00000000", new(1, 1));
+            Customer eli = bl.AddCustomer("eli", "00000000", new Location(2, 2));
+            Package package1 = bl.AddPackage(roni.ID, eli.ID, WeightCategories.heavy, Priorities.emergency);            
+            bl.AssignPackageToDrone(drone.ID);
+            Package package2 = bl.AddPackage(roni.ID, eli.ID, WeightCategories.heavy, Priorities.emergency);
+            List<Package> unassignedPackages = bl.GetUnassignedPackages();
+
+            Assert.True(unassignedPackages[0].ID == package2.ID && unassignedPackages.Count == 1, "Assertion for GetAllUnassignedPackages failed");
+            
         }
 
         [Fact]
         public void GetAvailableStationsTest()
         {
-            Assert.True(false, "Test not yet implemented"); 
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+
+            Station station1 = bl.AddStation("empty station", new Location(1, 1), 5);
+            Station station2 = bl.AddStation("full station", new(2, 2), 1);
+            Drone drone = bl.AddDrone("model", WeightCategories.heavy, station2.ID);
+
+            List<Station> availableStations = bl.GetAvailableStations();
+            Assert.True(availableStations[0].ID == station1.ID && availableStations.Count == 1, "Assertion for GetAvailableStations failed");
         }
 
     }
