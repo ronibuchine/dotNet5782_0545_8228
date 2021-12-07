@@ -7,8 +7,8 @@ namespace IBL
     {
         public class Package : BLEntity
         {
-            public Customer sender { get; set; }
-            public Customer receiver { get; set; } // TODO set this somewhere
+            public CustomerInPackage sender { get; set; }
+            public CustomerInPackage receiver { get; set; } // TODO set this somewhere
             public WeightCategories weightCategory { get; set; }
             public Priorities priority { get; set; }
             public Drone drone { get; set; }
@@ -19,8 +19,8 @@ namespace IBL
 
             public Package(int senderID, int receiverID, WeightCategories weight, Priorities priority)
             {
-                this.sender = new Customer(DalObject.GetInstance().GetCustomer(senderID));
-                this.receiver = new Customer(DalObject.GetInstance().GetCustomer(receiverID));
+                this.sender = new CustomerInPackage(DalObject.GetInstance().GetCustomer(senderID));
+                this.receiver = new CustomerInPackage(DalObject.GetInstance().GetCustomer(receiverID));
                 this.weightCategory = weight;
                 this.priority = priority;
             }
@@ -28,6 +28,8 @@ namespace IBL
             public Package(IDAL.DO.Package package) : base(null)
             {
                 ID = package.ID;
+                sender = new CustomerInPackage(DalObject.GetInstance().GetCustomer(package.senderId));
+                receiver = new CustomerInPackage(DalObject.GetInstance().GetCustomer(package.recieverId));
                 weightCategory = (IBL.BO.WeightCategories)package.weight;
                 priority = (IBL.BO.Priorities)package.priority;
                 requested = package.requested;

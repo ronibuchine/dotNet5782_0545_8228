@@ -24,7 +24,7 @@ namespace IBL
 
         // Actions
         public void SendDroneToCharge(int droneID);
-        public void ReleaseDroneFromCharge(int droneID, DateTime chargeTime);
+        public void ReleaseDroneFromCharge(int droneID, int hoursCharging);
         public void AssignPackageToDrone(int droneID);
         public void CollectPackage(int droneID);
         public void DeliverPackage(int droneID);

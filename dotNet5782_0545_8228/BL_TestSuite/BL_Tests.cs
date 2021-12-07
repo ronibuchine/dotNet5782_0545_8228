@@ -6,20 +6,20 @@ namespace BL_TestSuite
     public class BL_Tests
     {
 
-               
+
         [Theory]
         [InlineData("model1", WeightCategories.heavy)]
-        public void AddGetDroneTest( string model, WeightCategories maxWeight)
+        public void AddGetDroneTest(string model, WeightCategories maxWeight)
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
-            int stationID = bl.AddStation("name", new Location(1, 1), 5).ID;           
+            int stationID = bl.AddStation("name", new Location(1, 1), 5).ID;
             Drone drone = bl.AddDrone(model, maxWeight, stationID);
             Drone d = bl.GetDrone(drone.ID);
-            Assert.True(d.battery == drone.battery && d.ID == drone.ID && d.currentLocation == drone.currentLocation, "Assertion for AddDrone failed"); 
-            
+            Assert.True(d.battery == drone.battery && d.ID == drone.ID && d.currentLocation == drone.currentLocation, "Assertion for AddDrone failed");
+
             for (int i = 0; i < 4; i++)
             {
-                bl.AddDrone($"{model}_{i+1}", maxWeight, stationID);
+                bl.AddDrone($"{model}_{i + 1}", maxWeight, stationID);
             }
             Assert.Throws<InvalidBlObjectException>(() =>
                     {
@@ -28,8 +28,8 @@ namespace BL_TestSuite
                 );
         }
 
-        [Fact]        
-        public void AddGetStationTest() 
+        [Fact]
+        public void AddGetStationTest()
         {
             string name = "name1";
             Location location = new Location(1, 1);
@@ -37,7 +37,7 @@ namespace BL_TestSuite
 
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Station station = bl.AddStation(name, location, availableChargers);
-           
+
 
             Station s = bl.GetStation(station.ID);
             Assert.True((s.chargeSlots == station.chargeSlots &&
@@ -47,7 +47,7 @@ namespace BL_TestSuite
 
             for (int i = 0; i < 4; i++)
             {
-                bl.AddStation($"{name}_{i + 1}", new Location(i+1, i+1), availableChargers);
+                bl.AddStation($"{name}_{i + 1}", new Location(i + 1, i + 1), availableChargers);
             }
             Assert.Throws<InvalidBlObjectException>(() =>
                     {
@@ -57,7 +57,7 @@ namespace BL_TestSuite
         }
 
         [Fact]
-        public void AddGetCustomerTest() 
+        public void AddGetCustomerTest()
         {
             string name = "testname";
             string phone = "0586693748";
@@ -87,7 +87,7 @@ namespace BL_TestSuite
         [Theory]
         [InlineData(IBL.BO.WeightCategories.heavy, IBL.BO.Priorities.emergency)]
         public void AddGetPackageTest(WeightCategories weight, Priorities priority)
-        {            
+        {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             int senderID = bl.AddCustomer("name1", "123", new Location(1, 1)).ID;
             int receiverID = bl.AddCustomer("name2", "124", new Location(2, 2)).ID;
@@ -111,44 +111,44 @@ namespace BL_TestSuite
         }
 
         [Fact]
-        public void UpdateDroneTest() 
+        public void UpdateDroneTest()
         {
             // add -> update -> get -> check
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
-            Station s = bl.AddStation("name", new Location(1,1), 5);
+            Station s = bl.AddStation("name", new Location(1, 1), 5);
             Drone d = bl.AddDrone("model", WeightCategories.heavy, s.ID);
             bl.UpdateDrone(d.ID, "newModel");
             d = bl.GetDrone(d.ID);
-            Assert.True(d.model == "newModel", "drone model not updated"); 
+            Assert.True(d.model == "newModel", "drone model not updated");
         }
 
         [Fact]
-        public void UpdateStationNameTest() 
+        public void UpdateStationNameTest()
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
-            Station s = bl.AddStation("name", new Location(1,1), 5);
+            Station s = bl.AddStation("name", new Location(1, 1), 5);
             bl.UpdateStation(s.ID, "newName");
             s = bl.GetStation(s.ID);
-            Assert.True(s.name == "newName", "station model not updated"); 
+            Assert.True(s.name == "newName", "station model not updated");
         }
 
         [Fact]
-        public void UpdateStationChargersTest() 
+        public void UpdateStationChargersTest()
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
-            Station s = bl.AddStation("name", new Location(1,1), 2);
+            Station s = bl.AddStation("name", new Location(1, 1), 2);
             Drone d = bl.AddDrone("droneModel", WeightCategories.heavy, s.ID);
             s = bl.GetStation(s.ID);
             /* bl.SendDroneToCharge(d.ID); */
             Assert.Throws(typeof(InvalidBlObjectException), () => bl.UpdateStation(s.ID, 0));
             bl.UpdateStation(s.ID, 3);
             s = bl.GetStation(s.ID);
-            Assert.True(s.chargeSlots == 3, "station model not updated"); 
+            Assert.True(s.chargeSlots == 3, "station model not updated");
         }
 
         [Theory]
         [InlineData("testname")]
-        public void UpdateCustomerNameTest(string name) 
+        public void UpdateCustomerNameTest(string name)
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Customer customer = bl.AddCustomer("different name", "0586693748", new Location(1, 1));
@@ -168,18 +168,59 @@ namespace BL_TestSuite
             Assert.True(c.phone == phone && c.ID == customer.ID, "Update customer phone assertion failed!");
         }
 
-        [Theory]
-        [InlineData(1)]
-        public void SendDroneToChargeTest(int droneID) 
-        { 
-            /* IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null); */
-            /* Assert.Throws(typeof(IBL.BO.InvalidBlObjectException), () => bl.SendDroneToCharge(1)); */
-            /* Station s = bl.AddStation("station", new Location(1,1), 5); */
-            /* Drone d = bl.AddDrone("model", WeightCategories.light, s.ID); */
-            Assert.True(false, "Test not yet implemented");
-            
+        [Fact]
+        public void DroneIsTooFarAwayTest()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Station s1 = bl.AddStation("station", new Location(1, 1), 5);
+            Drone d = bl.AddDrone("model", WeightCategories.heavy, s1.ID);
+            Station s2 = bl.AddStation("station", new Location(-1, -179), 5);
+            Customer roni = bl.AddCustomer("Roni", "9999999999", new Location(1, 1));
+            Customer eli = bl.AddCustomer("Eli", "9999999999", new Location(2, 35));
+            bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.emergency);
+            bl.ReleaseDroneFromCharge(d.ID, 1);
+            bl.AssignPackageToDrone(d.ID);
+            bl.CollectPackage(d.ID);
+            bl.DeliverPackage(d.ID);
+            Assert.Throws(typeof(IBL.BO.InvalidBlObjectException), () => bl.SendDroneToCharge(d.ID));
         }
 
+        [Fact]
+        public void DroneIsNotFreeTest()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Station s1 = bl.AddStation("station", new Location(1, 1), 5);
+            Drone d = bl.AddDrone("model", WeightCategories.heavy, s1.ID);
+            Station s2 = bl.AddStation("station", new Location(-1, -179), 5);
+            bl.AddDrone("model", WeightCategories.light, s2.ID);
+            Customer roni = bl.AddCustomer("Roni", "9999999999", new Location(1, 1));
+            Customer eli = bl.AddCustomer("Eli", "9999999999", new Location(2, 35));
+            bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.emergency);
+            Assert.Throws(typeof(IBL.BO.InvalidBlObjectException), () => bl.SendDroneToCharge(d.ID));
+        }
+
+        [Fact]
+        public void RecursionIsBad()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Customer eli = bl.AddCustomer("eli", "222", new Location(1,1));
+            Customer roni = bl.AddCustomer("roni", "222", new Location(1,1));
+            Package p = bl.AddPackage(eli.ID, roni.ID, WeightCategories.heavy, Priorities.fast);
+            bl.GetPackage(p.ID);
+        }
+        [Fact]
+        public void NoAvailableChargersTest()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Station s1 = bl.AddStation("station", new Location(1, 1), 1);
+            Drone d = bl.AddDrone("model", WeightCategories.heavy, s1.ID);
+            Station s2 = bl.AddStation("station", new Location(-1, -179), 1);
+            bl.AddDrone("model", WeightCategories.light, s2.ID);
+            Customer roni = bl.AddCustomer("Roni", "9999999999", new Location(1, 1));
+            Customer eli = bl.AddCustomer("Eli", "9999999999", new Location(2, 35));
+            bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.emergency);
+            Assert.Throws(typeof(IBL.BO.InvalidBlObjectException), () => bl.SendDroneToCharge(d.ID));
+        }
         [Fact]
         public void ReleaseDroneFromChargeTest()
         {
@@ -199,7 +240,7 @@ namespace BL_TestSuite
         public void DeliverPackageTest(int droneID) { Assert.True(false, "Test not yet implemented"); }
 
         [Fact]
-        public void GetStationList() 
+        public void GetStationList()
         {
             // add a bunch -> check all IDs
             Assert.True(false, "Test not yet implemented");

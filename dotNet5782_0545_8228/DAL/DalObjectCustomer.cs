@@ -19,12 +19,7 @@ namespace DalObjectNamespace
 
         public void ProvidePackageToCustomer(int packageID)
         {
-            if (packageID < 0 || packageID > DataSource.packages.Count)
-            {
-                throw new IDAL.DO.DalObjectAccessException("Invalid index, please try again later.\n");
-            }
-            
-            DataSource.packages[packageID].delivered = DateTime.Now;
+            GetActualPackage(packageID).delivered = DateTime.Now;
         }
     }
 }

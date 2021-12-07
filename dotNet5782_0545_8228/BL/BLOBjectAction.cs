@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UTIL;
 using IBL.BO;
@@ -19,12 +20,14 @@ namespace BLOBjectNamespace
             dal.SendDroneToCharge(closestAvailable.ID, droneID);
         }
 
-        public void ReleaseDroneFromCharge(int droneID, DateTime chargeTime)
+        public void ReleaseDroneFromCharge(int droneID, int hoursCharging)
         {
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.maintenance) // is this always initialized?
                 throw new InvalidBlObjectException("Drone is not currently in maintenance");
-            drone.battery = DateTime.UtcNow.Hour * chargingRate;
+            drone.battery += hoursCharging * chargingRate;
+            if (drone.battery > 100)
+                drone.battery = 100;
             drone.status = DroneStatuses.free;
             int stationID = dal.GetAllCharges().Find((dc) => dc.DroneId == droneID).StationId;
             dal.ReleaseDroneFromCharge(stationID, droneID);
@@ -35,8 +38,8 @@ namespace BLOBjectNamespace
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.free) // is this always initialized?
                 throw new InvalidBlObjectException("Drone is not free currently");
-            
-            Package package = new(dal.GetAllPackages()
+
+            List<PackageInTransfer> packages = dal.GetAllPackages()
                 .FindAll(p => p.weight <= (IDAL.DO.WeightCategories)drone.weightCategory)
                 .OrderByDescending(p => p.priority)
                 .ThenByDescending(p => p.weight)
@@ -45,18 +48,24 @@ namespace BLOBjectNamespace
                     Location senderLocation = GetCustomer(p.senderId).currentLocation;
                     return Distances.GetDistance(senderLocation, drone.currentLocation);
                 })
-                .First());
+                .ToList()
+                .ConvertAll(p => new PackageInTransfer(p));
 
-            double distanceRequired = Distances.GetDistance(package.sender.currentLocation, drone.currentLocation) +
-                 Distances.GetDistance(package.sender.currentLocation, package.receiver.currentLocation);
-            double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
-            if (batteryRequired < 0 || batteryRequired > 100)
-                throw new Exception("Oh shit"); // TODO debug this
-            if (batteryRequired < drone.battery)
-                // really in this case it should look for some lower priority but closer package
-                throw new OperationNotPossibleException("package selected is too far away");
-            drone.status = DroneStatuses.delivery;
-            dal.AssignPackageToDrone(package.ID, droneID);
+            foreach (PackageInTransfer package in packages)
+            {
+                double a = Distances.GetDistance(package.collectionLocation, drone.currentLocation);
+                double b = Distances.GetDistance(package.collectionLocation, package.deliveringLocation);
+                double distanceRequired = a + b;
+                double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
+                /* if (batteryRequired < 0 || batteryRequired > 100) */
+                /*     throw new Exception("Oh shit"); // TODO debug this */
+                if (batteryRequired > drone.battery)
+                    continue;
+                drone.status = DroneStatuses.delivery;
+                dal.AssignPackageToDrone(package.ID, droneID);
+                return;
+            }
+            throw new OperationNotPossibleException("There is no suitable package to assign");
         }
 
         public void CollectPackage(int droneID)

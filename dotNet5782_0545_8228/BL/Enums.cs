@@ -6,7 +6,7 @@ namespace IBL
         /// <summary>
         /// Enum types for different weight categories 
         /// </summary>
-        public enum WeightCategories { heavy, medium, light };
+        public enum WeightCategories {light, medium, heavy };
         /// <summary>
         /// Enum types for potential drone statuses   
         /// </summary>

@@ -29,10 +29,10 @@ namespace BLOBjectNamespace
                     double battery = rand.NextDouble() * 20 + 20;
                     IDAL.DO.Station station = dal.GetStation(stationID);
                     Location location = new Location(station.longitude, station.latitude);
-                    Drone drone = new Drone(model, maxWeight, rand.NextDouble() * 20 + 20, DroneStatuses.free, location);
+                    Drone drone = new Drone(model, maxWeight, rand.NextDouble() * 20 + 20, DroneStatuses.maintenance, location);
                     drones.Add(drone); // for bl
                     dal.AddDrone(new IDAL.DO.Drone(drone.ID, model, (IDAL.DO.WeightCategories)maxWeight)); // for dl
-                    SendDroneToCharge(drone.ID);
+                    dal.SendDroneToCharge(stationID, drone.ID);
                     return drone;
                 }
                 else

@@ -29,7 +29,9 @@ namespace IBL
                 this.priority = package.priority;
             }
 
-            public PackageInTransfer() { }
+            public PackageInTransfer(IDAL.DO.Package package)
+            { 
+            }
 
         }
     }
