@@ -11,7 +11,7 @@ namespace IBL
             public CustomerInPackage receiver { get; set; } // TODO set this somewhere
             public WeightCategories weightCategory { get; set; }
             public Priorities priority { get; set; }
-            public Drone drone { get; set; }
+            public Drone drone { get; set; } // TODO: Change to droneinTransfer
             public DateTime requested { get; set; }
             public DateTime scheduled { get; set; }
             public DateTime pickedUp { get; set; }

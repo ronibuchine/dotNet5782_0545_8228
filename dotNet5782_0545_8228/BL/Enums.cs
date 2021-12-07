@@ -15,6 +15,6 @@ namespace IBL
         /// Enum types for different priority levels
         /// </summary>
         public enum Priorities { regular, fast, emergency };
-        public enum PackageStatuses { created, assigned, collected, delivered };
+        public enum PackageStatuses { requested, scheduled, pickedUp, delivered };
     }
 }

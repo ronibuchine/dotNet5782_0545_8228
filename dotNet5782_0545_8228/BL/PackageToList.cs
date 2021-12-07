@@ -23,11 +23,11 @@ namespace IBL
                 if (DateTime.Compare(package.delivered, DateTime.Now) > 0)
                     this.status = PackageStatuses.delivered;
                 if (DateTime.Compare(package.pickedUp, DateTime.Now) > 0)
-                    this.status = PackageStatuses.collected;
+                    this.status = PackageStatuses.pickedUp;
                 if (DateTime.Compare(package.scheduled, DateTime.Now) > 0)
-                    this.status = PackageStatuses.assigned;
+                    this.status = PackageStatuses.scheduled;
                 else
-                    this.status = PackageStatuses.created;
+                    this.status = PackageStatuses.requested;
             }
 
             public override string ToString()

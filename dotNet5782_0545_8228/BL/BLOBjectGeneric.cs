@@ -49,7 +49,7 @@ namespace BLOBjectNamespace
 
             CompleteStations(stations);
             CompletePackages(packages, customers);
-            CompleteCustomersPackageList(packages);
+            CompleteCustomersPackageList(customers, packages);
 
             // complete drones based on all other information
             Random rand = new Random();
@@ -62,15 +62,14 @@ namespace BLOBjectNamespace
                     if (DateTime.Compare(package.delivered, DateTime.Now) < 0)
                     {
                         drone.status = DroneStatuses.delivery;
-                        Location closestStationLoc = GetClosestStationLocation(package.sender.currentLocation, stations);
-                        double minRequired = GetDistance(closestStationLoc, package.sender.currentLocation) * GetConsumptionRate(drone.weightCategory);
+                        Location senderLocation = customers.Find(c => c.ID == package.sender.ID).currentLocation;
+                        Location closestStationLoc = GetClosestStationLocation(senderLocation, stations);
+                        double minRequired = GetDistance(closestStationLoc, senderLocation) * GetConsumptionRate(drone.weightCategory);
                         drone.battery = rand.NextDouble() * (100 - minRequired);
                         if (DateTime.Compare(package.pickedUp, DateTime.Now) > 0) // not collected
                             drone.currentLocation = closestStationLoc;
                         else //collected
-                            drone.currentLocation = package.sender.currentLocation;
-
-                        drone.packageInTransfer = new(package);
+                            drone.currentLocation = senderLocation;
                     }
                 }
                 else // drone has no associated package
@@ -119,20 +118,20 @@ namespace BLOBjectNamespace
             List<IDAL.DO.Package> dalPackages = dal.GetAllPackages();
             for (int i = 0; i < packages.Count; i++)
             {
-                packages[i].sender = customers.Find(c => c.ID == dalPackages[i].senderId);
-                packages[i].receiver = customers.Find(c => c.ID == dalPackages[i].recieverId);
+                packages[i].sender = new(customers.Find(c => c.ID == dalPackages[i].senderId));
+                packages[i].receiver = new(customers.Find(c => c.ID == dalPackages[i].recieverId));
                 if (dalPackages[i].droneId != 0)
                     packages[i].drone = drones.Find(d => d.ID == dalPackages[i].droneId);
             }
         }
 
-        private void CompleteCustomersPackageList(List<Package> packages)
+        private void CompleteCustomersPackageList(List<Customer> customers, List<Package> packages)
         {
             // get each sent/recieved package into the customers sent/recieved list
-            foreach (Package package in packages)
+            foreach (var customer in customers)
             {
-                package.receiver.packagesToCustomer.Add(package); // a bit circular
-                package.sender.packagesFromCustomer.Add(package);
+                customer.packagesToCustomer.AddRange(packages.FindAll(p => p.receiver.ID == customer.ID).ConvertAll(p => new PackageAtCustomer(p)));
+                customer.packagesFromCustomer.AddRange(packages.FindAll(p => p.sender.ID == customer.ID).ConvertAll(p => new PackageAtCustomer(p)));
             }
         }
 
@@ -202,9 +201,5 @@ namespace BLOBjectNamespace
             }
             return true;
         }
-
-       
-        
-
     }
 }
