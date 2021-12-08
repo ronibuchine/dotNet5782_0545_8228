@@ -301,6 +301,8 @@ namespace BL_TestSuite
             bl.ReleaseDroneFromCharge(drone.ID, 5);
             bl.AssignPackageToDrone(drone.ID);
             Assert.Throws<OperationNotPossibleException>(() => bl.DeliverPackage(drone.ID));
+            bl.CollectPackage(drone.ID);
+            bl.DeliverPackage(drone.ID);
         }
 
         [Fact]
