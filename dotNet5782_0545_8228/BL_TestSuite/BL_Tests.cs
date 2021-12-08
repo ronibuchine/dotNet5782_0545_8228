@@ -193,11 +193,6 @@ namespace BL_TestSuite
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Station s1 = bl.AddStation("station", new Location(1, 1), 5);
             Drone d = bl.AddDrone("model", WeightCategories.heavy, s1.ID);
-            Station s2 = bl.AddStation("station", new Location(-1, -179), 5);
-            bl.AddDrone("model", WeightCategories.light, s2.ID);
-            Customer roni = bl.AddCustomer("Roni", "9999999999", new Location(1, 1));
-            Customer eli = bl.AddCustomer("Eli", "9999999999", new Location(2, 35));
-            bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.emergency);
             Assert.Throws<InvalidBlObjectException>(() => bl.SendDroneToCharge(d.ID));
         }
 
@@ -207,31 +202,26 @@ namespace BL_TestSuite
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Station s1 = bl.AddStation("station", new Location(1, 1), 1);
-            Drone d = bl.AddDrone("model", WeightCategories.heavy, s1.ID);
-            Station s2 = bl.AddStation("station", new Location(-1, -179), 1);
-            bl.AddDrone("model", WeightCategories.light, s2.ID);
-            Customer roni = bl.AddCustomer("Roni", "9999999999", new Location(1, 1));
-            Customer eli = bl.AddCustomer("Eli", "9999999999", new Location(2, 35));
-            bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.emergency);
-            Assert.Throws<InvalidBlObjectException>(() => bl.SendDroneToCharge(d.ID));
+            Drone d = bl.AddDrone("model1", WeightCategories.heavy, s1.ID);
+            bl.ReleaseDroneFromCharge(d.ID, 1);
+            bl.AddDrone("model2", WeightCategories.heavy, s1.ID);
+            Assert.Throws<BlObjectAccessException>(() => bl.SendDroneToCharge(d.ID));
         }
+
         [Fact]
         public void ReleaseDroneFromChargeTest()
         {
             Assert.True(false, "Test not yet implemented");
         }
 
-        [Theory]
-        [InlineData(1)]
-        public void AssignPackageToDroneTest(int droneID) { Assert.True(false, "Test not yet implemented"); }
+        [Fact]
+        public void AssignPackageToDroneTest() { Assert.True(false, "Test not yet implemented"); }
 
-        [Theory]
-        [InlineData(1)]
-        public void CollectPackageTest(int droneID) { Assert.True(false, "Test not yet implemented"); }
+        [Fact]
+        public void CollectPackageTest() { Assert.True(false, "Test not yet implemented"); }
 
-        [Theory]
-        [InlineData(1)]
-        public void DeliverPackageTest(int droneID) { Assert.True(false, "Test not yet implemented"); }
+        [Fact]
+        public void DeliverPackageTest() { Assert.True(false, "Test not yet implemented"); }
 
         [Fact]
         public void GetStationList()
