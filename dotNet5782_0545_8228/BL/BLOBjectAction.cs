@@ -12,10 +12,10 @@ namespace BLOBjectNamespace
         {
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.free) // is this always initialized?
-                throw new InvalidBlObjectException("Drone is not free currently");
+                throw new OperationNotPossibleException("Drone is not free currently");
             Station closestAvailable = GetClosestStation(drone.currentLocation, GetAvailableStations());
             if (!CanArriveToLocation(drone, closestAvailable.location))
-                throw new InvalidBlObjectException("Drone does not have enough battery to reach closest available station");
+                throw new OperationNotPossibleException("Drone does not have enough battery to reach closest available station");
             drone.status = DroneStatuses.maintenance;
             dal.SendDroneToCharge(closestAvailable.ID, droneID);
         }
@@ -24,7 +24,7 @@ namespace BLOBjectNamespace
         {
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.maintenance) // is this always initialized?
-                throw new InvalidBlObjectException("Drone is not currently in maintenance");
+                throw new OperationNotPossibleException("Drone is not currently in maintenance");
             drone.battery += hoursCharging * chargingRate;
             if (drone.battery > 100)
                 drone.battery = 100;
@@ -37,7 +37,7 @@ namespace BLOBjectNamespace
         {
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.free) // is this always initialized?
-                throw new InvalidBlObjectException("Drone is not free currently");
+                throw new OperationNotPossibleException("Drone is not free currently");
 
             List<PackageInTransfer> packages = dal.GetAllPackages()
                 .FindAll(p => p.weight <= (IDAL.DO.WeightCategories)drone.weightCategory)
@@ -73,7 +73,7 @@ namespace BLOBjectNamespace
         {
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.delivery) // is this always initialized?
-                throw new InvalidBlObjectException("Drone is not delivering currently");
+                throw new OperationNotPossibleException("Drone is not delivering currently");
             IDAL.DO.Package dalPackage = dal.GetAllPackages().Find(p => p.droneId == droneID);
             Customer sender = new Customer(dal.GetCustomer(dalPackage.senderId));
             double distanceTraveled = Distances.GetDistance(sender.currentLocation, drone.currentLocation);
@@ -88,11 +88,11 @@ namespace BLOBjectNamespace
         {
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.delivery) // is this always initialized?
-                throw new InvalidBlObjectException("Drone is not delivering currently");
+                throw new OperationNotPossibleException("Drone is not delivering currently");
             IDAL.DO.Package dalPackage = dal.GetAllPackages().Find(p => p.droneId == droneID);
             // not a fan of this comparison. Not precise at all
             if (DateTime.Compare(dalPackage.pickedUp, DateTime.MinValue) == 0)
-                throw new InvalidBlObjectException("package has not yet been collected");
+                throw new OperationNotPossibleException("package has not yet been collected");
             Customer reciever = new Customer(dal.GetCustomer(dalPackage.recieverId));
             double distanceTraveled = Distances.GetDistance(reciever.currentLocation, drone.currentLocation);
             drone.battery -= distanceTraveled * GetConsumptionRate(drone.weightCategory);

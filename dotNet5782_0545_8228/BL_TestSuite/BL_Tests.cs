@@ -1,6 +1,7 @@
 using IBL.BO;
 using System.Collections.Generic;
 using System.Threading;
+using System;
 using Xunit;
 
 namespace BL_TestSuite
@@ -184,7 +185,7 @@ namespace BL_TestSuite
             bl.AssignPackageToDrone(d.ID);
             bl.CollectPackage(d.ID);
             bl.DeliverPackage(d.ID);
-            Assert.Throws<InvalidBlObjectException>(() => bl.SendDroneToCharge(d.ID));
+            Assert.Throws<OperationNotPossibleException>(() => bl.SendDroneToCharge(d.ID));
         }
 
         [Fact]
@@ -193,7 +194,7 @@ namespace BL_TestSuite
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Station s1 = bl.AddStation("station", new Location(1, 1), 5);
             Drone d = bl.AddDrone("model", WeightCategories.heavy, s1.ID);
-            Assert.Throws<InvalidBlObjectException>(() => bl.SendDroneToCharge(d.ID));
+            Assert.Throws<OperationNotPossibleException>(() => bl.SendDroneToCharge(d.ID));
         }
 
 
@@ -211,17 +212,96 @@ namespace BL_TestSuite
         [Fact]
         public void ReleaseDroneFromChargeTest()
         {
-            Assert.True(false, "Test not yet implemented");
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Station s1 = bl.AddStation("station", new Location(1, 1), 1);
+            Drone d = bl.AddDrone("model1", WeightCategories.heavy, s1.ID);
+            double? dronesBattery = d.battery;
+            bl.ReleaseDroneFromCharge(d.ID, 1);
+            Assert.True(dronesBattery < d.battery, "Releasing drone from charge failed, battery didn't increase");
+
         }
 
         [Fact]
-        public void AssignPackageToDroneTest() { Assert.True(false, "Test not yet implemented"); }
+        public void DroneNotInMaintenanceTest()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Station s1 = bl.AddStation("station", new Location(1, 1), 1);
+            Drone d = bl.AddDrone("model1", WeightCategories.heavy, s1.ID);
+            bl.ReleaseDroneFromCharge(d.ID, 1);
+            Assert.Throws<OperationNotPossibleException>(() => bl.ReleaseDroneFromCharge(d.ID, 1));
+        }
 
         [Fact]
-        public void CollectPackageTest() { Assert.True(false, "Test not yet implemented"); }
+        public void AssignPackageToDroneTest() { Assert.True(false, "Test not yet implemented"); } // test the sorting code snippet
 
         [Fact]
-        public void DeliverPackageTest() { Assert.True(false, "Test not yet implemented"); }
+        public void CollectPackageTest() 
+        {
+            // initialize
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Customer roni = bl.AddCustomer("roni", "00000000", new(1, 1));
+            Customer eli = bl.AddCustomer("eli", "111111111", new(2, 2));
+            Package package = bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.regular);
+            Station station = bl.AddStation("name", new(3, 3), 5);
+            Drone drone = bl.AddDrone("model", WeightCategories.medium, station.ID);
+            // perform appropriate prerequisite actions
+            bl.ReleaseDroneFromCharge(drone.ID, 5);
+            bl.AssignPackageToDrone(drone.ID);
+            DateTime oldTime = package.pickedUp;
+            // collect package and assert that the locaiton is the sender location and the pick up time is updated
+            bl.CollectPackage(drone.ID);
+            package = bl.GetPackage(package.ID);
+            Assert.True(drone.currentLocation.Equals(roni.currentLocation) && DateTime.Compare(oldTime, package.pickedUp) < 0);
+        }
+
+        [Fact]
+        public void PackageNotAbleToBeCollectedTest()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Customer roni = bl.AddCustomer("roni", "00000000", new(1, 1));
+            Customer eli = bl.AddCustomer("eli", "111111111", new(1, 1));
+            Package package = bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.regular);
+            Station station = bl.AddStation("name", new(1, 1), 5);
+            Drone drone = bl.AddDrone("model", WeightCategories.medium, station.ID);
+            Assert.Throws<OperationNotPossibleException>(() => bl.CollectPackage(drone.ID));
+            bl.ReleaseDroneFromCharge(drone.ID, 5);
+            Assert.Throws<OperationNotPossibleException>(() => bl.CollectPackage(drone.ID));
+        }
+
+        [Fact]
+        public void DeliverPackageTest() 
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Customer roni = bl.AddCustomer("roni", "00000000", new(1, 1));
+            Customer eli = bl.AddCustomer("eli", "111111111", new(1, 1));
+            Package package = bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.regular);
+            Station station = bl.AddStation("name", new(1, 1), 5);
+            Drone drone = bl.AddDrone("model", WeightCategories.medium, station.ID);
+            bl.ReleaseDroneFromCharge(drone.ID, 5);
+            bl.AssignPackageToDrone(drone.ID);
+            bl.CollectPackage(drone.ID);
+            bl.DeliverPackage(drone.ID);
+            DateTime oldTime = package.delivered;
+            package = bl.GetPackage(package.ID);
+
+            Assert.True(drone.status == DroneStatuses.free &&
+                drone.currentLocation.Equals(eli.currentLocation) &&
+                DateTime.Compare(oldTime, package.delivered) < 0, "Asseriton for Delivered package failed");
+        }
+
+        [Fact]
+        public void PackageNotAbleToBeDeliveredTest()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            Customer roni = bl.AddCustomer("roni", "00000000", new(1, 1));
+            Customer eli = bl.AddCustomer("eli", "111111111", new(1, 1));
+            Package package = bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.regular);
+            Station station = bl.AddStation("name", new(1, 1), 5);
+            Drone drone = bl.AddDrone("model", WeightCategories.medium, station.ID);            
+            bl.ReleaseDroneFromCharge(drone.ID, 5);
+            bl.AssignPackageToDrone(drone.ID);
+            Assert.Throws<OperationNotPossibleException>(() => bl.DeliverPackage(drone.ID));
+        }
 
         [Fact]
         public void GetStationList()
