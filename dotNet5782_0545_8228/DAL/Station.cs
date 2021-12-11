@@ -8,7 +8,7 @@ namespace IDAL
         /// An object representing a Drone Charging station. It contains an ID, Name, the number of remaining available charging slots and its location
         /// denoted by la
         /// </summary>
-        public class Station : IDAL.DO.DalEntity
+        public class Station : DalEntity
         {
             public string name { get; set; }
             public int chargeSlots { get; set; } // current available

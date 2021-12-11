@@ -6,7 +6,7 @@ namespace IBL
         /// <summary>
         /// Enum types for different weight categories 
         /// </summary>
-        public enum WeightCategories { heavy, medium, light };
+        public enum WeightCategories {light, medium, heavy };
         /// <summary>
         /// Enum types for potential drone statuses   
         /// </summary>
@@ -15,6 +15,6 @@ namespace IBL
         /// Enum types for different priority levels
         /// </summary>
         public enum Priorities { regular, fast, emergency };
-        public enum PackageStatuses { created, assigned, collected, delivered };
+        public enum PackageStatuses { requested, scheduled, pickedUp, delivered };
     }
 }

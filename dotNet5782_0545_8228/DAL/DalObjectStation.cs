@@ -9,13 +9,13 @@ namespace DalObjectNamespace
         public void AddStation() =>
             AddDalItem(DataSource.stations, IdalDoType.STATION);
 
-        public void AddStation(IDAL.DO.Station station) =>
+        public void AddStation(Station station) =>
             AddDalItem(DataSource.stations, station, IdalDoType.STATION);
 
         public List<Station> GetAllStations() => GetAllItems(DataSource.stations);
 
         public List<Station> GetAllUnoccupiedStations() =>
-            GetAllItems(DataSource.stations, (IDAL.DO.Station ds) => ds.chargeSlots > 0);
+            GetAllItems(DataSource.stations, (Station ds) => ds.chargeSlots > 0);
 
         public Station GetStation(int ID) => GetOneItem(DataSource.stations, ID);
 
@@ -23,7 +23,7 @@ namespace DalObjectNamespace
 
         public void SendDroneToCharge(int stationID, int droneID)
         {
-            DataSource.droneCharges.Add(new IDAL.DO.DroneCharge(droneID, stationID));
+            DataSource.droneCharges.Add(new DroneCharge(droneID, stationID));
             GetActualStation(stationID).chargeSlots--;
         }
 

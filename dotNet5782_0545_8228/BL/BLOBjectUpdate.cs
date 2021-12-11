@@ -33,7 +33,8 @@ namespace BLOBjectNamespace
 
         public void UpdateStation(int stationID, int numChargers)
         {
-            if (GetCountChargingDrones(stationID) > numChargers)
+            IBL.BO.Station s = GetStation(stationID);
+            if (s.chargingDrones.Count > numChargers)
             {
                 throw new IBL.BO.InvalidBlObjectException("There are currently more drones charging here than update request");
             }

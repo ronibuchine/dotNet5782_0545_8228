@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DalObjectNamespace;
 
 namespace IBL
 {
@@ -10,8 +11,8 @@ namespace IBL
             public string name { get; set; }
             public string phone { get; set; }
             public Location currentLocation { get; set; }
-            public List<Package> packagesFromCustomer { get; set; }
-            public List<Package> packagesToCustomer { get; set; }
+            public List<PackageAtCustomer> packagesFromCustomer { get; set; }
+            public List<PackageAtCustomer> packagesToCustomer { get; set; }
 
             public Customer(string name, string phone, Location location)
             {
@@ -26,8 +27,8 @@ namespace IBL
                 name = customer.name;
                 phone = customer.phone;
                 currentLocation = new Location(customer.longitude, customer.latitude);
-                packagesFromCustomer = new();
-                packagesToCustomer = new();
+                packagesFromCustomer = DalObject.GetInstance().GetAllPackages().FindAll(p => p.senderId == ID).ConvertAll(p => new PackageAtCustomer(p));
+                packagesToCustomer = DalObject.GetInstance().GetAllPackages().FindAll(p => p.recieverId == ID).ConvertAll(p => new PackageAtCustomer(p));
             }
 
             public override string ToString()

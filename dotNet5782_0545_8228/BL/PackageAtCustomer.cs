@@ -4,13 +4,46 @@ namespace IBL
 {
     namespace BO
     {
-        class PackageAtCustomer
+        public class PackageAtCustomer
         {
             public int ID { get; set; }
-            public double weight { get; set; }
+            public WeightCategories weight { get; set; }
             public Priorities priority { get; set; }
             public PackageStatuses status { get; set; }
-            public CustomerInPackage senderReceiver { get; set; }
+            public CustomerInPackage senderReceiver { get; set; } 
+
+            public PackageAtCustomer(IDAL.DO.Package package)
+            {
+                ID = package.ID;
+                weight = (WeightCategories)package.weight;
+                priority = (Priorities)package.priority;
+                if (DateTime.Compare(package.delivered, DateTime.Now) < 0) // has been delivered
+                    status = PackageStatuses.delivered;
+                else if (DateTime.Compare(package.pickedUp, DateTime.Now) < 0) // has been picked up
+                    status = PackageStatuses.pickedUp;
+                else if (DateTime.Compare(package.scheduled, DateTime.Now) < 0) // has been scheduled
+                    status = PackageStatuses.scheduled;
+                else // has been created
+                    status = PackageStatuses.requested;
+                // TODO assign senderReceiver
+            }
+
+            public PackageAtCustomer(Package package)
+            {
+                ID = package.ID;
+                weight = package.weightCategory;
+                priority = package.priority;
+                if (DateTime.Compare(package.delivered, DateTime.Now) < 0) // has been delivered
+                    status = PackageStatuses.delivered;
+                else if (DateTime.Compare(package.pickedUp, DateTime.Now) < 0) // has been picked up
+                    status = PackageStatuses.pickedUp;
+                else if (DateTime.Compare(package.scheduled, DateTime.Now) < 0) // has been scheduled
+                    status = PackageStatuses.scheduled;
+                else // has been created
+                    status = PackageStatuses.requested;
+                // TODO assign senderReceiver
+            }
+
             public override string ToString()
             {
                 return String.Format("ID = {0}, Weight = {1}, Priority = {2}, Package Status = {3}, Other Party = {4}",

@@ -16,7 +16,7 @@ namespace ConsoleUI
         /// <param name="args">arguments passed to the CLI</param>
         static void Main(string[] args)
         {
-            IDAL.IdalInterface data = new DalObjectNamespace.DalObject();
+            IDAL.IdalInterface data = DalObjectNamespace.DalObject.GetInstance();
             bool running = true;
             while (running)
             {
@@ -120,7 +120,7 @@ namespace ConsoleUI
             DisplayMenuNoOutput(new string[] { "Assign package to drone", "Collect package from drone", "Provide package to customer",
                      "Send a drone to charge", "Release a drone from charging", "Cancel"},
                      new Action[]{
-                         () => data.AssignPackageToDrone(GetChoice("Please choose which package to assign:")),
+                         () => data.AssignPackageToDrone(GetChoice("Please choose which package to assign:"), GetChoice("Please choose which drone to assign:")),
                          () => data.CollectPackageToDrone(GetChoice("Please choose which package to collect:")),
                          () => data.ProvidePackageToCustomer(GetChoice("Please choose which package to provide:")),
                          () => data.SendDroneToCharge(GetChoice("Please enter a drone station number:"), GetChoice("Please enter a drone number:")),
@@ -150,8 +150,8 @@ namespace ConsoleUI
                         () => data.GetAllStations().ConvertAll(d => (DalEntity)d),
                         () => data.GetAllDrones().ConvertAll(d => (DalEntity)d),
                         () => data.GetAllCustomers().ConvertAll(d => (DalEntity)d),
-                        () => data.GetAllParcels().ConvertAll(d => (DalEntity)d),
-                        () => data.GetAllNotAssignedParcels().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllPackages().ConvertAll(d => (DalEntity)d),
+                        () => data.GetAllNotAssignedPackages().ConvertAll(d => (DalEntity)d),
                         () => data.GetAllUnoccupiedStations().ConvertAll(d => (DalEntity)d),
                         () => new List<DalEntity>()
                     });

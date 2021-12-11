@@ -18,7 +18,7 @@ namespace IBL
                 this.name = name;
                 this.location = location;
                 this.chargeSlots = chargeSlots; // available chargeSlots
-                this.chargingDrones = new List<Drone>(chargeSlots);
+                this.chargingDrones = new List<Drone>(chargeSlots); // currently charging drones
             }
             
             public Station(IDAL.DO.Station station) : base(null)
@@ -28,7 +28,12 @@ namespace IBL
                 name = station.name;
                 location = new Location(station.longitude, station.latitude);
                 chargeSlots = station.chargeSlots;
+                chargingDrones = new(chargeSlots);
+                dal.GetAllCharges()
+                    .FindAll(dc => dc.StationId == ID)
+                    .ForEach(dc => chargingDrones.Add(new Drone(dal.GetDrone(dc.DroneId))));
             }
+
             public override string ToString()
             {
                 return String.Format("ID = {0}, Name = {1}, Location = {2}, Charge Slots = {3}, Charging Drones = {4}",

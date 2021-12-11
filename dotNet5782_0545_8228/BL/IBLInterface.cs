@@ -7,7 +7,7 @@ namespace IBL
     public interface IBLInterface
     {
         // Adder methods
-        public Station AddBaseStation(string name, Location location, int availableChargers);
+        public Station AddStation(string name, Location location, int availableChargers);
         public Drone AddDrone(string model, WeightCategories maxWeight, int stationID);
         public Customer AddCustomer(string name, string phone, Location location);
         public Package AddPackage(int senderID, int receiverID, WeightCategories weight, Priorities priority);
@@ -24,23 +24,25 @@ namespace IBL
 
         // Actions
         public void SendDroneToCharge(int droneID);
-        public void ReleaseDroneFromCharge(int droneID, DateTime chargeTime);
+        public void ReleaseDroneFromCharge(int droneID, int hoursCharging);
         public void AssignPackageToDrone(int droneID);
         public void CollectPackage(int droneID);
         public void DeliverPackage(int droneID);
 
 
         // Display
-        public Station GetBaseStation(int ID);
+        public Station GetStation(int ID);
         public Drone GetDrone(int ID);
         public Customer GetCustomer(int ID);
         public Package GetPackage(int ID);
-        public List<BaseStationToList> GetStationList();
+        public List<StationToList> GetStationList();
         public List<DroneToList> GetDroneList();
         public List<CustomerToList> GetCustomerList();
         public List<PackageToList> GetPackageList();
-        public List<PackageToList> GetUnassignedPackages();
+        public List<Package> GetUnassignedPackages();
         public List<Station> GetAvailableStations();
+
+        
 
     }
 }

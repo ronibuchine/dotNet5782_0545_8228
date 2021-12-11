@@ -5,7 +5,7 @@ namespace IDAL
     namespace DO
     {
         /// <summary>
-        /// a public struct object for Drones which contains all drone fields and methods
+        /// a public object for Drones which contains all drone fields and methods
         /// </summary>
         public class Drone : IDAL.DO.DalEntity
         {

@@ -19,6 +19,18 @@ namespace IBL
                 return String.Format("Longitude = {0}, Latitude = {1}",
                     longitude, latitude);
             }
+
+            public override bool Equals(object obj)
+            {
+                return obj is Location location &&
+                       longitude == location.longitude &&
+                       latitude == location.latitude;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(longitude, latitude);
+            }
         }
     }
 }

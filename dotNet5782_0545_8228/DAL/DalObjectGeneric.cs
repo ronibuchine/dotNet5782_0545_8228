@@ -14,12 +14,20 @@ namespace DalObjectNamespace
             nextID = DataSource.nextID;
         }
 
+        // for debugging/test only
+        public DalObject(Object o) 
+        {
+            nextID = DataSource.nextID;
+            dalInstance = this;
+        }
+
         public static DalObject GetInstance()
         {
             if (dalInstance == null)
                 dalInstance = new();
             return dalInstance;
         }
+
 
         public int GetNextID() => DataSource.nextID;
 
@@ -43,9 +51,7 @@ namespace DalObjectNamespace
         /// Displays all the items in the array unconditionally
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
-        private List<T> GetAllItems<T>(List<T> list) where T : IDAL.DO.DalEntity => GetAllItems(list, AlwaysTrue);
-
-        private bool AlwaysTrue<T>(T dalStruct) where T : IDAL.DO.DalEntity => true;
+        private List<T> GetAllItems<T>(List<T> list) where T : IDAL.DO.DalEntity => GetAllItems(list, (x) => true);
 
         // Displaying one object section
 
@@ -96,7 +102,7 @@ namespace DalObjectNamespace
                 IdalDoType type)
             where T : IDAL.DO.DalEntity
         {
-            if (list.Count + 1 > list.Capacity)
+            if (list.Count + 1 <= list.Capacity)
                 list.Add(item);
             else
                 throw new IDAL.DO.DataSourceException();
@@ -111,6 +117,16 @@ namespace DalObjectNamespace
                 DataSource.Config.heavyWeight,
                 DataSource.Config.chargingRate};
             return ret;
+        }
+
+        public void Clear()
+        {
+            DataSource.customers.Clear();
+            DataSource.drones.Clear();
+            DataSource.stations.Clear();
+            DataSource.packages.Clear();
+            DataSource.droneCharges.Clear();
+            nextID = 1;
         }
     }
 }
