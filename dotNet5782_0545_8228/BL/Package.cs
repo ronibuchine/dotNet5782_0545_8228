@@ -11,7 +11,7 @@ namespace IBL
             public CustomerInPackage receiver { get; set; } // TODO set this somewhere
             public WeightCategories weightCategory { get; set; }
             public Priorities priority { get; set; }
-            public Drone drone { get; set; } // TODO: Change to droneinTransfer
+            public DroneInDelivery drone { get; set; } // TODO: Change to droneinTransfer
             public DateTime requested { get; set; }
             public DateTime scheduled { get; set; }
             public DateTime pickedUp { get; set; }
@@ -32,6 +32,7 @@ namespace IBL
                 receiver = new CustomerInPackage(DalObject.GetInstance().GetCustomer(package.recieverId));
                 weightCategory = (IBL.BO.WeightCategories)package.weight;
                 priority = (IBL.BO.Priorities)package.priority;
+                drone = new DroneInDelivery(DalObject.GetInstance().GetDrone(package.droneId));
                 requested = package.requested;
                 scheduled = package.scheduled;
                 pickedUp = package.pickedUp;

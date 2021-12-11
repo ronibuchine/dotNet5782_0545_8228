@@ -57,8 +57,8 @@ namespace BLOBjectNamespace
                 double b = package.deliveryDistance;
                 double distanceRequired = a + b;
                 double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
-                /* if (batteryRequired < 0 || batteryRequired > 100) */
-                /*     throw new Exception("Oh shit"); // TODO debug this */
+                if (batteryRequired < 0)
+                    throw new Exception("Oh shit"); // TODO debug this
                 if (batteryRequired < drone.battery)
                 {
                     drone.status = DroneStatuses.delivery;

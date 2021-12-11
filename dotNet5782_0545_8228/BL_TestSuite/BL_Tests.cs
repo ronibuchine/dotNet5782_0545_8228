@@ -1,6 +1,6 @@
 using IBL.BO;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 using System;
 using Xunit;
 
@@ -232,10 +232,25 @@ namespace BL_TestSuite
         }
 
         [Fact]
-        public void AssignPackageToDroneTest() { Assert.True(false, "Test not yet implemented"); } // test the sorting code snippet
+        public void AssignPackageToDroneTest()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            var close =  bl.AddCustomer("close", "000", new Location(2, 2));
+            var kindaClose = bl.AddCustomer("kinda close", "000", new Location(3, 3));
+            var far = bl.AddCustomer("far", "000", new Location(80, 80));
+            var s = bl.AddStation("s1", new Location(1, 1), 5);
+            var drone = bl.AddDrone("model", WeightCategories.medium, s.ID);
+            bl.ReleaseDroneFromCharge(drone.ID, 1);
+            var p1 = bl.AddPackage(close.ID, kindaClose.ID, WeightCategories.light, Priorities.regular);
+            var p2 = bl.AddPackage(close.ID, kindaClose.ID, WeightCategories.heavy, Priorities.regular);
+            bl.AssignPackageToDrone(drone.ID);
+            p1 = bl.GetPackage(p1.ID);
+            Assert.True(p1.drone.ID == drone.ID);
+            Assert.True(!DateTime.Equals(p1.scheduled, DateTime.MinValue), "wrong package assigned");
+        }
 
         [Fact]
-        public void CollectPackageTest() 
+        public void CollectPackageTest()
         {
             // initialize
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
@@ -269,7 +284,7 @@ namespace BL_TestSuite
         }
 
         [Fact]
-        public void DeliverPackageTest() 
+        public void DeliverPackageTest()
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Customer roni = bl.AddCustomer("roni", "00000000", new(1, 1));
@@ -297,7 +312,7 @@ namespace BL_TestSuite
             Customer eli = bl.AddCustomer("eli", "111111111", new(1, 1));
             Package package = bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.regular);
             Station station = bl.AddStation("name", new(1, 1), 5);
-            Drone drone = bl.AddDrone("model", WeightCategories.medium, station.ID);            
+            Drone drone = bl.AddDrone("model", WeightCategories.medium, station.ID);
             bl.ReleaseDroneFromCharge(drone.ID, 5);
             bl.AssignPackageToDrone(drone.ID);
             Assert.Throws<OperationNotPossibleException>(() => bl.DeliverPackage(drone.ID));

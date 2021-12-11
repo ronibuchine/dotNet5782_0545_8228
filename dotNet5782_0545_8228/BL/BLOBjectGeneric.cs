@@ -121,7 +121,7 @@ namespace BLOBjectNamespace
                 packages[i].sender = new(customers.Find(c => c.ID == dalPackages[i].senderId));
                 packages[i].receiver = new(customers.Find(c => c.ID == dalPackages[i].recieverId));
                 if (dalPackages[i].droneId != 0)
-                    packages[i].drone = drones.Find(d => d.ID == dalPackages[i].droneId);
+                    packages[i].drone = new(drones.Find(d => d.ID == dalPackages[i].droneId));
             }
         }
 
