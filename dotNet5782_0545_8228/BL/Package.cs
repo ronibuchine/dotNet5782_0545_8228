@@ -30,9 +30,9 @@ namespace IBL
                 ID = package.ID;
                 sender = new CustomerInPackage(DalObject.GetInstance().GetCustomer(package.senderId));
                 receiver = new CustomerInPackage(DalObject.GetInstance().GetCustomer(package.recieverId));
-                weightCategory = (IBL.BO.WeightCategories)package.weight;
-                priority = (IBL.BO.Priorities)package.priority;
-                drone = new DroneInDelivery(DalObject.GetInstance().GetDrone(package.droneId));
+                weightCategory = (WeightCategories)package.weight;
+                priority = (Priorities)package.priority;
+                drone = package.droneId != 0 ? new DroneInDelivery(DalObject.GetInstance().GetDrone(package.droneId)) : null;
                 requested = package.requested;
                 scheduled = package.scheduled;
                 pickedUp = package.pickedUp;

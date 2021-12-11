@@ -232,7 +232,7 @@ namespace BL_TestSuite
         }
 
         [Fact]
-        public void AssignPackageToDroneTest()
+        public void AssignPackageWeightTest()
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             var close =  bl.AddCustomer("close", "000", new Location(2, 2));
@@ -248,6 +248,57 @@ namespace BL_TestSuite
             Assert.True(p1.drone.ID == drone.ID);
             Assert.True(!DateTime.Equals(p1.scheduled, DateTime.MinValue), "wrong package assigned");
         }
+
+        [Fact]
+        public void AssignPackagePriorityTest()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            var roni = bl.AddCustomer("roni", "000", new Location(2, 2));
+            var eli = bl.AddCustomer("eli", "000", new Location(3, 3));
+            var s = bl.AddStation("s1", new Location(1, 1), 5);
+            var drone = bl.AddDrone("model", WeightCategories.medium, s.ID);
+            bl.ReleaseDroneFromCharge(drone.ID, 1);
+            var p1 = bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.emergency);
+            bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.regular);
+            bl.AssignPackageToDrone(drone.ID);
+            p1 = bl.GetPackage(p1.ID);
+            Assert.True(p1.drone.ID == drone.ID);
+        }
+
+        [Fact]
+        public void AssignPackageWeightOrderTest()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            var close = bl.AddCustomer("close", "000", new Location(2, 2));
+            var kindaClose = bl.AddCustomer("kinda close", "000", new Location(3, 3));
+            var far = bl.AddCustomer("far", "000", new Location(80, 80));
+            var s = bl.AddStation("s1", new Location(1, 1), 5);
+            var drone = bl.AddDrone("model", WeightCategories.medium, s.ID);
+            bl.ReleaseDroneFromCharge(drone.ID, 1);
+            var p1 = bl.AddPackage(close.ID, kindaClose.ID, WeightCategories.light, Priorities.regular);
+            var p2 = bl.AddPackage(close.ID, kindaClose.ID, WeightCategories.medium, Priorities.regular);
+            bl.AssignPackageToDrone(drone.ID);
+            p2 = bl.GetPackage(p2.ID);
+            Assert.True(p2.drone.ID == drone.ID);
+        }
+
+        [Fact]
+        public void AssignPackageLocationTest()
+        {
+            IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
+            var close = bl.AddCustomer("close", "000", new Location(2, 2));
+            var kindaClose = bl.AddCustomer("kinda close", "000", new Location(3, 3));
+            var far = bl.AddCustomer("far", "000", new Location(80, 80));
+            var s = bl.AddStation("s1", new Location(1, 1), 5);
+            var drone = bl.AddDrone("model", WeightCategories.medium, s.ID);
+            bl.ReleaseDroneFromCharge(drone.ID, 1);
+            var p1 = bl.AddPackage(close.ID, kindaClose.ID, WeightCategories.light, Priorities.regular);
+            var p2 = bl.AddPackage(kindaClose.ID, close.ID, WeightCategories.light, Priorities.regular);
+            bl.AssignPackageToDrone(drone.ID);
+            p1 = bl.GetPackage(p1.ID);
+            Assert.True(p1.drone.ID == drone.ID);
+        }
+
 
         [Fact]
         public void CollectPackageTest()

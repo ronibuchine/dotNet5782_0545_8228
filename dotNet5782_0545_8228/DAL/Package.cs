@@ -47,8 +47,8 @@ namespace IDAL
                 this.senderId = senderId;
                 this.recieverId = recieverId;
                 this.droneId = droneId;
-                this.weight = (IDAL.DO.WeightCategories)rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length);
-                this.priority = (IDAL.DO.Priorities)rand.Next(Enum.GetNames(typeof(IDAL.DO.Priorities)).Length);
+                this.weight = (WeightCategories)rand.Next(Enum.GetNames(typeof(WeightCategories)).Length);
+                this.priority = (Priorities)rand.Next(Enum.GetNames(typeof(Priorities)).Length);
                 this.requested = DateTime.Now;
                 this.scheduled = DateTime.MinValue;
                 this.pickedUp = DateTime.MinValue;
