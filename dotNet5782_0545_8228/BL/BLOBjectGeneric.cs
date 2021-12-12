@@ -34,7 +34,7 @@ namespace BLOBjectNamespace
 
         private void CommonCtor(IdalInterface dal)
         {
-            IBL.BO.BLEntity.nextID = dal.GetNextID();
+            BLEntity.nextID = dal.GetNextID();
             double[] powerConsumption = dal.PowerConsumptionRequest();
             free = powerConsumption[0];
             lightWeight = powerConsumption[1];
@@ -59,14 +59,14 @@ namespace BLOBjectNamespace
                 if (package != null)
                 {
                     drone.packageInTransfer = new PackageInTransfer(package);
-                    if (DateTime.Compare(package.delivered, DateTime.Now) < 0)
+                    if (package.delivered == null)
                     {
                         drone.status = DroneStatuses.delivery;
                         Location senderLocation = customers.Find(c => c.ID == package.sender.ID).currentLocation;
                         Location closestStationLoc = GetClosestStationLocation(senderLocation, stations);
                         double minRequired = GetDistance(closestStationLoc, senderLocation) * GetConsumptionRate(drone.weightCategory);
                         drone.battery = rand.NextDouble() * (100 - minRequired);
-                        if (DateTime.Compare(package.pickedUp, DateTime.Now) > 0) // not collected
+                        if (package.pickedUp == null) // not collected
                             drone.currentLocation = closestStationLoc;
                         else //collected
                             drone.currentLocation = senderLocation;

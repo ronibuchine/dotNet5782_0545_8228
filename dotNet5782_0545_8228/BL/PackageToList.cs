@@ -20,11 +20,11 @@ namespace IBL
                 this.receiverName = package.receiver.name;
                 this.weightCategory = package.weightCategory;
                 this.priority = package.priority;
-                if (DateTime.Compare(package.delivered, DateTime.Now) > 0)
+                if (package.delivered != null)
                     this.status = PackageStatuses.delivered;
-                if (DateTime.Compare(package.pickedUp, DateTime.Now) > 0)
+                if (package.pickedUp != null)
                     this.status = PackageStatuses.pickedUp;
-                if (DateTime.Compare(package.scheduled, DateTime.Now) > 0)
+                if (package.scheduled != null)
                     this.status = PackageStatuses.scheduled;
                 else
                     this.status = PackageStatuses.requested;

@@ -60,8 +60,7 @@ namespace BLOBjectNamespace
             {
                 if (senderID == receiverID) throw new InvalidIDException("ERROR: Sender ID cannot be the same as the receiver ID");
                 Package package = new Package(senderID, receiverID, weight, priority);
-                package.delivered = package.scheduled = package.pickedUp = DateTime.MinValue;
-                package.requested = DateTime.Now;
+                package.delivered = package.scheduled = package.pickedUp = package.requested = null;
                 dal.AddPackage(new IDAL.DO.Package(
                             package.ID,
                             senderID,
@@ -70,9 +69,9 @@ namespace BLOBjectNamespace
                             (IDAL.DO.WeightCategories)weight,
                             (IDAL.DO.Priorities)priority,
                             package.requested,
-                            DateTime.MinValue,
-                            DateTime.MinValue,
-                            DateTime.MinValue));
+                            null,
+                            null,
+                            null));
                 return package;
             }
             catch (Exception e) { throw new InvalidBlObjectException(e.Message); }

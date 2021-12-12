@@ -4,17 +4,17 @@ namespace IDAL
 {
     namespace DO
     {
-        public class Package : IDAL.DO.DalEntity
+        public class Package : DalEntity
         {
             public int senderId { get; set; }
             public int recieverId { get; set; }
             public int droneId { get; set; }
             public WeightCategories weight { get; set; }
             public Priorities priority { get; set; }
-            public DateTime requested { get; set; }
-            public DateTime scheduled { get; set; }
-            public DateTime pickedUp { get; set; }
-            public DateTime delivered { get; set; }
+            public DateTime? requested { get; set; }
+            public DateTime? scheduled { get; set; }
+            public DateTime? pickedUp { get; set; }
+            public DateTime? delivered { get; set; }
 
             public Package(
                     int ID,
@@ -23,10 +23,10 @@ namespace IDAL
                     int droneId,
                     WeightCategories weight,
                     Priorities priority,
-                    DateTime requested,
-                    DateTime scheduled,
-                    DateTime pickedUp,
-                    DateTime delivered)
+                    DateTime? requested,
+                    DateTime? scheduled,
+                    DateTime? pickedUp,
+                    DateTime? delivered)
             : base(ID)
             {
                 this.senderId = senderId;
@@ -49,10 +49,10 @@ namespace IDAL
                 this.droneId = droneId;
                 this.weight = (WeightCategories)rand.Next(Enum.GetNames(typeof(WeightCategories)).Length);
                 this.priority = (Priorities)rand.Next(Enum.GetNames(typeof(Priorities)).Length);
-                this.requested = DateTime.Now;
-                this.scheduled = DateTime.MinValue;
-                this.pickedUp = DateTime.MinValue;
-                this.delivered = DateTime.MinValue;
+                this.requested = null;
+                this.scheduled = null;
+                this.pickedUp = null;
+                this.delivered = null;
             }
 
             public override Package Clone() => this.MemberwiseClone() as Package;

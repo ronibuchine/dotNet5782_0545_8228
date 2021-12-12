@@ -246,7 +246,7 @@ namespace BL_TestSuite
             bl.AssignPackageToDrone(drone.ID);
             p1 = bl.GetPackage(p1.ID);
             Assert.True(p1.drone.ID == drone.ID);
-            Assert.True(!DateTime.Equals(p1.scheduled, DateTime.MinValue), "wrong package assigned");
+            Assert.True((p1.scheduled != null), "wrong package assigned");
         }
 
         [Fact]
@@ -313,11 +313,11 @@ namespace BL_TestSuite
             // perform appropriate prerequisite actions
             bl.ReleaseDroneFromCharge(drone.ID, 5);
             bl.AssignPackageToDrone(drone.ID);
-            DateTime oldTime = package.pickedUp;
+            DateTime? oldTime = package.pickedUp;
             // collect package and assert that the locaiton is the sender location and the pick up time is updated
             bl.CollectPackage(drone.ID);
             package = bl.GetPackage(package.ID);
-            Assert.True(drone.currentLocation.Equals(roni.currentLocation) && DateTime.Compare(oldTime, package.pickedUp) < 0);
+            Assert.True(drone.currentLocation.Equals(roni.currentLocation) && package.pickedUp != null);
         }
 
         [Fact]
@@ -347,12 +347,12 @@ namespace BL_TestSuite
             bl.AssignPackageToDrone(drone.ID);
             bl.CollectPackage(drone.ID);
             bl.DeliverPackage(drone.ID);
-            DateTime oldTime = package.delivered;
+            DateTime? oldTime = package.delivered;
             package = bl.GetPackage(package.ID);
 
             Assert.True(drone.status == DroneStatuses.free &&
                 drone.currentLocation.Equals(eli.currentLocation) &&
-                DateTime.Compare(oldTime, package.delivered) < 0, "Asseriton for Delivered package failed");
+                package.delivered != null, "Asseriton for Delivered package failed");
         }
 
         [Fact]

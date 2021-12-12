@@ -91,7 +91,7 @@ namespace BLOBjectNamespace
                 throw new OperationNotPossibleException("Drone is not delivering currently");
             IDAL.DO.Package dalPackage = dal.GetAllPackages().Find(p => p.droneId == droneID);
             // not a fan of this comparison. Not precise at all
-            if (DateTime.Compare(dalPackage.pickedUp, DateTime.MinValue) == 0)
+            if (dalPackage.pickedUp == null)
                 throw new OperationNotPossibleException("package has not yet been collected");
             Customer reciever = new Customer(dal.GetCustomer(dalPackage.recieverId));
             double distanceTraveled = Distances.GetDistance(reciever.currentLocation, drone.currentLocation);

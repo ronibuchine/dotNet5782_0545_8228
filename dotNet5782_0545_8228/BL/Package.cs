@@ -8,14 +8,14 @@ namespace IBL
         public class Package : BLEntity
         {
             public CustomerInPackage sender { get; set; }
-            public CustomerInPackage receiver { get; set; } // TODO set this somewhere
+            public CustomerInPackage receiver { get; set; } 
             public WeightCategories weightCategory { get; set; }
             public Priorities priority { get; set; }
-            public DroneInDelivery drone { get; set; } // TODO: Change to droneinTransfer
-            public DateTime requested { get; set; }
-            public DateTime scheduled { get; set; }
-            public DateTime pickedUp { get; set; }
-            public DateTime delivered { get; set; }
+            public DroneInDelivery drone { get; set; } 
+            public DateTime? requested { get; set; }
+            public DateTime? scheduled { get; set; }
+            public DateTime? pickedUp { get; set; }
+            public DateTime? delivered { get; set; }
 
             public Package(int senderID, int receiverID, WeightCategories weight, Priorities priority)
             {

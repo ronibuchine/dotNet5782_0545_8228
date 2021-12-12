@@ -17,13 +17,13 @@ namespace IBL
                 ID = package.ID;
                 weight = (WeightCategories)package.weight;
                 priority = (Priorities)package.priority;
-                if (DateTime.Compare(package.delivered, DateTime.Now) < 0) // has been delivered
+                if (package.delivered != null) // has been delivered
                     status = PackageStatuses.delivered;
-                else if (DateTime.Compare(package.pickedUp, DateTime.Now) < 0) // has been picked up
+                else if (package.pickedUp != null) // has been picked up
                     status = PackageStatuses.pickedUp;
-                else if (DateTime.Compare(package.scheduled, DateTime.Now) < 0) // has been scheduled
+                else if (package.scheduled != null) // has been scheduled
                     status = PackageStatuses.scheduled;
-                else // has been created
+                else // has been assigned
                     status = PackageStatuses.requested;
                 // TODO assign senderReceiver
             }
@@ -33,11 +33,11 @@ namespace IBL
                 ID = package.ID;
                 weight = package.weightCategory;
                 priority = package.priority;
-                if (DateTime.Compare(package.delivered, DateTime.Now) < 0) // has been delivered
+                if (package.delivered != null) // has been delivered
                     status = PackageStatuses.delivered;
-                else if (DateTime.Compare(package.pickedUp, DateTime.Now) < 0) // has been picked up
+                else if (package.pickedUp != null) // has been picked up
                     status = PackageStatuses.pickedUp;
-                else if (DateTime.Compare(package.scheduled, DateTime.Now) < 0) // has been scheduled
+                else if (package.scheduled != null) // has been scheduled
                     status = PackageStatuses.scheduled;
                 else // has been created
                     status = PackageStatuses.requested;
