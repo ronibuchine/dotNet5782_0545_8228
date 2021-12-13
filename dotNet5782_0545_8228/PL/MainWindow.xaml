@@ -6,11 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="640" Width="800">
-    <Grid Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50*"></RowDefinition>
-            <RowDefinition Height="400*"></RowDefinition>
-        </Grid.RowDefinitions>
-
+    <Grid>
+        <Button Name="ShowDronesButton" Content="This is a button lol" HorizontalAlignment="Left" Margin="400,293,0,0" VerticalAlignment="Top" Click="ShowDronesButton_Click"/>
     </Grid>
 </Window>

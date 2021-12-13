@@ -11,15 +11,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IBL;
+using BLOBjectNamespace;
+using IBL.BO;
 
 namespace PL
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class DroneListWindow : Window
     {
-        public Window1()
+        public DroneListWindow(IBLInterface bl)
         {
             InitializeComponent();
         }
