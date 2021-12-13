@@ -22,9 +22,14 @@ namespace PL
     /// </summary>
     public partial class DroneListWindow : Window
     {
+
+        IBLInterface bl;
         public DroneListWindow(IBLInterface bl)
         {
+           
             InitializeComponent();
+            this.bl = bl;
+            DroneListView.ItemsSource = bl.GetDroneList();
         }
     }
 }
