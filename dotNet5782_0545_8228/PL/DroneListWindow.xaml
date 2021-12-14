@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneListWindow" Height="640" Width="800">
+        Title="DroneListWindow" Height="640" Width="800" Background="Gray">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"></RowDefinition>
@@ -18,10 +18,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="StatusSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1"/>
+            <ComboBox Name="DroneStatusSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="DroneStatusSelector_SelectionChanged"/>
             <TextBox Grid.Column="0"/>
         </Grid>
-        <ListView Grid.Row="1" x:Name="DroneListView">
+        <ListView Grid.Row="1" x:Name="DroneListView" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

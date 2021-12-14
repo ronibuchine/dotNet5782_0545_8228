@@ -88,7 +88,7 @@ namespace BLOBjectNamespace
         }
 
         public List<Station> GetAvailableStations()
-        {
+        {               
             return dal.GetAllUnoccupiedStations().ConvertAll((s) => new Station(s));
         }
     }
