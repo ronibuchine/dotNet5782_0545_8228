@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Window2" Height="450" Width="800">
-    <Grid>
-        
+        Title="Drone Setup" Height="350" Width="250">
+    <Grid Background="LightBlue">
+        <TextBox Name="ModelEntry" HorizontalAlignment="Center" Text="Enter Model" TextWrapping="Wrap" VerticalAlignment="Top" Width="133" RenderTransformOrigin="0.5,0.5" Margin="0,73,0,0">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.152"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Button Name="AddDrone" Content="Add Drone" HorizontalAlignment="Center" Margin="0,218,0,0" VerticalAlignment="Top" Width="136" Click="AddDrone_Click" Height="40"/>
+        <ComboBox Name="WeightSelection" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="136"/>
+        <ComboBox Name="StationSelection" HorizontalAlignment="Center" VerticalAlignment="Center" Width="136"/>
+
     </Grid>
 </Window>

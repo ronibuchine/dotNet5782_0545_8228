@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="640" Width="800">
-    <Grid>
-        <Button Name="ShowDronesButton" Content="This is a button lol" HorizontalAlignment="Left" Margin="400,293,0,0" VerticalAlignment="Top" Click="ShowDronesButton_Click"/>
+        Title="Xperience Drone Solutions" Height="640" Width="800">
+    <Grid >
+
+        <Image Name="XDS" Margin="285,169,295,329">
+            <Image.Source>
+                <BitmapImage DecodePixelWidth="300" UriSource="/images/XDS.png" />
+            </Image.Source>
+        </Image>
+        <Button x:Name="ShowDronesButton" 
+                Content="Click here to manage drones" 
+                HorizontalAlignment="Left" Margin="244,282,0,0" 
+                VerticalAlignment="Top" Click="ShowDronesButton_Click"
+                Height="94" Width="299"
+                FontSize="24"
+                FontFamily="Tw Cen MT"/>
+        <Image Name="Drone"
+        Margin="297,86,310,420"
+       >
+            <Image.Source
+       >
+                <BitmapImage
+        DecodePixelWidth="300" UriSource="/images/drone.png"
+      />
+            </Image.Source>
+        </Image>
     </Grid>
 </Window>

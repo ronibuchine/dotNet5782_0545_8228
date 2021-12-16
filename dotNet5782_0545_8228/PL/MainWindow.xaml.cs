@@ -29,6 +29,8 @@ namespace PL
         {
             InitializeComponent();
             bl = new BLOBject();
+            Drone.Visibility = Visibility.Visible;
+            XDS.Visibility = Visibility.Visible;
         }
 
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e)

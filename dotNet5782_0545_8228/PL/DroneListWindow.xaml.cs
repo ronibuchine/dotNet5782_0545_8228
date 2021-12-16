@@ -31,25 +31,74 @@ namespace PL
             this.bl = bl;
             DroneListView.ItemsSource = bl.GetDroneList();
             DroneStatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            DroneWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 
         private void DroneStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            List<string> selectorSource = new();
+            foreach (var item in Enum.GetValues(typeof(DroneStatuses)))
+            {
+                selectorSource.Add(item.ToString());
+            }
+            selectorSource.Add("All Drones");
             ComboBox combo = (ComboBox)sender;
-            if ((DroneStatuses)combo.SelectedItem == DroneStatuses.delivery)
+            combo.ItemsSource = selectorSource;
+            if ((string)combo.SelectedItem == "delivery")
             {
                 DroneListView.ItemsSource = bl.GetDroneList().FindAll((d) => d.status == DroneStatuses.delivery);
             }
-            if ((DroneStatuses)combo.SelectedItem == DroneStatuses.maintenance)
+            if ((string)combo.SelectedItem == "maintenance")
             {
                 DroneListView.ItemsSource = bl.GetDroneList().FindAll((d) => d.status == DroneStatuses.maintenance);
             }
-            if ((DroneStatuses)combo.SelectedItem == DroneStatuses.free)
+            if ((string)combo.SelectedItem == "free")
             {
                 DroneListView.ItemsSource = bl.GetDroneList().FindAll((d) => d.status == DroneStatuses.free);
             }
+            if ((string)combo.SelectedItem == "All Drones")
+            {
+                DroneListView.ItemsSource = bl.GetDroneList();
+            }
         }
 
-        
+        private void DroneWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<string> selectorSource = new();
+            foreach (var item in Enum.GetValues(typeof(WeightCategories)))
+            {
+                selectorSource.Add(item.ToString());
+            }
+            selectorSource.Add("All Drones");
+            ComboBox combo = (ComboBox)sender;
+            combo.ItemsSource = selectorSource;
+            if ((string)combo.SelectedItem == "light")
+            {
+                DroneListView.ItemsSource = bl.GetDroneList().FindAll((d) => d.weightCategory == WeightCategories.light);
+            }
+            if ((string)combo.SelectedItem == "medium")
+            {
+                DroneListView.ItemsSource = bl.GetDroneList().FindAll((d) => d.weightCategory == WeightCategories.medium);
+            }
+            if ((string)combo.SelectedItem == "heavy")
+            {
+                DroneListView.ItemsSource = bl.GetDroneList().FindAll((d) => d.weightCategory == WeightCategories.heavy);
+            }
+            if ((string)combo.SelectedItem == "All Drones")
+            {
+                DroneListView.ItemsSource = bl.GetDroneList();
+            }
+        }
+
+        private void AddDroneButton_Click(object sender, RoutedEventArgs e)
+        {
+            new DroneWindow(bl).Show();
+        }
+
+        private void DroneActionWindow(object sender, MouseButtonEventArgs e)
+        {
+            DroneToList drone = (DroneToList)DroneListView.SelectedItem;
+            new DroneWindow(bl, drone).Show();
+        }        
     }
 }

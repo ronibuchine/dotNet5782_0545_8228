@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneListWindow" Height="640" Width="800" Background="Gray">
+        Title="Drone List" Height="640" Width="800" Background="Gray">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
             <RowDefinition Height="400*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0">
@@ -18,10 +18,12 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="DroneStatusSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="DroneStatusSelector_SelectionChanged"/>
+            <ComboBox Name="DroneStatusSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="DroneStatusSelector_SelectionChanged" Background="Gray"/>
             <TextBox Grid.Column="0"/>
+            <Button Name="AddDroneButton" Content="Add Drone" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="200" Click="AddDroneButton_Click"/>
+            <ComboBox Name="DroneWeightSelector" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="69" Background="Gray" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
         </Grid>
-        <ListView Grid.Row="1" x:Name="DroneListView" >
+        <ListView Grid.Row="1" x:Name="DroneListView" Background="Moccasin" MouseDoubleClick="DroneActionWindow" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
