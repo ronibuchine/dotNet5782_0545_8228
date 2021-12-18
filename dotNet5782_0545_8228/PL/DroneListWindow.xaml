@@ -18,12 +18,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
+            
             <ComboBox Name="DroneStatusSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="DroneStatusSelector_SelectionChanged" Background="Gray"/>
-            <TextBox Grid.Column="0"/>
-            <Button Name="AddDroneButton" Content="Add Drone" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="200" Click="AddDroneButton_Click"/>
-            <ComboBox Name="DroneWeightSelector" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="69" Background="Gray" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+            <Button Name="AddDroneButton" Content="Add Drone" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT"/>
+            <ComboBox Name="DroneWeightSelector" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gray" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+            <Button Name="CloseButton" Content="Close" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="CloseButton_Click" FontSize="18" FontFamily="Tw Cen MT"/>
         </Grid>
-        <ListView Grid.Row="1" x:Name="DroneListView" Background="Moccasin" MouseDoubleClick="DroneActionWindow" >
+        <ListView Grid.Row="1" x:Name="DroneListView" Background="CadetBlue" MouseDoubleClick="DroneActionWindow" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

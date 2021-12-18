@@ -5,9 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Drone Setup" Height="350" Width="250">
+        Title="Drone Action Center" Height="450" Width="600">
     <Grid Background="LightBlue">
-        <TextBox Name="ModelEntry" HorizontalAlignment="Center" Text="Enter Model" TextWrapping="Wrap" VerticalAlignment="Top" Width="133" RenderTransformOrigin="0.5,0.5" Margin="0,73,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="299*"/>
+            <ColumnDefinition Width="301*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Name="ModelEntry" 
+                 HorizontalAlignment="Left" 
+                 Text="Enter Model" 
+                 TextWrapping="Wrap" 
+                 VerticalAlignment="Top" 
+                 Width="126" 
+                 RenderTransformOrigin="0.5,0.5" 
+                 Margin="237,118,0,0" 
+                 Visibility="Hidden" 
+                 Grid.ColumnSpan="2" 
+                 ContentElement.MouseEnter="ModelEntry_MouseEnter">
             <TextBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -17,9 +31,60 @@
                 </TransformGroup>
             </TextBox.RenderTransform>
         </TextBox>
-        <Button Name="AddDrone" Content="Add Drone" HorizontalAlignment="Center" Margin="0,218,0,0" VerticalAlignment="Top" Width="136" Click="AddDrone_Click" Height="40"/>
-        <ComboBox Name="WeightSelection" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="136"/>
-        <ComboBox Name="StationSelection" HorizontalAlignment="Center" VerticalAlignment="Center" Width="136"/>
+        <Button Name="AddDrone" 
+                Content="Add Drone" 
+                HorizontalAlignment="Left"  
+                VerticalAlignment="Top" Width="136" 
+                Click="AddDrone_Click" 
+                Height="20" Margin="232,237,0,0" 
+                FontFamily="Tw Cen MT" FontSize="12"
+                Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <ComboBox Name="WeightSelection" HorizontalAlignment="Left" Margin="232,195,0,0" VerticalAlignment="Top" Width="136" Visibility="Hidden" Grid.ColumnSpan="2" />
+        <ComboBox Name="StationSelection" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" Margin="232,155,0,0" Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <Button x:Name="Cancel" 
+            Content="X" 
+            HorizontalAlignment="Left"  
+            VerticalAlignment="Top" Width="24" 
+            Click="Cancel_Click" 
+            Height="23" Margin="267,10,0,0" 
+            FontFamily="Tw Cen MT" FontSize="20" FontStretch="Expanded"
+            Background="Red" Grid.Column="1"/>
+
+        <TextBox Name="UpdateDroneModelText" HorizontalAlignment="Left" Margin="103,166,0,0" Text="Enter Model" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Visibility="Hidden"/>
+        <Button Name="ModelUpdateButton" Content="Update" Grid.Column="1" HorizontalAlignment="Left" Margin="142,206,0,0" VerticalAlignment="Top" Click="ModelUpdateButton_Click" Visibility="Hidden"/>
+
+        <Grid Name="ButtonGrid" Margin="10,19,0,19" Background="LightSlateGray" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Name="DroneData" Visibility="Hidden" TextWrapping="Wrap" Grid.Row="0" FontFamily="Tw Cen MT" FontWeight="Bold" FontSize="16"/>
+            <Button Name="UpdateDroneButton" Visibility="Hidden" Content="Update Drone Model"  Grid.Row="1" FontFamily="Tw Cen MT" FontSize="16" Click="UpdateDroneButton_Click"/>
+            <Button Name="SendToChargeButton" Visibility="Hidden" Content="Send Drone to Charge"  Grid.Row="2" FontFamily="Tw Cen MT" FontSize="16" Click="SendToChargeButton_Click"/>
+            <Button Name="SendDroneForDeliveryButton" Visibility="Hidden" Content="Send Drone for Delivery"   Grid.Row="4" FontFamily="Tw Cen MT" FontSize="16" Click="SendDroneForDeliveryButton_Click"/>
+            <Button Name="CollectPackageButton" Visibility="Hidden" Content="Collect a Package"   Grid.Row="5" FontFamily="Tw Cen MT" FontSize="16" Click="CollectPackageButton_Click"/>
+            <Button Name="DeliverPackageButton" Visibility="Hidden" Content="Deliver Package"   Grid.Row="6" FontFamily="Tw Cen MT" FontSize="16" Click="DeliverPackageButton_Click"/>
+            <Button Name="ReleaseDroneFromChargeButton" Visibility="Hidden" Content="Release Drone From Charge"  Grid.Row="3" FontFamily="Tw Cen MT" FontSize="16" Click="ReleaseDroneFromChargeButton_Click"/>
+        </Grid>
+        <Image Name="DroneImage" Grid.Column="1" Margin="95,19,94,306" Stretch="Fill" Visibility="Hidden">
+            <Image.Source>
+                <BitmapImage UriSource="images/update-drone-image.png" />
+            </Image.Source>
+        </Image>
+        <TextBox Name="ChargingAmount" Visibility="Hidden" Grid.Column="1" HorizontalAlignment="Center" Margin="0,175,0,0" Text="Enter Hours Charging" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" ContentElement.MouseEnter="ChargingAmount_MouseEnter"/>
+        <Button Name="ChargingReleaseButton" Visibility="Hidden" Content="Release" Grid.Column="1" HorizontalAlignment="Center" Margin="0,216,0,0" VerticalAlignment="Top" Width="95" Click="ChargingReleaseButton_Click"/>
+
+
+
+
+
+
+
 
     </Grid>
 </Window>

@@ -91,5 +91,10 @@ namespace BLOBjectNamespace
         {               
             return dal.GetAllUnoccupiedStations().ConvertAll((s) => new Station(s));
         }
+
+        public List<DroneToList> GetSpecificDrones(Predicate<DroneToList> pred)
+        {
+            return GetDroneList().FindAll(pred);
+        }
     }
 }

@@ -41,8 +41,9 @@ namespace IBL
         public List<PackageToList> GetPackageList();
         public List<Package> GetUnassignedPackages();
         public List<Station> GetAvailableStations();
+        public List<DroneToList> GetSpecificDrones(Predicate<DroneToList> pred);
 
-        
+
 
     }
 }

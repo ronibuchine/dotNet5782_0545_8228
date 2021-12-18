@@ -6,13 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Xperience Drone Solutions" Height="640" Width="800">
-    <Grid >
-
-        <Image Name="XDS" Margin="285,169,295,329">
-            <Image.Source>
-                <BitmapImage DecodePixelWidth="300" UriSource="/images/XDS.png" />
-            </Image.Source>
-        </Image>
+    <Grid Background="CadetBlue">
         <Button x:Name="ShowDronesButton" 
                 Content="Click here to manage drones" 
                 HorizontalAlignment="Left" Margin="244,282,0,0" 
@@ -20,14 +14,14 @@
                 Height="94" Width="299"
                 FontSize="24"
                 FontFamily="Tw Cen MT"/>
-        <Image Name="Drone"
-        Margin="297,86,310,420"
-       >
-            <Image.Source
-       >
-                <BitmapImage
-        DecodePixelWidth="300" UriSource="/images/drone.png"
-      />
+        <Image Name="XDS" Margin="288,76,302,255" Visibility="Visible">
+            <Image.Source>
+                <BitmapImage UriSource="images/XDS.png"/>
+            </Image.Source>
+        </Image>
+        <Image Name="Drone" Margin="318,42,332,461" Visibility="Visible">
+            <Image.Source>
+                <BitmapImage UriSource="images/drone.png"/>
             </Image.Source>
         </Image>
     </Grid>
