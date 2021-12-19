@@ -41,8 +41,8 @@ namespace IBL
                 return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4}, Current Location = {5}, Package = {6})",
                     ID, model, battery, weightCategory.ToString(),
                     status,
-                    currentLocation == null ? currentLocation.ToString() : "null",
-                    packageInTransfer == null ? packageInTransfer.ToString() : "null");
+                    currentLocation != null ? currentLocation.ToString() : "null",
+                    packageInTransfer != null ? packageInTransfer.ToString() : "null");
             }
         }
     }
