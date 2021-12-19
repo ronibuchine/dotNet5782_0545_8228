@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
-    <Grid>
-        
+        Title="Drone List" Height="640" Width="800" Background="Gray">
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="400*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            
+            <ComboBox Name="DroneStatusSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="DroneStatusSelector_SelectionChanged" Background="Gray"/>
+            <Button Name="AddDroneButton" Content="Add Drone" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT"/>
+            <ComboBox Name="DroneWeightSelector" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gray" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+            <Button Name="CloseButton" Content="Close" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="CloseButton_Click" FontSize="18" FontFamily="Tw Cen MT"/>
+        </Grid>
+        <ListView Grid.Row="1" x:Name="DroneListView" Background="CadetBlue" MouseDoubleClick="DroneActionWindow" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
     </Grid>
 </Window>

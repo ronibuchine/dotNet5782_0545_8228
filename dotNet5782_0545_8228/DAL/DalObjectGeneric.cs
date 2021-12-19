@@ -66,7 +66,7 @@ namespace DalObjectNamespace
             if (ret != null)
                 return (T)ret.Clone();
             else
-                throw new IDAL.DO.InvalidDalObjectException();
+                throw new IDAL.DO.InvalidDalObjectException("There was an issue retrieving the entity.");
         }
         
         private T GetActualOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
@@ -77,7 +77,7 @@ namespace DalObjectNamespace
             if (ret != null)
                 return (T)ret;
             else
-                throw new IDAL.DO.InvalidDalObjectException();
+                throw new IDAL.DO.InvalidDalObjectException("There was an issue retrieving the entity.");
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace DalObjectNamespace
             if (list.Count + 1 > list.Capacity)
                 list.Add((T)DataSource.Insert(type));
             else
-                throw new IDAL.DO.DataSourceException();
+                throw new IDAL.DO.DataSourceException("The entity could not be added to the system.");
         }
 
         private void AddDalItem<T>(
@@ -105,7 +105,7 @@ namespace DalObjectNamespace
             if (list.Count + 1 <= list.Capacity)
                 list.Add(item);
             else
-                throw new IDAL.DO.DataSourceException();
+                throw new IDAL.DO.DataSourceException("The entity could not be added to the system.");
         }
 
         public double[] PowerConsumptionRequest()

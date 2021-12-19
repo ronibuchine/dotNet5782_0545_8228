@@ -7,15 +7,15 @@ namespace DalObjectNamespace
 {
     internal class DataSource
     {
-        private const int MIN_DRONES = 2;
-        private const int MIN_DRONE_STATIONS = 2;
-        private const int MIN_CUSTOMERS = 2;
-        private const int MIN_PACKAGES = 2;
+        private const int MIN_DRONES = 5;
+        private const int MIN_DRONE_STATIONS = 5;
+        private const int MIN_CUSTOMERS = 5;
+        private const int MIN_PACKAGES = 5;
 
-        private const int MAX_DRONES = 5;
-        private const int MAX_DRONE_STATIONS = 5;
-        private const int MAX_CUSTOMERS = 5;
-        private const int MAX_PACKAGES = 5;
+        private const int MAX_DRONES = 10;
+        private const int MAX_DRONE_STATIONS = 10;
+        private const int MAX_CUSTOMERS = 10;
+        private const int MAX_PACKAGES = 10;
         private const int MAX_DRONE_CHARGES = MAX_DRONES;
 
         public static List<Drone> drones = new List<Drone>(MAX_DRONES);
@@ -31,10 +31,10 @@ namespace DalObjectNamespace
         internal class Config
         {
             internal static double free = 0;
-            internal static double lightWeight = 1d/90;
-            internal static double midWeight = 1d/80;
-            internal static double heavyWeight = 1d/70;
-            internal static double chargingRate = 50; // in % per hour
+            internal static double lightWeight = 1d/480;
+            internal static double midWeight = 1d/450;
+            internal static double heavyWeight = 1d/420;
+            internal static double chargingRate = 10; // in % per hour
             internal static int packageCount = 0;
         }
 
