@@ -82,7 +82,61 @@ namespace BLOBjectNamespace
                         }
 
                         double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
-                        drone.battery = rand.NextDouble() * (100 - batteryRequired);
+                async void CommonCtor(IdalInterface dal)
+        {
+            BLEntity.nextID = dal.GetNextID();
+            double[] powerConsumption = dal.PowerConsumptionRequest();
+            free = powerConsumption[0];
+            lightWeight = powerConsumption[1];
+            midWeight = powerConsumption[2];
+            heavyWeight = powerConsumption[3];
+            chargingRate = powerConsumption[4];
+
+            drones = dal.GetAllDrones().ConvertAll(d => new Drone(d));
+            List<Package> packages = dal.GetAllPackages().ConvertAll(p => new Package(p));
+            List<Customer> customers = dal.GetAllCustomers().ConvertAll(c => new Customer(c));
+            List<Station> stations = dal.GetAllStations().ConvertAll(s => new Station(s));
+
+            CompleteStations(stations);
+            CompletePackages(packages, customers);
+            CompleteCustomersPackageList(customers, packages);
+
+            // complete drones based on all other information
+            Random rand = new Random();
+            foreach (Drone drone in drones)
+            {
+                Package package = packages.Find(p => p.drone != null && p.drone.ID == drone.ID);
+                if (package != null)
+                {
+                    PackageInTransfer packageInTransfer = new(package);
+                    drone.packageInTransfer = packageInTransfer;
+                    if (package.delivered == null)
+                    {
+                        drone.status = DroneStatuses.delivery;
+
+                        Location senderLocation = customers.Find(c => c.ID == package.sender.ID).currentLocation;
+                        Location closestStationLoc = GetClosestStationLocation(senderLocation, stations);
+
+                        Location closestStationToDelivery = GetClosestStationLocation(packageInTransfer.deliveringLocation, dal.GetAllStations().ConvertAll(s => new Station(s)));
+                        double distanceRequired = packageInTransfer.deliveryDistance;
+                        distanceRequired += GetDistance(packageInTransfer.deliveringLocation,closestStationToDelivery);
+
+                        if (package.pickedUp == null) // not collected
+                        {
+                            drone.currentLocation = closestStationLoc;
+                            distanceRequired += GetDistance(closestStationLoc, packageInTransfer.collectionLocation);
+                        }
+                        else //collected
+                        {
+                            drone.currentLocation = senderLocation;
+                        }
+
+                        double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
+
+                        if (batteryRequired > 100)
+                            throw new OperationNotPossibleException("battery required is greater than 100");
+
+                        drone.battery = rand.NextDouble() * (100 - batteryRequired) + batteryRequired;
                     }
                 }
                 else // drone has no associated package
