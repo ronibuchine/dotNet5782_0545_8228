@@ -59,7 +59,7 @@ namespace BLOBjectNamespace
                 double deliveryToClosestStation = Distances.GetDistance(package.deliveringLocation, closestStationToDelivery); 
                 double distanceRequired = droneToSender + senderToDelivery + deliveryToClosestStation;
                 double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
-                if (batteryRequired >= drone.battery)
+                if (batteryRequired <= drone.battery)
                 {
                     drone.status = DroneStatuses.delivery;
                     dal.AssignPackageToDrone(package.ID, droneID);
@@ -79,7 +79,7 @@ namespace BLOBjectNamespace
             double distanceTraveled = Distances.GetDistance(sender.currentLocation, drone.currentLocation);
             drone.battery -= distanceTraveled * GetConsumptionRate(drone.weightCategory);
             if (drone.battery < 0 || drone.battery > 100)
-                throw new Exception("Oh shit"); // TODO debug this
+                throw new Exception("oh shit, not enough battery to reach sender location"); // TODO debug this
             drone.currentLocation = sender.currentLocation;
             dal.CollectPackageToDrone(dalPackage.ID);
         }
@@ -97,7 +97,7 @@ namespace BLOBjectNamespace
             double distanceTraveled = Distances.GetDistance(reciever.currentLocation, drone.currentLocation);
             drone.battery -= distanceTraveled * GetConsumptionRate(drone.weightCategory);
             if (drone.battery < 0 || drone.battery > 100)
-                throw new Exception("Oh shit"); // TODO debug this
+                throw new Exception("Oh shit, not enough battery to reach delivery location"); // TODO debug this
             drone.currentLocation = reciever.currentLocation;
             drone.status = DroneStatuses.free;
             dal.ProvidePackageToCustomer(dalPackage.ID);
