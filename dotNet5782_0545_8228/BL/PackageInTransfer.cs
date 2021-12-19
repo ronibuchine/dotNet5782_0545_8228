@@ -1,6 +1,5 @@
 ﻿using System;
-using IDAL.DO;
-using DalObjectNamespace;
+using UTIL;
 
 namespace IBL
 {
@@ -21,7 +20,16 @@ namespace IBL
             public override string ToString()
             {
                 return String.Format("ID = {0}, Weight Category = {1}, Priority = {2}, Delivery Status = {3}, Sender = {4}, Recevier = {5}, Collection Location = {6}, Delivery Location = {7}, Delivery Distance = {8}",
-                    ID, weightCategory, priority, delivered.ToString(), sender.ToString(), receiver.ToString(), collectionLocation.ToString(), deliveringLocation.ToString(), deliveryDistance);
+                    ID, 
+                    weightCategory, 
+                    priority, 
+                    delivered, 
+                    PrintDebug.ToStringOrNull(sender),
+                    PrintDebug.ToStringOrNull(receiver),
+                    PrintDebug.ToStringOrNull(collectionLocation),
+                    PrintDebug.ToStringOrNull(deliveringLocation),
+                    PrintDebug.ToStringOrNull(deliveringLocation),
+                    deliveryDistance);
             }
 
             public PackageInTransfer(Package package)
