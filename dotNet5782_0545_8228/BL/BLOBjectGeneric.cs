@@ -62,14 +62,16 @@ namespace BLOBjectNamespace
                     if (package.delivered == null)
                     {
                         drone.status = DroneStatuses.delivery;
+
                         Location senderLocation = customers.Find(c => c.ID == package.sender.ID).currentLocation;
                         Location closestStationLoc = GetClosestStationLocation(senderLocation, stations);
-                        double batteryRequired = BatteryRequiredForDelivery(drone, drone.packageInTransfer);
-                        drone.battery = rand.NextDouble() * (100 - batteryRequired);
                         if (package.pickedUp == null) // not collected
                             drone.currentLocation = closestStationLoc;
                         else //collected
                             drone.currentLocation = senderLocation;
+
+                        double batteryRequired = BatteryRequiredForDelivery(drone, drone.packageInTransfer);
+                        drone.battery = rand.NextDouble() * (100 - batteryRequired);
                     }
                 }
                 else // drone has no associated package
