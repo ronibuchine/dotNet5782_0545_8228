@@ -53,19 +53,19 @@ namespace BLOBjectNamespace
 
             foreach (PackageInTransfer package in packages)
             {
-                double a = Distances.GetDistance(package.collectionLocation, drone.currentLocation);
-                double b = package.deliveryDistance;
-                double distanceRequired = a + b;
+                double droneToSender = Distances.GetDistance(drone.currentLocation, package.collectionLocation);
+                double senderToDelivery = package.deliveryDistance;
+                Location closestStationToDelivery = GetClosestStationLocation(package.deliveringLocation, dal.GetAllStations().ConvertAll(s => new Station(s)));
+                double deliveryToClosestStation = Distances.GetDistance(package.deliveringLocation, closestStationToDelivery); 
+                double distanceRequired = droneToSender + senderToDelivery + deliveryToClosestStation;
                 double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
-                if (batteryRequired < 0)
-                    throw new Exception("Oh shit"); // TODO debug this
-                if (batteryRequired < drone.battery)
+                if (batteryRequired >= drone.battery)
                 {
                     drone.status = DroneStatuses.delivery;
                     dal.AssignPackageToDrone(package.ID, droneID);
                     return;
                 }
-}
+            }
             throw new OperationNotPossibleException("There is no suitable package to assign");
         }
 
