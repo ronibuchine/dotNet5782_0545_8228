@@ -53,12 +53,7 @@ namespace BLOBjectNamespace
 
             foreach (PackageInTransfer package in packages)
             {
-                double droneToSender = Distances.GetDistance(drone.currentLocation, package.collectionLocation);
-                double senderToDelivery = package.deliveryDistance;
-                Location closestStationToDelivery = GetClosestStationLocation(package.deliveringLocation, dal.GetAllStations().ConvertAll(s => new Station(s)));
-                double deliveryToClosestStation = Distances.GetDistance(package.deliveringLocation, closestStationToDelivery); 
-                double distanceRequired = droneToSender + senderToDelivery + deliveryToClosestStation;
-                double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
+                double batteryRequired = BatteryRequiredForDelivery(drone, package);
                 if (batteryRequired <= drone.battery)
                 {
                     drone.status = DroneStatuses.delivery;
