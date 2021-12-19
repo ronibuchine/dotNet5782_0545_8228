@@ -84,7 +84,7 @@ namespace BLOBjectNamespace
                         double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
 
                         if (batteryRequired > 100)
-                            throw new OperationNotPossibleException("battery required is greater than 100");
+                            throw new OperationNotPossibleException("battery required is greater than 100. Battery required was " + batteryRequired);
 
                         drone.battery = rand.NextDouble() * (100 - batteryRequired) + batteryRequired;
                     }
