@@ -77,9 +77,10 @@ namespace BLOBjectNamespace
             IDAL.DO.Package dalPackage = dal.GetAllPackages().Find(p => p.droneId == droneID);
             Customer sender = new Customer(dal.GetCustomer(dalPackage.senderId));
             double distanceTraveled = Distances.GetDistance(drone.currentLocation, sender.currentLocation);
-            drone.battery -= (distanceTraveled * GetConsumptionRate(drone.weightCategory));
-            if (drone.battery < 0 || drone.battery > 100)
+            double batteryRequired = distanceTraveled * GetConsumptionRate(drone.weightCategory);
+            if (batteryRequired > drone.battery)
                 throw new Exception("oh shit, not enough battery to reach sender location" + drone.ToString()); // TODO debug this
+            drone.battery -= batteryRequired;
             drone.currentLocation = sender.currentLocation;
             dal.CollectPackageToDrone(dalPackage.ID);
         }
@@ -95,9 +96,10 @@ namespace BLOBjectNamespace
                 throw new OperationNotPossibleException("package has not yet been collected");
             Customer reciever = new Customer(dal.GetCustomer(dalPackage.recieverId));
             double distanceTraveled = Distances.GetDistance(reciever.currentLocation, drone.currentLocation);
-            drone.battery -= distanceTraveled * GetConsumptionRate(drone.weightCategory);
-            if (drone.battery < 0 || drone.battery > 100)
-                throw new Exception("Oh shit, not enough battery to reach delivery location" + drone.ToString()); // TODO debug this
+            double batteryRequired = distanceTraveled * GetConsumptionRate(drone.weightCategory);
+            if (batteryRequired > drone.battery)
+                throw new Exception("oh shit, not enough battery to reach delivery location" + drone.ToString()); // TODO debug this
+            drone.battery -= batteryRequired;
             drone.currentLocation = reciever.currentLocation;
             drone.status = DroneStatuses.free;
             dal.ProvidePackageToCustomer(dalPackage.ID);
