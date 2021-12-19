@@ -37,6 +37,13 @@ namespace IBL
                 this.ID = package.ID;
                 this.weightCategory = package.weightCategory;
                 this.priority = package.priority;
+                IDAL.DO.Customer dalSender = DalObjectNamespace.DalObject.GetInstance().GetCustomer(package.sender.ID);
+                IDAL.DO.Customer dalReciever = DalObjectNamespace.DalObject.GetInstance().GetCustomer(package.receiver.ID);
+                sender = new(dalSender);
+                receiver = new(dalReciever);
+                collectionLocation = new Location(dalSender.longitude, dalSender.latitude);
+                deliveringLocation = new Location(dalReciever.longitude, dalReciever.latitude);
+                deliveryDistance = UTIL.Distances.GetDistance(collectionLocation, deliveringLocation);
             }
 
             public PackageInTransfer(IDAL.DO.Package package)
