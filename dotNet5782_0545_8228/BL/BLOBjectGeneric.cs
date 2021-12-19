@@ -97,7 +97,9 @@ namespace BLOBjectNamespace
                     else // maintenance
                     {
                         drone.status = DroneStatuses.maintenance;
-                        drone.currentLocation = stations[rand.Next(stations.Count - 1)].location;
+                        var station = stations[rand.Next(stations.Count - 1)];
+                        drone.currentLocation = station.location;
+                        dal.SendDroneToCharge(station.ID, drone.ID);
                         drone.battery = rand.NextDouble() * 20;
                     }
                 }

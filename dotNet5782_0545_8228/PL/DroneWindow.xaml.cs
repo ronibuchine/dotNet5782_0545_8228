@@ -252,7 +252,7 @@ namespace PL
             try
             {
                 bl.DeliverPackage(drone.ID);
-                if (MessageBox.Show("Drone is delivering a package -- status set to delivery.", "", MessageBoxButton.OK) == MessageBoxResult.OK)
+                if (MessageBox.Show("Drone delivered the package -- status set to free.", "", MessageBoxButton.OK) == MessageBoxResult.OK)
                     RefreshAndClose();
             }
             catch (InvalidBlObjectException i)
