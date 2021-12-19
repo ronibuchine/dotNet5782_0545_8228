@@ -66,7 +66,7 @@
             <TextBlock Name="DroneData" Visibility="Hidden" TextWrapping="Wrap" Grid.Row="0" FontFamily="Tw Cen MT" FontWeight="Bold" FontSize="16"/>
             <Button Name="UpdateDroneButton" Visibility="Hidden" Content="Update Drone Model"  Grid.Row="1" FontFamily="Tw Cen MT" FontSize="16" Click="UpdateDroneButton_Click"/>
             <Button Name="SendToChargeButton" Visibility="Hidden" Content="Send Drone to Charge"  Grid.Row="2" FontFamily="Tw Cen MT" FontSize="16" Click="SendToChargeButton_Click"/>
-            <Button Name="SendDroneForDeliveryButton" Visibility="Hidden" Content="Send Drone for Delivery"   Grid.Row="4" FontFamily="Tw Cen MT" FontSize="16" Click="SendDroneForDeliveryButton_Click"/>
+            <Button Name="AssignPackageToDroneButton" Visibility="Hidden" Content="Assign a Package"   Grid.Row="4" FontFamily="Tw Cen MT" FontSize="16" Click="AssignPackageToDroneButton_Click"/>
             <Button Name="CollectPackageButton" Visibility="Hidden" Content="Collect a Package"   Grid.Row="5" FontFamily="Tw Cen MT" FontSize="16" Click="CollectPackageButton_Click"/>
             <Button Name="DeliverPackageButton" Visibility="Hidden" Content="Deliver Package"   Grid.Row="6" FontFamily="Tw Cen MT" FontSize="16" Click="DeliverPackageButton_Click"/>
             <Button Name="ReleaseDroneFromChargeButton" Visibility="Hidden" Content="Release Drone From Charge"  Grid.Row="3" FontFamily="Tw Cen MT" FontSize="16" Click="ReleaseDroneFromChargeButton_Click"/>

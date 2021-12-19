@@ -56,7 +56,7 @@ namespace PL
             CollectPackageButton.Visibility = Visibility.Visible;
             DeliverPackageButton.Visibility = Visibility.Visible;
             SendToChargeButton.Visibility = Visibility.Visible;
-            SendDroneForDeliveryButton.Visibility = Visibility.Visible;
+            AssignPackageToDroneButton.Visibility = Visibility.Visible;
             ReleaseDroneFromChargeButton.Visibility = Visibility.Visible;
             DroneImage.Visibility = Visibility.Visible;
 
@@ -161,12 +161,12 @@ namespace PL
             }
         }
 
-        private void SendDroneForDeliveryButton_Click(object sender, RoutedEventArgs e)
+        private void AssignPackageToDroneButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                bl.DeliverPackage(drone.ID);
-                if (MessageBox.Show("Drone is now delivering a package to a customer -- status set to delivery", "", MessageBoxButton.OK) == MessageBoxResult.OK)
+                bl.AssignPackageToDrone(drone.ID);
+                if (MessageBox.Show("Drone has now been assigned a package -- status set to delivery", "", MessageBoxButton.OK) == MessageBoxResult.OK)
                     RefreshAndClose();
             }
             catch (InvalidBlObjectException i)
