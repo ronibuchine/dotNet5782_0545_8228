@@ -3,7 +3,7 @@ using System;
 namespace IBL
 {
     namespace BO
-    { 
+    {
         public class Drone : BLEntity
         {
             public string model { get; set; }
@@ -11,7 +11,7 @@ namespace IBL
             public double? battery { get; set; }
             public DroneStatuses? status { get; set; }
             public Location currentLocation { get; set; }
-            public PackageInTransfer packageInTransfer {get; set;}
+            public PackageInTransfer packageInTransfer { get; set; }
 
             public Drone(
                 string model,
@@ -39,7 +39,10 @@ namespace IBL
             public override string ToString()
             {
                 return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4}, Current Location = {5}, Package = {6})",
-                    ID, model, battery, weightCategory.ToString(), status, currentLocation, packageInTransfer);
+                    ID, model, battery, weightCategory.ToString(),
+                    status,
+                    currentLocation == null ? currentLocation.ToString() : "null",
+                    packageInTransfer == null ? packageInTransfer.ToString() : "null");
             }
         }
     }
