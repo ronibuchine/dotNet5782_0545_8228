@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using IDAL.DO;
+using DO;
+using DALAPI;
 
-namespace DalObjectNamespace
+namespace DAL
 {
-    public partial class DalObject : IDAL.IdalInterface
+    public partial class DalObject : IdalInterface
     {
 
         public void AddStation() =>
@@ -12,9 +13,9 @@ namespace DalObjectNamespace
         public void AddStation(Station station) =>
             AddDalItem(DataSource.stations, station, IdalDoType.STATION);
 
-        public List<Station> GetAllStations() => GetAllItems(DataSource.stations);
+        public IEnumerable<Station> GetAllStations() => GetAllItems(DataSource.stations);
 
-        public List<Station> GetAllUnoccupiedStations() =>
+        public IEnumerable<Station> GetAllUnoccupiedStations() =>
             GetAllItems(DataSource.stations, (Station ds) => ds.chargeSlots > 0);
 
         public Station GetStation(int ID) => GetOneItem(DataSource.stations, ID);
@@ -27,9 +28,9 @@ namespace DalObjectNamespace
             GetActualStation(stationID).chargeSlots--;
         }
 
-        public List<DroneCharge> GetAllCharges()
+        public IEnumerable<DroneCharge> GetAllCharges()
         {
-            List<DroneCharge> newList = new();
+            IEnumerable<DroneCharge> newList = new();
             DataSource.droneCharges.ForEach(dc => newList.Add(dc.Clone()));
             return newList;
         }

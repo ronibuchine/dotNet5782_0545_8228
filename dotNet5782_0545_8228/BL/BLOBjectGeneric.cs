@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using IDAL;
-using DalObjectNamespace;
+using DAL;
 using IBL.BO;
 using static UTIL.Distances;
 

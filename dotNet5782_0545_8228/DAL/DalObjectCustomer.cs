@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using DO;
+using DALAPI;
 
-namespace DalObjectNamespace
+namespace DAL
 {
-    public partial class DalObject : IDAL.IdalInterface
+    public partial class DalObject : IdalInterface
     {
 
         public void AddCustomer() => AddDalItem(DataSource.customers, IdalDoType.CUSTOMER);
 
-        public void AddCustomer(IDAL.DO.Customer customer) =>
+        public void AddCustomer(Customer customer) =>
             AddDalItem(DataSource.customers, customer, IdalDoType.CUSTOMER);
 
-        public List<IDAL.DO.Customer> GetAllCustomers() => GetAllItems(DataSource.customers);
+        public List<Customer> GetAllCustomers() => GetAllItems(DataSource.customers);
 
-        public IDAL.DO.Customer GetCustomer(int ID) => GetOneItem(DataSource.customers, ID);
+        public Customer GetCustomer(int ID) => GetOneItem(DataSource.customers, ID);
 
-        public IDAL.DO.Customer GetActualCustomer(int ID) => GetActualOneItem(DataSource.customers, ID);
+        public Customer GetActualCustomer(int ID) => GetActualOneItem(DataSource.customers, ID);
 
         public void ProvidePackageToCustomer(int packageID)
         {

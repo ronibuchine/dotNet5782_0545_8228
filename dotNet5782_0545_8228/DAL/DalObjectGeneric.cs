@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using DO;
+using DALAPI;
+using System.Linq;
 
-namespace DalObjectNamespace
+namespace DAL
 {
-    public partial class DalObject : IDAL.IdalInterface
+    public partial class DalObject : IdalInterface
     {
         private static DalObject dalInstance = null;
         public static int nextID;
@@ -40,18 +43,18 @@ namespace DalObjectNamespace
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="pred">A predicate taking an item of the same type as list, that returns whether or not it should be displayed</param>
-        private List<T> GetAllItems<T>(List<T> list, Predicate<T> pred) where T : IDAL.DO.DalEntity
+        private IEnumerable<T> GetAllItems<T>(IEnumerable<T> list, Func<T, bool> pred) where T : DalEntity
         {
-            List<T> newList = new();
-            list.FindAll(pred).ForEach(t => newList.Add((T)t.Clone()));
-            return newList;
+            //IEnumerable<T> newList = new();
+            return list.Where<T>(pred).ToList();
+            //return newList;
         }
 
         /// <summary>
         /// Displays all the items in the array unconditionally
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
-        private List<T> GetAllItems<T>(List<T> list) where T : IDAL.DO.DalEntity => GetAllItems(list, (x) => true);
+        private IEnumerable<T> GetAllItems<T>(IEnumerable<T> list) where T : DalEntity => GetAllItems(list, (x) => true);
 
         // Displaying one object section
 
@@ -60,16 +63,16 @@ namespace DalObjectNamespace
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="ID">The index of which item to display</param>
-        private T GetOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
+        private T GetOneItem<T>(IEnumerable<T> list, int ID) where T : DalEntity
         {
             T ret = list.Find((t) => { return t.ID == ID; });
             if (ret != null)
                 return (T)ret.Clone();
             else
-                throw new IDAL.DO.InvalidDalObjectException("There was an issue retrieving the entity.");
+                throw new InvalidDalObjectException("There was an issue retrieving the entity.");
         }
         
-        private T GetActualOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
+        private T GetActualOneItem<T>(IEnumerable<T> list, int ID) where T : DalEntity
         {
             if (ID == 0)
                 return null;
@@ -77,7 +80,7 @@ namespace DalObjectNamespace
             if (ret != null)
                 return (T)ret;
             else
-                throw new IDAL.DO.InvalidDalObjectException("There was an issue retrieving the entity.");
+                throw new InvalidDalObjectException("There was an issue retrieving the entity.");
         }
 
         /// <summary>
@@ -86,26 +89,26 @@ namespace DalObjectNamespace
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="rand">A Random object</param>
         private void AddDalItem<T>(
-                List<T> list,
+                IEnumerable<T> list,
                 IdalDoType type)
-            where T : IDAL.DO.DalEntity
+            where T : DalEntity
         {
             if (list.Count + 1 > list.Capacity)
                 list.Add((T)DataSource.Insert(type));
             else
-                throw new IDAL.DO.DataSourceException("The entity could not be added to the system.");
+                throw new DataSourceException("The entity could not be added to the system.");
         }
 
         private void AddDalItem<T>(
-                List<T> list,
+                IEnumerable<T> list,
                 T item,
                 IdalDoType type)
-            where T : IDAL.DO.DalEntity
+            where T : DalEntity
         {
             if (list.Count + 1 <= list.Capacity)
                 list.Add(item);
             else
-                throw new IDAL.DO.DataSourceException("The entity could not be added to the system.");
+                throw new DataSourceException("The entity could not be added to the system.");
         }
 
         public double[] PowerConsumptionRequest()

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace IDAL
+namespace DALAPI
 {
     public interface IdalInterface
     {
@@ -13,13 +13,13 @@ namespace IDAL
         public void AddCustomer(DO.Customer customer);
         public void AddPackage(DO.Package package);
 
-        public List<DO.Drone> GetAllDrones();
-        public List<DO.Station> GetAllStations();
-        public List<DO.Customer> GetAllCustomers();
-        public List<DO.Package> GetAllPackages();
-        public List<DO.DroneCharge> GetAllCharges();
-        public List<DO.Package> GetAllNotAssignedPackages();
-        public List<DO.Station> GetAllUnoccupiedStations();
+        public IEnumerable<DO.Drone> GetAllDrones();
+        public IEnumerable<DO.Station> GetAllStations();
+        public IEnumerable<DO.Customer> GetAllCustomers();
+        public IEnumerable<DO.Package> GetAllPackages();
+        public IEnumerable<DO.DroneCharge> GetAllCharges();
+        public IEnumerable<DO.Package> GetAllNotAssignedPackages();
+        public IEnumerable<DO.Station> GetAllUnoccupiedStations();
 
         public DO.Drone GetDrone(int ID);
         public DO.Station GetStation(int ID);

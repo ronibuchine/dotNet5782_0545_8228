@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using IDAL.DO;
+using DO;
+using DALAPI;
 
-namespace DalObjectNamespace
+namespace DAL
 {
-    public partial class DalObject : IDAL.IdalInterface
+    public partial class DalObject : IdalInterface
     {
 
         public void AddDrone() =>
@@ -13,7 +14,7 @@ namespace DalObjectNamespace
         public void AddDrone(Drone drone) =>
             AddDalItem(DataSource.drones, drone, IdalDoType.DRONE);
 
-        public List<Drone> GetAllDrones() => GetAllItems(DataSource.drones);
+        public IEnumerable<Drone> GetAllDrones() => GetAllItems(DataSource.drones);
 
         public Drone GetDrone(int ID) => GetOneItem(DataSource.drones, ID);
 

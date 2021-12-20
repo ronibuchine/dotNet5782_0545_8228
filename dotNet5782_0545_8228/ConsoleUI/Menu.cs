@@ -16,7 +16,7 @@ namespace ConsoleUI
         /// <param name="args">arguments passed to the CLI</param>
         static void Main(string[] args)
         {
-            IDAL.IdalInterface data = DalObjectNamespace.DalObject.GetInstance();
+            IDAL.IdalInterface data = DAL.DalObject.GetInstance();
             bool running = true;
             while (running)
             {
