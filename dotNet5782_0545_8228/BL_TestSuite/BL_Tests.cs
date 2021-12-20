@@ -380,7 +380,7 @@ namespace BL_TestSuite
             {
                 bl.AddStation($"name_{i}", new Location(i + 1, i + 1), 5);
             }
-            List<StationToList> list = bl.GetStationList();
+            IEnumerable<StationToList> list = bl.GetStationList();
             int j = 0;
             foreach (StationToList station in list)
             {
@@ -398,7 +398,7 @@ namespace BL_TestSuite
             {
                 bl.AddDrone($"model_{i}", WeightCategories.light, station.ID);
             }
-            List<DroneToList> list = bl.GetDroneList();
+            IEnumerable<DroneToList> list = bl.GetDroneList();
             int j = 0;
             foreach (DroneToList drone in list)
             {
@@ -415,7 +415,7 @@ namespace BL_TestSuite
             {
                 bl.AddCustomer($"name_{i}", $"000000000{i}", new Location(i + 1, i + 1));
             }
-            List<CustomerToList> list = bl.GetCustomerList();
+            IEnumerable<CustomerToList> list = bl.GetCustomerList();
             int j = 0;
             foreach (CustomerToList customer in list)
             {
@@ -436,7 +436,7 @@ namespace BL_TestSuite
             {
                 idList.Add(bl.AddPackage(sender.ID, receiver.ID, WeightCategories.light, Priorities.regular).ID);
             }
-            List<PackageToList> list = bl.GetPackageList();
+            IEnumerable<PackageToList> list = bl.GetPackageList();
             int j = 0;
             foreach (PackageToList package in list)
             {
@@ -457,9 +457,9 @@ namespace BL_TestSuite
             Package package1 = bl.AddPackage(roni.ID, eli.ID, WeightCategories.heavy, Priorities.emergency);
             bl.AssignPackageToDrone(drone.ID);
             Package package2 = bl.AddPackage(roni.ID, eli.ID, WeightCategories.heavy, Priorities.emergency);
-            List<Package> unassignedPackages = bl.GetUnassignedPackages();
+            IEnumerable<Package> unassignedPackages = bl.GetUnassignedPackages();
 
-            Assert.True(unassignedPackages[0].ID == package2.ID && unassignedPackages.Count == 1, "Assertion for GetAllUnassignedPackages failed");
+            Assert.True(unassignedPackages.ElementAt(0).ID == package2.ID && unassignedPackages.Count() == 1, "Assertion for GetAllUnassignedPackages failed");
 
         }
 
@@ -472,8 +472,8 @@ namespace BL_TestSuite
             Station station2 = bl.AddStation("full station", new(2, 2), 1);
             Drone drone = bl.AddDrone("model", WeightCategories.heavy, station2.ID);
 
-            List<Station> availableStations = bl.GetAvailableStations();
-            Assert.True(availableStations[0].ID == station1.ID && availableStations.Count == 1, "Assertion for GetAvailableStations failed");
+            IEnumerable<Station> availableStations = bl.GetAvailableStations();
+            Assert.True(availableStations.ElementAt(0).ID == station1.ID && availableStations.Count() == 1, "Assertion for GetAvailableStations failed");
         }
 
     }

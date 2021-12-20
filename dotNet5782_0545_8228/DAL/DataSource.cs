@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using static DAL.DalObject;
 using DO;
@@ -7,22 +8,22 @@ namespace DAL
 {
     internal class DataSource
     {
-        private const int MIN_DRONES = 5;
-        private const int MIN_DRONE_STATIONS = 5;
-        private const int MIN_CUSTOMERS = 5;
-        private const int MIN_PACKAGES = 5;
+        internal const int MIN_DRONES = 5;
+        internal const int MIN_DRONE_STATIONS = 5;
+        internal const int MIN_CUSTOMERS = 5;
+        internal const int MIN_PACKAGES = 5;
 
-        private const int MAX_DRONES = 10;
-        private const int MAX_DRONE_STATIONS = 10;
-        private const int MAX_CUSTOMERS = 10;
-        private const int MAX_PACKAGES = 10;
-        private const int MAX_DRONE_CHARGES = MAX_DRONES;
+        internal const int MAX_DRONES = 10;
+        internal const int MAX_STATIONS = 10;
+        internal const int MAX_CUSTOMERS = 10;
+        internal const int MAX_PACKAGES = 10;
+        internal const int MAX_DRONE_CHARGES = MAX_DRONES;
 
-        public static List<Drone> drones = new List<Drone>(MAX_DRONES);
-        public static List<Station> stations = new List<Station>(MAX_DRONE_STATIONS);
-        public static List<Customer> customers = new List<Customer>(MAX_CUSTOMERS);
-        public static List<Package> packages = new List<Package>(MAX_PACKAGES);
-        public static List<DroneCharge> droneCharges = new List<DroneCharge>(MAX_DRONE_CHARGES);
+        internal static IEnumerable<Drone> drones = new List<Drone>(MAX_DRONES);
+        internal static IEnumerable<Station> stations = new List<Station>(MAX_STATIONS);
+        internal static IEnumerable<Customer> customers = new List<Customer>(MAX_CUSTOMERS);
+        internal static IEnumerable<Package> packages = new List<Package>(MAX_PACKAGES);
+        internal static IEnumerable<DroneCharge> droneCharges = new List<DroneCharge>(MAX_DRONE_CHARGES);
 
         public static int nextID { get; set; } = 1;
 
@@ -42,7 +43,7 @@ namespace DAL
         {
             rand = new Random();
             InitializeList<Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE, drones);
-            InitializeList<Station>(MIN_DRONE_STATIONS, MAX_DRONE_STATIONS, IdalDoType.STATION, stations);
+            InitializeList<Station>(MIN_DRONE_STATIONS, MAX_STATIONS, IdalDoType.STATION, stations);
             InitializeList<Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER, customers);
             InitializeList<Package>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.PACKAGE, packages);
         }
@@ -65,11 +66,11 @@ namespace DAL
                 case IdalDoType.CUSTOMER:
                     return new Customer(nextID++);
                 case IdalDoType.PACKAGE:
-                    int randX = rand.Next(customers.Count);
-                    int randY = RandomExceptX(customers.Count, randX, rand);
-                    int senderID = customers[randX].ID;
-                    int recieverID = customers[randY].ID;
-                    int droneID = drones[rand.Next(drones.Count)].ID;
+                    int randX = rand.Next(customers.Count());
+                    int randY = RandomExceptX(customers.Count(), randX, rand);
+                    int senderID = customers.ElementAt(randX).ID;
+                    int recieverID = customers.ElementAt(randY).ID;
+                    int droneID = drones.ElementAt(rand.Next(drones.Count())).ID;
                     return new Package(nextID++, senderID, recieverID, droneID);
                 default:
                     throw new InvalidDalObjectException();
@@ -98,13 +99,13 @@ namespace DAL
                 int min,
                 int max,
                 IdalDoType type, 
-                List<T> list)
+                IEnumerable<T> list)
             where T : DalEntity
         {
             int num = rand.Next(min, max + 1);
             for (int i = 0; i < num; ++i)
             {
-                list.Add((T)Insert(type));
+                list.Append((T)Insert(type));
             }            
         }
     }

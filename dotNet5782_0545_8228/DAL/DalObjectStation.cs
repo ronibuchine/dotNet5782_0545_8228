@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using DO;
 using DALAPI;
+using System.Linq;
 
 namespace DAL
 {
-    public partial class DalObject : IdalInterface
+    public partial class DalObject : IDAL
     {
 
         public void AddStation() =>
-            AddDalItem(DataSource.stations, IdalDoType.STATION);
+            AddDalItem(DataSource.stations, DataSource.MAX_STATIONS, IdalDoType.STATION);
 
         public void AddStation(Station station) =>
-            AddDalItem(DataSource.stations, station, IdalDoType.STATION);
+            AddDalItem(DataSource.stations, DataSource.MAX_STATIONS, station, IdalDoType.STATION);
 
         public IEnumerable<Station> GetAllStations() => GetAllItems(DataSource.stations);
 
@@ -24,20 +25,20 @@ namespace DAL
 
         public void SendDroneToCharge(int stationID, int droneID)
         {
-            DataSource.droneCharges.Add(new DroneCharge(droneID, stationID));
+            DataSource.droneCharges.Append(new DroneCharge(droneID, stationID));
             GetActualStation(stationID).chargeSlots--;
         }
 
         public IEnumerable<DroneCharge> GetAllCharges()
         {
-            IEnumerable<DroneCharge> newList = new();
-            DataSource.droneCharges.ForEach(dc => newList.Add(dc.Clone()));
-            return newList;
+            return (IEnumerable<DroneCharge>)DataSource.droneCharges.Select(dc => dc.Clone());
         }
         
         public void ReleaseDroneFromCharge(int stationID, int droneID)
         {
-            DataSource.droneCharges.Remove(DataSource.droneCharges.Find((dc) => {return dc.DroneId == droneID;}));
+            var temp = DataSource.droneCharges.ToList();
+            temp.Remove(temp.Find(dc => dc.DroneId == droneID));
+            DataSource.droneCharges = temp;
             GetActualStation(stationID).chargeSlots++;
         }
     }

@@ -5,14 +5,14 @@ using DALAPI;
 
 namespace DAL
 {
-    public partial class DalObject : IdalInterface
+    public partial class DalObject : IDAL
     {
 
         public void AddDrone() =>
-            AddDalItem(DataSource.drones, IdalDoType.DRONE);
+            AddDalItem(DataSource.drones, DataSource.MAX_DRONES, IdalDoType.DRONE);
 
         public void AddDrone(Drone drone) =>
-            AddDalItem(DataSource.drones, drone, IdalDoType.DRONE);
+            AddDalItem(DataSource.drones,DataSource.MAX_DRONES, drone, IdalDoType.DRONE);
 
         public IEnumerable<Drone> GetAllDrones() => GetAllItems(DataSource.drones);
 

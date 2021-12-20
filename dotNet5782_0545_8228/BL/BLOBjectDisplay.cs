@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using IBL.BO;
 
@@ -17,13 +18,13 @@ namespace BLOBjectNamespace
             }
             catch (InvalidBlObjectException i) {throw i;}
             catch (InvalidIDException e) {throw e;}
-            catch (IDAL.DO.InvalidDalObjectException e) {throw new InvalidBlObjectException(e.Message);}
+            catch (DO.InvalidDalObjectException e) {throw new InvalidBlObjectException(e.Message);}
             throw new Exception("UNKNOWN ERROR OCCURED. WHOOPS.");
         }
 
         public Drone GetDrone(int ID)
         {
-            Drone drone = drones.Find(d => d.ID == ID);
+            Drone drone = drones.First(d => d.ID == ID);
             if (drone == null)
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
             return drone;
@@ -40,7 +41,7 @@ namespace BLOBjectNamespace
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
             }
             catch (InvalidIDException e) { throw e; }
-            catch (IDAL.DO.InvalidDalObjectException e) { throw new InvalidBlObjectException(e.Message); }
+            catch (DO.InvalidDalObjectException e) { throw new InvalidBlObjectException(e.Message); }
             catch (InvalidBlObjectException i) { throw i; }
             throw new Exception("UNKNOWN ERROR OCCURED. WHOOPS.");
         }
@@ -54,47 +55,47 @@ namespace BLOBjectNamespace
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
             }
             catch (InvalidIDException e) { throw e; }
-            catch (IDAL.DO.InvalidDalObjectException e) { throw new InvalidBlObjectException(e.Message); }
+            catch (DO.InvalidDalObjectException e) { throw new InvalidBlObjectException(e.Message); }
             catch (InvalidBlObjectException i) { throw i; }
             throw new Exception("UNKNOWN ERROR OCCURED. WHOOPS.");
         }
 
-        public List<StationToList> GetStationList()
+        public IEnumerable<StationToList> GetStationList()
         {
-            return dal.GetAllStations().ConvertAll((ds) => new StationToList(new Station(ds)));
+            return dal.GetAllStations().Select(ds => new StationToList(new Station(ds)));
         }
 
-        public List<DroneToList> GetDroneList()
+        public IEnumerable<DroneToList> GetDroneList()
         {
-            return drones.ConvertAll((d) => new DroneToList(d));
+            return drones.Select((d) => new DroneToList(d));
         }
 
-        public List<CustomerToList> GetCustomerList()
+        public IEnumerable<CustomerToList> GetCustomerList()
         {
-            return dal.GetAllCustomers().ConvertAll((c) => new CustomerToList(new Customer(c)));
+            return dal.GetAllCustomers().Select((c) => new CustomerToList(new Customer(c)));
         }
 
-        public List<PackageToList> GetPackageList()
+        public IEnumerable<PackageToList> GetPackageList()
         {
-            return dal.GetAllPackages().ConvertAll((p) => new PackageToList(new Package(p)));
+            return dal.GetAllPackages().Select((p) => new PackageToList(new Package(p)));
         }
 
-        public List<Package> GetUnassignedPackages()
+        public IEnumerable<Package> GetUnassignedPackages()
         {
-            List<Package> unassignedPackages = new();
+            IEnumerable<Package> unassignedPackages = Enumerable.Empty<Package>();
             dal.GetAllNotAssignedPackages()
-                .ForEach(p => unassignedPackages.Add(new Package(p)));
+                .Select(p => unassignedPackages.Append(new Package(p)));
             return unassignedPackages;
         }
 
-        public List<Station> GetAvailableStations()
+        public IEnumerable<Station> GetAvailableStations()
         {               
-            return dal.GetAllUnoccupiedStations().ConvertAll((s) => new Station(s));
+            return dal.GetAllUnoccupiedStations().Select(s => new Station(s));
         }
 
-        public List<DroneToList> GetSpecificDrones(Predicate<DroneToList> pred)
+        public IEnumerable<DroneToList> GetSpecificDrones(Func<DroneToList, bool> pred)
         {
-            return GetDroneList().FindAll(pred);
+            return GetDroneList().Where(pred);
         }
     }
 }

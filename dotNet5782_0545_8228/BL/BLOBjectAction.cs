@@ -29,7 +29,8 @@ namespace BLOBjectNamespace
             if (drone.battery > 100)
                 drone.battery = 100;
             drone.status = DroneStatuses.free;
-            int stationID = dal.GetAllCharges().Find((dc) => dc.DroneId == droneID).StationId;
+            int stationID = dal.GetAllCharges()
+                .First((dc) => dc.DroneId == droneID).StationId;
             dal.ReleaseDroneFromCharge(stationID, droneID);
         }
 
@@ -39,8 +40,8 @@ namespace BLOBjectNamespace
             if (drone.status != DroneStatuses.free) // is this always initialized?
                 throw new OperationNotPossibleException("Drone is not free currently");
 
-            List<PackageInTransfer> packages = dal.GetAllPackages()
-                .FindAll(p => p.weight <= (IDAL.DO.WeightCategories)drone.weightCategory)
+            IEnumerable<PackageInTransfer> packages = dal.GetAllPackages()
+                .Where(p => p.weight <= (DO.WeightCategories)drone.weightCategory)
                 .OrderByDescending(p => p.priority)
                 .ThenByDescending(p => p.weight)
                 .ThenBy(p =>
@@ -48,8 +49,7 @@ namespace BLOBjectNamespace
                     Location senderLocation = GetCustomer(p.senderId).currentLocation;
                     return Distances.GetDistance(senderLocation, drone.currentLocation);
                 })
-                .ToList()
-                .ConvertAll(p => new PackageInTransfer(p));
+                .Select(p => new PackageInTransfer(p));
 
             foreach (PackageInTransfer package in packages)
             {
@@ -69,7 +69,7 @@ namespace BLOBjectNamespace
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.delivery) // is this always initialized?
                 throw new OperationNotPossibleException("Drone is not delivering currently");
-            IDAL.DO.Package dalPackage = dal.GetAllPackages().Find(p => p.droneId == droneID);
+            DO.Package dalPackage = dal.GetAllPackages().First(p => p.droneId == droneID);
             Customer sender = new Customer(dal.GetCustomer(dalPackage.senderId));
             double distanceTraveled = Distances.GetDistance(drone.currentLocation, sender.currentLocation);
             double batteryRequired = distanceTraveled * GetConsumptionRate(drone.weightCategory);
@@ -85,7 +85,7 @@ namespace BLOBjectNamespace
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.delivery) // is this always initialized?
                 throw new OperationNotPossibleException("Drone is not delivering currently");
-            IDAL.DO.Package dalPackage = dal.GetAllPackages().Find(p => p.droneId == droneID);
+            DO.Package dalPackage = dal.GetAllPackages().First(p => p.droneId == droneID);
             // not a fan of this comparison. Not precise at all
             if (dalPackage.pickedUp == null)
                 throw new OperationNotPossibleException("package has not yet been collected");

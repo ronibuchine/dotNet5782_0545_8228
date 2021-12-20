@@ -9,7 +9,7 @@ namespace IBL
             public int ID { get; set; }
             public string name { get; set; }
             
-            public CustomerInPackage(IDAL.DO.Customer customer)
+            public CustomerInPackage(DO.Customer customer)
             {
                 ID = customer.ID;
                 name = customer.name;

@@ -30,7 +30,7 @@ namespace IBL
                 this.packageInTransfer = packageInTransfer;
             }
 
-            public Drone(IDAL.DO.Drone drone) : base(null)
+            public Drone(DO.Drone drone) : base(null)
             {
                 ID = drone.ID;
                 model = drone.model;

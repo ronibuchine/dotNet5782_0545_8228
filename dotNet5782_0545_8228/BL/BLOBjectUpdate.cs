@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace BLOBjectNamespace
 {
@@ -13,7 +14,7 @@ namespace BLOBjectNamespace
                 IBL.BO.Drone drone = GetDrone(ID);
                 drone.model = newModel;
             }
-            catch (IDAL.DO.InvalidDalObjectException e)
+            catch (DO.InvalidDalObjectException e)
             {
                 throw new IBL.BO.InvalidBlObjectException(e.Message);
             }
@@ -25,7 +26,7 @@ namespace BLOBjectNamespace
             {
                 dal.GetActualStation(stationID).name = stationName;
             }
-            catch (IDAL.DO.InvalidDalObjectException e)
+            catch (DO.InvalidDalObjectException e)
             {
                 throw new IBL.BO.InvalidBlObjectException(e.Message);
             }
@@ -34,7 +35,7 @@ namespace BLOBjectNamespace
         public void UpdateStation(int stationID, int numChargers)
         {
             IBL.BO.Station s = GetStation(stationID);
-            if (s.chargingDrones.Count > numChargers)
+            if (s.chargingDrones.Count() > numChargers)
             {
                 throw new IBL.BO.InvalidBlObjectException("There are currently more drones charging here than update request");
             }
@@ -42,7 +43,7 @@ namespace BLOBjectNamespace
             {
                 dal.GetActualStation(stationID).chargeSlots = numChargers;
             }
-            catch (IDAL.DO.InvalidDalObjectException e)
+            catch (DO.InvalidDalObjectException e)
             {
                 throw new IBL.BO.InvalidBlObjectException(e.Message);
             }
@@ -60,7 +61,7 @@ namespace BLOBjectNamespace
             {
                 dal.GetActualCustomer(ID).name = name;
             }
-            catch (IDAL.DO.InvalidDalObjectException e)
+            catch (DO.InvalidDalObjectException e)
             {
                 throw new IBL.BO.InvalidBlObjectException(e.Message);
             }
@@ -73,7 +74,7 @@ namespace BLOBjectNamespace
                 // TODO validate phone number
                 dal.GetActualCustomer(ID).phone = phone;
             }
-            catch (IDAL.DO.InvalidDalObjectException e)
+            catch (DO.InvalidDalObjectException e)
             {
                 throw new IBL.BO.InvalidBlObjectException(e.Message);
             }

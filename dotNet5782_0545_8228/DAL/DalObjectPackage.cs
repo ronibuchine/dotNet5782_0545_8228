@@ -4,7 +4,7 @@ using DALAPI;
 
 namespace DAL
 {
-    public partial class DalObject : IdalInterface
+    public partial class DalObject : IDAL
     {
 
         // Update objects section
@@ -24,10 +24,10 @@ namespace DAL
             throw new DalObjectAccessException($"There is no drone assigned to this package: {package.ID}\n");
         }
         
-        public void AddPackage() => AddDalItem(DataSource.packages, IdalDoType.PACKAGE);
+        public void AddPackage() => AddDalItem(DataSource.packages, DataSource.MAX_PACKAGES, IdalDoType.PACKAGE);
 
         public void AddPackage(Package package) =>
-            AddDalItem(DataSource.packages, package, IdalDoType.PACKAGE);
+            AddDalItem(DataSource.packages,  DataSource.MAX_PACKAGES, package, IdalDoType.PACKAGE);
 
         public IEnumerable<Package> GetAllPackages() => GetAllItems(DataSource.packages);
 

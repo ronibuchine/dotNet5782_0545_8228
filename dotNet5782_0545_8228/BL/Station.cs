@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using DAL;
+using System.Linq;
 
 namespace IBL
 {
@@ -8,10 +8,10 @@ namespace IBL
     {
         public class Station : BLEntity
         {
-            public string name { get; set;}
+            public string name { get; set; }
             public Location location { get; set; }
             public int chargeSlots { get; set; }
-            public List<Drone> chargingDrones { get; set; }
+            public IEnumerable<Drone> chargingDrones { get; set; }
 
             public Station(string name, Location location, int chargeSlots)
             {
@@ -21,18 +21,17 @@ namespace IBL
                 this.chargingDrones = new List<Drone>(chargeSlots); // currently charging drones
             }
 
-                        
-            public Station(IDAL.DO.Station station) : base(null)
+
+            public Station(DO.Station station) : base(null)
             {
-                IDAL.IdalInterface dal = DalObject.GetInstance();
+                DALAPI.IDAL dal = DALAPI.DalFactory.GetDal();
                 ID = station.ID;
                 name = station.name;
                 location = new Location(station.longitude, station.latitude);
                 chargeSlots = station.chargeSlots;
-                chargingDrones = new(chargeSlots);
-                dal.GetAllCharges()
-                    .FindAll(dc => dc.StationId == ID)
-                    .ForEach(dc => chargingDrones.Add(new Drone(dal.GetDrone(dc.DroneId))));
+                chargingDrones = dal.GetAllCharges()
+                    .Where(dc => dc.StationId == ID)
+                    .Select(dc => new Drone(dal.GetDrone(dc.DroneId)));
             }
 
             public override string ToString()
@@ -42,5 +41,5 @@ namespace IBL
             }
         }
     }
-    
+
 }

@@ -5,15 +5,15 @@ using DALAPI;
 
 namespace DAL
 {
-    public partial class DalObject : IdalInterface
+    public partial class DalObject : IDAL
     {
 
-        public void AddCustomer() => AddDalItem(DataSource.customers, IdalDoType.CUSTOMER);
+        public void AddCustomer() => AddDalItem(DataSource.customers, DataSource.MAX_CUSTOMERS, IdalDoType.CUSTOMER);
 
         public void AddCustomer(Customer customer) =>
-            AddDalItem(DataSource.customers, customer, IdalDoType.CUSTOMER);
+            AddDalItem(DataSource.customers, DataSource.MAX_CUSTOMERS, customer, IdalDoType.CUSTOMER);
 
-        public List<Customer> GetAllCustomers() => GetAllItems(DataSource.customers);
+        public IEnumerable<Customer> GetAllCustomers() => GetAllItems(DataSource.customers);
 
         public Customer GetCustomer(int ID) => GetOneItem(DataSource.customers, ID);
 

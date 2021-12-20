@@ -10,7 +10,7 @@ namespace IBL
             /* public double battery { get; set; } */
             /* public Location currentLocation { get; set; } */
             
-            public DroneInDelivery(IDAL.DO.Drone drone)
+            public DroneInDelivery(DO.Drone drone)
             {
                 ID = drone.ID;
             }

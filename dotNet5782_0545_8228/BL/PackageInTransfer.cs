@@ -37,8 +37,11 @@ namespace IBL
                 this.ID = package.ID;
                 this.weightCategory = package.weightCategory;
                 this.priority = package.priority;
-                IDAL.DO.Customer dalSender = DAL.DalObject.GetInstance().GetCustomer(package.sender.ID);
-                IDAL.DO.Customer dalReciever = DAL.DalObject.GetInstance().GetCustomer(package.receiver.ID);
+
+                DALAPI.IDAL dal = DALAPI.DalFactory.GetDal();
+                DO.Customer dalSender = dal.GetCustomer(package.sender.ID);
+                DO.Customer dalReciever = dal.GetCustomer(package.receiver.ID);
+
                 sender = new(dalSender);
                 receiver = new(dalReciever);
                 collectionLocation = new Location(dalSender.longitude, dalSender.latitude);
@@ -46,14 +49,17 @@ namespace IBL
                 deliveryDistance = UTIL.Distances.GetDistance(collectionLocation, deliveringLocation);
             }
 
-            public PackageInTransfer(IDAL.DO.Package package)
+            public PackageInTransfer(DO.Package package)
             { 
                 ID = package.ID;
                 weightCategory = (WeightCategories)package.weight;
                 priority = (Priorities)package.priority;
                 /* delivered????? */
-                IDAL.DO.Customer dalSender = DAL.DalObject.GetInstance().GetCustomer(package.senderId);
-                IDAL.DO.Customer dalReciever = DAL.DalObject.GetInstance().GetCustomer(package.recieverId);
+
+                DALAPI.IDAL dal = DALAPI.DalFactory.GetDal();
+                DO.Customer dalSender = dal.GetCustomer(package.senderId);
+                DO.Customer dalReciever = dal.GetCustomer(package.recieverId);
+
                 sender = new(dalSender);
                 receiver = new(dalReciever);
                 collectionLocation = new Location(dalSender.longitude, dalSender.latitude);

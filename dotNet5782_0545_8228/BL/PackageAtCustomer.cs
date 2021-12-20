@@ -12,7 +12,7 @@ namespace IBL
             public PackageStatuses status { get; set; }
             public CustomerInPackage senderReceiver { get; set; } 
 
-            public PackageAtCustomer(IDAL.DO.Package package)
+            public PackageAtCustomer(DO.Package package)
             {
                 ID = package.ID;
                 weight = (WeightCategories)package.weight;

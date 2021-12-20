@@ -1,5 +1,4 @@
 ﻿using System;
-using DAL;
 
 namespace IBL
 {
@@ -19,20 +18,24 @@ namespace IBL
 
             public Package(int senderID, int receiverID, WeightCategories weight, Priorities priority)
             {
-                this.sender = new CustomerInPackage(DalObject.GetInstance().GetCustomer(senderID));
-                this.receiver = new CustomerInPackage(DalObject.GetInstance().GetCustomer(receiverID));
+                DALAPI.IDAL dal = DALAPI.DalFactory.GetDal();
+
+                this.sender = new CustomerInPackage(dal.GetCustomer(senderID));
+                this.receiver = new CustomerInPackage(dal.GetCustomer(receiverID));
                 this.weightCategory = weight;
                 this.priority = priority;
             }
 
-            public Package(IDAL.DO.Package package) : base(null)
+            public Package(DO.Package package) : base(null)
             {
                 ID = package.ID;
-                sender = new CustomerInPackage(DalObject.GetInstance().GetCustomer(package.senderId));
-                receiver = new CustomerInPackage(DalObject.GetInstance().GetCustomer(package.recieverId));
+
+                DALAPI.IDAL dal = DALAPI.DalFactory.GetDal();
+                sender = new CustomerInPackage(dal.GetCustomer(package.senderId));
+                receiver = new CustomerInPackage(dal.GetCustomer(package.recieverId));
                 weightCategory = (WeightCategories)package.weight;
                 priority = (Priorities)package.priority;
-                drone = package.droneId != 0 ? new DroneInDelivery(DalObject.GetInstance().GetDrone(package.droneId)) : null;
+                drone = package.droneId != 0 ? new DroneInDelivery(dal.GetDrone(package.droneId)) : null;
                 requested = package.requested;
                 scheduled = package.scheduled;
                 pickedUp = package.pickedUp;

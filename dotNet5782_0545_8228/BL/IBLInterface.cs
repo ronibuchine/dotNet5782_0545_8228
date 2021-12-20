@@ -35,13 +35,13 @@ namespace IBL
         public Drone GetDrone(int ID);
         public Customer GetCustomer(int ID);
         public Package GetPackage(int ID);
-        public List<StationToList> GetStationList();
-        public List<DroneToList> GetDroneList();
-        public List<CustomerToList> GetCustomerList();
-        public List<PackageToList> GetPackageList();
-        public List<Package> GetUnassignedPackages();
-        public List<Station> GetAvailableStations();
-        public List<DroneToList> GetSpecificDrones(Predicate<DroneToList> pred);
+        public IEnumerable<StationToList> GetStationList();
+        public IEnumerable<DroneToList> GetDroneList();
+        public IEnumerable<CustomerToList> GetCustomerList();
+        public IEnumerable<PackageToList> GetPackageList();
+        public IEnumerable<Package> GetUnassignedPackages();
+        public IEnumerable<Station> GetAvailableStations();
+        public IEnumerable<DroneToList> GetSpecificDrones(Func<DroneToList, bool> pred);
 
 
 

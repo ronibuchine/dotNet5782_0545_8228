@@ -22,7 +22,7 @@ namespace DO
         {
             Random rand = new();
             this.model = "Drone_" + (ID + 1).ToString();
-            this.maxWeight = (IDAL.DO.WeightCategories) rand.Next(Enum.GetNames(typeof(IDAL.DO.WeightCategories)).Length - 1);
+            this.maxWeight = (DO.WeightCategories) rand.Next(Enum.GetNames(typeof(DO.WeightCategories)).Length - 1);
         }
 
         public override Drone Clone() => this.MemberwiseClone() as Drone;

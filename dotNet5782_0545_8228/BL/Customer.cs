@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
-using DAL;
 
 namespace IBL
 {
@@ -11,8 +11,8 @@ namespace IBL
             public string name { get; set; }
             public string phone { get; set; }
             public Location currentLocation { get; set; }
-            public List<PackageAtCustomer> packagesFromCustomer { get; set; }
-            public List<PackageAtCustomer> packagesToCustomer { get; set; }
+            public IEnumerable<PackageAtCustomer> packagesFromCustomer { get; set; }
+            public IEnumerable<PackageAtCustomer> packagesToCustomer { get; set; }
 
             public Customer(string name, string phone, Location location)
             {
@@ -21,14 +21,20 @@ namespace IBL
                 this.currentLocation = location;
             }
 
-            public Customer(IDAL.DO.Customer customer) : base(null)
+            public Customer(DO.Customer customer) : base(null)
             {
                 ID = customer.ID;
                 name = customer.name;
                 phone = customer.phone;
                 currentLocation = new Location(customer.longitude, customer.latitude);
-                packagesFromCustomer = DalObject.GetInstance().GetAllPackages().FindAll(p => p.senderId == ID).ConvertAll(p => new PackageAtCustomer(p));
-                packagesToCustomer = DalObject.GetInstance().GetAllPackages().FindAll(p => p.recieverId == ID).ConvertAll(p => new PackageAtCustomer(p));
+
+                DALAPI.IDAL dal = DALAPI.DalFactory.GetDal();
+                packagesFromCustomer = dal.GetAllPackages()
+                    .Where(p => p.senderId == ID)
+                    .Select(p => new PackageAtCustomer(p));
+                packagesToCustomer = dal.GetAllPackages()
+                    .Where(p => p.recieverId == ID)
+                    .Select(p => new PackageAtCustomer(p));
             }
 
             public override string ToString()

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DAL
 {
-    public partial class DalObject : IdalInterface
+    public partial class DalObject : IDAL
     {
         private static DalObject dalInstance = null;
         public static int nextID;
@@ -45,16 +45,14 @@ namespace DAL
         /// <param name="pred">A predicate taking an item of the same type as list, that returns whether or not it should be displayed</param>
         private IEnumerable<T> GetAllItems<T>(IEnumerable<T> list, Func<T, bool> pred) where T : DalEntity
         {
-            //IEnumerable<T> newList = new();
-            return list.Where<T>(pred).ToList();
-            //return newList;
+            return (IEnumerable<T>)list.Where<T>(pred).Select(t => t.Clone());
         }
 
         /// <summary>
         /// Displays all the items in the array unconditionally
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
-        private IEnumerable<T> GetAllItems<T>(IEnumerable<T> list) where T : DalEntity => GetAllItems(list, (x) => true);
+        private IEnumerable<T> GetAllItems<T>(IEnumerable<T> list) where T : DalEntity => GetAllItems(list, x => true);
 
         // Displaying one object section
 
@@ -65,7 +63,7 @@ namespace DAL
         /// <param name="ID">The index of which item to display</param>
         private T GetOneItem<T>(IEnumerable<T> list, int ID) where T : DalEntity
         {
-            T ret = list.Find((t) => { return t.ID == ID; });
+            T ret = list.First((t) => { return t.ID == ID; });
             if (ret != null)
                 return (T)ret.Clone();
             else
@@ -76,7 +74,7 @@ namespace DAL
         {
             if (ID == 0)
                 return null;
-            T ret = list.Find((t) => { return t.ID == ID; });
+            T ret = list.First((t) => { return t.ID == ID; });
             if (ret != null)
                 return (T)ret;
             else
@@ -90,23 +88,25 @@ namespace DAL
         /// <param name="rand">A Random object</param>
         private void AddDalItem<T>(
                 IEnumerable<T> list,
+                int max,
                 IdalDoType type)
             where T : DalEntity
         {
-            if (list.Count + 1 > list.Capacity)
-                list.Add((T)DataSource.Insert(type));
+            if (list.Count() + 1 < max)
+                list.Append((T)DataSource.Insert(type));
             else
                 throw new DataSourceException("The entity could not be added to the system.");
         }
 
         private void AddDalItem<T>(
                 IEnumerable<T> list,
+                int max,
                 T item,
                 IdalDoType type)
             where T : DalEntity
         {
-            if (list.Count + 1 <= list.Capacity)
-                list.Add(item);
+            if (list.Count() + 1 <= max)
+                list.Append(item);
             else
                 throw new DataSourceException("The entity could not be added to the system.");
         }
@@ -124,11 +124,11 @@ namespace DAL
 
         public void Clear()
         {
-            DataSource.customers.Clear();
-            DataSource.drones.Clear();
-            DataSource.stations.Clear();
-            DataSource.packages.Clear();
-            DataSource.droneCharges.Clear();
+            DataSource.customers = Enumerable.Empty<Customer>();
+            DataSource.drones = Enumerable.Empty<Drone>();
+            DataSource.stations = Enumerable.Empty<Station>();
+            DataSource.packages = Enumerable.Empty<Package>();
+            DataSource.droneCharges = Enumerable.Empty<DroneCharge>();
             nextID = 1;
         }
     }

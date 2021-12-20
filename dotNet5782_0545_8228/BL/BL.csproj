@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DALObject.csproj" />
+    <!-- <ProjectReference Include="..\DAL\DALObject.csproj" /> -->
+    <ProjectReference Include="..\DALFacade\DALFacade.csproj" />
   </ItemGroup>
 
 </Project>

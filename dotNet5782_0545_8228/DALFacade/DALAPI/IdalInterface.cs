@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace DALAPI
 {
-    public interface IdalInterface
+    public interface IDAL
     {
         public void AddDrone();
         public void AddStation();
