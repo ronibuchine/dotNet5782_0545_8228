@@ -90,10 +90,10 @@ namespace BLOBjectNamespace
 
         public IEnumerable<Package> GetUnassignedPackages()
         {
-            IEnumerable<Package> unassignedPackages = Enumerable.Empty<Package>();
-            dal.GetAllNotAssignedPackages()
-                .Select(p => unassignedPackages.Append(new Package(p)));
-            return unassignedPackages;
+            /* IEnumerable<Package> unassignedPackages = Enumerable.Empty<Package>(); */
+            return dal.GetAllNotAssignedPackages()
+                .Select(p => new Package(p));
+            /* return unassignedPackages; */
         }
 
         public IEnumerable<Station> GetAvailableStations()

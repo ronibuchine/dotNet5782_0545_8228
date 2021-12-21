@@ -30,7 +30,7 @@ namespace BLOBjectNamespace
                 drone.battery = 100;
             drone.status = DroneStatuses.free;
             int stationID = dal.GetAllCharges()
-                .First((dc) => dc.DroneId == droneID).StationId;
+                                .First(dc => dc.DroneId == droneID).StationId;
             dal.ReleaseDroneFromCharge(stationID, droneID);
         }
 

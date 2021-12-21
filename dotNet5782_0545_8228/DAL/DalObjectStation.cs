@@ -25,7 +25,7 @@ namespace DAL
 
         public void SendDroneToCharge(int stationID, int droneID)
         {
-            DataSource.droneCharges.Append(new DroneCharge(droneID, stationID));
+            DataSource.droneCharges.Add(new DroneCharge(droneID, stationID));
             GetActualStation(stationID).chargeSlots--;
         }
 
