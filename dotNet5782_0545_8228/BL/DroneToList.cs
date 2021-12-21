@@ -1,4 +1,5 @@
 using System;
+using UTIL;
 
 namespace IBL
 {
@@ -27,7 +28,7 @@ namespace IBL
             public override string ToString()
             {
                 return String.Format("ID = {0}, Model = {1}, WeightCategory = {2}, Battery = {3}, Drone Status = {4}, Location = {5}, Package Number = {6}", 
-                    ID, model, weightCategory, battery, status, location.ToString(), packageNumber);
+                    ID, model, weightCategory, PrintDebug.ToStringOrNull(battery), PrintDebug.ToStringOrNull(status), PrintDebug.ToStringOrNull(location), PrintDebug.ToStringOrNull(packageNumber));
             }
         }
     }

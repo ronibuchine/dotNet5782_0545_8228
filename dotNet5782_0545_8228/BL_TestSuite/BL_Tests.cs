@@ -20,7 +20,7 @@ namespace BL_TestSuite
             Drone d = bl.GetDrone(drone.ID);
             Assert.True(d.ID == drone.ID, "Assertion for AddDrone failed");
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 4; i++)
             {
                 bl.AddDrone($"{model}_{i + 1}", maxWeight, stationID);
             }
@@ -143,7 +143,7 @@ namespace BL_TestSuite
             Drone d = bl.AddDrone("droneModel", WeightCategories.heavy, s.ID);
             s = bl.GetStation(s.ID);
             /* bl.SendDroneToCharge(d.ID); */
-            Assert.Throws<InvalidBlObjectException>(() => bl.UpdateStation(s.ID, 0));
+            Assert.Throws<InvalidBlObjectException>(() => bl.UpdateStation(s.ID, -1));
             bl.UpdateStation(s.ID, 3);
             s = bl.GetStation(s.ID);
             Assert.True(s.chargeSlots == 3, "station model not updated");

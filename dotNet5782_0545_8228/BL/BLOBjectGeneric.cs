@@ -55,43 +55,14 @@ namespace BLOBjectNamespace
             Random rand = new Random();
             foreach (Drone drone in drones)
             {
-                Package package = packages.First(p => p.drone != null && p.drone.ID == drone.ID);
-                if (package != null)
+                Package package;
+                try 
                 {
-                    PackageInTransfer packageInTransfer = new(package);
-                    drone.packageInTransfer = packageInTransfer;
-                    if (package.delivered == null)
-                    {
-                        drone.status = DroneStatuses.delivery;
-
-                        Location senderLocation = customers.First(c => c.ID == package.sender.ID).currentLocation;
-                        Location closestStationLoc = GetClosestStationLocation(senderLocation, stations);
-
-                        Location closestStationToDelivery = GetClosestStationLocation(packageInTransfer.deliveringLocation,
-                                dal.GetAllStations().Select(s => new Station(s)));
-                        double distanceRequired = packageInTransfer.deliveryDistance;
-                        distanceRequired += GetDistance(packageInTransfer.deliveringLocation,closestStationToDelivery);
-
-                        if (package.pickedUp == null) // not collected
-                        {
-                            drone.currentLocation = closestStationLoc;
-                            distanceRequired += GetDistance(closestStationLoc, packageInTransfer.collectionLocation);
-                        }
-                        else //collected
-                        {
-                            drone.currentLocation = senderLocation;
-                        }
-
-                        double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
-
-                        if (batteryRequired > 100)
-                            throw new OperationNotPossibleException("battery required is greater than 100. Battery required was " + batteryRequired);
-
-                        drone.battery = rand.NextDouble() * (100 - batteryRequired) + batteryRequired;
-                    }
+                    package = packages.First(p => p.drone != null && p.drone.ID == drone.ID);
                 }
-                else // drone has no associated package
+                catch (InvalidOperationException e) 
                 {
+
                     int randChoice = rand.Next(2);
                     if (randChoice == 0) // free
                     {
@@ -120,7 +91,40 @@ namespace BLOBjectNamespace
                         dal.SendDroneToCharge(station.ID, drone.ID);
                         drone.battery = rand.NextDouble() * 20;
                     }
+                    return;
                 }
+                PackageInTransfer packageInTransfer = new(package);
+                drone.packageInTransfer = packageInTransfer;
+                if (package.delivered == null)
+                {
+                    drone.status = DroneStatuses.delivery;
+
+                    Location senderLocation = customers.First(c => c.ID == package.sender.ID).currentLocation;
+                    Location closestStationLoc = GetClosestStationLocation(senderLocation, stations);
+
+                    Location closestStationToDelivery = GetClosestStationLocation(packageInTransfer.deliveringLocation,
+                            dal.GetAllStations().Select(s => new Station(s)));
+                    double distanceRequired = packageInTransfer.deliveryDistance;
+                    distanceRequired += GetDistance(packageInTransfer.deliveringLocation,closestStationToDelivery);
+
+                    if (package.pickedUp == null) // not collected
+                    {
+                        drone.currentLocation = closestStationLoc;
+                        distanceRequired += GetDistance(closestStationLoc, packageInTransfer.collectionLocation);
+                    }
+                    else //collected
+                    {
+                        drone.currentLocation = senderLocation;
+                    }
+
+                    double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
+
+                    if (batteryRequired > 100)
+                        throw new OperationNotPossibleException("battery required is greater than 100. Battery required was " + batteryRequired);
+
+                    drone.battery = rand.NextDouble() * (100 - batteryRequired) + batteryRequired;
+                }
+                
             }
         }
 
