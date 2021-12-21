@@ -8,7 +8,19 @@ namespace DAL
 {
     public partial class DalObject : IDAL
     {
-        private static DalObject dalInstance = null;
+
+        private static DalObject _instance; 
+        public static DalObject Instance 
+        {
+            get 
+            {
+                if (_instance == null)
+                    _instance = new();
+                return _instance;
+            }
+            set { }
+        }
+
         public static int nextID;
 
         private DalObject() 
@@ -21,14 +33,14 @@ namespace DAL
         public DalObject(Object o) 
         {
             nextID = DataSource.nextID;
-            dalInstance = this;
+            Instance = this;
         }
 
         public static DalObject GetInstance()
         {
-            if (dalInstance == null)
-                dalInstance = new();
-            return dalInstance;
+            if (Instance == null)
+                Instance = new();
+            return Instance;
         }
 
 
@@ -45,7 +57,9 @@ namespace DAL
         /// <param name="pred">A predicate taking an item of the same type as list, that returns whether or not it should be displayed</param>
         private IEnumerable<T> GetAllItems<T>(IEnumerable<T> list, Func<T, bool> pred) where T : DalEntity
         {
-            return (IEnumerable<T>)list.Where<T>(pred).Select(t => t.Clone());
+            return list
+                    .Where<T>(pred)
+                    .Select(t => t);
         }
 
         /// <summary>
@@ -87,26 +101,26 @@ namespace DAL
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="rand">A Random object</param>
         private void AddDalItem<T>(
-                IEnumerable<T> list,
+                List<T> list,
                 int max,
                 IdalDoType type)
             where T : DalEntity
         {
             if (list.Count() + 1 < max)
-                list.Append((T)DataSource.Insert(type));
+                list.Add((T)DataSource.Insert(type));
             else
                 throw new DataSourceException("The entity could not be added to the system.");
         }
 
         private void AddDalItem<T>(
-                IEnumerable<T> list,
+                List<T> list,
                 int max,
                 T item,
                 IdalDoType type)
             where T : DalEntity
         {
-            if (list.Count() + 1 <= max)
-                list.Append(item);
+            if (list.Count + 1 <= max)
+                list.Add(item);
             else
                 throw new DataSourceException("The entity could not be added to the system.");
         }

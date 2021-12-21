@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
@@ -13,7 +14,15 @@ namespace DALAPI
 
         static DalConfig()
         {
-            XElement dalConfig = XElement.Load(@" xml\dal-config.xml");
+            var path = Directory.GetCurrentDirectory();
+            var containing = Directory.GetFiles(path, "*.sln");
+            while (containing.Length == 0)
+            {
+                path = Directory.GetParent(path).FullName;
+                containing = Directory.GetFiles(path, "*.sln");
+            }
+
+            XElement dalConfig = XElement.Load(path + @"\xml\dal-config.xml");
             DalName = dalConfig.Element("dal").Value;
             DalPackages =
                 (from pkg in dalConfig.Element("dal-packages").Elements() select pkg

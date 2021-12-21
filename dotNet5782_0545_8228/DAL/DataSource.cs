@@ -42,10 +42,10 @@ namespace DAL
         public static void Initialize()
         {
             rand = new Random();
-            InitializeList<Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE, drones);
-            InitializeList<Station>(MIN_DRONE_STATIONS, MAX_STATIONS, IdalDoType.STATION, stations);
-            InitializeList<Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER, customers);
-            InitializeList<Package>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.PACKAGE, packages);
+            InitializeList<Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE, (List<Drone>)drones);
+            InitializeList<Station>(MIN_DRONE_STATIONS, MAX_STATIONS, IdalDoType.STATION, (List<Station>)stations);
+            InitializeList<Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER, (List<Customer>)customers);
+            InitializeList<Package>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.PACKAGE, (List<Package>)packages);
         }
         
 
@@ -99,13 +99,13 @@ namespace DAL
                 int min,
                 int max,
                 IdalDoType type, 
-                IEnumerable<T> list)
+                List<T> list)
             where T : DalEntity
         {
             int num = rand.Next(min, max + 1);
             for (int i = 0; i < num; ++i)
             {
-                list.Append((T)Insert(type));
+                list.Add((T)Insert(type));
             }            
         }
     }

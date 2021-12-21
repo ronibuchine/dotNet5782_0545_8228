@@ -9,10 +9,10 @@ namespace DAL
     {
 
         public void AddDrone() =>
-            AddDalItem(DataSource.drones, DataSource.MAX_DRONES, IdalDoType.DRONE);
+            AddDalItem((List<Drone>)DataSource.drones, DataSource.MAX_DRONES, IdalDoType.DRONE);
 
         public void AddDrone(Drone drone) =>
-            AddDalItem(DataSource.drones,DataSource.MAX_DRONES, drone, IdalDoType.DRONE);
+            AddDalItem((List<Drone>)DataSource.drones,DataSource.MAX_DRONES, drone, IdalDoType.DRONE);
 
         public IEnumerable<Drone> GetAllDrones() => GetAllItems(DataSource.drones);
 

@@ -9,10 +9,10 @@ namespace DAL
     {
 
         public void AddStation() =>
-            AddDalItem(DataSource.stations, DataSource.MAX_STATIONS, IdalDoType.STATION);
+            AddDalItem((List<Station>)DataSource.stations, DataSource.MAX_STATIONS, IdalDoType.STATION);
 
         public void AddStation(Station station) =>
-            AddDalItem(DataSource.stations, DataSource.MAX_STATIONS, station, IdalDoType.STATION);
+            AddDalItem((List<Station>)DataSource.stations, DataSource.MAX_STATIONS, station, IdalDoType.STATION);
 
         public IEnumerable<Station> GetAllStations() => GetAllItems(DataSource.stations);
 

@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{E1BA2643-DB34-4C2D-BFF5-109411A355D3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALObject", "DAL\DALObject.csproj", "{05C786CB-9108-442F-A72C-AB756C75F455}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{A2EBFD22-075F-488E-83A8-8455A8DB0F9D}"
@@ -20,11 +18,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI_BL", "BL_TestSuit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{6E6B026C-8D4E-4A6E-B1AE-7C3CF02232E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DALFacade", "DALFacade\DALFacade.csproj", "{E4A9BDF9-3B66-4F56-833C-56E7D243B7FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALFacade", "DALFacade\DALFacade.csproj", "{E4A9BDF9-3B66-4F56-833C-56E7D243B7FA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{5B26EB77-0F01-41B4-A058-D66C5BDA97F6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{22DFC022-0310-41DF-AE58-739A48002A8A}"
 	ProjectSection(SolutionItems) = preProject
-		dal-config.xml = dal-config.xml
+		xml\dal-config.xml = xml\dal-config.xml
 	EndProjectSection
 EndProject
 Global
@@ -37,10 +35,6 @@ Global
 		{4D5DB847-EBDB-4EC5-A3C6-0705DAD585D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D5DB847-EBDB-4EC5-A3C6-0705DAD585D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D5DB847-EBDB-4EC5-A3C6-0705DAD585D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E1BA2643-DB34-4C2D-BFF5-109411A355D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1BA2643-DB34-4C2D-BFF5-109411A355D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1BA2643-DB34-4C2D-BFF5-109411A355D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1BA2643-DB34-4C2D-BFF5-109411A355D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{05C786CB-9108-442F-A72C-AB756C75F455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{05C786CB-9108-442F-A72C-AB756C75F455}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05C786CB-9108-442F-A72C-AB756C75F455}.Release|Any CPU.ActiveCfg = Release|Any CPU
