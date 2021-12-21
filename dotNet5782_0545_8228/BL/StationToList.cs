@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace IBL
 {
@@ -10,8 +11,8 @@ namespace IBL
             {
                 ID = station.ID;
                 name = station.name;
-                availableChargeSlots = station.chargeSlots - station.chargingDrones.Count;
-                occupiedSlots = station.chargingDrones.Count;
+                availableChargeSlots = station.chargeSlots - station.chargingDrones.Count();
+                occupiedSlots = station.chargingDrones.Count();
             }
             public int ID { get; set; }
             public string name { get; set; }
