@@ -22,7 +22,7 @@ namespace DALAPI
                 containing = Directory.GetFiles(path, "*.sln");
             }
 
-            XElement dalConfig = XElement.Load(path + @"\xml\dal-config.xml");
+            XElement dalConfig = XElement.Load(path + @"/xml/dal-config.xml");
             DalName = dalConfig.Element("dal").Value;
             DalPackages =
                 (from pkg in dalConfig.Element("dal-packages").Elements() select pkg

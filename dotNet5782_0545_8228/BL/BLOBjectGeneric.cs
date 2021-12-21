@@ -17,7 +17,7 @@ namespace BLOBjectNamespace
         public static double midWeight { get; set; }
         public static double heavyWeight { get; set; }
         public IDAL dal { get; }
-        private IEnumerable<Drone> drones;
+        private List<Drone> drones;
 
         public BLOBject(Object _)
         {
@@ -42,7 +42,7 @@ namespace BLOBjectNamespace
             heavyWeight = powerConsumption[3];
             chargingRate = powerConsumption[4];
 
-            drones = dal.GetAllDrones().Select(d => new Drone(d));
+            drones = dal.GetAllDrones().Select(d => new Drone(d)).ToList();
             IEnumerable<Package> packages = dal.GetAllPackages().Select(p => new Package(p));
             IEnumerable<Customer> customers = dal.GetAllCustomers().Select(c => new Customer(c));
             IEnumerable<Station> stations = dal.GetAllStations().Select(s => new Station(s));

@@ -19,11 +19,11 @@ namespace DAL
         internal const int MAX_PACKAGES = 10;
         internal const int MAX_DRONE_CHARGES = MAX_DRONES;
 
-        internal static IEnumerable<Drone> drones = new List<Drone>(MAX_DRONES);
-        internal static IEnumerable<Station> stations = new List<Station>(MAX_STATIONS);
-        internal static IEnumerable<Customer> customers = new List<Customer>(MAX_CUSTOMERS);
-        internal static IEnumerable<Package> packages = new List<Package>(MAX_PACKAGES);
-        internal static IEnumerable<DroneCharge> droneCharges = new List<DroneCharge>(MAX_DRONE_CHARGES);
+        internal static List<Drone> drones = new List<Drone>(MAX_DRONES);
+        internal static List<Station> stations = new List<Station>(MAX_STATIONS);
+        internal static List<Customer> customers = new List<Customer>(MAX_CUSTOMERS);
+        internal static List<Package> packages = new List<Package>(MAX_PACKAGES);
+        internal static List<DroneCharge> droneCharges = new List<DroneCharge>(MAX_DRONE_CHARGES);
 
         public static int nextID { get; set; } = 1;
 
@@ -42,10 +42,10 @@ namespace DAL
         public static void Initialize()
         {
             rand = new Random();
-            InitializeList<Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE, (List<Drone>)drones);
-            InitializeList<Station>(MIN_DRONE_STATIONS, MAX_STATIONS, IdalDoType.STATION, (List<Station>)stations);
-            InitializeList<Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER, (List<Customer>)customers);
-            InitializeList<Package>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.PACKAGE, (List<Package>)packages);
+            InitializeList<Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE, drones);
+            InitializeList<Station>(MIN_DRONE_STATIONS, MAX_STATIONS, IdalDoType.STATION, stations);
+            InitializeList<Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER, customers);
+            InitializeList<Package>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.PACKAGE, packages);
         }
         
 
@@ -66,11 +66,11 @@ namespace DAL
                 case IdalDoType.CUSTOMER:
                     return new Customer(nextID++);
                 case IdalDoType.PACKAGE:
-                    int randX = rand.Next(customers.Count());
-                    int randY = RandomExceptX(customers.Count(), randX, rand);
-                    int senderID = customers.ElementAt(randX).ID;
-                    int recieverID = customers.ElementAt(randY).ID;
-                    int droneID = drones.ElementAt(rand.Next(drones.Count())).ID;
+                    int randX = rand.Next(customers.Count);
+                    int randY = RandomExceptX(customers.Count, randX, rand);
+                    int senderID = customers[randX].ID;
+                    int recieverID = customers[randY].ID;
+                    int droneID = drones[rand.Next(drones.Count)].ID;
                     return new Package(nextID++, senderID, recieverID, droneID);
                 default:
                     throw new InvalidDalObjectException();

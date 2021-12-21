@@ -24,10 +24,10 @@ namespace DAL
             throw new DalObjectAccessException($"There is no drone assigned to this package: {package.ID}\n");
         }
         
-        public void AddPackage() => AddDalItem((List<Package>)DataSource.packages, DataSource.MAX_PACKAGES, IdalDoType.PACKAGE);
+        public void AddPackage() => AddDalItem(DataSource.packages, DataSource.MAX_PACKAGES, IdalDoType.PACKAGE);
 
         public void AddPackage(Package package) =>
-            AddDalItem((List<Package>)DataSource.packages,  DataSource.MAX_PACKAGES, package, IdalDoType.PACKAGE);
+            AddDalItem(DataSource.packages,  DataSource.MAX_PACKAGES, package, IdalDoType.PACKAGE);
 
         public IEnumerable<Package> GetAllPackages() => GetAllItems(DataSource.packages);
 

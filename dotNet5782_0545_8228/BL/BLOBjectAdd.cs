@@ -31,7 +31,7 @@ namespace BLOBjectNamespace
                     DO.Station station = dal.GetStation(stationID);
                     Location location = new Location(station.longitude, station.latitude);
                     Drone drone = new Drone(model, maxWeight, rand.NextDouble() * 20 + 20, DroneStatuses.maintenance, location);
-                    drones.Append(drone); // for bl
+                    drones.Add(drone); // for bl
                     dal.AddDrone(new DO.Drone(drone.ID, model, (DO.WeightCategories)maxWeight)); // for dl
                     dal.SendDroneToCharge(stationID, drone.ID);
                     return drone;

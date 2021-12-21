@@ -24,7 +24,15 @@ namespace BLOBjectNamespace
 
         public Drone GetDrone(int ID)
         {
-            Drone drone = drones.First(d => d.ID == ID);
+            Drone drone;
+            try 
+            {
+                drone = drones.First(d => d.ID == ID);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidBlObjectException("ERROR: This entity does not exist.");
+            }
             if (drone == null)
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
             return drone;
