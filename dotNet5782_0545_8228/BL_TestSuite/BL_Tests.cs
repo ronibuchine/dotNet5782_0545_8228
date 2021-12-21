@@ -20,7 +20,7 @@ namespace BL_TestSuite
             Drone d = bl.GetDrone(drone.ID);
             Assert.True(d.ID == drone.ID, "Assertion for AddDrone failed");
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 9; i++)
             {
                 bl.AddDrone($"{model}_{i + 1}", maxWeight, stationID);
             }
@@ -48,7 +48,7 @@ namespace BL_TestSuite
                 s.name == station.name &&
                 s.location.Equals(station.location)), "AddStation assertion failed");
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 9; i++)
             {
                 bl.AddStation($"{name}_{i + 1}", new Location(i + 1, i + 1), availableChargers);
             }
@@ -76,7 +76,7 @@ namespace BL_TestSuite
                 c.name == customer.name &&
                 c.currentLocation.Equals(customer.currentLocation), "AddCustomer assertion failed");
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 9; i++)
             {
                 bl.AddCustomer($"{name}_{i + 1}", phone, new Location(i + 1, i + 1));
             }
@@ -101,7 +101,7 @@ namespace BL_TestSuite
                 package.priority == p.priority &&
                 package.weightCategory == p.weightCategory, "Assertion for AddGetPackage failed");
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 9; i++)
             {
                 bl.AddPackage(senderID, receiverID, weight, priority);
             }

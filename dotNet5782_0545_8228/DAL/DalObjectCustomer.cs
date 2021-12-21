@@ -8,10 +8,10 @@ namespace DAL
     public partial class DalObject : IDAL
     {
 
-        public void AddCustomer() => AddDalItem(DataSource.customers, DataSource.MAX_CUSTOMERS, IdalDoType.CUSTOMER);
+        public void AddCustomer() => AddDalItem(DataSource.customers, IdalDoType.CUSTOMER);
 
         public void AddCustomer(Customer customer) =>
-            AddDalItem(DataSource.customers, DataSource.MAX_CUSTOMERS, customer, IdalDoType.CUSTOMER);
+            AddDalItem(DataSource.customers, customer, IdalDoType.CUSTOMER);
 
         public IEnumerable<Customer> GetAllCustomers() => GetAllItems(DataSource.customers);
 
