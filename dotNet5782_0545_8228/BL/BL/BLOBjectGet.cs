@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using IBL.BO;
 
-namespace BLOBjectNamespace
+namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {

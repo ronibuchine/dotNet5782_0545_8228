@@ -1,5 +1,5 @@
 using System;
-using IBL.BO;
+using BL;
 
 namespace UTIL
 {

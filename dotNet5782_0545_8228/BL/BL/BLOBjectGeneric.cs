@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using IBL.BO;
 using DALAPI;
 using static UTIL.Distances;
 
 
 
-namespace BLOBjectNamespace
+namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {

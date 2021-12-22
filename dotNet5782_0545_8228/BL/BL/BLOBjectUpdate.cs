@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace BLOBjectNamespace
+namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {
@@ -11,12 +11,12 @@ namespace BLOBjectNamespace
             try
             {
                 dal.UpdateDrone(ID, newModel);
-                IBL.BO.Drone drone = GetDrone(ID);
+                Drone drone = GetDrone(ID);
                 drone.model = newModel;
             }
             catch (DO.InvalidDalObjectException e)
             {
-                throw new IBL.BO.InvalidBlObjectException(e.Message);
+                throw new InvalidBlObjectException(e.Message);
             }
         }
 
@@ -28,16 +28,16 @@ namespace BLOBjectNamespace
             }
             catch (DO.InvalidDalObjectException e)
             {
-                throw new IBL.BO.InvalidBlObjectException(e.Message);
+                throw new InvalidBlObjectException(e.Message);
             }
         }
 
         public void UpdateStation(int stationID, int numChargers)
         {
-            IBL.BO.Station s = GetStation(stationID);
+            Station s = GetStation(stationID);
             if (s.chargingDrones.Count() > numChargers)
             {
-                throw new IBL.BO.InvalidBlObjectException("There are currently more drones charging here than update request");
+                throw new InvalidBlObjectException("There are currently more drones charging here than update request");
             }
             try
             {
@@ -45,7 +45,7 @@ namespace BLOBjectNamespace
             }
             catch (DO.InvalidDalObjectException e)
             {
-                throw new IBL.BO.InvalidBlObjectException(e.Message);
+                throw new InvalidBlObjectException(e.Message);
             }
         }
 
@@ -63,7 +63,7 @@ namespace BLOBjectNamespace
             }
             catch (DO.InvalidDalObjectException e)
             {
-                throw new IBL.BO.InvalidBlObjectException(e.Message);
+                throw new InvalidBlObjectException(e.Message);
             }
         }
 
@@ -76,7 +76,7 @@ namespace BLOBjectNamespace
             }
             catch (DO.InvalidDalObjectException e)
             {
-                throw new IBL.BO.InvalidBlObjectException(e.Message);
+                throw new InvalidBlObjectException(e.Message);
             }
         }
 
