@@ -177,15 +177,24 @@ namespace BL_TestSuite
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
             Station s1 = bl.AddStation("station", new Location(1, 1), 5);
             Drone d = bl.AddDrone("model", WeightCategories.heavy, s1.ID);
+            bl.ReleaseDroneFromCharge(d.ID, 1);
             Station s2 = bl.AddStation("station", new Location(-1, -179), 5);
             Customer roni = bl.AddCustomer("Roni", "9999999999", new Location(1, 1));
             Customer eli = bl.AddCustomer("Eli", "9999999999", new Location(2, 35));
-            bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.emergency);
-            bl.ReleaseDroneFromCharge(d.ID, 1);
-            bl.AssignPackageToDrone(d.ID);
-            bl.CollectPackage(d.ID);
-            bl.DeliverPackage(d.ID);
-            Assert.Throws<OperationNotPossibleException>(() => bl.SendDroneToCharge(d.ID));
+
+            Assert.Throws<OperationNotPossibleException>(() =>
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    bl.AddPackage(roni.ID, eli.ID, WeightCategories.light, Priorities.emergency);
+                    bl.AssignPackageToDrone(d.ID);
+                    bl.CollectPackage(d.ID);
+                    bl.DeliverPackage(d.ID);
+                    bl.SendDroneToCharge(d.ID);
+                    bl.ReleaseDroneFromCharge(d.ID, 1);
+
+                }
+            });
         }
 
         [Fact]
@@ -235,7 +244,7 @@ namespace BL_TestSuite
         public void AssignPackageWeightTest()
         {
             IBL.IBLInterface bl = new BLOBjectNamespace.BLOBject(null);
-            var close =  bl.AddCustomer("close", "000", new Location(2, 2));
+            var close = bl.AddCustomer("close", "000", new Location(2, 2));
             var kindaClose = bl.AddCustomer("kinda close", "000", new Location(3, 3));
             var far = bl.AddCustomer("far", "000", new Location(80, 80));
             var s = bl.AddStation("s1", new Location(1, 1), 5);
