@@ -77,11 +77,10 @@ namespace BLOBjectNamespace
                             Customer customer = recievingCustomers.ElementAt(rand.Next(recievingCustomers.Count()));
                             drone.currentLocation = customer.currentLocation;
                         }
-
-                        drone.battery = rand.NextDouble() * 20;
+                       
                         Location closestStation = GetClosestStationLocation(drone.currentLocation, stations);
                         double minRequired = GetDistance(drone.currentLocation, closestStation) * GetConsumptionRate(drone.weightCategory);
-                        drone.battery = rand.NextDouble() * (100 - minRequired);
+                        drone.battery = rand.NextDouble() * (100 - minRequired) + minRequired;
                     }
                     else // maintenance
                     {
@@ -91,7 +90,7 @@ namespace BLOBjectNamespace
                         dal.SendDroneToCharge(station.ID, drone.ID);
                         drone.battery = rand.NextDouble() * 20;
                     }
-                    return;
+                    continue;
                 }
                 PackageInTransfer packageInTransfer = new(package);
                 drone.packageInTransfer = packageInTransfer;

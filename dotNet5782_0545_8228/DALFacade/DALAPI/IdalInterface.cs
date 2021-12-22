@@ -13,6 +13,16 @@ namespace DALAPI
         public void AddCustomer(DO.Customer customer);
         public void AddPackage(DO.Package package);
 
+        // Update methods
+        public void UpdateDrone(int ID, string newModel);
+        public void UpdateStation(int stationID, string stationName); // either one of the last two parameters must be entered or both of them
+        public void UpdateStation(int stationID, int numChargers);
+        public void UpdateStation(int stationID, string stationName, int numChargers);
+        public void UpdateCustomerName(int ID, string name);
+        public void UpdateCustomerPhone(int ID, string phone);
+        public void UpdateCustomer(int ID, string name, string phone);
+
+
         public IEnumerable<DO.Drone> GetAllDrones();
         public IEnumerable<DO.Station> GetAllStations();
         public IEnumerable<DO.Customer> GetAllCustomers();

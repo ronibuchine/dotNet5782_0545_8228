@@ -10,7 +10,7 @@ namespace BLOBjectNamespace
         {
             try
             {
-                dal.GetActualDrone(ID).model = newModel;
+                dal.UpdateDrone(ID, newModel);
                 IBL.BO.Drone drone = GetDrone(ID);
                 drone.model = newModel;
             }
@@ -24,7 +24,7 @@ namespace BLOBjectNamespace
         {
             try
             {
-                dal.GetActualStation(stationID).name = stationName;
+                dal.UpdateStation(stationID, stationName);
             }
             catch (DO.InvalidDalObjectException e)
             {
@@ -41,7 +41,7 @@ namespace BLOBjectNamespace
             }
             try
             {
-                dal.GetActualStation(stationID).chargeSlots = numChargers;
+                dal.UpdateStation(stationID, numChargers);
             }
             catch (DO.InvalidDalObjectException e)
             {
@@ -59,7 +59,7 @@ namespace BLOBjectNamespace
         {
             try
             {
-                dal.GetActualCustomer(ID).name = name;
+                dal.UpdateCustomerName(ID, name);
             }
             catch (DO.InvalidDalObjectException e)
             {
@@ -72,7 +72,7 @@ namespace BLOBjectNamespace
             try
             {
                 // TODO validate phone number
-                dal.GetActualCustomer(ID).phone = phone;
+                dal.UpdateCustomerPhone(ID, phone);
             }
             catch (DO.InvalidDalObjectException e)
             {
