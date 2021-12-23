@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using DO;
 using DALAPI;
-using System.Linq;
 
 namespace DAL
 {
@@ -39,7 +38,7 @@ namespace DAL
         /// <param name="pred">A predicate taking an item of the same type as list, that returns whether or not it should be displayed</param>
         private IEnumerable<T> GetAllItems<T>(List<T> list, Predicate<T> pred) where T : DalEntity
         {
-            return list.FindAll(pred).ConvertAll(t => (T)t.Clone());
+            return list.FindAll(t => t.IsActive && pred(t)).ConvertAll(t => (T)t.Clone());
         }
 
         /// <summary>
@@ -55,24 +54,16 @@ namespace DAL
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="ID">The index of which item to display</param>
-        private T GetOneItem<T>(List<T> list, int ID) where T : DalEntity
-        {
-            T ret = list.First((t) => { return t.ID == ID; });
-            if (ret != null)
-                return (T)ret.Clone();
-            else
-                throw new InvalidDalObjectException("There was an issue retrieving the entity.");
-        }
+        private T GetOneItem<T>(List<T> list, int ID) where T : DalEntity => (T)GetActualOneItem<T>(list, ID).Clone();
 
         private T GetActualOneItem<T>(List<T> list, int ID) where T : DalEntity
         {
             if (ID == 0)
                 return null;
-            T ret = list.First((t) => { return t.ID == ID; });
-            if (ret != null)
-                return (T)ret;
-            else
+            T ret = list.Find((t) => { return t.ID == ID && t.IsActive; });
+            if (ret == null)
                 throw new InvalidDalObjectException("There was an issue retrieving the entity.");
+            return (T)ret;
         }
 
         /// <summary>

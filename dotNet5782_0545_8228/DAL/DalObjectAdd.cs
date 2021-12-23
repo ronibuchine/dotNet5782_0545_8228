@@ -7,14 +7,11 @@ namespace DAL
     public partial class DalObject : IDAL
     {
 
-        // Update objects section
-
-                
+        // Add objects section
         public void AddPackage() => AddDalItem(DataSource.packages, IdalDoType.PACKAGE);
 
         public void AddPackage(Package package) =>
             AddDalItem(DataSource.packages, package, IdalDoType.PACKAGE);
-       
 
         public void AddCustomer() => AddDalItem(DataSource.customers, IdalDoType.CUSTOMER);
 
