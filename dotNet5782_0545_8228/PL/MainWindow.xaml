@@ -5,13 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Xperience Drone Solutions" Height="640" Width="800">
+        Title="Xperience Drone Solutions" Height="640" Width="800"
+        SizeToContent="Height">
+    <Window.Resources>
+
+    </Window.Resources>
     <Grid Opacity="0.99" Cursor="Arrow">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="Black" Offset="0"/>
                 <GradientStop Color="#FF5F7C65" Offset="1"/>
             </LinearGradientBrush>
+
         </Grid.Background>
         <Grid.OpacityMask>
             <RadialGradientBrush>
@@ -19,14 +24,20 @@
                 <GradientStop Color="#FFAD9C9C" Offset="1"/>
             </RadialGradientBrush>
         </Grid.OpacityMask>
+
         <Button x:Name="ShowDronesButton" 
-                Content="Click here to manage drones" 
-                HorizontalAlignment="Left" Margin="244,282,0,0" 
+                Content="Login" 
+                HorizontalAlignment="Center" Margin="0,405,0,0" 
                 VerticalAlignment="Top" Click="ShowDronesButton_Click"
-                Height="94" Width="299"
-                FontSize="24"
-                FontFamily="Tw Cen MT"/>
-        <Image Name="XDS" HorizontalAlignment="Center" Height="265" Margin="0,30,0,0" VerticalAlignment="Top" Width="406" Source="/images/XDS.png"/>
-        <Image Name="Drone" HorizontalAlignment="Center" Height="265" Margin="0,30,0,0" VerticalAlignment="Top" Width="406" Source="C:\Users\ronib\OneDrive\Desktop\CompSci\Year 3\Semester 1\Mini Project in Windows\dotNet5782_0545_8228\dotNet5782_0545_8228\PL\images\drone.png"/>
+                Height="39" Width="214"
+                FontSize="18"
+                FontFamily="Tw Cen MT"
+                Background="{StaticResource ButtonBrush}"/>
+
+        <Image Name="XDS" HorizontalAlignment="Center" Height="179" Margin="0,151,0,0" VerticalAlignment="Top" Width="240" Source="/images/XDS.png"/>
+        <TextBox Name="Username" Text="Enter Username"  HorizontalAlignment="Center" Margin="0,312,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214" Height="20"/>
+        <TextBox Name="Password" Text="Enter Password" HorizontalAlignment="Center" Margin="0,367,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214" Height="20"/>
+        <Button Name="NewUser" Content="Create a New Account" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="131" Background="{StaticResource ButtonBrush}"/>
+        <Image Name="Drone" Margin="346,69,346,449" HorizontalAlignment="Center" VerticalAlignment="Top" Source="/images/drone-x.png" Visibility="Visible"/>
     </Grid>
 </Window>

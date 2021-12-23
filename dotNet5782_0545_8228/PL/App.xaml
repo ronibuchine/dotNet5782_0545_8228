@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <LinearGradientBrush x:Key="ButtonBrush" EndPoint="0.5,0"  StartPoint="0.5,1">
+            <GradientStop Color="CadetBlue" Offset="0"/>
+            <GradientStop Color="LightGray" Offset=".6"/>
+        </LinearGradientBrush>
          
     </Application.Resources>
+   
 </Application>
