@@ -1,4 +1,8 @@
 ﻿
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("DALObject")]
+/* [assembly: InternalsVisibleTo("DALXml")] */
 namespace DO
 {
     public abstract class DalEntity

@@ -97,7 +97,7 @@ namespace BL
     
         public IEnumerable<Package> GetUnassignedPackages()
         {
-            return dal.GetAllNotAssignedPackages().Select(p => new Package(p));
+            return dal.GetAllUnassignedPackages().Select(p => new Package(p));
         }
 
     

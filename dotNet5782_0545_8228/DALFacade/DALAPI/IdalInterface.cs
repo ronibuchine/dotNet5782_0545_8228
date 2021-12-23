@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace DALAPI
@@ -230,7 +231,6 @@ namespace DALAPI
         /// <returns></returns>
         public double[] PowerConsumptionRequest();
         public int GetNextID();
-
         public void Clear();
     }
 }

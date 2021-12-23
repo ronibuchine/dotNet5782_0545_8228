@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using DO;
 using DALAPI;
 using System.Linq;
@@ -10,7 +9,6 @@ namespace DAL
     {
 
        
-
        
 
         public void ProvidePackageToCustomer(int packageID)
