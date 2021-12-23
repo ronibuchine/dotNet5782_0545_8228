@@ -6,41 +6,23 @@ using System.Linq;
 
 namespace DAL
 {
-    public partial class DalObject : IDAL
+    public sealed partial class DalObject : IDAL
     {
 
-        private static DalObject _instance; 
-        public static DalObject Instance 
-        {
-            get 
-            {
-                if (_instance == null)
-                    _instance = new();
-                return _instance;
-            }
-            set { }
-        }
+        // Lazy<T> is by default thread safe, as only one thread can access the
+        // ctor at a time. By the time the next thread accesses it, the
+        // singlton will be already be constructed and the previous intance
+        // will be returned
+        private static readonly Lazy<DalObject> lazy = new Lazy<DalObject>(() => new DalObject());
+
+        public static DalObject Instance { get { return lazy.Value; } }
 
         public static int nextID;
 
-        private DalObject() 
+        private DalObject()
         {
             DataSource.Initialize();
             nextID = DataSource.nextID;
-        }
-
-        // for debugging/test only
-        public DalObject(Object o) 
-        {
-            nextID = DataSource.nextID;
-            Instance = this;
-        }
-
-        public static DalObject GetInstance()
-        {
-            if (Instance == null)
-                Instance = new();
-            return Instance;
         }
 
 
@@ -81,7 +63,7 @@ namespace DAL
             else
                 throw new InvalidDalObjectException("There was an issue retrieving the entity.");
         }
-        
+
         private T GetActualOneItem<T>(List<T> list, int ID) where T : DalEntity
         {
             if (ID == 0)
