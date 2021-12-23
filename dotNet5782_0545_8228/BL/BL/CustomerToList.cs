@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using DALAPI;
 
 
 namespace BL
@@ -11,11 +13,13 @@ namespace BL
             name = customer.name;
             phoneNumber = customer.phone;
             // TODO do these package numbers
-            numberExpectedPackages = 0;
-            numberPackagesDelivered = 0;
-            numberPackagesUndelivered = 0;
-            numberReceivedPackages = 0;
+            IDAL dal = DalFactory.GetDal();
+            numberExpectedPackages = dal.GetAllPackages(p => p.recieverId == ID && p.delivered == null).Count();
+            numberPackagesDelivered = dal.GetAllPackages(p => p.senderId == ID && p.delivered != null).Count();
+            numberPackagesUndelivered = dal.GetAllPackages(p => p.senderId == ID && p.delivered == null).Count();
+            numberReceivedPackages = dal.GetAllPackages(p => p.recieverId == ID && p.delivered != null).Count();
         }
+
         public int ID {get; set;}
         public string name { get; set; }
         public string phoneNumber { get; set; }

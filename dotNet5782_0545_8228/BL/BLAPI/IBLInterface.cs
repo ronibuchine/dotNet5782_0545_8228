@@ -14,7 +14,7 @@ namespace IBL
 
         // Update methods
         public void UpdateDrone(int ID, string newModel);
-        public void UpdateStation(int stationID, string stationName); // either one of the last two parameters must be entered or both of them
+        public void UpdateStation(int stationID, string stationName);
         public void UpdateStation(int stationID, int numChargers);
         public void UpdateStation(int stationID, string stationName, int numChargers);
         public void UpdateCustomerName(int ID, string name);
@@ -30,7 +30,7 @@ namespace IBL
         public void DeliverPackage(int droneID);
 
 
-        // Display
+        // Getters
         public Station GetStation(int ID);
         public Drone GetDrone(int ID);
         public Customer GetCustomer(int ID);
@@ -43,6 +43,11 @@ namespace IBL
         public IEnumerable<Station> GetAvailableStations();
         public IEnumerable<DroneToList> GetSpecificDrones(Func<DroneToList, bool> pred);
 
+        // deleters
+        public void DeleteCustomer(int ID);
+        public void DeleteDrone(int ID);
+        public void DeletePackage(int ID);
+        public void DeleteStation(int ID);
 
 
     }

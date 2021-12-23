@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace BL
 {
@@ -60,7 +59,8 @@ namespace BL
             {
                 if (senderID == receiverID) throw new InvalidIDException("ERROR: Sender ID cannot be the same as the receiver ID");
                 Package package = new Package(senderID, receiverID, weight, priority);
-                package.delivered = package.scheduled = package.pickedUp = package.requested = null;
+                package.delivered = package.scheduled = package.pickedUp = null;
+                package.requested = DateTime.Now;
                 dal.AddPackage(new DO.Package(
                             package.ID,
                             senderID,
@@ -68,7 +68,7 @@ namespace BL
                             0,
                             (DO.WeightCategories)weight,
                             (DO.Priorities)priority,
-                            package.requested,
+                            DateTime.Now,
                             null,
                             null,
                             null));

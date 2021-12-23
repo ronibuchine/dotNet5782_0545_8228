@@ -58,7 +58,6 @@ namespace DALAPI
         public void SendDroneToCharge(int stationID, int droneID);
         public void ReleaseDroneFromCharge(int stationID, int droneID);
 
-
         // deleters
         public void DeleteCustomer(int ID);
         public void DeleteDrone(int ID);

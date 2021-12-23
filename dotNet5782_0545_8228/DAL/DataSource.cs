@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using static DAL.DalObject;
 using DO;
@@ -8,6 +7,7 @@ namespace DAL
 {
     internal class DataSource
     {
+        // TODO make these numbers bigger... and better
         internal const int MIN_DRONES = 5;
         internal const int MIN_DRONE_STATIONS = 5;
         internal const int MIN_CUSTOMERS = 5;
