@@ -2,23 +2,35 @@
 using System.Collections.Generic;
 using DO;
 using DALAPI;
+using System.Linq;
 
 namespace DAL
 {
     public partial class DalObject : IDAL
     {
 
-        public void AddDrone() =>
-            AddDalItem((List<Drone>)DataSource.drones, IdalDoType.DRONE);
+       
 
-        public void AddDrone(Drone drone) =>
-            AddDalItem((List<Drone>)DataSource.drones, drone, IdalDoType.DRONE);
+       
 
-        public IEnumerable<Drone> GetAllDrones() => GetAllItems(DataSource.drones);
+        public void ProvidePackageToCustomer(int packageID)
+        {
+            GetActualPackage(packageID).delivered = DateTime.Now;
+        }
 
-        public Drone GetDrone(int ID) => GetOneItem(DataSource.drones, ID);
+        public void ReleaseDroneFromCharge(int stationID, int droneID)
+        {
+            var temp = DataSource.droneCharges.ToList();
+            temp.Remove(temp.Find(dc => dc.DroneId == droneID));
+            DataSource.droneCharges = temp;
+            GetActualStation(stationID).chargeSlots++;
+        }
 
-        public Drone GetActualDrone(int ID) => GetActualOneItem(DataSource.drones, ID);
+        public void SendDroneToCharge(int stationID, int droneID)
+        {
+            DataSource.droneCharges.Add(new DroneCharge(droneID, stationID));
+            GetActualStation(stationID).chargeSlots--;
+        }
 
         /// <summary>
         /// Takes index of a parcel and assigns to next available drone which can support the parcel weight
@@ -40,6 +52,6 @@ namespace DAL
         {
             GetActualPackage(packageID).pickedUp = DateTime.Now;
         }
-
     }
 }
+

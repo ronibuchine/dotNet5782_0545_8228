@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UTIL;
-using IBL.BO;
+using BL;
 
-namespace BLOBjectNamespace
+namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace BLOBjectNamespace
+namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {
@@ -10,13 +10,13 @@ namespace BLOBjectNamespace
         {
             try
             {
-                dal.GetActualDrone(ID).model = newModel;
-                IBL.BO.Drone drone = GetDrone(ID);
+                dal.UpdateDrone(ID, newModel);
+                Drone drone = GetDrone(ID);
                 drone.model = newModel;
             }
             catch (DO.InvalidDalObjectException e)
             {
-                throw new IBL.BO.InvalidBlObjectException(e.Message);
+                throw new InvalidBlObjectException(e.Message);
             }
         }
 
@@ -24,28 +24,28 @@ namespace BLOBjectNamespace
         {
             try
             {
-                dal.GetActualStation(stationID).name = stationName;
+                dal.UpdateStation(stationID, stationName);
             }
             catch (DO.InvalidDalObjectException e)
             {
-                throw new IBL.BO.InvalidBlObjectException(e.Message);
+                throw new InvalidBlObjectException(e.Message);
             }
         }
 
         public void UpdateStation(int stationID, int numChargers)
         {
-            IBL.BO.Station s = GetStation(stationID);
+            Station s = GetStation(stationID);
             if (s.chargingDrones.Count() > numChargers)
             {
-                throw new IBL.BO.InvalidBlObjectException("There are currently more drones charging here than update request");
+                throw new InvalidBlObjectException("There are currently more drones charging here than update request");
             }
             try
             {
-                dal.GetActualStation(stationID).chargeSlots = numChargers;
+                dal.UpdateStation(stationID, numChargers);
             }
             catch (DO.InvalidDalObjectException e)
             {
-                throw new IBL.BO.InvalidBlObjectException(e.Message);
+                throw new InvalidBlObjectException(e.Message);
             }
         }
 
@@ -59,11 +59,11 @@ namespace BLOBjectNamespace
         {
             try
             {
-                dal.GetActualCustomer(ID).name = name;
+                dal.UpdateCustomerName(ID, name);
             }
             catch (DO.InvalidDalObjectException e)
             {
-                throw new IBL.BO.InvalidBlObjectException(e.Message);
+                throw new InvalidBlObjectException(e.Message);
             }
         }
 
@@ -72,11 +72,11 @@ namespace BLOBjectNamespace
             try
             {
                 // TODO validate phone number
-                dal.GetActualCustomer(ID).phone = phone;
+                dal.UpdateCustomerPhone(ID, phone);
             }
             catch (DO.InvalidDalObjectException e)
             {
-                throw new IBL.BO.InvalidBlObjectException(e.Message);
+                throw new InvalidBlObjectException(e.Message);
             }
         }
 
