@@ -3,6 +3,9 @@
 
 namespace BL
 {
+    /// <summary>
+    /// A package entity whcih is used for list represntation
+    /// </summary>
     public class PackageToList
     {
         public int ID { get; set; }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DO;
 using DALAPI;
-using System.Linq;
 
 namespace DAL
 {
@@ -45,20 +43,20 @@ namespace DAL
 
 
 
-
         // Get all conditionals -- these return copies
-        // Some of these take predicates, some of them are pre-built for common queries
-        public IEnumerable<Drone> GetAllDrones(Func<Drone, bool> pred) => GetAllDrones().Where(pred);
-
-        public IEnumerable<Customer> GetAllCustomers(Func<Customer, bool> pred) => GetAllCustomers().Where(pred);
-
-        public IEnumerable<Package> GetAllPackages(Func<Package, bool> pred) => GetAllPackages().Where(pred);
-
-        public IEnumerable<Station> GetAllStations(Func<Station, bool> pred) => GetAllStations().Where(pred);
-
         public IEnumerable<Package> GetAllUnassignedPackages() => GetAllItems(DataSource.packages, (Package p) => p.droneId == 0);
 
         public IEnumerable<Station> GetAllUnoccupiedStations() => GetAllItems(DataSource.stations, (Station ds) => ds.chargeSlots > 0);
+
+        // Some of these take predicates, some of them are pre-built for common queries
+        /* public IEnumerable<Drone> GetAllDrones(Func<Drone, bool> pred) => GetAllDrones().Where(pred); */
+
+        /* public IEnumerable<Customer> GetAllCustomers(Func<Customer, bool> pred) => GetAllCustomers().Where(pred); */
+
+        /* public IEnumerable<Package> GetAllPackages(Func<Package, bool> pred) => GetAllPackages().Where(pred); */
+
+        /* public IEnumerable<Station> GetAllStations(Func<Station, bool> pred) => GetAllStations().Where(pred); */
+
 
 
     }

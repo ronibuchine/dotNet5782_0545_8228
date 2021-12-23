@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace BL
 {
+    /// <summary>
+    /// A station entity which is used for list representation.
+    /// </summary>
     public class StationToList
     {
         public StationToList(Station station)

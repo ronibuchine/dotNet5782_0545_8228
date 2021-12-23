@@ -3,7 +3,10 @@ using BL;
 
 namespace UTIL
 {
-    public class Distances 
+    /// <summary>
+    /// A util class which is used to calculate distances based on inpouts of longitude and latitude.
+    /// </summary>
+    internal class Distances 
     {
         private static double toRadians(
             double angleIn10thofaDegree)
@@ -14,7 +17,13 @@ namespace UTIL
                         Math.PI) / 180;
         }
 
-        public static double GetDistance(Location l1, Location l2)                  
+        /// <summary>
+        /// Calculates the distance between 2 locations
+        /// </summary>
+        /// <param name="l1"></param>
+        /// <param name="l2"></param>
+        /// <returns>The distance between both locations</returns>
+        internal static double GetDistance(Location l1, Location l2)                  
         {
     
             // The math module contains

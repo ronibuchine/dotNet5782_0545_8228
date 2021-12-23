@@ -9,7 +9,7 @@ namespace DO
     {
         public int ID { get; set; }
 
-        internal bool IsActive = true;
+        public bool IsActive = true;
 
         protected DalEntity(int ID)
         {

@@ -1,72 +1,261 @@
-using System;
 using System.Collections.Generic;
 
 namespace DALAPI
 {
     public interface IDAL
     {
-        // Add methods
-        public void AddDrone();
-        public void AddStation();
-        public void AddCustomer();
-        public void AddPackage();
+        
+        /// <summary>
+        /// This issues an API call which adds a new drone to the DataSource.
+        /// </summary>
+        /// <param name="drone"></param>
         public void AddDrone(DO.Drone drone);
+
+        /// <summary>
+        /// This issues an API call which adds a new station to the DataSource.
+        /// </summary>
+        /// <param name="droneStation"></param>
         public void AddStation(DO.Station droneStation);
+
+        /// <summary>
+        /// This issues an API call which adds a new customer to the DataSource.
+        /// </summary>
+        /// <param name="customer"></param>
         public void AddCustomer(DO.Customer customer);
+
+        /// <summary>
+        /// This issues an API call which adds a new package to the DataSource.
+        /// </summary>
+        /// <param name="package"></param>
         public void AddPackage(DO.Package package);
 
-        // Update methods
+        /// <summary>
+        /// This API call will update a given drone and changes it's model to the string that was passed.
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="newModel"></param>
         public void UpdateDrone(int ID, string newModel);
-        public void UpdateStation(int stationID, string stationName); 
+
+        /// <summary>
+        /// This API call will update a given station and changes it's name to the string that was passed.
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="stationName"></param>
+        public void UpdateStation(int stationID, string stationName);
+
+        /// <summary>
+        /// This API call will update a given station and changes the number of charging slots it has.
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="numChargers"></param>
         public void UpdateStation(int stationID, int numChargers);
+
+        /// <summary>
+        /// This API call will both update the number of chargers and the station name of a given station
+        /// </summary>
+        /// <param name="stationID"></param>
+        /// <param name="stationName"></param>
+        /// <param name="numChargers"></param>
         public void UpdateStation(int stationID, string stationName, int numChargers);
+
+        /// <summary>
+        /// This API call will update the name of a given customer in the DataSource
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="name"></param>
         public void UpdateCustomerName(int ID, string name);
+
+        /// <summary>
+        /// This API call will update a customer phone number in the DataSource
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="phone"></param>
         public void UpdateCustomerPhone(int ID, string phone);
+
+        /// <summary>
+        /// This API call will update both the name and phone number of a customer in the DataSource
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="name"></param>
+        /// <param name="phone"></param>
         public void UpdateCustomer(int ID, string name, string phone);
 
-        // Get alls
+        /// <summary>
+        /// This API call will return all the active drones which are in the system
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DO.Drone> GetAllDrones();
+
+        /// <summary>
+        /// This API call will return all the active stations which are tin the system
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DO.Station> GetAllStations();
+
+        /// <summary> 
+        /// This API call will return all the active customers in the system
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DO.Customer> GetAllCustomers();
+
+        /// <summary>
+        /// This API call will return all the active packages in the system
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DO.Package> GetAllPackages();
+
+        /// <summary>
+        /// This API call will return all the DroneCharge pairs in the system
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DO.DroneCharge> GetAllCharges();
+
+        /// <summary>
+        /// This API call will retrieve all the unassigned packages in the system
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DO.Package> GetAllUnassignedPackages();
+
+        /// <summary>
+        /// This API call will retrieve all the unoccupied stations in the system
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DO.Station> GetAllUnoccupiedStations();
 
-        //Getters
+
+        /// <summary>
+        /// This API call retrieves a drone basedon it's ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>A copy of the drone object</returns>
         public DO.Drone GetDrone(int ID);
+
+        /// <summary>
+        /// This API call retrieves a given station based on it's ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>a copy of the station object</returns>
         public DO.Station GetStation(int ID);
+
+        /// <summary>
+        /// This API call retrieves a given customer based on it's ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>a copy of the customer object</returns>
         public DO.Customer GetCustomer(int ID);
+
+        /// <summary>
+        /// This API call retrieves a given package based on it's ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>A copy of the package object</returns>
         public DO.Package GetPackage(int ID);
 
-        // Get actuals
+        /// <summary>
+        /// This API call retrieves a drone based on it's ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>A reference to the actual drone</returns>
         public DO.Drone GetActualDrone(int ID);
+
+        /// <summary>
+        /// This API call retrieves a station from the system
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>A referecne to the actual station</returns>
         public DO.Station GetActualStation(int ID);
+
+        /// <summary>
+        /// This API call retrieves a customer from the system
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>A reference of the actual customer</returns>
         public DO.Customer GetActualCustomer(int ID);
+
+        /// <summary>
+        /// This API call retrieves a package from the system
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>A reference to the actual package</returns>
         public DO.Package GetActualPackage(int ID);
 
-        // Get all conditionals
-        public IEnumerable<DO.Drone> GetAllDrones(Func<DO.Drone, bool> pred);
-        public IEnumerable<DO.Station> GetAllStations(Func<DO.Station, bool> pred);
-        public IEnumerable<DO.Customer> GetAllCustomers(Func<DO.Customer, bool> pred);
-        public IEnumerable<DO.Package> GetAllPackages(Func<DO.Package, bool> pred);
-
-        // Actions
+        /// <summary>
+        /// This API call will assign a given package to the specified drone in the system if it can
+        /// This may throw an Exception on failure
+        /// </summary>
+        /// <param name="packageID"></param>
+        /// <param name="droneID"></param>
         public void AssignPackageToDrone(int packageID, int droneID);
+
+        /// <summary>
+        /// This API call collects a package for a drone.
+        /// This may throw an Exception upon failure
+        /// </summary>
+        /// <param name="packageID"></param>
         public void CollectPackageToDrone(int packageID);
+
+        /// <summary>
+        /// This API call Will deliver the package to the customer it is meant for.
+        /// This may throw an exception upon failure
+        /// </summary>
+        /// <param name="packageID"></param>
         public void ProvidePackageToCustomer(int packageID);
+
+        /// <summary>
+        /// This API call sends a drone to charge at the closest available station.
+        /// This may throw an exception upon failure
+        /// </summary>
+        /// <param name="stationID"></param>
+        /// <param name="droneID"></param>
         public void SendDroneToCharge(int stationID, int droneID);
+
+        /// <summary>
+        /// This API call will release a drone from charging at a station.
+        /// This may throw an exception upon failure
+        /// </summary>
+        /// <param name="stationID"></param>
+        /// <param name="droneID"></param>
         public void ReleaseDroneFromCharge(int stationID, int droneID);
 
-        // deleters
+        /// <summary>
+        /// This retrieves the power consumption of the different weight classes
+        /// </summary>
+        /// <returns></returns>
+        public double[] PowerConsumptionRequest();
+
+        /// <summary>
+        /// Marks a customer as inactive in the system
+        /// </summary>
+        /// <param name="ID"></param>
         public void DeleteCustomer(int ID);
+
+        /// <summary>
+        /// Marks a Drone as inactive in the system
+        /// </summary>
+        /// <param name="ID"></param>
         public void DeleteDrone(int ID);
+
+        /// <summary>
+        /// Marks a package as inactive in the system
+        /// </summary>
+        /// <param name="ID"></param>
         public void DeletePackage(int ID);
+
+        /// <summary>
+        /// Marks a station as inactive in the system
+        /// </summary>
+        /// <param name="ID"></param>
         public void DeleteStation(int ID);
 
-        // misc
-        public double[] PowerConsumptionRequest();
+        /// <summary>
+        /// Get next ID of current running ID's
+        /// </summary>
         public int GetNextID();
+
+
+        /// <summary>
+        /// Delete entire contents of dal
+        /// </summary>
         public void Clear();
     }
 }

@@ -4,6 +4,9 @@ using UTIL;
 
 namespace BL
 {
+    /// <summary>
+    /// The entity of a drone in our system. This class keeps all the relevant information on drones 
+    /// </summary>
     public class Drone : BLEntity
     {
         public string model { get; set; }

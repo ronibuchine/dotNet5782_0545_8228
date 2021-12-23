@@ -4,18 +4,6 @@ namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {
-        ///<summary>
-        ///Delete a customer
-        ///</summary>
-        ///<param name="ID">
-        ///The ID of the customer to delete
-        ///</param>
-        ///<exception cref="OperationNotPossibleException">
-        ///If there is a package in the system that needs to be delivered to the customer
-        ///</exception>
-        ///<exception cref="InvalidBlObjectException">
-        ///If the customer does not exist in the system
-        ///</exception>
         public void DeleteCustomer(int ID)
         {
             var customer = GetCustomerList().First(p => p.ID == ID);
@@ -26,18 +14,6 @@ namespace BL
             dal.DeleteCustomer(ID);
         }
 
-        ///<summary>
-        ///Delete a drone
-        ///</summary>
-        ///<param name="ID">
-        ///The ID of the drone to delete
-        ///</param>
-        ///<exception cref="OperationNotPossibleException">
-        ///If the drone is in delivery status it cannot be deleted
-        ///</exception>
-        ///<exception cref="InvalidBlObjectException">
-        ///If the drone does not exist in the system
-        ///</exception>
         public void DeleteDrone(int ID)
         {
             if (GetDrone(ID).status == DroneStatuses.delivery)
@@ -46,18 +22,6 @@ namespace BL
             dal.DeleteDrone(ID);
         }
 
-        ///<summary>
-        ///Delete a package
-        ///</summary>
-        ///<param name="ID">
-        ///The ID of the drone to delete
-        ///</param>
-        ///<exception cref="OperationNotPossibleException">
-        ///The package can only be deleted if it has not be assigned yet, or if has already been delivered
-        ///</exception>
-        ///<exception cref="InvalidBlObjectException">
-        ///If the package does not exist in the system
-        ///</exception>
         public void DeletePackage(int ID)
         {
             var package = dal.GetPackage(ID);
@@ -68,21 +32,6 @@ namespace BL
             
         }
 
-        ///<summary>
-        ///Delete a package
-        ///</summary>
-        ///<remarks>
-        ///Be very careful when calling this. There may be drones that are counting on this station in the future and will be stranded if the station dissapears
-        ///</remarks>
-        ///<param name="ID">
-        ///The ID of the drone to delete
-        ///</param>
-        ///<exception cref="OperationNotPossibleException">
-        ///The station can only be deleted if there are no drones charging on it
-        ///</exception>
-        ///<exception cref="InvalidBlObjectException">
-        ///If the package does not exist in the system
-        ///</exception>
         public void DeleteStation(int ID)
         {
             if (dal.GetAllCharges()

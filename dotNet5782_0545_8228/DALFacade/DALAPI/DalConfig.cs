@@ -6,12 +6,18 @@ using System.Linq;
 
 namespace DALAPI
 {
+    /// <summary>
+    /// This class is a configuration class for the data layer of our system
+    /// </summary>
     class DalConfig
     {
         internal static string DalName;
 
         internal static Dictionary<string, string> DalPackages;
 
+        /// <summary>
+        /// The static constructor here loads the xml config file from the solution folder and laods the appropriate implementatino of the DALObject
+        /// </summary>
         static DalConfig()
         {
             var path = Directory.GetCurrentDirectory();

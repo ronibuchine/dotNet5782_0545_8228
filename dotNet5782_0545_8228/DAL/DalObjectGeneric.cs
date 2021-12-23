@@ -5,13 +5,16 @@ using DALAPI;
 
 namespace DAL
 {
+    /// <summary>
+    /// Lazy<T> is by default thread safe, as only one thread can access the
+    /// ctor at a time. By the time the next thread accesses it, the
+    /// singlton will be already be constructed and the previous intance
+    /// will be returned
+    /// </summary>
     public sealed partial class DalObject : IDAL
     {
 
-        // Lazy<T> is by default thread safe, as only one thread can access the
-        // ctor at a time. By the time the next thread accesses it, the
-        // singlton will be already be constructed and the previous intance
-        // will be returned
+       
         private static readonly Lazy<DalObject> lazy = new Lazy<DalObject>(() => new DalObject());
 
         public static DalObject Instance { get { return lazy.Value; } }
@@ -56,6 +59,13 @@ namespace DAL
         /// <param name="ID">The index of which item to display</param>
         private T GetOneItem<T>(List<T> list, int ID) where T : DalEntity => (T)GetActualOneItem<T>(list, ID).Clone();
 
+        /// <summary>
+        /// Retrieves an entity from the DataSource
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         private T GetActualOneItem<T>(List<T> list, int ID) where T : DalEntity
         {
             if (ID == 0)

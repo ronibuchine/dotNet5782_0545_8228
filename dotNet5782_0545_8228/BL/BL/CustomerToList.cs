@@ -5,6 +5,9 @@ using DALAPI;
 
 namespace BL
 {
+    /// <summary>
+    /// Customer entity which is used for list representation
+    /// </summary>
     public class CustomerToList
     {
         public CustomerToList(Customer customer)
@@ -14,10 +17,10 @@ namespace BL
             phoneNumber = customer.phone;
             // TODO do these package numbers
             IDAL dal = DalFactory.GetDal();
-            numberExpectedPackages = dal.GetAllPackages(p => p.recieverId == ID && p.delivered == null).Count();
-            numberPackagesDelivered = dal.GetAllPackages(p => p.senderId == ID && p.delivered != null).Count();
-            numberPackagesUndelivered = dal.GetAllPackages(p => p.senderId == ID && p.delivered == null).Count();
-            numberReceivedPackages = dal.GetAllPackages(p => p.recieverId == ID && p.delivered != null).Count();
+            numberExpectedPackages = dal.GetAllPackages().Where(p => p.recieverId == ID && p.delivered == null).Count();
+            numberPackagesDelivered = dal.GetAllPackages().Where(p => p.senderId == ID && p.delivered != null).Count();
+            numberPackagesUndelivered = dal.GetAllPackages().Where(p => p.senderId == ID && p.delivered == null).Count();
+            numberReceivedPackages = dal.GetAllPackages().Where(p => p.recieverId == ID && p.delivered != null).Count();
         }
 
         public int ID {get; set;}

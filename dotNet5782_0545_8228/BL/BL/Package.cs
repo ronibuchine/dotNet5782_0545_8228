@@ -3,6 +3,9 @@
 
 namespace BL
 {
+    /// <summary>
+    ///  a Package entity representing a package in our delivery system
+    /// </summary>
     public class Package : BLEntity
     {
         public CustomerInPackage sender { get; set; }

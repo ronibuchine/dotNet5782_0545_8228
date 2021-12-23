@@ -3,6 +3,9 @@
 
 namespace BL
 {
+    /// <summary>
+    ///  A Package in our system which is currently referenced by a customer
+    /// </summary>
     public class PackageAtCustomer
     {
         public int ID { get; set; }

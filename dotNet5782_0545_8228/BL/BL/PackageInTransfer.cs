@@ -4,6 +4,9 @@ using UTIL;
 
 namespace BL
 { 
+    /// <summary>
+    /// A package in our system which is currently in transfer to a customer
+    /// </summary>
     public class PackageInTransfer
     {
         public int ID { get; set; }

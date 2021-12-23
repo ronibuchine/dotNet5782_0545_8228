@@ -2,8 +2,9 @@
 
 namespace BL
 {
-    public partial class BLOBject : IBL.IBLInterface
+    partial class BLOBject : IBL.IBLInterface
     {
+      
         public Station AddStation(string name, Location location, int availableChargers)
         {
             try
@@ -18,6 +19,7 @@ namespace BL
             }
         }
 
+     
         public Drone AddDrone(string model, WeightCategories maxWeight, int stationID)
         {
             try
@@ -42,6 +44,7 @@ namespace BL
             catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
         }
 
+     
         public Customer AddCustomer(string name, string phone, Location location)
         {
             try
@@ -53,6 +56,7 @@ namespace BL
             catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
         }
 
+       
         public Package AddPackage(int senderID, int receiverID, WeightCategories weight, Priorities priority)
         {
             try

@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 namespace BL
 {
-    public partial class BLOBject : IBL.IBLInterface
+    partial class BLOBject : IBL.IBLInterface
     {
+      
         public Station GetStation(int ID)
         {
             try
@@ -18,9 +19,9 @@ namespace BL
             catch (InvalidBlObjectException i) {throw i;}
             catch (InvalidIDException e) {throw e;}
             catch (DO.InvalidDalObjectException e) {throw new InvalidBlObjectException(e.Message);}
-            throw new Exception("UNKNOWN ERROR OCCURED. WHOOPS.");
         }
 
+       
         public Drone GetDrone(int ID)
         {
             Drone drone;
@@ -36,7 +37,8 @@ namespace BL
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
             return drone;
         }
-          
+         
+      
         public Customer GetCustomer(int ID)
         {
             if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
@@ -68,31 +70,37 @@ namespace BL
             return dal.GetAllStations().Select(ds => new StationToList(new Station(ds)));
         }
 
+      
         public IEnumerable<DroneToList> GetDroneList()
         {
             return drones.Select((d) => new DroneToList(d));
         }
 
+       
         public IEnumerable<CustomerToList> GetCustomerList()
         {
             return dal.GetAllCustomers().Select((c) => new CustomerToList(new Customer(c)));
         }
 
+      
         public IEnumerable<PackageToList> GetPackageList()
         {
             return dal.GetAllPackages().Select((p) => new PackageToList(new Package(p)));
         }
 
+    
         public IEnumerable<Package> GetUnassignedPackages()
         {
             return dal.GetAllUnassignedPackages().Select(p => new Package(p));
         }
 
+    
         public IEnumerable<Station> GetAvailableStations()
         {               
             return dal.GetAllUnoccupiedStations().Select(s => new Station(s));
         }
 
+       
         public IEnumerable<DroneToList> GetSpecificDrones(Func<DroneToList, bool> pred)
         {
             return GetDroneList().Where(pred);
