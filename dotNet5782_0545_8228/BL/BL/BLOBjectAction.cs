@@ -8,6 +8,11 @@ namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {
+        /// <summary>
+        /// This API call will send the given drone to the nearest charging station assuming that drone is able to make the journey.
+        /// This will fail if the drone isn't free or it doesn't have enough battery.
+        /// </summary>
+        /// <param name="droneID">ID of the drone to send</param>
         public void SendDroneToCharge(int droneID)
         {
             Drone drone = GetDrone(droneID);
@@ -20,6 +25,12 @@ namespace BL
             dal.SendDroneToCharge(closestAvailable.ID, droneID);
         }
 
+        /// <summary>
+        /// This API call will release a specified drone from charging. It is released after a certain amount of hours which is specified by the user of the system.
+        /// This call throws exceptions when the drone doesn't have the correct status, i.e. not in maintenance.
+        /// </summary>
+        /// <param name="droneID">the drone that is currently in charging to be released.</param>
+        /// <param name="hoursCharging">Number of hours the drone was charging for.</param>
         public void ReleaseDroneFromCharge(int droneID, int hoursCharging)
         {
             Drone drone = GetDrone(droneID);
@@ -34,6 +45,12 @@ namespace BL
             dal.ReleaseDroneFromCharge(stationID, droneID);
         }
 
+        /// <summary>
+        /// This API call will assign the best possible package to the drone that is supplied to the function call.
+        /// Packages are assigned in order of suitability in terms of weight and priority.
+        /// It throws an exception in the event that there is no suitable package or the drone cannot currently be assigned a package.
+        /// </summary>
+        /// <param name="droneID">The drone ID to assign to.</param>
         public void AssignPackageToDrone(int droneID)
         {
             Drone drone = GetDrone(droneID);
@@ -64,6 +81,11 @@ namespace BL
             throw new OperationNotPossibleException("There is no suitable package to assign");
         }
 
+        /// <summary>
+        /// This API call will allow the drone to collect the package it is assigned to.
+        /// This call will fail in the event that the drone isn't currently assigned a package or it does not have enough battery to reach the sender.
+        /// </summary>
+        /// <param name="droneID">The drone to collect the package</param>
         public void CollectPackage(int droneID)
         {
             Drone drone = GetDrone(droneID);
@@ -80,6 +102,11 @@ namespace BL
             dal.CollectPackageToDrone(dalPackage.ID);
         }
 
+        /// <summary>
+        /// This API call will deliver a package to the customer the package is intended for.
+        /// This call fails when the package hasn't been collect4ed yet, the drone does not have enough battery or the drone is not in the correct status.
+        /// </summary>
+        /// <param name="droneID">the drone to deliver the package</param>
         public void DeliverPackage(int droneID)
         {
             Drone drone = GetDrone(droneID);
