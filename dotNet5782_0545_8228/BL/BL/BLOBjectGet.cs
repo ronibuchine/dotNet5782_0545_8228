@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BL
 {
-    public partial class BLOBject : IBL.IBLInterface
+    partial class BLOBject : IBL.IBLInterface
     {
       
         public Station GetStation(int ID)

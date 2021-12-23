@@ -10,7 +10,7 @@ namespace BL
     {
         public double? battery { get; set; }
 
-        internal DroneInCharge(Drone drone)
+        public DroneInCharge(Drone drone)
         {
             ID = drone.ID;
             battery = drone.battery;

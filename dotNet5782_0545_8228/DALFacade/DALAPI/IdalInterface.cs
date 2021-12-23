@@ -5,14 +5,7 @@ namespace DALAPI
 {
     public interface IDAL
     {
-        /// <summary>
-        /// This function adds a Drone entity to the data layer
-        /// </summary>
-        public void AddDrone();
-        public void AddStation();
-        public void AddCustomer();
-        public void AddPackage();
-
+        
         /// <summary>
         /// This issues an API call which adds a new drone to the DataSource.
         /// </summary>
@@ -122,7 +115,7 @@ namespace DALAPI
         /// This API call will retrieve all the unassigned packages in the system
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<DO.Package> GetAllNotAssignedPackages();
+        public IEnumerable<DO.Package> GetAllUnassignedPackages();
 
         /// <summary>
         /// This API call will retrieve all the unoccupied stations in the system
@@ -230,6 +223,30 @@ namespace DALAPI
         /// </summary>
         /// <returns></returns>
         public double[] PowerConsumptionRequest();
+
+        /// <summary>
+        /// Marks a customer as inactive in the system
+        /// </summary>
+        /// <param name="ID"></param>
+        public void DeleteCustomer(int ID);
+
+        /// <summary>
+        /// Marks a Drone as inactive in the system
+        /// </summary>
+        /// <param name="ID"></param>
+        public void DeleteDrone(int ID);
+
+        /// <summary>
+        /// Marks a package as inactive in the system
+        /// </summary>
+        /// <param name="ID"></param>
+        public void DeletePackage(int ID);
+
+        /// <summary>
+        /// Marks a station as inactive in the system
+        /// </summary>
+        /// <param name="ID"></param>
+        public void DeleteStation(int ID);
         public int GetNextID();
         public void Clear();
     }

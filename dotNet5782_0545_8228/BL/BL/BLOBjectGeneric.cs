@@ -12,14 +12,14 @@ namespace BL
     /// This class is the class which controls the implementations of the BLAPI.
     /// The class contains Add, Update, Remove, Get and other various action calls.
     /// </summary>
-    public partial class BLOBject : IBL.IBLInterface
+    partial class BLOBject : IBL.IBLInterface
     {
-        public static double chargingRate { get; set; }
-        public static double free { get; set; }
-        public static double lightWeight { get; set; }
-        public static double midWeight { get; set; }
-        public static double heavyWeight { get; set; }
-        public IDAL dal { get; }
+        private static double chargingRate { get; set; }
+        private static double free { get; set; }
+        private static double lightWeight { get; set; }
+        private static double midWeight { get; set; }
+        private static double heavyWeight { get; set; }
+        private IDAL dal { get; }
         private List<Drone> drones;
 
         /// <summary>

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BL
 {
-    public partial class BLOBject : IBL.IBLInterface
+    partial class BLOBject : IBL.IBLInterface
     {
 
      

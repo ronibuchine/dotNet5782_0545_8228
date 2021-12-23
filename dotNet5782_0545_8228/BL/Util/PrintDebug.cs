@@ -11,6 +11,6 @@ namespace UTIL
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static String ToStringOrNull<T>(T t) => t != null ? t.ToString() : "null";
+        internal static String ToStringOrNull<T>(T t) => t != null ? t.ToString() : "null";
     }
 }

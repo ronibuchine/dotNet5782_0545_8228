@@ -6,7 +6,7 @@ namespace UTIL
     /// <summary>
     /// A util class which is used to calculate distances based on inpouts of longitude and latitude.
     /// </summary>
-    public class Distances 
+    internal class Distances 
     {
         private static double toRadians(
             double angleIn10thofaDegree)
@@ -23,7 +23,7 @@ namespace UTIL
         /// <param name="l1"></param>
         /// <param name="l2"></param>
         /// <returns>The distance between both locations</returns>
-        public static double GetDistance(Location l1, Location l2)                  
+        internal static double GetDistance(Location l1, Location l2)                  
         {
     
             // The math module contains
