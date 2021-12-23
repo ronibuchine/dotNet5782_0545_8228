@@ -13,8 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IBL;
-using BLOBjectNamespace;
-using IBL.BO;
+using BL;
 
 namespace PL
 {
@@ -28,7 +27,7 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            bl = new BLOBject();
+            bl = BLFactory.GetBL();
             Drone.Visibility = Visibility.Visible;
             XDS.Visibility = Visibility.Visible;
         }

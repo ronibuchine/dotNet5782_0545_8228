@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using DO;
+using DALAPI;
 
-namespace DalObjectNamespace
+namespace DAL
 {
-    public partial class DalObject : IDAL.IdalInterface
+    /// <summary>
+    /// Lazy<T> is by default thread safe, as only one thread can access the
+    /// ctor at a time. By the time the next thread accesses it, the
+    /// singlton will be already be constructed and the previous intance
+    /// will be returned
+    /// </summary>
+    public sealed partial class DalObject : IDAL
     {
-        private static DalObject dalInstance = null;
+
+       
+        private static readonly Lazy<DalObject> lazy = new Lazy<DalObject>(() => new DalObject());
+
+        public static DalObject Instance { get { return lazy.Value; } }
+
         public static int nextID;
 
-        private DalObject() 
+        private DalObject()
         {
             DataSource.Initialize();
             nextID = DataSource.nextID;
-        }
-
-        // for debugging/test only
-        public DalObject(Object o) 
-        {
-            nextID = DataSource.nextID;
-            dalInstance = this;
-        }
-
-        public static DalObject GetInstance()
-        {
-            if (dalInstance == null)
-                dalInstance = new();
-            return dalInstance;
         }
 
 
@@ -40,18 +39,16 @@ namespace DalObjectNamespace
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="pred">A predicate taking an item of the same type as list, that returns whether or not it should be displayed</param>
-        private List<T> GetAllItems<T>(List<T> list, Predicate<T> pred) where T : IDAL.DO.DalEntity
+        private IEnumerable<T> GetAllItems<T>(List<T> list, Predicate<T> pred) where T : DalEntity
         {
-            List<T> newList = new();
-            list.FindAll(pred).ForEach(t => newList.Add((T)t.Clone()));
-            return newList;
+            return list.FindAll(t => t.IsActive && pred(t)).ConvertAll(t => (T)t.Clone());
         }
 
         /// <summary>
         /// Displays all the items in the array unconditionally
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
-        private List<T> GetAllItems<T>(List<T> list) where T : IDAL.DO.DalEntity => GetAllItems(list, (x) => true);
+        private IEnumerable<T> GetAllItems<T>(List<T> list) where T : DalEntity => GetAllItems(list, x => true);
 
         // Displaying one object section
 
@@ -60,24 +57,23 @@ namespace DalObjectNamespace
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="ID">The index of which item to display</param>
-        private T GetOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
-        {
-            T ret = list.Find((t) => { return t.ID == ID; });
-            if (ret != null)
-                return (T)ret.Clone();
-            else
-                throw new IDAL.DO.InvalidDalObjectException("There was an issue retrieving the entity.");
-        }
-        
-        private T GetActualOneItem<T>(List<T> list, int ID) where T : IDAL.DO.DalEntity
+        private T GetOneItem<T>(List<T> list, int ID) where T : DalEntity => (T)GetActualOneItem<T>(list, ID).Clone();
+
+        /// <summary>
+        /// Retrieves an entity from the DataSource
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        private T GetActualOneItem<T>(List<T> list, int ID) where T : DalEntity
         {
             if (ID == 0)
                 return null;
-            T ret = list.Find((t) => { return t.ID == ID; });
-            if (ret != null)
-                return (T)ret;
-            else
-                throw new IDAL.DO.InvalidDalObjectException("There was an issue retrieving the entity.");
+            T ret = list.Find((t) => { return t.ID == ID && t.IsActive; });
+            if (ret == null)
+                throw new InvalidDalObjectException("There was an issue retrieving the entity.");
+            return (T)ret;
         }
 
         /// <summary>
@@ -88,24 +84,24 @@ namespace DalObjectNamespace
         private void AddDalItem<T>(
                 List<T> list,
                 IdalDoType type)
-            where T : IDAL.DO.DalEntity
+            where T : DalEntity
         {
-            if (list.Count + 1 > list.Capacity)
+            if (list.Count + 1 <= list.Capacity)
                 list.Add((T)DataSource.Insert(type));
             else
-                throw new IDAL.DO.DataSourceException("The entity could not be added to the system.");
+                throw new DataSourceException("The entity could not be added to the system.");
         }
 
         private void AddDalItem<T>(
                 List<T> list,
                 T item,
                 IdalDoType type)
-            where T : IDAL.DO.DalEntity
+            where T : DalEntity
         {
             if (list.Count + 1 <= list.Capacity)
                 list.Add(item);
             else
-                throw new IDAL.DO.DataSourceException("The entity could not be added to the system.");
+                throw new DataSourceException("The entity could not be added to the system.");
         }
 
         public double[] PowerConsumptionRequest()

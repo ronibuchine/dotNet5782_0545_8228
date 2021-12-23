@@ -1,28 +1,29 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
-using static DalObjectNamespace.DalObject;
-using IDAL.DO;
+using static DAL.DalObject;
+using DO;
 
-namespace DalObjectNamespace
+namespace DAL
 {
     internal class DataSource
     {
-        private const int MIN_DRONES = 5;
-        private const int MIN_DRONE_STATIONS = 5;
-        private const int MIN_CUSTOMERS = 5;
-        private const int MIN_PACKAGES = 5;
+        internal const int MIN_DRONES = 5;
+        internal const int MIN_DRONE_STATIONS = 5;
+        internal const int MIN_CUSTOMERS = 5;
+        internal const int MIN_PACKAGES = 5;
 
-        private const int MAX_DRONES = 10;
-        private const int MAX_DRONE_STATIONS = 10;
-        private const int MAX_CUSTOMERS = 10;
-        private const int MAX_PACKAGES = 10;
-        private const int MAX_DRONE_CHARGES = MAX_DRONES;
+        internal const int MAX_DRONES = 10;
+        internal const int MAX_STATIONS = 10;
+        internal const int MAX_CUSTOMERS = 10;
+        internal const int MAX_PACKAGES = 10;
+        internal const int MAX_DRONE_CHARGES = MAX_DRONES;
 
-        public static List<Drone> drones = new List<Drone>(MAX_DRONES);
-        public static List<Station> stations = new List<Station>(MAX_DRONE_STATIONS);
-        public static List<Customer> customers = new List<Customer>(MAX_CUSTOMERS);
-        public static List<Package> packages = new List<Package>(MAX_PACKAGES);
-        public static List<DroneCharge> droneCharges = new List<DroneCharge>(MAX_DRONE_CHARGES);
+        internal static List<Drone> drones = new List<Drone>(MAX_DRONES);
+        internal static List<Station> stations = new List<Station>(MAX_STATIONS);
+        internal static List<Customer> customers = new List<Customer>(MAX_CUSTOMERS);
+        internal static List<Package> packages = new List<Package>(MAX_PACKAGES);
+        internal static List<DroneCharge> droneCharges = new List<DroneCharge>(MAX_DRONE_CHARGES);
 
         public static int nextID { get; set; } = 1;
 
@@ -42,7 +43,7 @@ namespace DalObjectNamespace
         {
             rand = new Random();
             InitializeList<Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE, drones);
-            InitializeList<Station>(MIN_DRONE_STATIONS, MAX_DRONE_STATIONS, IdalDoType.STATION, stations);
+            InitializeList<Station>(MIN_DRONE_STATIONS, MAX_STATIONS, IdalDoType.STATION, stations);
             InitializeList<Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER, customers);
             InitializeList<Package>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.PACKAGE, packages);
         }
