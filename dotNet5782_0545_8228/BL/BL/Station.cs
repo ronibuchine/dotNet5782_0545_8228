@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace BL
 {
+    /// <summary>
+    /// An entity which represents a statino in our delivery system. It hosts drones which are currently charging
+    /// </summary>
     public class Station : BLEntity
     {
         public string name { get; set; }

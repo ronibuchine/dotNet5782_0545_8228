@@ -4,6 +4,9 @@ using UTIL;
 
 namespace BL
 {
+    /// <summary>
+    /// A drone entity which is used for list representation
+    /// </summary>
     public class DroneToList
     {
         public int ID { get; set; }

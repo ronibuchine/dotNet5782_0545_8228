@@ -3,6 +3,9 @@
 namespace BL
 {
     
+    /// <summary>
+    /// A drone which is currently charging
+    /// </summary>
     class DroneInCharge : BLEntity
     {
         public double? battery { get; set; }

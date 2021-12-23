@@ -6,6 +6,10 @@ using Xunit;
 
 namespace BL_TestSuite
 {
+    /// <summary>
+    /// This is a test suite for all of the functions in the BLAPI.
+    /// After every change these test should be run to ensure nothing is broken in the logic of the system
+    /// </summary>
     public class BL_Tests
     {
 

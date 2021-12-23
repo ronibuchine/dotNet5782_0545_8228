@@ -3,6 +3,9 @@
 
 namespace BL
 {
+    /// <summary>
+    /// Customer entity which is used for list representation
+    /// </summary>
     public class CustomerToList
     {
         public CustomerToList(Customer customer)

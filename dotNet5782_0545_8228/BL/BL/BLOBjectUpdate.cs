@@ -6,6 +6,7 @@ namespace BL
     public partial class BLOBject : IBL.IBLInterface
     {
 
+     
         public void UpdateDrone(int ID, string newModel)
         {
             try
@@ -32,6 +33,7 @@ namespace BL
             }
         }
 
+        
         public void UpdateStation(int stationID, int numChargers)
         {
             Station s = GetStation(stationID);
@@ -49,12 +51,14 @@ namespace BL
             }
         }
 
+     
         public void UpdateStation(int stationID, string stationName, int numChargers)
         {
             UpdateStation(stationID, stationName);
             UpdateStation(stationID, numChargers);
         }
 
+      
         public void UpdateCustomerName(int ID, string name)
         {
             try
@@ -67,6 +71,7 @@ namespace BL
             }
         }
 
+      
         public void UpdateCustomerPhone(int ID, String phone)
         {
             try
@@ -80,6 +85,7 @@ namespace BL
             }
         }
 
+       
         public void UpdateCustomer(int ID, string name, String phone)
         {
             UpdateCustomerName(ID, name);

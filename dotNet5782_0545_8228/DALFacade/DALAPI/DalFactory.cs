@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace DALAPI
 {
+    /// <summary>
+    /// This is a Singleton factory class used to construct DALObjects, whether they are implemented as DalXML or DalOBject with a software datasource
+    /// </summary>
     public class DalFactory
     {
         public static IDAL GetDal()

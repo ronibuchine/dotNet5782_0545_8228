@@ -3,6 +3,9 @@
 
 namespace BL
 {
+    /// <summary>
+    /// A drone entity which is currently in delivery
+    /// </summary>
     public class DroneInDelivery
     {
         public int ID { get; set; }

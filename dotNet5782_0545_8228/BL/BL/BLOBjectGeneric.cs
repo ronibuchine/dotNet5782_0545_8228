@@ -8,6 +8,10 @@ using static UTIL.Distances;
 
 namespace BL
 {
+    /// <summary>
+    /// This class is the class which controls the implementations of the BLAPI.
+    /// The class contains Add, Update, Remove, Get and other various action calls.
+    /// </summary>
     public partial class BLOBject : IBL.IBLInterface
     {
         public static double chargingRate { get; set; }
@@ -18,6 +22,10 @@ namespace BL
         public IDAL dal { get; }
         private List<Drone> drones;
 
+        /// <summary>
+        /// Constructor used for testing and debugging, empty initializes the data layer.
+        /// </summary>
+        /// <param name="_">meant to be a null object</param>
         public BLOBject(Object _)
         {
             this.dal = DalFactory.GetDal();
@@ -25,12 +33,20 @@ namespace BL
             CommonCtor(this.dal);
         }
 
+        /// <summary>
+        /// Calls the DALFactory to construct a new data layer.
+        /// </summary>
         public BLOBject()
         {
             this.dal = DalFactory.GetDal();
             CommonCtor(this.dal);
         }
 
+        /// <summary>
+        /// Performs logical checks on the random data objects which were initialized in the data layer.
+        /// Ensures entities which are in valid states and battery levels
+        /// </summary>
+        /// <param name="dal"></param>
         private void CommonCtor(IDAL dal)
         {
             BLEntity.nextID = dal.GetNextID();
@@ -126,6 +142,10 @@ namespace BL
             }
         }
 
+        /// <summary>
+        /// Ensures that all the Station fields are set correctly.
+        /// </summary>
+        /// <param name="stations"></param>
         private void CompleteStations(IEnumerable<Station> stations)
         {
             // for each drone charge record that data in station.chargingDrones
@@ -133,6 +153,11 @@ namespace BL
                 stations.First(s => s.ID == droneCharge.StationId).chargingDrones.Append(drones.First(d => d.ID == droneCharge.DroneId));
         }
 
+        /// <summary>
+        /// Ensures tht all the Package fields are initialized correctly.
+        /// </summary>
+        /// <param name="packages"></param>
+        /// <param name="customers"></param>
         private void CompletePackages(IEnumerable<Package> packages, IEnumerable<Customer> customers)
         {
             // Find the sender and reciever for each package based on what is in dal
@@ -147,6 +172,11 @@ namespace BL
             }
         }
 
+        /// <summary>
+        /// Ensures that the package list inside the Customer entity is initialized correctly.
+        /// </summary>
+        /// <param name="customers"></param>
+        /// <param name="packages"></param>
         private void CompleteCustomersPackageList(IEnumerable<Customer> customers, IEnumerable<Package> packages)
         {
             // get each sent/recieved package into the customers sent/recieved list
@@ -169,6 +199,12 @@ namespace BL
             return GetClosestStation(location, stations).location;
         }
 
+        /// <summary>
+        /// Given a location, this function will determine the closest station to that location.
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="stations"></param>
+        /// <returns>The closest station to the passed location.</returns>
         private Station GetClosestStation(Location location, IEnumerable<Station> stations)
         {
             double min = double.PositiveInfinity;
@@ -188,7 +224,11 @@ namespace BL
             return minStation;
         }
 
-
+        /// <summary>
+        /// This will retrieve the consumption rate for each weight category in the system
+        /// </summary>
+        /// <param name="weight"></param>
+        /// <returns>Consumption rate per hour of use</returns>
         private double GetConsumptionRate(WeightCategories weight)
         {
             if (weight == WeightCategories.light)
@@ -205,16 +245,28 @@ namespace BL
             }
         }
 
+        /// <summary>
+        /// Determines the minimum battery required for a drone to reach a specified location
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <param name="location"></param>
+        /// <returns>The minimum battery level needed to travel the distance</returns>
         private double GetMinBatteryRequired(Drone drone, Location location)
         {
             return GetDistance(location, drone.currentLocation) * GetConsumptionRate(drone.weightCategory);
         }
 
+        
         private bool CanArriveToLocation(Drone drone, Location location)
         {
             return GetMinBatteryRequired(drone, location) < drone.battery;
         }
 
+        /// <summary>
+        /// ID validation method
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>a boolean value if the ID is valid</returns>
         private Boolean IsValidID(int ID)
         {
             if (ID < 0) // other conditions here?
@@ -223,16 +275,12 @@ namespace BL
                 return true;
         }
 
-        private Boolean IsUniqueDroneID(int ID)
-        {
-            foreach (DO.Drone drone in dal.GetAllDrones())
-            {
-                if (drone.ID == ID)
-                    return false;
-            }
-            return true;
-        }
-
+        /// <summary>
+        /// Determines the battery level required for a given drone to deliver a specific package.
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <param name="package"></param>
+        /// <returns>The desired battery level needed</returns>
         private double BatteryRequiredForDelivery(Drone drone, PackageInTransfer package)
         {
             double droneToSender = GetDistance(drone.currentLocation, package.collectionLocation);

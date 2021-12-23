@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace BL
 {
+    /// <summary>
+    /// A customer entity whcih represents a customer in our system.
+    /// </summary>
     public class Customer : BLEntity
     {
         public string name { get; set; }

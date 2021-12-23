@@ -3,6 +3,9 @@ using System;
 
 namespace BL
 {
+    /// <summary>
+    /// A customer entity which is referenced by a specific package
+    /// </summary>
     public class CustomerInPackage
     {
         public int ID { get; set; }

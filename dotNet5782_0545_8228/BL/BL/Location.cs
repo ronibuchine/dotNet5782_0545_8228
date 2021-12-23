@@ -3,6 +3,9 @@
 
 namespace BL
 { 
+    /// <summary>
+    ///  a Location object which stores a latitude and longitude value
+    /// </summary>
     public class Location
     {
         public Location(double longitude, double latitude)
