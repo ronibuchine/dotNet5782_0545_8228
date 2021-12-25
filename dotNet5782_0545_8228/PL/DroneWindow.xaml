@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Drone Action Center" Height="450" Width="600">
-    <Grid Background="LightBlue">
+    <Grid Background="{StaticResource WindowBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="299*"/>
             <ColumnDefinition Width="301*"/>
@@ -51,7 +51,7 @@
             Background="Red" Grid.Column="1"/>
 
         <TextBox Name="UpdateDroneModelText" HorizontalAlignment="Left" Margin="103,166,0,0" Text="Enter Model" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Visibility="Hidden"/>
-        <Button Name="ModelUpdateButton" Content="Update" Grid.Column="1" HorizontalAlignment="Left" Margin="142,206,0,0" VerticalAlignment="Top" Click="ModelUpdateButton_Click" Visibility="Hidden"/>
+        <Button Name="ModelUpdateButton" Background="{StaticResource ButtonBrush}" Content="Update" Grid.Column="1" HorizontalAlignment="Left" Margin="142,206,0,0" VerticalAlignment="Top" Click="ModelUpdateButton_Click" Visibility="Hidden"/>
 
         <Grid Name="ButtonGrid" Margin="10,19,0,19" Background="LightSlateGray" Visibility="Hidden">
             <Grid.RowDefinitions>
@@ -64,12 +64,12 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Name="DroneData" Visibility="Hidden" TextWrapping="Wrap" Grid.Row="0" FontFamily="Tw Cen MT" FontWeight="Bold" FontSize="16"/>
-            <Button Name="UpdateDroneButton" Visibility="Hidden" Content="Update Drone Model"  Grid.Row="1" FontFamily="Tw Cen MT" FontSize="16" Click="UpdateDroneButton_Click"/>
-            <Button Name="SendToChargeButton" Visibility="Hidden" Content="Send Drone to Charge"  Grid.Row="2" FontFamily="Tw Cen MT" FontSize="16" Click="SendToChargeButton_Click"/>
-            <Button Name="AssignPackageToDroneButton" Visibility="Hidden" Content="Assign a Package"   Grid.Row="4" FontFamily="Tw Cen MT" FontSize="16" Click="AssignPackageToDroneButton_Click"/>
-            <Button Name="CollectPackageButton" Visibility="Hidden" Content="Collect a Package"   Grid.Row="5" FontFamily="Tw Cen MT" FontSize="16" Click="CollectPackageButton_Click"/>
-            <Button Name="DeliverPackageButton" Visibility="Hidden" Content="Deliver Package"   Grid.Row="6" FontFamily="Tw Cen MT" FontSize="16" Click="DeliverPackageButton_Click"/>
-            <Button Name="ReleaseDroneFromChargeButton" Visibility="Hidden" Content="Release Drone From Charge"  Grid.Row="3" FontFamily="Tw Cen MT" FontSize="16" Click="ReleaseDroneFromChargeButton_Click"/>
+            <Button Name="UpdateDroneButton" Background="{StaticResource ButtonBrush}" Visibility="Hidden" Content="Update Drone Model"  Grid.Row="1" FontFamily="Tw Cen MT" FontSize="16" Click="UpdateDroneButton_Click"/>
+            <Button Name="SendToChargeButton" Background="{StaticResource ButtonBrush}" Visibility="Hidden" Content="Send Drone to Charge"  Grid.Row="2" FontFamily="Tw Cen MT" FontSize="16" Click="SendToChargeButton_Click"/>
+            <Button Name="AssignPackageToDroneButton" Background="{StaticResource ButtonBrush}" Visibility="Hidden" Content="Assign a Package"   Grid.Row="4" FontFamily="Tw Cen MT" FontSize="16" Click="AssignPackageToDroneButton_Click"/>
+            <Button Name="CollectPackageButton" Background="{StaticResource ButtonBrush}" Visibility="Hidden" Content="Collect a Package"   Grid.Row="5" FontFamily="Tw Cen MT" FontSize="16" Click="CollectPackageButton_Click"/>
+            <Button Name="DeliverPackageButton" Background="{StaticResource ButtonBrush}" Visibility="Hidden" Content="Deliver Package"   Grid.Row="6" FontFamily="Tw Cen MT" FontSize="16" Click="DeliverPackageButton_Click"/>
+            <Button Name="ReleaseDroneFromChargeButton" Background="{StaticResource ButtonBrush}" Visibility="Hidden" Content="Release Drone From Charge"  Grid.Row="3" FontFamily="Tw Cen MT" FontSize="16" Click="ReleaseDroneFromChargeButton_Click"/>
         </Grid>
         <Image Name="DroneImage" Grid.Column="1" Margin="95,19,94,306" Stretch="Fill" Visibility="Hidden">
             <Image.Source>
@@ -77,7 +77,7 @@
             </Image.Source>
         </Image>
         <TextBox Name="ChargingAmount" Visibility="Hidden" Grid.Column="1" HorizontalAlignment="Center" Margin="0,175,0,0" Text="Enter Hours Charging" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" ContentElement.MouseEnter="ChargingAmount_MouseEnter"/>
-        <Button Name="ChargingReleaseButton" Visibility="Hidden" Content="Release" Grid.Column="1" HorizontalAlignment="Center" Margin="0,216,0,0" VerticalAlignment="Top" Width="95" Click="ChargingReleaseButton_Click"/>
+        <Button Name="ChargingReleaseButton" Visibility="Hidden" Background="{StaticResource ButtonBrush}" Content="Release" Grid.Column="1" HorizontalAlignment="Center" Margin="0,216,0,0" VerticalAlignment="Top" Width="95" Click="ChargingReleaseButton_Click"/>
 
 
 

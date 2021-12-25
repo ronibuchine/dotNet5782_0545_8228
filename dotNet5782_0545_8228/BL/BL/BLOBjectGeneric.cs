@@ -12,7 +12,7 @@ namespace BL
     /// This class is the class which controls the implementations of the BLAPI.
     /// The class contains Add, Update, Remove, Get and other various action calls.
     /// </summary>
-    partial class BLOBject : IBL.IBLInterface
+    public partial class BLOBject : IBL.IBLInterface
     {
         private static double chargingRate { get; set; }
         private static double free { get; set; }

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IBL;
 using BL;
+using System.Globalization;
 
 namespace PL
 {
@@ -36,5 +37,7 @@ namespace PL
         {
             new DroneListWindow(bl).Show();
         }
+
+              
     }
 }

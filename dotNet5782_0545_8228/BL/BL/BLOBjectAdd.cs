@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BL
 {
-    partial class BLOBject : IBL.IBLInterface
+    public partial class BLOBject : IBL.IBLInterface
     {
       
         public Station AddStation(string name, Location location, int availableChargers)

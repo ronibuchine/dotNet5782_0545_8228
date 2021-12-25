@@ -6,7 +6,7 @@ using BL;
 
 namespace BL
 {
-     partial class BLOBject : IBL.IBLInterface
+    public partial class BLOBject : IBL.IBLInterface
     {
        
         public void SendDroneToCharge(int droneID)

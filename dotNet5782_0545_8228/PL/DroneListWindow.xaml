@@ -5,32 +5,139 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Drone List" Height="640" Width="800" Background="Gray">
+        Title="System Management" Height="640" Width="800" Background="Gray">
     <Grid Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20*"></RowDefinition>
-            <RowDefinition Height="400*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-            
-            <ComboBox Name="DroneStatusSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="DroneStatusSelector_SelectionChanged" Background="Gray"/>
-            <Button Name="AddDroneButton" Content="Add Drone" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT"/>
-            <ComboBox Name="DroneWeightSelector" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gray" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
-            <Button Name="CloseButton" Content="Close" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="CloseButton_Click" FontSize="18" FontFamily="Tw Cen MT"/>
-        </Grid>
-        <ListView Grid.Row="1" x:Name="DroneListView" Background="CadetBlue" MouseDoubleClick="DroneActionWindow" >
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <TabControl>
+            <TabItem Header="Drones">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"></RowDefinition>
+                        <RowDefinition Height="480*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Name="DroneGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions >
+
+                        <Button Name="CloseButton" Content="Close" Background="{StaticResource ButtonBrush}" Grid.Column="0" Click="CloseButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                        <ComboBox Name="DroneStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
+                        <Button Name="AddDroneButton" Content="Add Drone" Background="{StaticResource ButtonBrush}" Grid.Column="3" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                        <ComboBox Name="DroneWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+
+                    </Grid>
+
+                    <ListView  x:Name="DroneListView" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Packages">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"></RowDefinition>
+                        <RowDefinition Height="480*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Name="PackageGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions >
+
+                        <Button Name="ExtraPackageButton" Content="Close" Background="{StaticResource ButtonBrush}" Grid.Column="0" Click="CloseButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                        <ComboBox Name="PackageStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
+                        <Button Name="AddPackageeButton" Content="Add Package" Background="{StaticResource ButtonBrush}" Grid.Column="3" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                        <ComboBox Name="PackageWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+
+                    </Grid>
+
+                    <ListView  x:Name="PackageListView" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Stations">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"></RowDefinition>
+                        <RowDefinition Height="480*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Name="StationGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions >
+
+                        <Button Name="ExtraButton" Content="Close" Background="{StaticResource ButtonBrush}" Grid.Column="0" Click="CloseButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                        <ComboBox Name="StationStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
+                        <Button Name="AddStationButton" Content="Add Station" Background="{StaticResource ButtonBrush}" Grid.Column="3" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                        <ComboBox Name="StationSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+
+                    </Grid>
+
+                    <ListView  x:Name="StationListView" Grid.Row="1" Background="{StaticResource WindowBrush}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Customers">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"></RowDefinition>
+                        <RowDefinition Height="480*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Name="CustomerGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions >
+
+                        <Button Name="Extra2eButton" Content="Close" Background="{StaticResource ButtonBrush}" Grid.Column="0" Click="CloseButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                        <ComboBox Name="CustomerStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
+                        <Button Name="AddCustomerButton" Content="Add Customer" Background="{StaticResource ButtonBrush}" Grid.Column="3" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                        <ComboBox Name="CustomerWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+
+                    </Grid>
+
+                    <ListView  x:Name="CustomerListView" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+
+            </TabItem>
+
+
+
+
+        </TabControl>
+
+
 
 
     </Grid>
