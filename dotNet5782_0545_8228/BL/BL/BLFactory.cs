@@ -9,8 +9,7 @@ namespace BL
     /// </summary>
     public class BLFactory
     {
-        private static readonly Lazy<BLOBject> lazy
-            = new Lazy<BLOBject>(() => new BLOBject());
+        private static readonly Lazy<BLOBject> lazy = new Lazy<BLOBject>(() => new BLOBject());
 
         public static IBL.IBLInterface GetBL() => lazy.Value;
         

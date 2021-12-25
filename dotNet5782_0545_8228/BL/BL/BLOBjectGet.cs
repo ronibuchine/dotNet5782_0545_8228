@@ -41,34 +41,28 @@ namespace BL
       
         public Customer GetCustomer(int ID)
         {
+            if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
             try
             {
-                if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
                 Customer customer = new Customer(dal.GetCustomer(ID));
-                if (customer != null) 
-                    return customer;
-                throw new InvalidBlObjectException("ERROR: This entity does not exist.");
+                if (customer == null) 
+                    throw new InvalidBlObjectException("ERROR: This entity does not exist.");
+                return customer;
             }
-            catch (InvalidIDException e) { throw e; }
             catch (DO.InvalidDalObjectException e) { throw new InvalidBlObjectException(e.Message); }
-            catch (InvalidBlObjectException i) { throw i; }
-            throw new Exception("UNKNOWN ERROR OCCURED. WHOOPS.");
         }
 
-      
         public Package GetPackage(int ID)
         {
+            if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
             try
             {
-                if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
                 Package package = new Package(dal.GetPackage(ID));
-                if (package != null) return package;
-                throw new InvalidBlObjectException("ERROR: This entity does not exist.");
+                if (package == null) 
+                    throw new InvalidBlObjectException("ERROR: This entity does not exist.");
+                return package;
             }
-            catch (InvalidIDException e) { throw e; }
             catch (DO.InvalidDalObjectException e) { throw new InvalidBlObjectException(e.Message); }
-            catch (InvalidBlObjectException i) { throw i; }
-            throw new Exception("UNKNOWN ERROR OCCURED. WHOOPS.");
         }
 
         public IEnumerable<StationToList> GetStationList()

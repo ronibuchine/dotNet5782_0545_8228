@@ -138,74 +138,132 @@ namespace IBL
         /// API call which retrieves a specified station entity.
         /// </summary>
         /// <param name="ID"></param>
-        /// <returns></returns>
+        /// <returns>a station</returns>
         public Station GetStation(int ID);
 
         /// <summary>
         /// API call which retrieves a specified drone entity.
         /// </summary>
         /// <param name="ID"></param>
-        /// <returns></returns>
+        /// <returns>a drone</returns>
         public Drone GetDrone(int ID);
 
         /// <summary>
         /// API call which gets the specified customer.
         /// </summary>
         /// <param name="ID"></param>
-        /// <returns></returns>
+        /// <returns> a customer</returns>
         public Customer GetCustomer(int ID);
 
         /// <summary>
         /// API call which retrieves a specified package via ID number
         /// </summary>
         /// <param name="ID"></param>
-        /// <returns></returns>
+        /// <returns>a package</returns>
         public Package GetPackage(int ID);
 
 
         /// <summary>
         /// Retrieves all stations in ToList form.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All stations</returns>
         public IEnumerable<StationToList> GetStationList();
 
         /// <summary>
         /// Retrieves all drones in ToList form
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All drones</returns>
         public IEnumerable<DroneToList> GetDroneList();
 
         /// <summary>
         /// Retrieves all Customers in ToList form.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All customers</returns>
         public IEnumerable<CustomerToList> GetCustomerList();
 
         /// <summary>
         /// Retrieves all packages in ToList form
         /// </summary>
-        /// <returns></returns>
+        /// <returns> All packages</returns>
         public IEnumerable<PackageToList> GetPackageList();
 
         /// <summary>
         /// Retrieves all packages which aren't currently assigned to a Drone
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Packages that have not been assigned to drones</returns>
         public IEnumerable<Package> GetUnassignedPackages();
 
         /// <summary>
         /// Retrieves a list of all stations which are available
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Stations with available charge slots</returns>
         public IEnumerable<Station> GetAvailableStations();
 
         /// <summary>
         /// Retrieves a list of drones which fit some predicate function.
         /// </summary>
         /// <param name="pred"></param>
-        /// <returns></returns>
+        /// <returns>drones that match the given predicate</returns>
         public IEnumerable<DroneToList> GetSpecificDrones(Func<DroneToList, bool> pred);
 
+        ///<summary>
+        ///Delete a customer
+        ///</summary>
+        ///<param name="ID">
+        ///The ID of the customer to delete
+        ///</param>
+        ///<exception cref="OperationNotPossibleException">
+        ///If there is a package in the system that needs to be delivered to the customer
+        ///</exception>
+        ///<exception cref="InvalidBlObjectException">
+        ///If the customer does not exist in the system
+        ///</exception>
+        public void DeleteCustomer(int ID);
+
+        ///<summary>
+        ///Delete a drone
+        ///</summary>
+        ///<param name="ID">
+        ///The ID of the drone to delete
+        ///</param>
+        ///<exception cref="OperationNotPossibleException">
+        ///If the drone is in delivery status it cannot be deleted
+        ///</exception>
+        ///<exception cref="InvalidBlObjectException">
+        ///If the drone does not exist in the system
+        ///</exception>
+        public void DeleteDrone(int ID);
+
+        ///<summary>
+        ///Delete a package
+        ///</summary>
+        ///<param name="ID">
+        ///The ID of the drone to delete
+        ///</param>
+        ///<exception cref="OperationNotPossibleException">
+        ///The package can only be deleted if it has not be assigned yet, or if has already been delivered
+        ///</exception>
+        ///<exception cref="InvalidBlObjectException">
+        ///If the package does not exist in the system
+        ///</exception>
+        public void DeletePackage(int ID);
+
+        ///<summary>
+        ///Delete a package
+        ///</summary>
+        ///<remarks>
+        ///Be very careful when calling this.There may be drones that are counting on this station in the future and will be stranded if the station dissapears
+        ///</remarks>
+        ///<param name="ID">
+        ///The ID of the drone to delete
+        ///</param>
+        ///<exception cref="OperationNotPossibleException">
+        ///The station can only be deleted if there are no drones charging on it
+        ///</exception>
+        ///<exception cref="InvalidBlObjectException">
+        ///If the package does not exist in the system
+        ///</exception>
+        public void DeleteStation(int ID);
 
 
     }

@@ -75,7 +75,7 @@ namespace BL
                 {
                     package = packages.First(p => p.drone != null && p.drone.ID == drone.ID);
                 }
-                catch (InvalidOperationException e) 
+                catch (InvalidOperationException) 
                 {
 
                     int randChoice = rand.Next(2);

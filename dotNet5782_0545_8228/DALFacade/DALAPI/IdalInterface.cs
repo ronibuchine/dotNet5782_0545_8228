@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace DALAPI
@@ -247,7 +246,16 @@ namespace DALAPI
         /// </summary>
         /// <param name="ID"></param>
         public void DeleteStation(int ID);
+
+        /// <summary>
+        /// Get next ID of current running ID's
+        /// </summary>
         public int GetNextID();
+
+
+        /// <summary>
+        /// Delete entire contents of dal
+        /// </summary>
         public void Clear();
     }
 }

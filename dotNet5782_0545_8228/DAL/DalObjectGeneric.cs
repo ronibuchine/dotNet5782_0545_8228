@@ -83,10 +83,12 @@ namespace DAL
         /// <param name="rand">A Random object</param>
         private void AddDalItem<T>(
                 List<T> list,
+                int max,
                 IdalDoType type)
             where T : DalEntity
         {
-            if (list.Count + 1 <= list.Capacity)
+            int current = list.FindAll(t => t.IsActive).Count;
+            if (current + 1 <= max)
                 list.Add((T)DataSource.Insert(type));
             else
                 throw new DataSourceException("The entity could not be added to the system.");
@@ -94,11 +96,13 @@ namespace DAL
 
         private void AddDalItem<T>(
                 List<T> list,
+                int max,
                 T item,
                 IdalDoType type)
             where T : DalEntity
         {
-            if (list.Count + 1 <= list.Capacity)
+            int current = list.FindAll(t => t.IsActive).Count;
+            if (current + 1 <= max)
                 list.Add(item);
             else
                 throw new DataSourceException("The entity could not be added to the system.");

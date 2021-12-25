@@ -8,26 +8,26 @@ namespace DAL
     {
 
         // Add objects section
-        public void AddPackage() => AddDalItem(DataSource.packages, IdalDoType.PACKAGE);
+        public void AddPackage() => AddDalItem(DataSource.packages, DataSource.MAX_PACKAGES, IdalDoType.PACKAGE);
 
         public void AddPackage(Package package) =>
-            AddDalItem(DataSource.packages, package, IdalDoType.PACKAGE);
+            AddDalItem(DataSource.packages, DataSource.MAX_PACKAGES, package, IdalDoType.PACKAGE);
 
-        public void AddCustomer() => AddDalItem(DataSource.customers, IdalDoType.CUSTOMER);
+        public void AddCustomer() => AddDalItem(DataSource.customers, DataSource.MAX_CUSTOMERS, IdalDoType.CUSTOMER);
 
         public void AddCustomer(Customer customer) =>
-            AddDalItem(DataSource.customers, customer, IdalDoType.CUSTOMER);
+            AddDalItem(DataSource.customers, DataSource.MAX_CUSTOMERS, customer, IdalDoType.CUSTOMER);
 
         public void AddDrone() =>
-           AddDalItem((List<Drone>)DataSource.drones, IdalDoType.DRONE);
+           AddDalItem(DataSource.drones, DataSource.MAX_DRONES, IdalDoType.DRONE);
 
         public void AddDrone(Drone drone) =>
-            AddDalItem((List<Drone>)DataSource.drones, drone, IdalDoType.DRONE);
+            AddDalItem((List<Drone>)DataSource.drones, DataSource.MAX_DRONES, drone, IdalDoType.DRONE);
 
         public void AddStation() =>
-           AddDalItem(DataSource.stations, IdalDoType.STATION);
+           AddDalItem(DataSource.stations,DataSource.MAX_STATIONS, IdalDoType.STATION);
 
         public void AddStation(Station station) =>
-            AddDalItem(DataSource.stations, station, IdalDoType.STATION);
+            AddDalItem(DataSource.stations, DataSource.MAX_STATIONS, station, IdalDoType.STATION);
     }
 }
