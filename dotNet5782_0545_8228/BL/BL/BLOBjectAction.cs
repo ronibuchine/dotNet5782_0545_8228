@@ -60,6 +60,7 @@ namespace BL
                 if (batteryRequired <= drone.battery)
                 {
                     drone.status = DroneStatuses.delivery;
+                    drone.packageInTransfer = package;
                     dal.AssignPackageToDrone(package.ID, droneID);
                     return;
                 }
@@ -102,6 +103,7 @@ namespace BL
             drone.battery -= batteryRequired;
             drone.currentLocation = reciever.currentLocation;
             drone.status = DroneStatuses.free;
+            drone.packageInTransfer = null;
             dal.ProvidePackageToCustomer(dalPackage.ID);
         }
     }
