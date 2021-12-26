@@ -71,7 +71,7 @@
             <Button Name="DeliverPackageButton" Background="{StaticResource ButtonBrush}" Visibility="Hidden" Content="Deliver Package"   Grid.Row="6" FontFamily="Tw Cen MT" FontSize="16" Click="DeliverPackageButton_Click"/>
             <Button Name="ReleaseDroneFromChargeButton" Background="{StaticResource ButtonBrush}" Visibility="Hidden" Content="Release Drone From Charge"  Grid.Row="3" FontFamily="Tw Cen MT" FontSize="16" Click="ReleaseDroneFromChargeButton_Click"/>
         </Grid>
-        <Image Name="DroneImage" Grid.Column="1" Margin="95,19,94,306" Stretch="Fill" Visibility="Hidden">
+        <Image Name="DroneImage" Grid.Column="1" Margin="87,28,86,264" Stretch="Fill" Visibility="Hidden">
             <Image.Source>
                 <BitmapImage UriSource="images/update-drone-image.png" />
             </Image.Source>

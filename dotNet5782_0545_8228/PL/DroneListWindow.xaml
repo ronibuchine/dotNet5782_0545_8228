@@ -32,7 +32,13 @@
                     <ListView  x:Name="DroneListView" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn/>
+                                <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
+                                <GridViewColumn Header="Model" Width="75" DisplayMemberBinding="{Binding Path=model}"/>
+                                <GridViewColumn Header="Status" Width="75" DisplayMemberBinding="{Binding Path=status}"/>
+                                <GridViewColumn Header="Weight" Width="75" DisplayMemberBinding="{Binding Path=weightCategory}"/>
+                                <GridViewColumn Header="Battery" Width="100" DisplayMemberBinding="{Binding Path=battery}"/>
+                                <GridViewColumn Header="Location" Width="200" DisplayMemberBinding="{Binding Path=location}"/>
+                                <GridViewColumn Header="Package" Width="50" DisplayMemberBinding="{Binding Path=packageNumber}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
