@@ -40,5 +40,10 @@ namespace BL
                 throw new OperationNotPossibleException("The station currently has drones charging at it");
             dal.DeleteStation(ID);
         }
+
+        public void DeleteEmployee(int ID)
+        {
+            dal.DeleteEmployee(ID);
+        }
     }
 }

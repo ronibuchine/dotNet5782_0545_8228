@@ -30,7 +30,7 @@ namespace DAL
 
         public int GetNextID() => DataSource.nextID;
 
-        public enum IdalDoType { DRONE, STATION, CUSTOMER, PACKAGE };
+        public enum IdalDoType { DRONE, STATION, CUSTOMER, PACKAGE, EMPLOYEE };
 
         // Adding objects section
 

@@ -106,5 +106,12 @@ namespace BL
             drone.packageInTransfer = null;
             dal.ProvidePackageToCustomer(dalPackage.ID);
         }
+
+
+        public bool VerifyEmployeeCredentials(int ID, string password)
+        {
+            return dal.VerifyEmployeeCredentials(ID, password);            
+        }
+        
     }
 }

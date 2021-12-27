@@ -15,6 +15,7 @@ namespace DAL
         public Package GetPackage(int ID) => GetOneItem(DataSource.packages, ID);
 
         public Station GetStation(int ID) => GetOneItem(DataSource.stations, ID);
+        public Employee GetEmployee(int ID) => GetOneItem(DataSource.employees, ID);
 
 
 
@@ -26,6 +27,7 @@ namespace DAL
         public Package GetActualPackage(int ID) => GetActualOneItem(DataSource.packages, ID);
 
         public Station GetActualStation(int ID) => GetActualOneItem(DataSource.stations, ID);
+        public Employee GetActualEmployee(int ID) => GetActualOneItem(DataSource.employees, ID);
 
 
 
@@ -40,6 +42,7 @@ namespace DAL
         public IEnumerable<Package> GetAllPackages() => GetAllItems(DataSource.packages);
 
         public IEnumerable<Station> GetAllStations() => GetAllItems(DataSource.stations);
+        public IEnumerable<Employee> GetAllEmployees() => GetAllItems(DataSource.employees);
 
 
 
