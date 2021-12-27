@@ -35,9 +35,33 @@ namespace PL
 
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneListWindow(bl).Show();
+            
+            int ID;
+            try
+            {
+                ID = Int32.Parse(Username.Text);                
+            }
+            catch (FormatException except)
+            {
+                ID = 0;                
+            }
+            string password = Password.Text;
+            if (IsBusiness.IsChecked == true && bl.VerifyEmployeeCredentials(ID, password))
+            {
+                new DroneListWindow(bl).Show();
+            }
+            else if (IsCustomer.IsChecked == true)
+            {
+                new DroneListWindow(bl).Show();
+            }
+            else
+            {
+                MessageBox.Show("One or more of the credentials provided were incorrect. Please try again.");
+            }
+            
         }
+        
 
-              
+        
     }
 }
