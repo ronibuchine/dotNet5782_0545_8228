@@ -107,7 +107,7 @@ namespace DAL
         private static void InitializeList<T>(
                 int min,
                 int max,
-                IdalDoType type, 
+                IdalDoType type,
                 List<T> list)
             where T : DalEntity
         {
@@ -115,7 +115,7 @@ namespace DAL
             for (int i = 0; i < num; ++i)
             {
                 list.Add((T)Insert(type));
-            }            
+            }          
         }
     }
 }
