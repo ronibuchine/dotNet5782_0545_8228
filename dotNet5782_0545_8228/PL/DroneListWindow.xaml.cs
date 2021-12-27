@@ -30,6 +30,9 @@ namespace PL
             InitializeComponent();
             this.bl = bl;
             DroneListView.ItemsSource = bl.GetDroneList();
+            StationListView.ItemsSource = bl.GetStationList();
+            PackageListView.ItemsSource = bl.GetPackageList();
+            CustomerListView.ItemsSource = bl.GetCustomerList();
             List<string> statuses = new List<string>();
             foreach (var status in Enum.GetValues(typeof(DroneStatuses)))
             {
