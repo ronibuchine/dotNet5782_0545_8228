@@ -73,7 +73,7 @@ namespace DAL
             T ret = list.Find((t) => { return t.ID == ID && t.IsActive; });
             if (ret == null)
                 throw new InvalidDalObjectException("There was an issue retrieving the entity.");
-            return (T)ret;
+            return ret;
         }
 
         /// <summary>
