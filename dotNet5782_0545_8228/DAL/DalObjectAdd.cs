@@ -8,6 +8,9 @@ namespace DAL
     {
 
         // Add objects section
+        public void AddEmployee() => AddDalItem(DataSource.employees, DataSource.MAX_EMPLOYEES, IdalDoType.EMPLOYEE);
+        public void AddEmployee(int ID, string password) =>
+            AddDalItem(DataSource.employees, DataSource.MAX_EMPLOYEES, new Employee(ID, password), IdalDoType.EMPLOYEE);
         public void AddPackage() => AddDalItem(DataSource.packages, DataSource.MAX_PACKAGES, IdalDoType.PACKAGE);
 
         public void AddPackage(Package package) =>

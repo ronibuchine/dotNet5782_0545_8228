@@ -7,7 +7,10 @@ namespace DAL
 {
     public partial class DalObject : IDAL
     {
-
+        public bool VerifyEmployeeCredentials(int ID, string password)
+        {
+            return DataSource.employees.Find(e => ID == e.ID && password == e.password && e.IsActive) != null;
+        }
        
        
 

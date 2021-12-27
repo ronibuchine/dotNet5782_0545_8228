@@ -31,8 +31,9 @@ namespace IBL
         /// <param name="name"></param>
         /// <param name="phone"></param>
         /// <param name="location"></param>
+        /// <param name="password"></param>
         /// <returns>A reference to the customer that was added.</returns>
-        public Customer AddCustomer(string name, string phone, Location location);
+        public Customer AddCustomer(string name, string phone, Location location, string password = null);
 
         /// <summary>
         /// API call which adds a new package to the system.
@@ -43,6 +44,9 @@ namespace IBL
         /// <param name="priority"></param>
         /// <returns>A reference to the package that was added.</returns>
         public Package AddPackage(int senderID, int receiverID, WeightCategories weight, Priorities priority);
+
+
+        public void AddEmployee(int ID, string password);
 
         /// <summary>
         /// Updates a drone entity with a new model name
@@ -132,6 +136,14 @@ namespace IBL
         /// </summary>
         /// <param name="droneID">the drone to deliver the package</param>
         public void DeliverPackage(int droneID);
+
+        /// <summary>
+        /// This API call will verify if the employee inputted a valid ID and password
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="password"></param>
+        /// <returns>a boolean based on whether or not it is verified</returns>
+        public bool VerifyEmployeeCredentials(int ID, string password);
 
 
         /// <summary>
@@ -264,6 +276,12 @@ namespace IBL
         ///If the package does not exist in the system
         ///</exception>
         public void DeleteStation(int ID);
+
+        /// <summary>
+        /// This API call deactivates an employee account in the system
+        /// </summary>
+        /// <param name="ID"></param>
+        public void DeleteEmployee(int ID);
 
 
     }

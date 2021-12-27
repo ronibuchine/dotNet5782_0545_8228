@@ -45,12 +45,12 @@ namespace BL
         }
 
      
-        public Customer AddCustomer(string name, string phone, Location location)
+        public Customer AddCustomer(string name, string phone, Location location, string password = null)
         {
             try
             {
                 Customer customer = new Customer(name, phone, location);
-                dal.AddCustomer(new DO.Customer(customer.ID, name, phone, location.longitude, location.latitude));
+                dal.AddCustomer(new DO.Customer(customer.ID, name, phone, location.longitude, location.latitude, password));
                 return customer;
             }
             catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
@@ -79,6 +79,17 @@ namespace BL
                 return package;
             }
             catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
+        }
+
+        public void AddEmployee(int ID, string password)
+        {
+            if (dal.GetEmployee(ID) == null) // check to make sure the employee doesn't already exist
+            {
+                dal.AddEmployee(ID, password);
+                return;
+            }
+            throw new OperationNotPossibleException("This employee already exists in the system.\nPlease contact a system administrator for valid credentials.");
+            
         }
     }
 }
