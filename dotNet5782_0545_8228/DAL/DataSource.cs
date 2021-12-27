@@ -48,7 +48,7 @@ namespace DAL
         {
             rand = new Random();
             // employee accounts must be initialized first to recieve ID 1
-            InitializeList<Employee>(MIN_EMPLOYEES, MAX_EMPLOYEES, IdalDoType.EMPLOYEE, employees);
+            InitializeList<Employee>(MIN_EMPLOYEES, MIN_EMPLOYEES, IdalDoType.EMPLOYEE, employees);
             InitializeList<Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE, drones);
             InitializeList<Station>(MIN_DRONE_STATIONS, MAX_STATIONS, IdalDoType.STATION, stations);
             InitializeList<Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER, customers);
