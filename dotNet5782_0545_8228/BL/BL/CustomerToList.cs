@@ -15,7 +15,6 @@ namespace BL
             ID = customer.ID;
             name = customer.name;
             phoneNumber = customer.phone;
-            // TODO do these package numbers
             IDAL dal = DalFactory.GetDal();
             numberExpectedPackages = dal.GetAllPackages().Where(p => p.recieverId == ID && p.delivered == null).Count();
             numberPackagesDelivered = dal.GetAllPackages().Where(p => p.senderId == ID && p.delivered != null).Count();
