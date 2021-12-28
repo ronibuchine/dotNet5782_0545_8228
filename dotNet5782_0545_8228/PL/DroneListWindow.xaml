@@ -68,7 +68,12 @@
                     <ListView  x:Name="PackageListView" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn/>
+                                <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
+                                <GridViewColumn Header="Sender Name" Width="125" DisplayMemberBinding="{Binding Path=senderName}"/>
+                                <GridViewColumn Header="Receiver Name" Width="125" DisplayMemberBinding="{Binding Path=receiverName}"/>
+                                <GridViewColumn Header="Weight" Width="75" DisplayMemberBinding="{Binding Path=weightCategory}"/>
+                                <GridViewColumn Header="Priority" Width="200" DisplayMemberBinding="{Binding Path=priority}"/>
+                                <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding Path=status}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -99,7 +104,12 @@
                     <ListView  x:Name="StationListView" Grid.Row="1" Background="{StaticResource WindowBrush}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn/>
+                                <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
+                                <GridViewColumn Header="name" Width="125" DisplayMemberBinding="{Binding Path=name}"/>
+                                <GridViewColumn Header="Available" Width="125" DisplayMemberBinding="{Binding Path=availableChargeSlots}"/>
+                                <GridViewColumn Header="Occupied" Width="75" DisplayMemberBinding="{Binding Path=occupiedSlots}"/>
+                                <GridViewColumn Header="Latitude" Width="125" DisplayMemberBinding="{Binding Path=latitude}"/>
+                                <GridViewColumn Header="Longitude" Width="125" DisplayMemberBinding="{Binding Path=longitude}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -130,7 +140,13 @@
                     <ListView  x:Name="CustomerListView" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn/>
+                                <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
+                                <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding Path=name}"/>
+                                <GridViewColumn Header="Phone" Width="125" DisplayMemberBinding="{Binding Path=phoneNumber}"/>
+                                <GridViewColumn Header="Expected Packages" Width="75" DisplayMemberBinding="{Binding Path=numberExpectedPackages}"/>
+                                <GridViewColumn Header="Delivered Packages" Width="125" DisplayMemberBinding="{Binding Path=numberPackagesDelivered}"/>
+                                <GridViewColumn Header="Undelivered Packages" Width="125" DisplayMemberBinding="{Binding Path=numberPackagesUndelivered}"/>
+                                <GridViewColumn Header="Recieved Packages" Width="125" DisplayMemberBinding="{Binding Path=numberReceivedPackages}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
