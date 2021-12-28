@@ -91,13 +91,22 @@ namespace IBL
         /// <param name="phone"></param>
         public void UpdateCustomerPhone(int ID, String phone);
 
+
+        /// <summary>
+        /// Updates the customers password
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="password"></param>
+        public void UpdateCustomerPassword(int ID, string password);
+
         /// <summary>
         /// Updates both the name and phone number of a given customer
         /// </summary>
         /// <param name="ID"></param>
         /// <param name="name"></param>
         /// <param name="phone"></param>
-        public void UpdateCustomer(int ID, string name, String phone);
+        /// <param name="password">defaults to null if not passed</param>
+        public void UpdateCustomer(int ID, string name, string phone, string password = null);
 
 
         /// <summary>

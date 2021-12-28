@@ -60,8 +60,10 @@ namespace PL
             }
             
         }
-        
 
-        
+        private void NewUser_Click(object sender, RoutedEventArgs e)
+        {
+            new CreateAccountWindow(bl).Show();
+        }
     }
 }

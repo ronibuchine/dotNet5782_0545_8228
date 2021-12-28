@@ -15,6 +15,7 @@ namespace BL
         public Location currentLocation { get; set; }
         public IEnumerable<PackageAtCustomer> packagesFromCustomer { get; set; }
         public IEnumerable<PackageAtCustomer> packagesToCustomer { get; set; }
+        
 
         public Customer(string name, string phone, Location location)
         {

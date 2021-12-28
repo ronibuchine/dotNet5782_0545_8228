@@ -79,12 +79,19 @@ namespace DALAPI
         public void UpdateCustomerPhone(int ID, string phone);
 
         /// <summary>
+        /// This API call will update a customer password in the DataSource
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="phone"></param>
+        public void UpdateCustomerPassword(int ID, string password);
+
+        /// <summary>
         /// This API call will update both the name and phone number of a customer in the DataSource
         /// </summary>
         /// <param name="ID"></param>
         /// <param name="name"></param>
         /// <param name="phone"></param>
-        public void UpdateCustomer(int ID, string name, string phone);
+        public void UpdateCustomer(int ID, string name, string phone, string password = null);
 
         /// <summary>
         /// This API call will return all the active drones which are in the system
