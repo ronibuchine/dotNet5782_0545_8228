@@ -145,6 +145,14 @@ namespace IBL
         /// <returns>a boolean based on whether or not it is verified</returns>
         public bool VerifyEmployeeCredentials(int ID, string password);
 
+        /// <summary>
+        /// This API call will verify if the customer inputted a valid ID and password
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="password"></param>
+        /// <returns>a boolean based on whether or not it is verified</returns>
+        public bool VerifyCustomerCredentials(int ID, string password);
+
 
         /// <summary>
         /// API call which retrieves a specified station entity.

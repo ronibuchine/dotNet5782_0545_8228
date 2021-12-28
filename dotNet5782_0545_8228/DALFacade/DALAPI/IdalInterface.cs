@@ -251,6 +251,15 @@ namespace DALAPI
         /// <returns>a boolean value based on whether or not it was verified</returns>
         public bool VerifyEmployeeCredentials(int ID, string password);
 
+
+        /// <summary>
+        /// This API call verifies the credentials of a given customer
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="password"></param>
+        /// <returns>a boolean value based on whether or not it was verified</returns>
+        public bool VerifyCustomerCredentials(int ID, string password);
+
         /// <summary>
         /// This retrieves the power consumption of the different weight classes
         /// </summary>

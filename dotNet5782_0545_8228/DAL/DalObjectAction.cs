@@ -11,8 +11,13 @@ namespace DAL
         {
             return DataSource.employees.Find(e => ID == e.ID && password == e.password && e.IsActive) != null;
         }
-       
-       
+
+        public bool VerifyCustomerCredentials(int ID, string password)
+        {
+            return DataSource.customers.Find(e => ID == e.ID && password == e.password && e.IsActive) != null;
+        }
+
+
 
         public void ProvidePackageToCustomer(int packageID)
         {

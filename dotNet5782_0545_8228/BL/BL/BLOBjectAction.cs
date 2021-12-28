@@ -112,6 +112,11 @@ namespace BL
         {
             return dal.VerifyEmployeeCredentials(ID, password);            
         }
-        
+
+        public bool VerifyCustomerCredentials(int ID, string password)
+        {
+            return dal.VerifyCustomerCredentials(ID, password);
+        }
+
     }
 }

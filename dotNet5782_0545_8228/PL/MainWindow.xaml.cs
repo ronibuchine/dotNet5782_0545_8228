@@ -50,7 +50,7 @@ namespace PL
             {
                 new DroneListWindow(bl).Show();
             }
-            else if (IsCustomer.IsChecked == true)
+            else if (IsCustomer.IsChecked == true && bl.VerifyCustomerCredentials(ID, password)) 
             {
                 new DroneListWindow(bl).Show();
             }
