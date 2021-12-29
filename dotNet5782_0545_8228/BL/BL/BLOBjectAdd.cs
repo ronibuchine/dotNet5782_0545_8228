@@ -83,12 +83,18 @@ namespace BL
 
         public void AddEmployee(int ID, string password)
         {
-            if (dal.GetEmployee(ID) == null) // check to make sure the employee doesn't already exist
+            try  // check to make sure the employee doesn't already exist
+            {
+                dal.GetEmployee(ID);
+                throw new OperationNotPossibleException("This employee already exists in the system.\nPlease contact a system administrator for valid credentials.");
+
+            }
+            catch (DO.InvalidDalObjectException except)
             {
                 dal.AddEmployee(ID, password);
                 return;
             }
-            throw new OperationNotPossibleException("This employee already exists in the system.\nPlease contact a system administrator for valid credentials.");
+            
             
         }
     }

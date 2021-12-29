@@ -36,14 +36,27 @@ namespace PL
         {
             try
             {
-                Customer customer = bl.GetCustomer(Int32.Parse(IDBox.Text));                
-                bl.UpdateCustomer(Int32.Parse(IDBox.Text), NameBox.Text, PhoneBox.Text, PasswordBox.Text);
+                if (CustomerAccountCheck.IsChecked == true)
+                {
+                    Customer customer = bl.GetCustomer(Int32.Parse(IDBox.Text));
+                    bl.UpdateCustomer(Int32.Parse(IDBox.Text), NameBox.Text, PhoneBox.Text, PasswordBox.Text);
+                }
+                else //employee is checked
+                {
+                    
+                    bl.AddEmployee(Int32.Parse(IDBox.Text), PasswordBox.Text);
+                    if (MessageBox.Show("Account Created Successfully", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
+                }
                 
             }
             catch (InvalidBlObjectException except)
             {
                 bl.AddCustomer(NameBox.Text, PhoneBox.Text, new Location(new Random().NextDouble() * 360, new Random().NextDouble() * 180), PasswordBox.Text);
                 if (MessageBox.Show("Account Created Successfully", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
+            }  
+            catch (OperationNotPossibleException except)
+            {
+                MessageBox.Show(except.Message);
             }
             catch (FormatException except)
             {

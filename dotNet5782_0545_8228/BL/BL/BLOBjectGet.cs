@@ -65,6 +65,16 @@ namespace BL
             catch (DO.InvalidDalObjectException e) { throw new InvalidBlObjectException(e.Message); }
         }
 
+        public bool GetEmployee(int ID)
+        {
+            if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
+            try
+            {
+                return dal.GetEmployee(ID) != null;
+            }
+            catch (DO.InvalidDalObjectException e) { return false; }
+        }
+
         public IEnumerable<StationToList> GetStationList()
         {
             return dal.GetAllStations().Select(ds => new StationToList(new Station(ds)));

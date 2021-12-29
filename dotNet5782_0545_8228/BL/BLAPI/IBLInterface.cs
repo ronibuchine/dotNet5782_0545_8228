@@ -191,6 +191,13 @@ namespace IBL
         /// <returns>a package</returns>
         public Package GetPackage(int ID);
 
+        /// <summary>
+        /// API call which tells whether or not an employee exists in the system
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>a boolean value based on whether or not the employee exists</returns>
+        public bool GetEmployee(int ID);
+
 
         /// <summary>
         /// Retrieves all stations in ToList form.
