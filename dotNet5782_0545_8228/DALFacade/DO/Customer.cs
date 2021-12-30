@@ -37,6 +37,8 @@ namespace DO
             password = null;
         }
 
+        private Customer() : base() {}
+
         public override Customer Clone() => this.MemberwiseClone() as Customer;
 
         public override string ToString()

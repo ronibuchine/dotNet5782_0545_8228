@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("DALObject")]
-/* [assembly: InternalsVisibleTo("DALXml")] */
 namespace DO
 {
     public abstract class DalEntity
@@ -15,6 +14,9 @@ namespace DO
         {
             this.ID = ID;
         }
+
+        // needed for serialization
+        protected DalEntity(){}
         
         public abstract object Clone();
     }

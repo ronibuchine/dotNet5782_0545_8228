@@ -4,6 +4,6 @@
   <dal>list</dal>
   <dal-packages>
     <list>DALObject</list>
-    <xml>DalXml</xml>
+    <xml>DAlXml</xml>
   </dal-packages>
 </config>

@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALObject", "DAL\DALObject.csproj", "{05C786CB-9108-442F-A72C-AB756C75F455}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALObject", "DALObject\DALObject.csproj", "{05C786CB-9108-442F-A72C-AB756C75F455}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{A2EBFD22-075F-488E-83A8-8455A8DB0F9D}"
 EndProject
@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{22DFC022-031
 	ProjectSection(SolutionItems) = preProject
 		xml\dal-config.xml = xml\dal-config.xml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DALXml", "DALXml\DALXml.csproj", "{AA1D35BA-0543-4708-8CC3-3232016D86B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{E4A9BDF9-3B66-4F56-833C-56E7D243B7FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4A9BDF9-3B66-4F56-833C-56E7D243B7FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4A9BDF9-3B66-4F56-833C-56E7D243B7FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA1D35BA-0543-4708-8CC3-3232016D86B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA1D35BA-0543-4708-8CC3-3232016D86B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA1D35BA-0543-4708-8CC3-3232016D86B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA1D35BA-0543-4708-8CC3-3232016D86B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

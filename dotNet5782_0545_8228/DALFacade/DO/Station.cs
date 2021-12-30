@@ -31,6 +31,8 @@ namespace DO
             this.latitude = (rand.NextDouble() * 180) - 90;
         }
 
+        private Station() : base() {}
+
         public override Station Clone() => this.MemberwiseClone() as Station;
 
         public override string ToString()

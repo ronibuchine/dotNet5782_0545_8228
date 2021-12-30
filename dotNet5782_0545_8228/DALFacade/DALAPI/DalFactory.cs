@@ -28,7 +28,7 @@ namespace DALAPI
             Assembly dalAssembly;
             try
             {
-                dalAssembly = Assembly.LoadFile(path + @"\DAL\bin\Debug\net5.0\" + $"{dalPkg}.dll");
+                dalAssembly = Assembly.LoadFile(path + $"\\{dalPkg}\\bin\\Debug\\net5.0\\" + $"{dalPkg}.dll");
                 //Assembly.Load(dalPkg + ".dll"); 
             }
             catch (Exception)
