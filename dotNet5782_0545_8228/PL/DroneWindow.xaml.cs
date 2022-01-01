@@ -79,7 +79,7 @@ namespace PL
                 bl.AddDrone(model, trueWeight, stationID);
                 if (MessageBox.Show("Drone Added Successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK)
                 {
-                    DroneListWindow window = Application.Current.Windows.OfType<DroneListWindow>().FirstOrDefault();
+                    ListWindow window = Application.Current.Windows.OfType<ListWindow>().FirstOrDefault();
                     window.DroneStatusSelector.SelectedItem = window.DroneWeightSelector.SelectedItem = "All Drones";
                     window.DroneListView.ItemsSource = bl.GetDroneList();
                     Close();
@@ -98,7 +98,7 @@ namespace PL
 
         private void RefreshAndClose()
         {
-            DroneListWindow window = Application.Current.Windows.OfType<DroneListWindow>().FirstOrDefault();
+            ListWindow window = Application.Current.Windows.OfType<ListWindow>().FirstOrDefault();
             window.DroneStatusSelector.SelectedItem = window.DroneWeightSelector.SelectedItem = "All Drones";
             window.DroneListView.ItemsSource = bl.GetDroneList();
             Close();

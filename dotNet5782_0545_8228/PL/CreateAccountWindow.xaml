@@ -12,7 +12,7 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="b2v"/>
     </Window.Resources>
-    <Border Background="{StaticResource WindowBrush}" CornerRadius="20">
+    <Border Background="{StaticResource WindowBrush}" CornerRadius="20" MouseDown="Border_MouseDown">
         <Grid>
             <TextBox Name="IDBox" Text="Enter ID" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25" Width="226" Margin="0,313,0,0"/>
             <TextBox Name="NameBox" Visibility="{Binding IsChecked,ElementName=CustomerAccountCheck, Converter={StaticResource b2v}}" Text="Enter Name" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25" Width="226" Margin="0,205,0,0"/>

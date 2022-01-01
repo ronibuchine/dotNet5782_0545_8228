@@ -12,6 +12,10 @@
             <GradientStop Color="LightGray" Offset="0"/>
             <GradientStop Color="DarkCyan" Offset="1"/>
         </LinearGradientBrush>
+        <LinearGradientBrush x:Key="AddButtonBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="LightBlue" Offset="0"/>
+            <GradientStop Color="#24A0ED" Offset="1"/>
+        </LinearGradientBrush>
         
 
 

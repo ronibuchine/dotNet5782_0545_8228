@@ -48,11 +48,11 @@ namespace PL
             string password = Password.Text;
             if (IsBusiness.IsChecked == true && bl.VerifyEmployeeCredentials(ID, password))
             {
-                new DroneListWindow(bl).Show();
+                new ListWindow(bl).Show();
             }
             else if (IsCustomer.IsChecked == true && bl.VerifyCustomerCredentials(ID, password)) 
             {
-                new DroneListWindow(bl).Show();
+                new ListWindow(bl).Show();
             }
             else
             {
@@ -65,5 +65,7 @@ namespace PL
         {
             new CreateAccountWindow(bl).Show();
         }
+
+        
     }
 }

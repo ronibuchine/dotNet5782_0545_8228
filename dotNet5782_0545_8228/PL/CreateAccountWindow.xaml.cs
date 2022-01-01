@@ -38,7 +38,7 @@ namespace PL
             {
                 if (CustomerAccountCheck.IsChecked == true)
                 {
-                    Customer customer = bl.GetCustomer(Int32.Parse(IDBox.Text));
+                    BL.Customer customer = bl.GetCustomer(Int32.Parse(IDBox.Text));
                     bl.UpdateCustomer(Int32.Parse(IDBox.Text), NameBox.Text, PhoneBox.Text, PasswordBox.Text);
                 }
                 else //employee is checked
@@ -62,6 +62,12 @@ namespace PL
             {
                 MessageBox.Show("Please enter a valid ID");
             }
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
         }
     }
 }
