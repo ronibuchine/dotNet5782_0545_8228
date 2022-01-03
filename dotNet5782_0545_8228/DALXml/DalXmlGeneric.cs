@@ -11,31 +11,31 @@ namespace DAL
 
     public partial class DALXml : IDAL
     {
-        static void Main()
-        {
-            var path = Directory.GetCurrentDirectory();
-            var containing = Directory.GetFiles(path, "*.sln");
-            while (containing.Length == 0)
-            {
-                path = Directory.GetParent(path).FullName;
-                containing = Directory.GetFiles(path, "*.sln");
-            }
+        /* static void Main() */
+        /* { */
+        /*     var path = Directory.GetCurrentDirectory(); */
+        /*     var containing = Directory.GetFiles(path, "*.sln"); */
+        /*     while (containing.Length == 0) */
+        /*     { */
+        /*         path = Directory.GetParent(path).FullName; */
+        /*         containing = Directory.GetFiles(path, "*.sln"); */
+        /*     } */
 
-            XElement dalConfig = XElement.Load(path + @"/xml/drones.xml");
-            IEnumerable<Drone> drones = dalConfig.Element("list").Elements().Select(e => XelementToDrone(e));
+        /*     XElement dalConfig = XElement.Load(path + @"/xml/drones.xml"); */
+        /*     IEnumerable<Drone> drones = dalConfig.Element("list").Elements().Select(e => XelementToDrone(e)); */
 
-            foreach (var drone in drones)
-            {
-                Console.Out.Write("" + drone.ToString());
-            }
+        /*     foreach (var drone in drones) */
+        /*     { */
+        /*         Console.Out.Write("" + drone.ToString()); */
+        /*     } */
             
             
 
-            /* var drone = new Drone(1, "model", WeightCategories.heavy); */
-            /* System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(drone.GetType()); */
-            /* x.Serialize(Console.Out, drone); */
-            /* Console.WriteLine(); */
-        }
+        /*     /1* var drone = new Drone(1, "model", WeightCategories.heavy); *1/ */
+        /*     /1* System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(drone.GetType()); *1/ */
+        /*     /1* x.Serialize(Console.Out, drone); *1/ */
+        /*     /1* Console.WriteLine(); *1/ */
+        /* } */
 
         static private WeightCategories ParseWeightCategory(string weight) =>
             weight switch
@@ -58,9 +58,38 @@ namespace DAL
             return drone;
         }
 
-        public DALXml()
+        private static readonly Lazy<DALXml> lazy = new Lazy<DALXml>(() => new DALXml());
+
+        public static DALXml Instance { get { return lazy.Value; } }
+
+        public static int nextID;
+
+        private DALXml()
         {
+            nextID = Initialize();
         }
+
+        private int Initialize()
+        {
+            GetFile("drones");
+            var rand = new Random();
+        }
+
+        private XElement GetFile(string filename)
+        {
+            var path = Directory.GetCurrentDirectory();
+            var containing = Directory.GetFiles(path, "*.sln");
+            while (containing.Length == 0)
+            {
+                path = Directory.GetParent(path).FullName;
+                containing = Directory.GetFiles(path, "*.sln");
+            }
+
+            XElement dalConfig = XElement.Load(path + $"/data/{filename}.xml");
+            return dalConfig.Element("list");
+
+        }
+
 
         public void Clear()
         {
