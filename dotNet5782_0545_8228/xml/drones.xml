@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<drones>
+  <list>
+    <Drone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <IsActive>true</IsActive>
+      <ID>1</ID>
+      <model>model</model>
+      <maxWeight>heavy</maxWeight>
+    </Drone>
+  </list>
+</drones>

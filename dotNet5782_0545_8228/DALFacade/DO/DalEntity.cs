@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("DALObject")]
@@ -19,6 +19,11 @@ namespace DO
         protected DalEntity(){}
         
         public abstract object Clone();
+
+        public override string ToString()
+        {
+            return String.Format("ID ={0}, IsActive = {1}", ID, IsActive);
+        }
     }
 
 }
