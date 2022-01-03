@@ -14,13 +14,13 @@ namespace PL
 
         public Drone(DroneToList drone)
         {
-            _ID = drone.ID;
-            _model = drone.model;
-            _weightCategory = drone.weightCategory;
-            _battery = drone.battery;
-            _status = drone.status;
-            _location = drone.location;
-            _packageNumber = drone.packageNumber;
+            ID = drone.ID;
+            model = drone.model;
+            weightCategory = drone.weightCategory;
+            battery = drone.battery;
+            status = drone.status;
+            location = drone.location;
+            packageNumber = drone.packageNumber;
 
         }
 
@@ -28,7 +28,7 @@ namespace PL
 
         private int _ID;
         private string _model;
-        private BL.WeightCategories _weightCategory;
+        private WeightCategories _weightCategory;
         private double? _battery;
         private DroneStatuses? _status;
         private Location _location;
@@ -39,7 +39,7 @@ namespace PL
             {
                 return _ID;
             }
-            set { _ID = value; NotifyPropertyChanged(); }
+            set { _ID = value; NotifyPropertyChanged("ID"); }
         }
         public string model
         {
@@ -50,7 +50,6 @@ namespace PL
             set
             {
                 _model = value;
-                BLFactory.GetBL().UpdateDrone(ID, value);
                 NotifyPropertyChanged();
             }
         }
@@ -60,7 +59,7 @@ namespace PL
             {
                 return _weightCategory;
             }
-            set { _weightCategory = value; NotifyPropertyChanged(); }
+            set { _weightCategory = value; NotifyPropertyChanged("weightCategory"); }
         }
         public double? battery
         {
@@ -68,7 +67,7 @@ namespace PL
             {
                 return _battery;
             }
-            set { _battery = value; NotifyPropertyChanged(); }
+            set { _battery = value; NotifyPropertyChanged("battery"); }
         }
         public DroneStatuses? status
         {
@@ -76,7 +75,7 @@ namespace PL
             {
                 return _status;
             }
-            set { _status = value; NotifyPropertyChanged(); }
+            set { _status = value; NotifyPropertyChanged("status"); }
         }
         public Location location
         {
@@ -84,7 +83,7 @@ namespace PL
             {
                 return _location;
             }
-            set { _location = value; NotifyPropertyChanged(); }
+            set { _location = value; NotifyPropertyChanged("location"); }
             
         }
         public int? packageNumber
@@ -93,10 +92,10 @@ namespace PL
             {
                 return _packageNumber;
             }
-            set { _packageNumber = value; NotifyPropertyChanged(); }
+            set { _packageNumber = value; NotifyPropertyChanged("packageNumber"); }
         }
 
-        private BL.Drone GetDrone() => BLFactory.GetBL().GetDrone(ID);        
+        
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

@@ -25,7 +25,7 @@ namespace PL
     {
 
         IBLInterface bl;
-        internal ObservableCollection<DroneToList> drones;
+        internal ObservableCollection<Drone> drones;
         internal ObservableCollection<StationToList> stations;
         internal ObservableCollection<PackageToList> packages;
         internal ObservableCollection<CustomerToList> customers;
@@ -33,10 +33,14 @@ namespace PL
         {
             InitializeComponent();
             this.bl = bl;
-            DroneListView.ItemsSource = drones = new(bl.GetDroneList());
-            StationListView.ItemsSource = stations = new(bl.GetStationList());
-            PackageListView.ItemsSource = packages = new(bl.GetPackageList());
-            CustomerListView.ItemsSource = customers = new(bl.GetCustomerList());
+            drones = new(bl.GetDroneList().Select(d => new Drone(d)));
+            DroneListView.DataContext = drones;
+            stations = new(bl.GetStationList());
+            StationListView.DataContext = stations;
+            packages = new(bl.GetPackageList());
+            PackageListView.DataContext = packages;
+            customers = new(bl.GetCustomerList());
+            CustomerListView.DataContext = customers;
             DroneStatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             DroneWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));           
         }
@@ -75,13 +79,13 @@ namespace PL
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl).Show();
+            new DroneWindow(bl, drones).Show();
         }
 
         private void DroneActionWindow(object sender, MouseButtonEventArgs e)
         {
-            DroneToList drone = (DroneToList)DroneListView.SelectedItem;
-            new DroneWindow(bl, drone).Show();
+            Drone drone = (Drone)DroneListView.SelectedItem;
+            new DroneWindow(bl, drone, drones).Show();
         }
 
        

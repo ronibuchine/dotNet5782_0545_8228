@@ -14,12 +14,12 @@ namespace PL
 
         public Package(PackageToList package)
         {
-            _ID = package.ID;
-            _senderName = package.senderName;
-            _receiverName = package.receiverName;
-            _weightCategory = package.weightCategory;
-            _priority = package.priority;
-            _status = package.status;
+            ID = package.ID;
+            senderName = package.senderName;
+            receiverName = package.receiverName;
+            weightCategory = package.weightCategory;
+            priority = package.priority;
+            status = package.status;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -78,9 +78,7 @@ namespace PL
             {
                 return _status;            }
             set { _status = value; NotifyPropertyChanged(); }
-        }
-
-        private BL.Package GetPackage() => BLFactory.GetBL().GetPackage(ID);
+        }       
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

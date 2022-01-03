@@ -9,11 +9,12 @@
         Background="Transparent"
         WindowStyle="None"
         AllowsTransparency="True">
+    
     <Border CornerRadius="10" MouseDown="Border_MouseDown">
     <Grid Name="MainGrid">
         <TabControl>
             <TabItem Header="Drones">
-                <Grid DataContext="{Binding Path=drones}" Background="Gray">
+                <Grid Background="Gray">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*"></RowDefinition>
                         <RowDefinition Height="480*"></RowDefinition>
@@ -43,7 +44,7 @@
 
                     </Grid>
 
-                    <ListView  Name="DroneListView" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow" >
+                    <ListView  Name="DroneListView" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -88,7 +89,7 @@
 
                     </Grid>
 
-                    <ListView  Name="PackageListView" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
+                    <ListView  Name="PackageListView" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -134,7 +135,7 @@
 
                     </Grid>
 
-                    <ListView  Name="StationListView" Grid.Row="1" Background="{StaticResource WindowBrush}">
+                        <ListView  Name="StationListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -180,7 +181,7 @@
 
                     </Grid>
 
-                    <ListView  Name="CustomerListView" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
+                        <ListView  Name="CustomerListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>

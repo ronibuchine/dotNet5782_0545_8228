@@ -13,13 +13,13 @@ namespace PL
 
         public Customer(CustomerToList customer)
         {
-            _ID = customer.ID;
-            _name = customer.name;
-            _phoneNumber = customer.phoneNumber;
-            _numberPackagesDelivered = customer.numberPackagesDelivered;
-            _numberPackagesUndelivered = customer.numberPackagesUndelivered;
-            _numberReceivedPackages = customer.numberReceivedPackages;
-            _numberExpectedPackages = customer.numberExpectedPackages;
+            ID = customer.ID;
+            name = customer.name;
+            phoneNumber = customer.phoneNumber;
+            numberPackagesDelivered = customer.numberPackagesDelivered;
+            numberPackagesUndelivered = customer.numberPackagesUndelivered;
+            numberReceivedPackages = customer.numberReceivedPackages;
+            numberExpectedPackages = customer.numberExpectedPackages;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -49,7 +49,6 @@ namespace PL
             set
             {
                 _name = value;
-                BLFactory.GetBL().UpdateCustomerName(ID, value);
                 NotifyPropertyChanged();
             }
         }
@@ -62,7 +61,6 @@ namespace PL
             set
             {
                 _phoneNumber = value;
-                BLFactory.GetBL().UpdateCustomerPhone(ID, value);
                 NotifyPropertyChanged();
             }
         }
@@ -93,7 +91,7 @@ namespace PL
         public int numberExpectedPackages         {            get
             {
                 return _numberExpectedPackages;
-            }            set { _numberExpectedPackages = value; NotifyPropertyChanged(); }        }        private BL.Customer GetCustomer() => BLFactory.GetBL().GetCustomer(ID);        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+            }            set { _numberExpectedPackages = value; NotifyPropertyChanged(); }        }               private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             if (PropertyChanged != null)
             {

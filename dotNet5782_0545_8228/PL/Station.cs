@@ -14,12 +14,12 @@ namespace PL
 
         public Station(StationToList station)
         {
-            _ID = station.ID;
-            _name = station.name;
-            _availableChargeSlots = station.availableChargeSlots;
-            _occupiedSlots = station.occupiedSlots;
-            _latitude = station.latitude;
-            _longitude = station.longitude;
+            ID = station.ID;
+            name = station.name;
+            availableChargeSlots = station.availableChargeSlots;
+            occupiedSlots = station.occupiedSlots;
+            latitude = station.latitude;
+            longitude = station.longitude;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,7 +48,6 @@ namespace PL
             set
             {
                 _name = value;
-                BLFactory.GetBL().UpdateStation(ID, value);
                 NotifyPropertyChanged();
             }
         }
@@ -85,9 +84,7 @@ namespace PL
                 return _longitude;
             }
             set { _longitude = value; NotifyPropertyChanged(); }
-        }
-
-        private BL.Station GetStation() => BLFactory.GetBL().GetStation(ID);
+        }       
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
