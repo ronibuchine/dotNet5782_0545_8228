@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IBL;
 using BL;
-using BL;
 using System.Collections.ObjectModel;
 
 namespace PL
@@ -26,20 +25,20 @@ namespace PL
 
         IBLInterface bl;
         internal ObservableCollection<Drone> drones;
-        internal ObservableCollection<StationToList> stations;
-        internal ObservableCollection<PackageToList> packages;
-        internal ObservableCollection<CustomerToList> customers;
+        internal ObservableCollection<Station> stations;
+        internal ObservableCollection<Package> packages;
+        internal ObservableCollection<Customer> customers;
         public ListWindow(IBLInterface bl)
         {
             InitializeComponent();
             this.bl = bl;
             drones = new(bl.GetDroneList().Select(d => new Drone(d)));
             DroneListView.DataContext = drones;
-            stations = new(bl.GetStationList());
+            stations = new(bl.GetStationList().Select(s => new Station(s)));
             StationListView.DataContext = stations;
-            packages = new(bl.GetPackageList());
+            packages = new(bl.GetPackageList().Select(p => new Package(p)));
             PackageListView.DataContext = packages;
-            customers = new(bl.GetCustomerList());
+            customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
             CustomerListView.DataContext = customers;
             DroneStatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             DroneWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));           
@@ -105,6 +104,24 @@ namespace PL
         {
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
+        }
+
+        private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Customer customer = (Customer)CustomerListView.SelectedItem;
+            new CustomerViewWindow(bl, customer, customers).Show();
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            drones = new(bl.GetDroneList().Select(d => new Drone(d)));
+            DroneListView.DataContext = drones;
+            stations = new(bl.GetStationList().Select(s => new Station(s)));
+            StationListView.DataContext = stations;
+            packages = new(bl.GetPackageList().Select(p => new Package(p)));
+            PackageListView.DataContext = packages;
+            customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
+            CustomerListView.DataContext = customers;
         }
     }
 }

@@ -12,23 +12,18 @@
     
     <Border CornerRadius="10" MouseDown="Border_MouseDown">
     <Grid Name="MainGrid">
-        <TabControl>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="620*"/>
+                <RowDefinition Height="20*"/>
+            </Grid.RowDefinitions>
+        <TabControl Grid.Row="0">
             <TabItem Header="Drones">
                 <Grid Background="Gray">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*"></RowDefinition>
                         <RowDefinition Height="480*"></RowDefinition>
-                        <RowDefinition Height="20*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button Name="LogoutButton1"
-                                Content="Logout"
-                                Background="{StaticResource ButtonBrush}"
-                                Click="CloseButton_Click"
-                                FontSize="12" FontFamily="Tw Cen MT" 
-                                Margin="10,0,0,5"
-                                Grid.Row="2"
-                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                Width="100"/>
+                   
                     <Grid Name="DroneGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -64,17 +59,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*"></RowDefinition>
                         <RowDefinition Height="480*"></RowDefinition>
-                        <RowDefinition Height="20*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button Name="LogoutButton2"
-                                Content="Logout"
-                                Background="{StaticResource ButtonBrush}"
-                                Click="CloseButton_Click"
-                                FontSize="12" FontFamily="Tw Cen MT" 
-                                Margin="10,-10,0,0"
-                                Grid.Row="2"
-                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                Width="100"/>
+                   
                     <Grid Name="PackageGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -109,17 +95,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*"></RowDefinition>
                         <RowDefinition Height="480*"></RowDefinition>
-                        <RowDefinition Height="20*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button Name="LogoutButton3"
-                                Content="Logout"
-                                Background="{StaticResource ButtonBrush}"
-                                Click="CloseButton_Click"
-                                FontSize="12" FontFamily="Tw Cen MT" 
-                                Margin="10,-10,0,0"
-                                Grid.Row="2"
-                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                Width="100"/>
+                   
                     <Grid Name="StationGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -151,62 +128,67 @@
 
             </TabItem>
             <TabItem Header="Customers">
-                <Grid DataContext="{Binding Path=customers}" Background="Gray">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="20*"></RowDefinition>
-                        <RowDefinition Height="480*"></RowDefinition>
-                        <RowDefinition Height="20*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Button Name="LogoutButton4"
-                                Content="Logout"
-                                Background="{StaticResource ButtonBrush}"
-                                Click="CloseButton_Click"
-                                FontSize="12" FontFamily="Tw Cen MT" 
-                                Margin="10,-10,0,0"
-                                Grid.Row="2"
-                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                Width="100"/>
-                    <Grid Name="CustomerGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions >
+                    <Grid DataContext="{Binding Path=customers}" Background="Gray">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20*"></RowDefinition>
+                            <RowDefinition Height="480*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                       
+                        <Grid Name="CustomerGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions >
 
-                        <Button Name="ClearFilterButton4" Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
-                        <ComboBox Name="CustomerStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
-                        <Button Name="AddCustomerButton" Content="Add Customer" Background="{StaticResource ButtonBrush}" Grid.Column="3" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
-                        <ComboBox Name="CustomerWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
-
+                            <Button Name="ClearFilterButton4" Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
+                            <ComboBox Name="CustomerStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
+                            <Button Name="AddCustomerButton" Content="Add Customer" Background="{StaticResource ButtonBrush}" Grid.Column="3" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                            <ComboBox Name="CustomerWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+                        </Grid>
+                        <ListView  Name="CustomerListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="CustomerListView_MouseDoubleClick"  >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
+                                    <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding Path=name}"/>
+                                    <GridViewColumn Header="Phone" Width="125" DisplayMemberBinding="{Binding Path=phoneNumber}"/>
+                                    <GridViewColumn Header="# Expected Packages" Width="75" DisplayMemberBinding="{Binding Path=numberExpectedPackages}"/>
+                                    <GridViewColumn Header="# Delivered Packages" Width="125" DisplayMemberBinding="{Binding Path=numberPackagesDelivered}"/>
+                                    <GridViewColumn Header="# Undelivered Packages" Width="125" DisplayMemberBinding="{Binding Path=numberPackagesUndelivered}"/>
+                                    <GridViewColumn Header="# Recieved Packages" Width="125" DisplayMemberBinding="{Binding Path=numberReceivedPackages}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </Grid>
 
-                        <ListView  Name="CustomerListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow"  >
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
-                                <GridViewColumn Header="Name" Width="125" DisplayMemberBinding="{Binding Path=name}"/>
-                                <GridViewColumn Header="Phone" Width="125" DisplayMemberBinding="{Binding Path=phoneNumber}"/>
-                                <GridViewColumn Header="# Expected Packages" Width="75" DisplayMemberBinding="{Binding Path=numberExpectedPackages}"/>
-                                <GridViewColumn Header="# Delivered Packages" Width="125" DisplayMemberBinding="{Binding Path=numberPackagesDelivered}"/>
-                                <GridViewColumn Header="# Undelivered Packages" Width="125" DisplayMemberBinding="{Binding Path=numberPackagesUndelivered}"/>
-                                <GridViewColumn Header="# Recieved Packages" Width="125" DisplayMemberBinding="{Binding Path=numberReceivedPackages}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-
-            </TabItem>
+                </TabItem>
 
 
 
 
         </TabControl>
+            <Button Name="LogoutButton4" Grid.Row="1"
+                                Content="Logout"
+                                Background="{StaticResource ButtonBrush}"
+                                Click="CloseButton_Click"
+                                FontSize="12" FontFamily="Tw Cen MT" 
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                Width="100"/>
+            <Button Name="RefreshButton" Grid.Row="1"
+                            Content="Refresh"
+                            Background="{StaticResource ButtonBrush}"
+                            Click="RefreshButton_Click"
+                            FontSize="12" FontFamily="Tw Cen MT" 
+                            Margin="150,0,0,0"
+                            HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                            Width="100"/>
 
 
 
 
-    </Grid>
+        </Grid>
     </Border>
 </Window>
 

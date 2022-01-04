@@ -25,6 +25,9 @@ namespace PL
         IBLInterface bl;
         Drone drone;
         ObservableCollection<Drone> drones;
+        ObservableCollection<Station> stations;
+        ObservableCollection<Package> packages;
+        ObservableCollection<Customer> customers;
 
         internal DroneWindow(IBLInterface bl, ObservableCollection<Drone> drones)
         {
@@ -54,7 +57,6 @@ namespace PL
             this.drone = drone;
             this.drones = drones;
             DataContext = this.drone;
-            string packageString = drone.status == DroneStatuses.delivery ? drone.packageNumber.ToString() : "no assigned package";
             
             ButtonGrid.Visibility = Visibility.Visible;
             UpdateDroneButton.Visibility = Visibility.Visible;
@@ -133,6 +135,7 @@ namespace PL
             drone.packageNumber = tempDrone.packageInTransfer == null ? null : tempDrone.packageInTransfer.ID;
             Drone temp = drones.Where(d => d.ID == drone.ID).FirstOrDefault();
             drones[drones.IndexOf(temp)] = drone;
+            
         }
 
         private void SendToChargeButton_Click(object sender, RoutedEventArgs e)

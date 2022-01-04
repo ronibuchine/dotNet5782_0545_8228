@@ -33,23 +33,13 @@ namespace PL
 
         public int ID
         {
-            get
-            {
-                return _ID;
-            }
+            get{ return _ID; }
             set { _ID = value; NotifyPropertyChanged(); }
         }
         public string name 
         {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-                NotifyPropertyChanged();
-            }
+            get{return _name;}
+            set{ _name = value;  NotifyPropertyChanged();}
         }
         public int availableChargeSlots
         { 
@@ -61,28 +51,19 @@ namespace PL
         }
         public int occupiedSlots
         {
-            get
-            {
-                return _occupiedSlots;
-            }
+            get{return _occupiedSlots;}
             set { _occupiedSlots = value; NotifyPropertyChanged(); }
             
         }
         public double latitude 
         { 
-            get
-            {
-                return _latitude;
-            }
+            get{return _latitude;}
             set { _latitude = value; NotifyPropertyChanged(); }
             
         }
         public double longitude 
         { 
-            get
-            {
-                return _longitude;
-            }
+            get{return _longitude;}
             set { _longitude = value; NotifyPropertyChanged(); }
         }       
 

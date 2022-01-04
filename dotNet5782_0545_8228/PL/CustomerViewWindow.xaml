@@ -6,7 +6,77 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="CustomerViewWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Background="{StaticResource WindowBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="300*"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400*"/>
+                <ColumnDefinition Width="400*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Name="ModelEntry" 
+                 HorizontalAlignment="Left" 
+                 Text="Enter Model" 
+                 TextWrapping="Wrap" 
+                 VerticalAlignment="Top" 
+                 Width="126" 
+                 RenderTransformOrigin="0.5,0.5" 
+                 Margin="237,118,0,0" 
+                 Visibility="Hidden" 
+                 Grid.ColumnSpan="2"/>
+            <Button Name="AddDrone" 
+                Content="Add Drone" 
+                HorizontalAlignment="Left"  
+                VerticalAlignment="Top" Width="136" 
+                Click="AddDrone_Click" 
+                Height="20" Margin="232,237,0,0" 
+                FontFamily="Tw Cen MT" FontSize="12"
+                Visibility="Hidden" Grid.ColumnSpan="2"/>
+            <ComboBox Name="WeightSelection" HorizontalAlignment="Left" Margin="232,195,0,0" VerticalAlignment="Top" Width="136" Visibility="Hidden" Grid.ColumnSpan="2" />
+            <ComboBox Name="StationSelection" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" Margin="232,155,0,0" Visibility="Hidden" Grid.ColumnSpan="2"/>
+            <Button x:Name="Cancel" 
+                Content="Cancel" 
+                HorizontalAlignment="Left"  
+                VerticalAlignment="Top" Width="60" Height="20" 
+                Click="Cancel_Click"  Margin="10,342,0,0" 
+                FontFamily="Tw Cen MT" FontSize="14" FontStretch="Expanded"
+                Background="{StaticResource ButtonBrush}" Grid.Row="1"/>
+
+            <StackPanel Grid.Column="0" VerticalAlignment="Center" Height="200" Width="150">
+                <Label Name="IDBlock" Content="{Binding ID, Mode=TwoWay, StringFormat=Customer ID: {0:#}}" Width="120" Height="26" Margin="0,20,0,0"/>
+                <TextBox Name="NameBlock" Text="{Binding name, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+                <TextBox Name="PhoneBlock" Text="{Binding phoneNumber, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+                <Button Name="UpdateCustomerButton" Width="120" Background="{StaticResource AddButtonBrush}" Margin="0,20,0,0" Click="UpdateButton_Click" Visibility="Visible" Content="✓ Save Changes" FontFamily="Tw Cen MT" FontSize="10" Height="19"/>
+            </StackPanel>
+
+
+            <ListView Name="SentPackageList" Grid.Column="1" HorizontalAlignment="Center" Height="150" Width="200" Margin="0,0,0,20" VerticalAlignment="Bottom">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Package #" DisplayMemberBinding="{Binding Path=ID}"/>
+                        <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Path=weight}"/>
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=status}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView Name="ReceviedPackageList" Grid.Column="1"  HorizontalAlignment="Center" Height="150" Width="200" Margin="0,0,0,20" VerticalAlignment="Top">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Package #" DisplayMemberBinding="{Binding Path=ID}"/>
+                        <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Path=weight}"/>
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=status}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+
+
+
+        </Grid>
     </Grid>
 </Window>
