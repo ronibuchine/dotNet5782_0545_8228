@@ -78,13 +78,13 @@ namespace PL
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl, drones).Show();
+            new DroneWindow(bl).Show();
         }
 
         private void DroneActionWindow(object sender, MouseButtonEventArgs e)
         {
             Drone drone = (Drone)DroneListView.SelectedItem;
-            new DroneWindow(bl, drone, drones).Show();
+            new DroneWindow(bl, drone).Show();
         }
 
        
@@ -122,6 +122,18 @@ namespace PL
             PackageListView.DataContext = packages;
             customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
             CustomerListView.DataContext = customers;
+        }
+
+        private void PackageListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Package package = (Package)PackageListView.SelectedItem;
+            new PackageViewWindow(bl, package).Show();
+        }
+
+        private void StationListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Station station = (Station)StationListView.SelectedItem;
+            new StationViewWindow(bl, station).Show();
         }
     }
 }

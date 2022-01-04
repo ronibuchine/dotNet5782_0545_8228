@@ -44,7 +44,7 @@ namespace PL
             this.customers = customers;
             DataContext = this.customer;
             SentPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesFromCustomer;
-            ReceviedPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesToCustomer;
+            ReceivedPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesToCustomer;
 
         }
 
@@ -81,8 +81,6 @@ namespace PL
             Close();
         }
 
-       
-
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -99,11 +97,22 @@ namespace PL
         private void Synchronize()
         {
             BL.Customer tempCustomer = bl.GetCustomer(customer.ID);
-           
+            customer.name = tempCustomer.name;
+            customer.phoneNumber = tempCustomer.phone;
             Customer temp = customers.Where(c => c.ID == customer.ID).FirstOrDefault();
             customers[customers.IndexOf(temp)] = customer;
         }
 
-       
+        private void SentPackageList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            PackageAtCustomer package = (PackageAtCustomer)SentPackageList.SelectedItem;
+            new PackageViewWindow(bl, package).Show();
+        }
+
+        private void ReceivedPackageList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            PackageAtCustomer package = (PackageAtCustomer)ReceivedPackageList.SelectedItem;
+            new PackageViewWindow(bl, package).Show();
+        }
     }
 }

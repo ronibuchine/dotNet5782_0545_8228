@@ -6,7 +6,53 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="PackageViewWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Background="{StaticResource WindowBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="300*"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400*"/>
+                <ColumnDefinition Width="400*"/>
+            </Grid.ColumnDefinitions>
+           
+            <Button Name="AddPackage" 
+                Content="Add Package" 
+                HorizontalAlignment="Left"  
+                VerticalAlignment="Top" Width="136" 
+                Height="20" Margin="232,237,0,0" 
+                FontFamily="Tw Cen MT" FontSize="12"
+                Visibility="Hidden" Grid.ColumnSpan="2"/>
+            <ComboBox Name="WeightSelection" HorizontalAlignment="Left" Margin="232,195,0,0" VerticalAlignment="Top" Width="136" Visibility="Hidden" Grid.ColumnSpan="2" />
+            <ComboBox Name="StationSelection" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" Margin="232,155,0,0" Visibility="Hidden" Grid.ColumnSpan="2"/>
+            <Button x:Name="Cancel" 
+                Content="Cancel" 
+                HorizontalAlignment="Left"  
+                VerticalAlignment="Top" Width="60" Height="20" 
+                Click="Cancel_Click"  Margin="10,342,0,0" 
+                FontFamily="Tw Cen MT" FontSize="14" FontStretch="Expanded"
+                Background="{StaticResource ButtonBrush}" Grid.Row="1"/>
+
+            <Button Name="ViewDroneButton" Width="40" Height="20" Content="View" Margin="40,-40,0,0"/>
+            <Button Name="ViewSenderButton" Width="40" Height="20" Content="View" Margin="40,0,0,0"/>
+            <Button Name="ViewReceiverButton" Width="40" Height="20" Content="View" Margin="40, 40,0,0"/>
+
+            <StackPanel Grid.Column="0" VerticalAlignment="Center" Height="200" Width="150" Margin="128,0,122,0">
+                <Label Name="IDBlock" Content="{Binding ID, Mode=TwoWay, StringFormat=ID: {0:#}}" Width="120" Height="26" Margin="0,20,0,0"/>
+                <Label Name="SenderBlock" Content="{Binding senderName, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+                <Label Name="ReceiverBlock" Content="{Binding receiverName, Mode=TwoWay}" Width="120"/>
+                <Label Name="Status" Content="{Binding status, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+                <Label Name="WeightBlock" Content="{Binding weightCategory, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+                <Label Name="PriorityBlock" Content="{Binding priority, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+            </StackPanel>
+            <Button Name="DeletePackageButton" Width="120" Background="{StaticResource CancelButtonBrush}" Margin="140,308,140,45" Click="DeletePackageButton_Click"  Visibility="Visible" Content="✕ Delete Package" FontFamily="Tw Cen MT" Foreground="LightGray" FontSize="10" Height="19"/>
+
+
+
+
+        </Grid>
     </Grid>
 </Window>

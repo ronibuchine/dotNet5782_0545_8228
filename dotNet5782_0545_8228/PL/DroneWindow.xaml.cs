@@ -24,16 +24,11 @@ namespace PL
     {
         IBLInterface bl;
         Drone drone;
-        ObservableCollection<Drone> drones;
-        ObservableCollection<Station> stations;
-        ObservableCollection<Package> packages;
-        ObservableCollection<Customer> customers;
 
-        internal DroneWindow(IBLInterface bl, ObservableCollection<Drone> drones)
+        internal DroneWindow(IBLInterface bl)
         {
             InitializeComponent();
             this.bl = bl;
-            this.drones = drones;
             WeightSelection.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             List<int> stationIds = new();
             foreach (var station in bl.GetAvailableStations())
@@ -50,12 +45,11 @@ namespace PL
         /// <summary>
         /// Drone Window ctor for actions
         /// </summary>
-        internal DroneWindow(IBLInterface bl, Drone drone, ObservableCollection<Drone> drones)
+        internal DroneWindow(IBLInterface bl, Drone drone)
         {
             InitializeComponent();
             this.bl = bl;
             this.drone = drone;
-            this.drones = drones;
             DataContext = this.drone;
             
             ButtonGrid.Visibility = Visibility.Visible;
@@ -87,7 +81,7 @@ namespace PL
                 if (MessageBox.Show("Drone Added Successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK)
                 {
                     ListWindow window = Application.Current.Windows.OfType<ListWindow>().FirstOrDefault();
-                    drones = new(bl.GetDroneList().Select(d => new Drone(d)));
+                    //drones = new(bl.GetDroneList().Select(d => new Drone(d)));
                     Close();
                 }
             }
@@ -132,10 +126,7 @@ namespace PL
             drone.status = tempDrone.status;
             drone.location = tempDrone.currentLocation;
             drone.battery = tempDrone.battery;
-            drone.packageNumber = tempDrone.packageInTransfer == null ? null : tempDrone.packageInTransfer.ID;
-            Drone temp = drones.Where(d => d.ID == drone.ID).FirstOrDefault();
-            drones[drones.IndexOf(temp)] = drone;
-            
+            drone.packageNumber = tempDrone.packageInTransfer == null ? null : tempDrone.packageInTransfer.ID;   
         }
 
         private void SendToChargeButton_Click(object sender, RoutedEventArgs e)

@@ -55,7 +55,7 @@
             </StackPanel>
 
 
-            <ListView Name="SentPackageList" Grid.Column="1" HorizontalAlignment="Center" Height="150" Width="200" Margin="0,0,0,20" VerticalAlignment="Bottom">
+            <ListView Name="SentPackageList" Grid.Column="1" HorizontalAlignment="Center" Height="150" Width="200" Margin="0,0,0,20" VerticalAlignment="Bottom" MouseDoubleClick="SentPackageList_MouseDoubleClick">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Package #" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -64,7 +64,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <ListView Name="ReceviedPackageList" Grid.Column="1"  HorizontalAlignment="Center" Height="150" Width="200" Margin="0,0,0,20" VerticalAlignment="Top">
+            <ListView Name="ReceivedPackageList" Grid.Column="1"  HorizontalAlignment="Center" Height="150" Width="200" Margin="0,0,0,20" VerticalAlignment="Top" MouseDoubleClick="ReceivedPackageList_MouseDoubleClick">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Package #" DisplayMemberBinding="{Binding Path=ID}"/>

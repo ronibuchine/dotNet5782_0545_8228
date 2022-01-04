@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IBL;
+using BL;
 
 namespace PL
 {
@@ -19,9 +21,33 @@ namespace PL
     /// </summary>
     public partial class StationViewWindow : Window
     {
-        public StationViewWindow()
+        IBLInterface bl;
+        Station station;
+
+        internal StationViewWindow(IBLInterface bl, Station station)
         {
             InitializeComponent();
+            this.bl = bl;
+            this.station = station;
+            DataContext = station;
+            ChargingDroneList.ItemsSource = bl.GetStation(station.ID).chargingDrones;
+        }
+
+        private void DeleteStationButton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.DeleteStation(station.ID);
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ChargingDroneList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BL.Drone temp = (BL.Drone)ChargingDroneList.SelectedItem;
+            Drone drone = new(bl.GetDroneList().Where(d => d.ID == temp.ID).FirstOrDefault());
+            new DroneWindow(bl, drone).Show();
         }
     }
 }

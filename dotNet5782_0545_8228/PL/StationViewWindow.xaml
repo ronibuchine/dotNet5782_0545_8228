@@ -5,8 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="StationViewWindow" Height="450" Width="800">
+        Title="StationViewWindow" Height="450" Width="600"
+        Background="{StaticResource WindowBrush}">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="300*"/>
+        </Grid.ColumnDefinitions>
         
+        <Button Name="AddStation" 
+                Content="+ Add Station" 
+                HorizontalAlignment="Left"  
+                VerticalAlignment="Top" Width="136" 
+                Height="20" Margin="232,237,0,0" 
+                FontFamily="Tw Cen MT" FontSize="12"
+                Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <ComboBox Name="WeightSelection" HorizontalAlignment="Left" Margin="232,195,0,0" VerticalAlignment="Top" Width="136" Visibility="Hidden" Grid.ColumnSpan="2" />
+        <ComboBox Name="StationSelection" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" Margin="232,155,0,0" Visibility="Hidden" Grid.ColumnSpan="2"/>
+        
+        <Button x:Name="Cancel" 
+                Content="Cancel" 
+                HorizontalAlignment="Left"  
+                VerticalAlignment="Top" Width="60" Height="20" 
+                Click="Cancel_Click"  Margin="10,404,0,0" 
+                FontFamily="Tw Cen MT" FontSize="14" FontStretch="Expanded"
+                Background="{StaticResource ButtonBrush}"/>
+        
+
+       
+
+        <StackPanel Grid.Column="0" VerticalAlignment="Center" Height="200" Width="150" Margin="70,0,122,0">
+            <Label Name="IDBlock" Content="{Binding ID, Mode=TwoWay, StringFormat=ID: {0:#}}" Width="120" Height="26" Margin="0,20,0,0"/>
+            <TextBox Name="NameBlock" Text="{Binding name, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+            <Label Name="AvailableSlotsBlock" Content="{Binding availableChargingSlots, Mode=TwoWay}" Width="120"/>
+            <Label Name="OccupiedSlotsBlock" Content="{Binding Path=occupiedSlots, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+            <Label Name="LatitudeBlock" Content="{Binding latitude, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+            <Label Name="LongitudeBlock" Content="{Binding longitude, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+        </StackPanel>
+        <Button Name="DeleteStationButton"
+                Width="120"
+                Background="{StaticResource CancelButtonBrush}"
+                Click="DeleteStationButton_Click" 
+                Visibility="Visible" 
+                Content="✕ Delete Station"
+                FontFamily="Tw Cen MT" Foreground="LightGray" FontSize="10"
+                Height="19" Margin="83,364,97,51"/>
+        <ListView Name="ChargingDroneList" Height="200" Width="250" Grid.Column="1" Margin="0,0,0,0" MouseDoubleClick="ChargingDroneList_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Drone ID" DisplayMemberBinding="{Binding Path=ID}" Width="75"/>
+                    <GridViewColumn Header="Battery Level" DisplayMemberBinding="{Binding Path=battery}" Width="150"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
     </Grid>
 </Window>

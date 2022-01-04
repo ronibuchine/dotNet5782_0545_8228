@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IBL;
+using BL;
 
 namespace PL
 {
@@ -19,9 +21,33 @@ namespace PL
     /// </summary>
     public partial class PackageViewWindow : Window
     {
-        public PackageViewWindow()
+
+        IBLInterface bl;
+        Package package;
+        PackageAtCustomer packageAtCustomer;
+        internal PackageViewWindow(IBLInterface bl, Package package)
         {
             InitializeComponent();
+            this.bl = bl;
+            this.package = package;
+            DataContext = package;
+        }
+
+        internal PackageViewWindow(IBLInterface bl, PackageAtCustomer package)
+        {
+            this.bl = bl;
+            packageAtCustomer = package;
+            DataContext = packageAtCustomer;
+        }
+
+        private void DeletePackageButton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.DeletePackage(packageAtCustomer.ID);
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
