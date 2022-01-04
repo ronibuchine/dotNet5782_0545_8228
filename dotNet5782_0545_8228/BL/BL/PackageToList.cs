@@ -24,9 +24,9 @@ namespace BL
             this.priority = package.priority;
             if (package.delivered != null)
                 this.status = PackageStatuses.delivered;
-            if (package.pickedUp != null)
+            else if (package.pickedUp != null)
                 this.status = PackageStatuses.pickedUp;
-            if (package.scheduled != null)
+            else if (package.scheduled != null)
                 this.status = PackageStatuses.scheduled;
             else
                 this.status = PackageStatuses.requested;
