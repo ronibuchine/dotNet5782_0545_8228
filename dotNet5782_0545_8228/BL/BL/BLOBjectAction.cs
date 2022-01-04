@@ -46,7 +46,7 @@ namespace BL
             try
             {
                 PackageInTransfer package = dal.GetAllPackages()
-                    .Where(p => p.weight <= (DO.WeightCategories)drone.weightCategory && p.requested == null)
+                    .Where(p => p.weight <= (DO.WeightCategories)drone.weightCategory && p.scheduled == null)
                     .Select(p => new PackageInTransfer(p))
                     .Where(p => BatteryRequiredForDelivery(drone, p) <= drone.battery)
                     .OrderByDescending(p => p.priority)
