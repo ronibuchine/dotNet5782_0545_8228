@@ -22,13 +22,15 @@ namespace BL
             this.receiverName = package.receiver.name;
             this.weightCategory = package.weightCategory;
             this.priority = package.priority;
+
+            // there is a smarter way to do this. there must be.
             if (package.delivered != null)
                 this.status = PackageStatuses.delivered;
-            else if (package.pickedUp != null)
+            if (package.pickedUp != null)
                 this.status = PackageStatuses.pickedUp;
-            else if (package.scheduled != null)
+            if (package.scheduled != null)
                 this.status = PackageStatuses.scheduled;
-            else
+            if (package.requested != null)
                 this.status = PackageStatuses.requested;
         }
 
