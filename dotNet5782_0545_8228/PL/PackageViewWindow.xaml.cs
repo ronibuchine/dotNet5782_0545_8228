@@ -24,25 +24,30 @@ namespace PL
 
         IBLInterface bl;
         Package package;
-        PackageAtCustomer packageAtCustomer;
+        DroneToList drone;
         internal PackageViewWindow(IBLInterface bl, Package package)
         {
             InitializeComponent();
             this.bl = bl;
             this.package = package;
+            this.drone = bl.GetDroneList().Where(d => d.packageNumber == package.ID).FirstOrDefault();
             DataContext = package;
+            DronePanel.DataContext = drone;
         }
 
-        internal PackageViewWindow(IBLInterface bl, PackageAtCustomer package)
+        internal PackageViewWindow(IBLInterface bl, PackageAtCustomer package, string sendReceiveValue, int customerID)
         {
             this.bl = bl;
-            packageAtCustomer = package;
-            DataContext = packageAtCustomer;
+            this.package = new(package, sendReceiveValue, customerID);
+            drone = bl.GetDroneList().Where(d => d.packageNumber == package.ID).FirstOrDefault();
+            DataContext = package;
+            if (drone != null) 
+                DronePanel.DataContext = drone;
         }
 
         private void DeletePackageButton_Click(object sender, RoutedEventArgs e)
         {
-            bl.DeletePackage(packageAtCustomer.ID);
+            bl.DeletePackage(package.ID);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

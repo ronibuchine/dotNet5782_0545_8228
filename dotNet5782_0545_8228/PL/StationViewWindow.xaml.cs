@@ -30,6 +30,7 @@ namespace PL
             this.bl = bl;
             this.station = station;
             DataContext = station;
+            ChargingDroneList.DataContext = bl.GetStation(station.ID).chargingDrones;
             ChargingDroneList.ItemsSource = bl.GetStation(station.ID).chargingDrones;
         }
 

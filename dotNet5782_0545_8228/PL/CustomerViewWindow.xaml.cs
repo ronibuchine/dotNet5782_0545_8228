@@ -48,6 +48,8 @@ namespace PL
 
         }
 
+        
+
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             string model = ModelEntry.Text;
@@ -106,13 +108,13 @@ namespace PL
         private void SentPackageList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             PackageAtCustomer package = (PackageAtCustomer)SentPackageList.SelectedItem;
-            new PackageViewWindow(bl, package).Show();
+            new PackageViewWindow(bl, package, "sent", customer.ID).Show();
         }
 
         private void ReceivedPackageList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             PackageAtCustomer package = (PackageAtCustomer)ReceivedPackageList.SelectedItem;
-            new PackageViewWindow(bl, package).Show();
+            new PackageViewWindow(bl, package, "received", customer.ID).Show();
         }
     }
 }

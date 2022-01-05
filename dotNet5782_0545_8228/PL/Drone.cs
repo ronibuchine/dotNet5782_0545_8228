@@ -28,12 +28,12 @@ namespace PL
 
         private int _ID;
         private string _model;
-        private WeightCategories _weightCategory;
+        private WeightCategories? _weightCategory;
         private double? _battery;
         private DroneStatuses? _status;
         private Location _location;
         private int? _packageNumber;
-        public int ID 
+        public int ID
         {
             get
             {
@@ -53,7 +53,7 @@ namespace PL
                 NotifyPropertyChanged();
             }
         }
-        public WeightCategories weightCategory
+        public WeightCategories? weightCategory
         {
             get
             {

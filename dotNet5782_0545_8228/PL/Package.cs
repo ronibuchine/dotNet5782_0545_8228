@@ -22,6 +22,19 @@ namespace PL
             status = package.status;
         }
 
+        public Package(PackageAtCustomer package, string sendReceiveValue, int customerID)
+        {
+            ID = package.ID;
+            weightCategory = package.weight;
+            priority = package.priority;
+            status = package.status;
+            if (sendReceiveValue == "sent")
+                senderName = BLFactory.GetBL().GetCustomer(customerID).name;
+            else
+                receiverName = BLFactory.GetBL().GetCustomer(customerID).name;
+
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private int _ID;
@@ -69,14 +82,16 @@ namespace PL
         {
             get
             {
-                return _priority;            }
+                return _priority;
+            }
             set { _priority = value; NotifyPropertyChanged(); }
         }
         public PackageStatuses status 
         {
             get
             {
-                return _status;            }
+                return _status;
+            }
             set { _status = value; NotifyPropertyChanged(); }
         }       
 

@@ -81,7 +81,7 @@ namespace DAL
                     int randY = RandomExceptX(customers.Count, randX, rand);
                     int senderID = customers[randX].ID;
                     int recieverID = customers[randY].ID;
-                    int droneID = rand.Next(2) == 0 ? 0 : unassignedDrones[rand.Next(unassignedDrones.Count)].ID;
+                    int droneID = rand.Next(2) == 0 ? 0 : unassignedDrones[rand.Next(unassignedDrones.Count-1)].ID;
                     return new Package(nextID++, senderID, recieverID, droneID);
                 case IdalDoType.EMPLOYEE:
                     return new Employee(nextID++, ADMIN_PASSWORD);

@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\box.png" />
+    <None Remove="images\charging-station.png" />
+    <None Remove="images\drone-package.png" />
     <None Remove="images\drone-x.png" />
     <None Remove="images\drone.png" />
     <None Remove="images\update-drone-image.png" />
@@ -18,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\box.png" />
+    <Resource Include="images\charging-station.png" />
+    <Resource Include="images\drone-package.png" />
     <Resource Include="images\drone-x.png" />
     <Resource Include="images\drone.png" />
     <Resource Include="images\update-drone-image.png" />
