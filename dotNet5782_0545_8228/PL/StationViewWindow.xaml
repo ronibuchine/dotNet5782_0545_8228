@@ -35,12 +35,12 @@
 
 
         <StackPanel Grid.Column="0" VerticalAlignment="Top" Height="266" Margin="57,117,73,0">
-            <Label Name="IDBlock" Background="LightGray" Content="{Binding ID, Mode=TwoWay, StringFormat=ID: {0:#}}" Width="120" Height="20" Margin="0,20,0,0"/>
-            <TextBox Name="NameBlock" Background="LightGray" Text="{Binding name, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
-            <TextBlock Name="AvailableSlotsBlock" Background="LightGray" Text="{Binding availableChargingSlots, Mode=TwoWay}" Margin="0,20,0,0" Width="120"/>
-            <TextBlock Name="OccupiedSlotsBlock" Background="LightGray" Text="{Binding Path=occupiedSlots, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
-            <TextBlock Name="LatitudeBlock" Background="LightGray" Text="{Binding latitude, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
-            <TextBlock Name="LongitudeBlock" Background="LightGray" Text="{Binding longitude, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+            <Label Name="IDBlock" Background="LightGray" Content="{Binding Path=ID, Mode=TwoWay, StringFormat=ID: {0:#}}" Width="120" Height="20" Margin="0,20,0,0"/>
+            <TextBox Name="NameBlock" Background="LightGray" Text="{Binding Path=name, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+            <TextBlock Name="AvailableSlotsBlock" Background="LightGray" Text="{Binding Path=availableChargeSlots, Mode=TwoWay}" Margin="0,20,0,0" Width="120"/>
+
+            <TextBlock Name="LatitudeBlock" Background="LightGray" Text="{Binding Path=latitude, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
+            <TextBlock Name="LongitudeBlock" Background="LightGray" Text="{Binding Path=longitude, Mode=TwoWay}" Width="120" Margin="0,20,0,0"/>
             <Button x:Name="DeleteStationButton"
                 Width="120"
                 Background="{StaticResource CancelButtonBrush}"
@@ -50,7 +50,7 @@
                 FontFamily="Tw Cen MT" Foreground="LightGray" FontSize="10" Margin="0,20,0,0"
                 Height="19"/>
         </StackPanel>
-        <ListView Name="ChargingDroneList" Height="200" Width="250" Grid.Column="1" Margin="0,0,0,0" MouseDoubleClick="ChargingDroneList_MouseDoubleClick">
+        <ListView Name="ChargingDroneList" Height="200" Width="250" Grid.Column="1" Margin="0,0,0,0" ItemsSource="{Binding}" MouseDoubleClick="ChargingDroneList_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Drone ID" DisplayMemberBinding="{Binding Path=ID}" Width="75"/>
@@ -58,8 +58,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Image Source="/images/charging-station.png" Margin="108,14,108,298" />
+        <Image Source="/images/charging-station.png" Margin="108,8,108,304" />
         <TextBlock Grid.Column="1" Text="Charging Drones" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,90,150,0" FontStyle="Italic" />
+        <TextBlock Text="Station ID" FontStyle="Italic" VerticalAlignment="Top" Margin="83,117,160,0"/>
+        <TextBlock Text="Station Name" FontStyle="Italic" VerticalAlignment="Top" Margin="83,198,135,0"/>
+        <TextBlock Text="Available Chargers" FontStyle="Italic" VerticalAlignment="Top" Margin="83,158,114,0"/>
+        <TextBlock Text="Latitude" FontStyle="Italic" VerticalAlignment="Top" Margin="85,231,158,0"/>
+        <TextBlock Text="Longitude" FontStyle="Italic" VerticalAlignment="Top" Margin="83,269,152,0"/>
 
 
     </Grid>

@@ -18,7 +18,7 @@ namespace BL
 
         public override string ToString()
         {
-            return String.Format("Longitude = {0}, Latitude = {1}",
+            return String.Format("Longitude = {0}\nLatitude = {1}",
                 longitude, latitude);
         }
 

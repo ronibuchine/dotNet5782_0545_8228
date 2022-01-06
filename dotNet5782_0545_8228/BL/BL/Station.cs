@@ -33,7 +33,7 @@ namespace BL
             chargeSlots = station.chargeSlots;
             chargingDrones = dal.GetAllCharges()
                 .Where(dc => dc.StationId == ID)
-                .Select(dc => new Drone(dal.GetDrone(dc.DroneId)));
+                .Select(dc => BLFactory.GetBL().GetDrone(dc.DroneId));
         }
 
         public override string ToString()

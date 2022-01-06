@@ -258,5 +258,10 @@ namespace PL
                 MessageBox.Show(except.Message);
             }
         }
+
+        private void DeletePackage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

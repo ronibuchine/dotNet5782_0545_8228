@@ -31,7 +31,6 @@ namespace PL
             this.station = station;
             DataContext = station;
             ChargingDroneList.DataContext = bl.GetStation(station.ID).chargingDrones;
-            ChargingDroneList.ItemsSource = bl.GetStation(station.ID).chargingDrones;
         }
 
         private void DeleteStationButton_Click(object sender, RoutedEventArgs e)

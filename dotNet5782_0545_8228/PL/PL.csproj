@@ -12,6 +12,7 @@
     <None Remove="images\drone-package.png" />
     <None Remove="images\drone-x.png" />
     <None Remove="images\drone.png" />
+    <None Remove="images\dronenopackage.png" />
     <None Remove="images\update-drone-image.png" />
     <None Remove="images\XDS.png" />
   </ItemGroup>
@@ -26,6 +27,7 @@
     <Resource Include="images\drone-package.png" />
     <Resource Include="images\drone-x.png" />
     <Resource Include="images\drone.png" />
+    <Resource Include="images\dronenopackage.png" />
     <Resource Include="images\update-drone-image.png" />
     <Resource Include="images\XDS.png" />
   </ItemGroup>

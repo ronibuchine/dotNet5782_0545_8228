@@ -42,34 +42,45 @@
             Background="{StaticResource ButtonBrush}" Grid.Row="1"/>
 
 
-
+        <Button Name="UpdateDroneButton"
+                Background="{StaticResource AddButtonBrush}" 
+                Click="ModelUpdateButton_Click" 
+                Visibility="Visible" 
+                Content="✓ Save Changes" 
+                FontFamily="Tw Cen MT"
+                FontSize="11"
+                VerticalAlignment="Top" HorizontalAlignment="Center" 
+                Margin="0,287,0,0" Width="166" Height="20"
+                Grid.Row="1"/>
         <StackPanel Name="ButtonGrid" Margin="70,19,0,19" Visibility="Visible" Orientation="Horizontal" Width="550">
-
-            <Button Name="UpdateDroneButton" Width="60" Background="{StaticResource AddButtonBrush}" Click="ModelUpdateButton_Click" Visibility="Visible" Content="Update Model" FontFamily="Tw Cen MT" FontSize="8" Margin="0,0,0,0"/>
-            <Button Name="SendToChargeButton" Width="60" Background="{StaticResource ButtonBrush}" Visibility="Visible" Content="Charge" FontFamily="Tw Cen MT" FontSize="8" Click="SendToChargeButton_Click" Margin="20,0,0,0"/>
-            <Button Name="AssignPackageToDroneButton"  Width="60" Background="{StaticResource ButtonBrush}" Visibility="Visible" Content="Assign Package"  FontFamily="Tw Cen MT" FontSize="8" Click="AssignPackageToDroneButton_Click" Margin="20,0,0,0"/>
-            <Button Name="CollectPackageButton" Width="60" Background="{StaticResource ButtonBrush}" Visibility="Visible" Content="Collect Package"  FontFamily="Tw Cen MT" FontSize="8" Click="CollectPackageButton_Click" Margin="20,0,0,0"/>
-            <Button Name="DeliverPackageButton" Width="60" Background="{StaticResource ButtonBrush}" Visibility="Visible" Content="Deliver Package"  FontFamily="Tw Cen MT" FontSize="8" Click="DeliverPackageButton_Click" Margin="20,0,0,0"/>
-            <Button Name="ReleaseDroneFromChargeButton" Width="60" Background="{StaticResource ButtonBrush}" Visibility="Visible" Content="Charge Release" FontFamily="Tw Cen MT" FontSize="8" Click="ReleaseDroneFromChargeButton_Click" Margin="20,0,0,0"/>
+            <Button Name="DeletePackage" Width="60" Margin="20,0,0,0" Background="{StaticResource CancelButtonBrush}" Click="DeletePackage_Click" Visibility="Visible" Content="✕ Delete Drone" Foreground="LightGray" FontFamily="Tw Cen MT" FontSize="9" />
+            <Button Name="SendToChargeButton" Width="60" Background="{StaticResource ButtonBrush}" Visibility="Visible" Click="SendToChargeButton_Click" Margin="20,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/images/charging-station.png" Height="15" />
+                    <TextBlock Text="Charge" FontFamily="Tw Cen MT" FontSize="9" Margin="5,3,0,0"/>
+                </StackPanel>
+            </Button>
+            <Button Name="AssignPackageToDroneButton"  Width="60" Background="{StaticResource ButtonBrush}" Visibility="Visible" Content="Assign Package"  FontFamily="Tw Cen MT" FontSize="9" Click="AssignPackageToDroneButton_Click" Margin="20,0,0,0"/>
+            <Button Name="CollectPackageButton" Width="60" Background="{StaticResource ButtonBrush}" Visibility="Visible" Content="Collect Package"  FontFamily="Tw Cen MT" FontSize="9" Click="CollectPackageButton_Click" Margin="20,0,0,0"/>
+            <Button Name="DeliverPackageButton" Width="60" Background="{StaticResource ButtonBrush}" Visibility="Visible" Content="Deliver Package"  FontFamily="Tw Cen MT" FontSize="9" Click="DeliverPackageButton_Click" Margin="20,0,0,0"/>
+            <Button Name="ReleaseDroneFromChargeButton" Width="60" Background="{StaticResource ButtonBrush}" Visibility="Visible" Content="Charge Release" FontFamily="Tw Cen MT" FontSize="9" Click="ReleaseDroneFromChargeButton_Click" Margin="20,0,0,0"/>
         </StackPanel>
-        <TextBox Name="UpdateDroneModelText" HorizontalAlignment="Center" Margin="0,133,0,0" Text="{Binding Path=model}" TextWrapping="Wrap" Height="20" VerticalAlignment="Top" Width="120" Visibility="Visible" Grid.Row="1"/>
-        <Image Name="DroneImage" Margin="242,52,242,239" Stretch="Fill" Visibility="Visible" Grid.RowSpan="2">
-            <Image.Source>
-                <BitmapImage UriSource="images/update-drone-image.png" />
-            </Image.Source>
-        </Image>
+        <TextBox Name="UpdateDroneModelText" Background="LightGray" HorizontalAlignment="Left" Margin="129,0,0,0" Text="{Binding Path=model}" TextWrapping="Wrap" Height="20" VerticalAlignment="Center" Width="166" Visibility="Visible" Grid.Row="1"/>
+        <Image Name="DroneImage" Source="images/dronenopackage.png"  Margin="260,62,260,269" Stretch="Fill" Visibility="Visible" Grid.RowSpan="2"/>
+
         <TextBox Name="ChargingAmount" Visibility="Hidden" Grid.Column="1" HorizontalAlignment="Center" Margin="0,175,0,0" Text="Enter Hours Charging" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" ContentElement.MouseEnter="ChargingAmount_MouseEnter"/>
         <Button Name="ChargingReleaseButton" Visibility="Hidden" Background="{StaticResource ButtonBrush}" Content="Release" Grid.Column="1" HorizontalAlignment="Center" Margin="0,216,0,0" VerticalAlignment="Top" Width="95" Click="ChargingReleaseButton_Click"/>
-        <Label Name="IDBlock" Content="{Binding Path=ID, Mode=TwoWay}" HorizontalAlignment="Center" Margin="0,105,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="120"/>
-        <Label Name="WeightBlock" Content="{Binding Path=weightCategory, Mode=TwoWay}" HorizontalAlignment="Center" Margin="0,159,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="120"/>
-        <Label Name="StatusBlock" Content="{Binding Path=status, Mode=TwoWay}" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Width="120" Margin="0,190,0,0"/>
-        <Label Name="BatteryBlock" Content="{Binding Path=battery, Mode=TwoWay}" HorizontalAlignment="Center" Grid.Row="1"   VerticalAlignment="Top" Margin="0,211,0,0" Width="120"/>
-        <Label Name="LocationBLock" Content="{Binding Path=location, Mode=TwoWay}" HorizontalAlignment="Center" Grid.Row="1"  VerticalAlignment="Top" Margin="0,232,0,0" Width="120" Height="45"/>
-
-
-
-
-
+        <TextBlock Name="IDBlock" Background="LightGray" Text="{Binding Path=ID, Mode=TwoWay}" HorizontalAlignment="Left" Margin="129,126,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="166" Height="19"/>
+        <TextBlock Name="WeightBlock" Background="LightGray" Text="{Binding Path=weightCategory, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Row="1"  VerticalAlignment="Top" Width="166" Height="19" Margin="129,239,0,0"/>
+        <TextBlock Name="StatusBlock" Background="LightGray" Text="{Binding Path=status, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="166" Margin="353,126,0,0" Height="19"/>
+        <TextBlock Name="BatteryBlock" Background="LightGray" Text="{Binding Path=battery, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Row="1"   VerticalAlignment="Center" Margin="353,0,0,0" Width="166" Height="19"/>
+        <Label Name="LocationBlock" Background="LightGray" Content="{Binding Path=location, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Row="1"  VerticalAlignment="Top" Margin="353,215,0,0" Width="166" Height="45"/>
+        <TextBlock Text="Drone ID" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="129,105,0,0" Grid.Row="1" />
+        <TextBlock Text="Weight Class" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="129,217,0,0" Grid.Row="1" />
+        <TextBlock Text="Current Status" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="353,108,0,0" Grid.Row="1" />
+        <TextBlock Text="Location" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="353,196,0,0" Grid.Row="1" />
+        <TextBlock Text="Drone Model" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="129,153,0,0" Grid.Row="1" />
+        <TextBlock Text="Battery Level" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="353,155,0,0" Grid.Row="1" />
 
 
 

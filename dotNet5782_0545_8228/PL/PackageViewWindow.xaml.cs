@@ -37,12 +37,13 @@ namespace PL
 
         internal PackageViewWindow(IBLInterface bl, PackageAtCustomer package, string sendReceiveValue, int customerID)
         {
+            InitializeComponent();
             this.bl = bl;
             this.package = new(package, sendReceiveValue, customerID);
             drone = bl.GetDroneList().Where(d => d.packageNumber == package.ID).FirstOrDefault();
-            DataContext = package;
-            if (drone != null) 
-                DronePanel.DataContext = drone;
+            DataContext = package; 
+            DronePanel.DataContext = drone;
+            
         }
 
         private void DeletePackageButton_Click(object sender, RoutedEventArgs e)
