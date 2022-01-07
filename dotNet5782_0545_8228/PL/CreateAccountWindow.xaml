@@ -5,23 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="CreateAccountWindow" Height="600" Width="400"
+        Title="CreateAccountWindow" Height="500" Width="300"
         Background="Transparent"
         WindowStyle="None"
-        AllowsTransparency="True">
+        AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="b2v"/>
     </Window.Resources>
-    <Border Background="{StaticResource WindowBrush}" CornerRadius="20" MouseDown="Border_MouseDown">
+    <Border Background="{StaticResource ButtonBrush}" CornerRadius="20" MouseDown="Border_MouseDown">
         <Grid>
+            <Image Source="/images/user.png" VerticalAlignment="Top" Width="100" Margin="0,40,0,0"/>
             <TextBox Name="IDBox" Text="Enter ID" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25" Width="226" Margin="0,313,0,0"/>
             <TextBox Name="NameBox" Visibility="{Binding IsChecked,ElementName=CustomerAccountCheck, Converter={StaticResource b2v}}" Text="Enter Name" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Top" Height="25" Width="226" Margin="0,205,0,0"/>
             <TextBox Name="PhoneBox" Visibility="{Binding IsChecked,ElementName=CustomerAccountCheck, Converter={StaticResource b2v}}" Text="Enter Phone Number" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Top" Height="24" Width="226" Margin="0,258,0,0"/>
             <TextBox Name="PasswordBox" Text="Enter Password" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Top" Height="24" Width="226" Margin="0,366,0,0"/>
-            <Button Name="CreateAccount" Content="Create Account" VerticalAlignment="Top" HorizontalAlignment="Left" Height="24" Width="94" Margin="219,410,0,0" Background="{StaticResource ButtonBrush}" Click="CreateAccount_Click"/>
-            <Button Name="Cancel" Content="Cancel" VerticalAlignment="Top" HorizontalAlignment="Left" Height="24" Width="94" Margin="87,410,0,0" Background="{StaticResource ButtonBrush}" Click="Cancel_Click"/>
-            <RadioButton Name="EmployeeAccountCheck" Content="Employee" HorizontalAlignment="Left" Margin="119,162,0,0" VerticalAlignment="Top" IsChecked="True"/>
-            <RadioButton Name="CustomerAccountCheck" Content="Customer" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="207,162,0,0"/>
+            <Button Name="CreateAccount" Content="Create Account" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="24" Width="94" Margin="0,0,-120,65" Background="{StaticResource ButtonBrush}" Click="CreateAccount_Click"/>
+            <Button Name="Cancel" Content="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="24" Width="94" Margin="0,0,120,65" Background="{StaticResource ButtonBrush}" Click="Cancel_Click"/>
+            <RadioButton Name="EmployeeAccountCheck" Content="Employee" HorizontalAlignment="Center" Margin="0,160,120,0" VerticalAlignment="Top" IsChecked="True"/>
+            <RadioButton Name="CustomerAccountCheck" Content="Customer" HorizontalAlignment="Center" Margin="0,160,-120,0" VerticalAlignment="Top" IsChecked="True"/>
 
         </Grid>
     </Border>

@@ -35,6 +35,7 @@ namespace PL
             {
                 stationIds.Add(station.ID);
             }
+            AddGrid.Visibility = Visibility.Visible;
             StationSelection.ItemsSource = stationIds;
             ModelEntry.Visibility = Visibility.Visible;
             StationSelection.Visibility = Visibility.Visible;
@@ -51,15 +52,10 @@ namespace PL
             this.bl = bl;
             this.drone = drone;
             DataContext = this.drone;
-            
+
+            TextEntries.Visibility = Visibility.Visible;            
             ButtonGrid.Visibility = Visibility.Visible;
             UpdateDroneButton.Visibility = Visibility.Visible;
-            CollectPackageButton.Visibility = Visibility.Visible;
-            DeliverPackageButton.Visibility = Visibility.Visible;
-            SendToChargeButton.Visibility = Visibility.Visible;
-            AssignPackageToDroneButton.Visibility = Visibility.Visible;
-            ReleaseDroneFromChargeButton.Visibility = Visibility.Visible;
-            DroneImage.Visibility = Visibility.Visible;
 
         }
 
@@ -175,44 +171,39 @@ namespace PL
 
         private void ReleaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (drone.status == DroneStatuses.maintenance)
-            {
-                ChargingReleaseButton.Visibility = Visibility.Visible;
-                ChargingAmount.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                MessageBox.Show("Drone is not currently charging.");
-            }
-        }
-
-        private void ChargingAmount_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ChargingAmount.Text = "";
+            //if (drone.status == DroneStatuses.maintenance)
+            //{
+            //    ChargingReleaseButton.Visibility = Visibility.Visible;
+            //    ChargingAmount.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Drone is not currently charging.");
+            //}
         }
 
         private void ChargingReleaseButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            try
-            {
-                bl.ReleaseDroneFromCharge(drone.ID, Int32.Parse(ChargingAmount.Text));
-                Synchronize();
-                MessageBox.Show($"Drone has charged for {ChargingAmount.Text} hours.");
 
-            }
-            catch (InvalidBlObjectException i)
-            {
-                MessageBox.Show(i.Message);
-            }
-            catch (InvalidOperationException i)
-            {
-                MessageBox.Show(i.Message);
-            }
-            catch (Exception except)
-            {
-                MessageBox.Show(except.Message);
-            }
+            //try
+            //{
+            //    bl.ReleaseDroneFromCharge(drone.ID, Int32.Parse(ChargingAmount.Text));
+            //    Synchronize();
+            //    MessageBox.Show($"Drone has charged for {ChargingAmount.Text} hours.");
+
+            //}
+            //catch (InvalidBlObjectException i)
+            //{
+            //    MessageBox.Show(i.Message);
+            //}
+            //catch (InvalidOperationException i)
+            //{
+            //    MessageBox.Show(i.Message);
+            //}
+            //catch (Exception except)
+            //{
+            //    MessageBox.Show(except.Message);
+            //}
         }
 
         private void CollectPackageButton_Click(object sender, RoutedEventArgs e)

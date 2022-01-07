@@ -135,5 +135,10 @@ namespace PL
             Station station = (Station)StationListView.SelectedItem;
             new StationViewWindow(bl, station).Show();
         }
+
+        private void AddStationButton_Click(object sender, RoutedEventArgs e)
+        {
+            new StationViewWindow(bl).Show();
+        }
     }
 }

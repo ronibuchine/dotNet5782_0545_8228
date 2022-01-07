@@ -31,6 +31,7 @@ namespace PL
             InitializeComponent();
             this.bl = bl;
             this.customers = customers;
+
         }
 
         /// <summary>

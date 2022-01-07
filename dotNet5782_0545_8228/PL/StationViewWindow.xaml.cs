@@ -31,6 +31,26 @@ namespace PL
             this.station = station;
             DataContext = station;
             ChargingDroneList.DataContext = bl.GetStation(station.ID).chargingDrones;
+            ChargingDroneList.Visibility = Visibility.Visible;
+            StationInfo.Visibility = Visibility.Visible;
+            StationImage.Visibility = Visibility.Visible;
+            Drones.Visibility = Visibility.Visible;
+            SID.Visibility = Visibility.Visible;
+            IName.Visibility = Visibility.Visible;
+            Chargers.Visibility = Visibility.Visible;
+            ILatitude.Visibility = Visibility.Visible;
+            ILongitude.Visibility = Visibility.Visible;
+            DeleteStationButton.Visibility = Visibility.Visible;
+        }
+
+        internal StationViewWindow(IBLInterface bl)
+        {
+            InitializeComponent();
+            this.bl = bl;
+            AddBorder.Visibility = Visibility.Visible;
+            StationBWImage.Visibility = Visibility.Visible;
+
+
         }
 
         private void DeleteStationButton_Click(object sender, RoutedEventArgs e)
@@ -48,6 +68,23 @@ namespace PL
             BL.Drone temp = (BL.Drone)ChargingDroneList.SelectedItem;
             Drone drone = new(bl.GetDroneList().Where(d => d.ID == temp.ID).FirstOrDefault());
             new DroneWindow(bl, drone).Show();
+        }
+
+        private void AddStation_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Location location = new(Double.Parse(LatitudeEntry.Text), Double.Parse(LongitudeEntry.Text));
+                bl.AddStation(NameEntry.Text, location, Int32.Parse(SlotsEntry.Text));
+            }
+            catch (InvalidBlObjectException except)
+            {
+                MessageBox.Show(except.Message);
+            }
+            catch (FormatException except)
+            {
+                MessageBox.Show("Please enter acceeptable numbers for location and charge slot entries.");
+            }
         }
     }
 }

@@ -8,7 +8,7 @@
         Title="System Management" Height="640" Width="800"
         Background="{StaticResource WindowBrush}"
         WindowStyle="None"
-        AllowsTransparency="True">
+        AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     
     <Border CornerRadius="10" MouseDown="Border_MouseDown">
     <Grid Name="MainGrid">
@@ -39,7 +39,7 @@
 
                     </Grid>
 
-                    <ListView  Name="DroneListView" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow" >
+                    <ListView  Foreground="LightGray" Name="DroneListView" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -75,7 +75,7 @@
 
                     </Grid>
 
-                    <ListView  Name="PackageListView" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="PackageListView_MouseDoubleClick"  >
+                        <ListView Foreground="LightGray" Name="PackageListView" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="PackageListView_MouseDoubleClick"  >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -107,12 +107,12 @@
 
                         <Button Name="ClearFilterButton3" Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
                         <ComboBox Name="StationStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
-                        <Button Name="AddStationButton" Content="+ Add Station" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                        <Button Name="AddStationButton" Content="+ Add Station" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddStationButton_Click"  FontSize="18" FontFamily="Tw Cen MT" />
                         <ComboBox Name="StationSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
 
                     </Grid>
 
-                        <ListView  Name="StationListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="StationListView_MouseDoubleClick">
+                        <ListView Foreground="LightGray" Name="StationListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="StationListView_MouseDoubleClick">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -147,7 +147,7 @@
                             <Button Name="AddCustomerButton" Content="+ Add Customer" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
                             <ComboBox Name="CustomerWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
                         </Grid>
-                        <ListView  Name="CustomerListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="CustomerListView_MouseDoubleClick"  >
+                        <ListView Foreground="LightGray" Name="CustomerListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="CustomerListView_MouseDoubleClick"  >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>

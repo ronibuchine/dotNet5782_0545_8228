@@ -54,6 +54,14 @@ namespace PL
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }    
+
+        private void ViewDrone_Click(object sender, RoutedEventArgs e)
+        {
+            if (drone != null)
+                new DroneWindow(bl, new(drone)).Show();
+            else
+                MessageBox.Show("There is no drone assigned to the selected package.");
         }
     }
 }
