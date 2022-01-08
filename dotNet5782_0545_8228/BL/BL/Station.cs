@@ -32,8 +32,8 @@ namespace BL
             location = new Location(station.longitude, station.latitude);
             chargeSlots = station.chargeSlots;
             chargingDrones = dal.GetAllCharges()
-                .Where(dc => dc.StationId == ID)
-                .Select(dc => BLFactory.GetBL().GetDrone(dc.DroneId));
+                .Where(dc => dc.stationId == ID)
+                .Select(dc => BLFactory.GetBL().GetDrone(dc.droneId));
         }
 
         public override string ToString()

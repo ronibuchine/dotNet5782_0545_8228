@@ -22,17 +22,19 @@ namespace BL
         }
 
        
-        public void ReleaseDroneFromCharge(int droneID, int hoursCharging)
+        public void ReleaseDroneFromCharge(int droneID)
         {
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.maintenance) // is this always initialized?
-                throw new OperationNotPossibleException("Drone is not currently in maintenance");
-            drone.battery += hoursCharging * chargingRate;
+                throw new OperationNotPossibleException("Drone is not currently in maintenance"); 
+            TimeSpan timeCharged = DateTime.Now.Subtract(dal.GetAllCharges()
+                                 .First((dc) => dc.droneId == droneID).beganCharge);
+            drone.battery += timeCharged.Seconds * chargingRate;
             if (drone.battery > 100)
                 drone.battery = 100;
-            drone.status = DroneStatuses.free;
+            drone.status = DroneStatuses.free;            
             int stationID = dal.GetAllCharges()
-                                .First((dc) => dc.DroneId == droneID).StationId;
+                                .First((dc) => dc.droneId == droneID).stationId;
             dal.ReleaseDroneFromCharge(stationID, droneID);
         }
 

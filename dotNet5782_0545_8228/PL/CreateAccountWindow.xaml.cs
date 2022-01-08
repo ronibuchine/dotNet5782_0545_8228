@@ -51,8 +51,20 @@ namespace PL
             }
             catch (InvalidBlObjectException except)
             {
-                bl.AddCustomer(NameBox.Text, PhoneBox.Text, new Location(new Random().NextDouble() * 360, new Random().NextDouble() * 180), PasswordBox.Text);
-                if (MessageBox.Show("Account Created Successfully", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
+                try
+                {
+                    bl.AddCustomer(NameBox.Text,
+                        (Int32.Parse(PhoneBox.Text)).ToString(),
+                        new Location(new Random().NextDouble() * 360, new Random().NextDouble() * 180),
+                        Int32.Parse(IDBox.Text),
+                        PasswordBox.Text);
+                    if (MessageBox.Show("Account Created Successfully", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
+                }
+                catch (FormatException fExcept)
+                {
+                    MessageBox.Show("Please enter a valid ID/Phone Number");
+                }
+                
             }  
             catch (OperationNotPossibleException except)
             {

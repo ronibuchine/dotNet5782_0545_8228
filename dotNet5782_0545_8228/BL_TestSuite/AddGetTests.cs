@@ -67,7 +67,7 @@ namespace BL_TestSuite
             Location location = new Location(1, 1);
 
             IBL.IBLInterface bl = new BL.BLOBject(null);
-            Customer customer = bl.AddCustomer(name, phone, location);
+            Customer customer = bl.AddCustomer(name, phone, location, 123);
 
 
             Customer c = bl.GetCustomer(customer.ID);
@@ -78,11 +78,11 @@ namespace BL_TestSuite
 
             for (int i = 0; i < 9; i++)
             {
-                bl.AddCustomer($"{name}_{i + 1}", phone, new Location(i + 1, i + 1));
+                bl.AddCustomer($"{name}_{i + 1}", phone, new Location(i + 1, i + 1), 123);
             }
             Assert.Throws<InvalidBlObjectException>(() =>
                     {
-                        bl.AddCustomer($"{name}_6", phone, new Location(10, 10));
+                        bl.AddCustomer($"{name}_6", phone, new Location(10, 10), 123);
                     }
                 );
         }
@@ -92,8 +92,8 @@ namespace BL_TestSuite
         public void AddGetPackageTest(WeightCategories weight, Priorities priority)
         {
             IBL.IBLInterface bl = new BL.BLOBject(null);
-            int senderID = bl.AddCustomer("name1", "123", new Location(1, 1)).ID;
-            int receiverID = bl.AddCustomer("name2", "124", new Location(2, 2)).ID;
+            int senderID = bl.AddCustomer("name1", "123", new Location(1, 1), 123).ID;
+            int receiverID = bl.AddCustomer("name2", "124", new Location(2, 2), 12).ID;
 
             Package package = bl.AddPackage(senderID, receiverID, weight, priority);
             Package p = bl.GetPackage(package.ID);

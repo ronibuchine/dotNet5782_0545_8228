@@ -47,7 +47,7 @@ namespace BL_TestSuite
         public void UpdateCustomerNameTest(string name)
         {
             IBL.IBLInterface bl = new BL.BLOBject(null);
-            Customer customer = bl.AddCustomer("different name", "0586693748", new Location(1, 1));
+            Customer customer = bl.AddCustomer("different name", "0586693748", new Location(1, 1), 123);
             bl.UpdateCustomerName(customer.ID, name);
             Customer c = bl.GetCustomer(customer.ID);
             Assert.True(c.name == name && c.ID == customer.ID, "Update customer name assertion failed!");
@@ -58,7 +58,7 @@ namespace BL_TestSuite
         public void UpdateCustomerPhoneTest(string phone)
         {
             IBL.IBLInterface bl = new BL.BLOBject(null);
-            Customer customer = bl.AddCustomer("name", "111111111", new Location(1, 1));
+            Customer customer = bl.AddCustomer("name", "111111111", new Location(1, 1), 123);
             bl.UpdateCustomerPhone(customer.ID, phone);
             Customer c = bl.GetCustomer(customer.ID);
             Assert.True(c.phone == phone && c.ID == customer.ID, "Update customer phone assertion failed!");

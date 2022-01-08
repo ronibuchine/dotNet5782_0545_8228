@@ -31,9 +31,10 @@ namespace IBL
         /// <param name="name"></param>
         /// <param name="phone"></param>
         /// <param name="location"></param>
-        /// <param name="password"></param>
+        /// <param name="ID"></param>
         /// <returns>A reference to the customer that was added.</returns>
-        public Customer AddCustomer(string name, string phone, Location location, string password = null);
+        /// <param name="password"></param>
+        public Customer AddCustomer(string name, string phone, Location location, int ID, string password = null);
 
         /// <summary>
         /// API call which adds a new package to the system.
@@ -117,12 +118,11 @@ namespace IBL
         public void SendDroneToCharge(int droneID);
 
         /// <summary>
-        /// This API call will release a specified drone from charging. It is released after a certain amount of hours which is specified by the user of the system.
+        /// This API call will release a specified drone from charging. It is released after a certain amount of seconds which is specified by the user of the system.
         /// This call throws exceptions when the drone doesn't have the correct status, i.e. not in maintenance.
         /// </summary>
         /// <param name="droneID">the drone that is currently in charging to be released.</param>
-        /// <param name="hoursCharging">Number of hours the drone was charging for.</param>
-        public void ReleaseDroneFromCharge(int droneID, int hoursCharging);
+        public void ReleaseDroneFromCharge(int droneID);
 
         /// <summary>
         /// This API call will assign the best possible package to the drone that is supplied to the function call.
