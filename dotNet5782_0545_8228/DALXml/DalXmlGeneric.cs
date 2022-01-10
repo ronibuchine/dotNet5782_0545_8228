@@ -13,7 +13,7 @@ namespace DAL
     {
         // TODO: store this stuff in some config xml
         internal const int MIN_DRONES = 5;
-        internal const int MIN_DRONE_STATIONS = 5;
+        internal const int MIN_STATIONS = 5;
         internal const int MIN_CUSTOMERS = 5;
         internal const int MIN_PACKAGES = 5;
         internal const int MIN_EMPLOYEES = 1;
@@ -43,41 +43,6 @@ namespace DAL
         internal XElement droneChargesRoot;
         internal XElement customersRoot;
         internal XElement configRoot;
-
-        /* static void Main() */
-        /* { */
-        /*     var path = Directory.GetCurrentDirectory(); */
-        /*     var containing = Directory.GetFiles(path, "*.sln"); */
-        /*     while (containing.Length == 0) */
-        /*     { */
-        /*         path = Directory.GetParent(path).FullName; */
-        /*         containing = Directory.GetFiles(path, "*.sln"); */
-        /*     } */
-
-        /*     XElement dalConfig = XElement.Load(path + @"/xml/drones.xml"); */
-        /*     IEnumerable<Drone> drones = dalConfig.Element("list").Elements().Select(e => XelementToDrone(e)); */
-
-        /*     foreach (var drone in drones) */
-        /*     { */
-        /*         Console.Out.Write("" + drone.ToString()); */
-        /*     } */
-
-
-
-        /*     /1* var drone = new Drone(1, "model", WeightCategories.heavy); *1/ */
-        /*     /1* System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(drone.GetType()); *1/ */
-        /*     /1* x.Serialize(Console.Out, drone); *1/ */
-        /*     /1* Console.WriteLine(); *1/ */
-        /* } */
-
-        /* static private WeightCategories ParseWeightCategory(string weight) => */
-        /*     weight switch */
-        /*     { */
-        /*         "heavy" => WeightCategories.heavy, */
-        /*         "medium" => WeightCategories.medium, */
-        /*         "light" => WeightCategories.light, */
-        /*         _ => throw new Exception("not valid weight") */
-        /*     }; */
 
         static private Drone XelementToDrone(XElement el)
         {
@@ -112,6 +77,7 @@ namespace DAL
             stationsPath = xmlPath + stationsPath;
             employeesPath = xmlPath + employeesPath;
             droneChargesPath = xmlPath + droneChargesPath;
+            customersPath = xmlPath + customersPath;
             configPath = xmlPath + configPath;
 
             Initialize();
@@ -130,79 +96,103 @@ namespace DAL
 
             try
             {
-                dronesRoot = LoadXml("drones");
-            }
-            catch (FileNotFoundException)
-            {
-                dronesRoot = Create(dronesPath).Element("list");
-            }
-
-            try
-            {
-                packagesRoot = LoadXml("packages");
-            }
-            catch (FileNotFoundException)
-            {
-                packagesRoot = Create(packagesPath).Element("list");
-            }
-
-            try
-            {
-                stationsRoot = LoadXml("stations");
-            }
-            catch (FileNotFoundException)
-            {
-                stationsRoot = Create(stationsPath).Element("list");
-            }
-
-            try
-            {
                 employeesRoot = LoadXml("employees");
-            }
-            catch (FileNotFoundException)
-            {
-                employeesRoot = Create(employeesPath).Element("list");
-            }
-
-            try
-            {
+                dronesRoot = LoadXml("drones");
+                stationsRoot = LoadXml("stations");
+                customersRoot = LoadXml("customers");
+                packagesRoot = LoadXml("packages");
                 droneChargesRoot = LoadXml("droneCharges");
             }
             catch (FileNotFoundException)
             {
-                droneChargesRoot = Create(droneChargesPath).Element("list");
-            }
+                Random rand = new();
+                Clear();
+                int nextID = 1;
+                XElement.Load(configPath).Element("nextID").Value = nextID.ToString();
 
-            try
-            {
-                customersRoot = LoadXml("customers");
-            }
-            catch (FileNotFoundException)
-            {
-                customersRoot = Create(customersPath).Element("list");
+                employeesRoot = Create(employeesPath);
+                int num = rand.Next(MIN_EMPLOYEES, MIN_EMPLOYEES + 1);
+                for (int i = 0; i < num; i++)
+                {
+                    employeesRoot.Add(EmployeeToXElement(new Employee(nextID++, ADMIN_PASSWORD)));
+                }
+                SaveXml("employees");
+
+                dronesRoot = Create(dronesPath);
+                num = rand.Next(MIN_DRONES, MAX_DRONES + 1);
+                for (int i = 0; i < num; i++)
+                {
+                    dronesRoot.Add(DroneToXElement(new Drone(nextID++)));
+                }
+                SaveXml("drones");
+
+
+                stationsRoot = Create(stationsPath);
+                num = rand.Next(MIN_STATIONS, MAX_STATIONS + 1);
+                for (int i = 0; i < num; i++)
+                {
+                    stationsRoot.Add(StationToXElement(new Station(nextID++)));
+                }
+                SaveXml("stations");
+
+                customersRoot = Create(customersPath);
+                num = rand.Next(MIN_CUSTOMERS, MAX_CUSTOMERS + 1);
+                for (int i = 0; i < num; i++)
+                {
+                    customersRoot.Add(CustomerToXElement(new Customer(nextID++)));
+                }
+                SaveXml("customers");
+
+                packagesRoot = Create(packagesPath);
+                num = rand.Next(MIN_PACKAGES, MAX_PACKAGES + 1);
+                List<int> ids = new();
+                packagesRoot
+                    .Elements()
+                    .ToList()
+                    .ForEach(p => ids.Add(Int32.Parse(p.Element("droneID").Value)));
+                var unassignedDrones = dronesRoot
+                    .Elements()
+                    .Where(d => !ids
+                            .Contains(Int32.Parse(d.Element("ID").Value)));
+
+                for (int i = 0; i < num; i++)
+                {
+                    int randX = rand.Next(customersRoot.Elements().Count());
+                    int randY = RandomExceptX(customersRoot.Elements().Count(), randX, rand);
+                    int senderID = Int32.Parse(customersRoot.Elements().ElementAt(randX).Element("ID").Value);
+                    int recieverID = Int32.Parse(customersRoot.Elements().ElementAt(randY).Element("ID").Value);
+                    int droneID = rand.Next(2) == 0 ? 0 : Int32.Parse(unassignedDrones.Elements().ElementAt(rand.Next(unassignedDrones.Count() - 1)).Value);
+                    packagesRoot.Add(PackageToXElement(new Package(nextID++, senderID, recieverID, droneID)));
+                }
+                SaveXml("packages");
+
+                configRoot = XElement.Load(configPath);
+                configRoot.Element("nextID").Value = nextID.ToString();
+                SaveXml("config");
             }
         }
 
-        private XElement LoadXml(String choice) 
+        private static int RandomExceptX(int n, int x, Random rand)
         {
-            try 
+            int result = rand.Next(n);
+            if (result != x)
+                return result;
+            return (result + 1) % n;
+        }
+
+        private XElement LoadXml(String choice)
+        {
+            return choice switch
             {
-                return choice switch
-                {
-                    "drones" => XElement.Load(dronesPath),
-                        "packages" => XElement.Load(packagesPath),
-                        "stations" => XElement.Load(stationsPath),
-                        "employees" => XElement.Load(employeesPath),
-                        "droneCharges" => XElement.Load(droneChargesPath),
-                        "customers" => XElement.Load(customersPath),
-                        "config" => XElement.Load(configPath),
-                        _ => throw new InvalidDataException()
-                };
-            }
-            catch (FileNotFoundException e)
-            {
-                return Create(e.FileName);
-            }
+                "drones" => XElement.Load(dronesPath),
+                "packages" => XElement.Load(packagesPath),
+                "stations" => XElement.Load(stationsPath),
+                "employees" => XElement.Load(employeesPath),
+                "droneCharges" => XElement.Load(droneChargesPath),
+                "customers" => XElement.Load(customersPath),
+                "config" => XElement.Load(configPath),
+                _ => throw new InvalidDataException()
+            };
         }
 
 
@@ -226,7 +216,7 @@ namespace DAL
                     droneChargesRoot.Save(droneChargesPath);
                     break;
                 case "customers":
-                    droneChargesRoot.Save(droneChargesPath);
+                    customersRoot.Save(customersPath);
                     break;
                 case "config":
                     configRoot.Save(configPath);
@@ -246,11 +236,19 @@ namespace DAL
             var xmlFile = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
                 new XElement("list", ""));
-            var name = Path.GetFileNameWithoutExtension(path);
-
             xmlFile.Save(path);
             return xmlFile.Element("list");
         }
+
+        /* private XElement RandomlyPopulateList(String choice, XElement list) */
+        /* { */
+        /*     Random rand = new(); */
+        /*     switch (choice) */
+        /*     { */
+        /*         case "drones": */
+        /*             break; */
+        /*     } */
+        /* } */
 
 
         private Drone XElementToDroneList()
@@ -298,7 +296,6 @@ namespace DAL
                 Double.Parse(powerConsumption.Element("midWeight").Value),
                 Double.Parse(powerConsumption.Element("heavyWeight").Value),
                 Double.Parse(powerConsumption.Element("chargingRate").Value)};
-            System.Console.WriteLine("Parsed power consumption");
             return ret;
         }
 

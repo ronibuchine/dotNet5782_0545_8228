@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DALFacade\DALFacade.csproj" />
+    <ProjectReference Include="..\DALUtils\DALUtils.csproj" />
   </ItemGroup>
 
 </Project>

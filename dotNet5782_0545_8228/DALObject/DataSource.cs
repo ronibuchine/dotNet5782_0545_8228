@@ -9,7 +9,7 @@ namespace DAL
     {
         // TODO make these numbers bigger... and better
         internal const int MIN_DRONES = 5;
-        internal const int MIN_DRONE_STATIONS = 5;
+        internal const int MIN_STATIONS = 5;
         internal const int MIN_CUSTOMERS = 5;
         internal const int MIN_PACKAGES = 5;
         internal const int MIN_EMPLOYEES = 1;
@@ -50,7 +50,7 @@ namespace DAL
             // employee accounts must be initialized first to recieve ID 1
             InitializeList<Employee>(MIN_EMPLOYEES, MIN_EMPLOYEES, IdalDoType.EMPLOYEE, employees);
             InitializeList<Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE, drones);
-            InitializeList<Station>(MIN_DRONE_STATIONS, MAX_STATIONS, IdalDoType.STATION, stations);
+            InitializeList<Station>(MIN_STATIONS, MAX_STATIONS, IdalDoType.STATION, stations);
             InitializeList<Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER, customers);
             InitializeList<Package>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.PACKAGE, packages);
         }

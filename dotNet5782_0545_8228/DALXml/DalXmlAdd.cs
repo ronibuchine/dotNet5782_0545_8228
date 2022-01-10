@@ -95,9 +95,9 @@ namespace DAL
 
         private XElement DroneChargeToXElement(DroneCharge droneCharge)
         {
-            return new XElement("dronCharge",
-                    new XElement("DroneId", droneCharge.DroneId),
-                    new XElement("StationId", droneCharge.StationId));
+            return new XElement("droneCharge",
+                    new XElement("DroneId", droneCharge.droneId),
+                    new XElement("StationId", droneCharge.stationId));
         }
 
         private XElement EmployeeToXElement(Employee employee)
@@ -105,7 +105,7 @@ namespace DAL
             return new XElement("employee",
                     new XElement("ID", employee.ID),
                     new XElement("IsActive", employee.IsActive),
-                    new XElement("name", employee.password));
+                    new XElement("password", employee.password));
         }
 
         private XElement CustomerToXElement(Customer customer)

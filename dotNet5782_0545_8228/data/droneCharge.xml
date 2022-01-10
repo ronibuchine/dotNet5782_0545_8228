@@ -1,2 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<list></list>
+<list>
+  <droneCharge>
+    <DroneId>1</DroneId>
+    <StationId>2</StationId>
+  </droneCharge>
+</list>
