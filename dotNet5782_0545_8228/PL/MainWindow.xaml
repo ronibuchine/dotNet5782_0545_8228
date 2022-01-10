@@ -7,29 +7,33 @@
         mc:Ignorable="d"
         Title="Xperience Drone Solutions" Height="640" Width="800"
         SizeToContent="Height"
-        Background="Transparent">
+        Background="Transparent" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
     <Window.Resources>
 
     </Window.Resources>
-    <Grid Opacity="0.99" Cursor="Arrow" Background="{StaticResource ButtonBrush}" >
+
+    <Grid Opacity="0.99" Cursor="Arrow" Background="{StaticResource WindowBrush}" >
 
 
         <Button x:Name="ShowDronesButton" 
-                Content="Login" 
-                HorizontalAlignment="Center" Margin="0,250,0,0" 
-                VerticalAlignment="Center" Click="ShowDronesButton_Click"
-                Height="39" Width="214"
-                FontSize="18"
-                FontFamily="Tw Cen MT"
-                Background="{StaticResource ButtonBrush}"/>
+                    Content="Login" 
+                    HorizontalAlignment="Center" Margin="0,441,0,0" 
+                    VerticalAlignment="Top" Click="ShowDronesButton_Click"
+                    Height="39" Width="214"
+                    FontSize="18"
+                    FontFamily="Tw Cen MT"
+                    Background="{StaticResource ButtonBrush}"/>
 
         <Image Name="XDS" HorizontalAlignment="Center" Height="179" Margin="0,-200,0,0" VerticalAlignment="Center" Width="240" Source="/images/XDS.png"/>
-        <TextBox Name="Username" Text="Enter Username"  HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="214" Height="20"/>
-        <TextBox Name="Password" Text="Enter Password" HorizontalAlignment="Center" Margin="0,150,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="214" Height="20"  />
+        <TextBlock Text="Enter User ID" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="291,321,0,0" FontStyle="Italic"/>
+        <TextBox Name="Username"  HorizontalAlignment="Center" Margin="0,344,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214" Height="20"/>
+        <TextBlock Text="Enter Password" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="291,375,0,0" FontStyle="Italic"/>
+        <PasswordBox Name="Password" PasswordChar="•" HorizontalAlignment="Center" Margin="0,400,0,0"   VerticalAlignment="Top" Width="214" Height="20"  />
         <Button Name="NewUser" Content="Create a New Account" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="131" Background="{StaticResource ButtonBrush}" Click="NewUser_Click"/>
         <Image Name="Drone" Margin="346,69,346,449" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/images/drone-x.png"/>
         <RadioButton Name="IsCustomer" Content="Customer User" HorizontalAlignment="Center" Margin="120,-20,0,0" VerticalAlignment="Center"/>
         <RadioButton Name="IsBusiness" Content="Business User" HorizontalAlignment="Center" Margin="-120,-20,0,0" VerticalAlignment="Center" IsChecked="True"/>
-       
+
     </Grid>
+
 </Window>

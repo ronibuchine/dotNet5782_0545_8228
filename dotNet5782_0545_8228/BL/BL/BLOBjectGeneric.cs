@@ -140,6 +140,7 @@ namespace BL
                 }
                 
             }
+            
         }
 
         /// <summary>
@@ -150,7 +151,7 @@ namespace BL
         {
             // for each drone charge record that data in station.chargingDrones
             foreach (var droneCharge in dal.GetAllCharges())
-                stations.First(s => s.ID == droneCharge.StationId).chargingDrones.Append(drones.First(d => d.ID == droneCharge.DroneId));
+                stations.First(s => s.ID == droneCharge.stationId).chargingDrones.Append(drones.First(d => d.ID == droneCharge.droneId));
         }
 
         /// <summary>

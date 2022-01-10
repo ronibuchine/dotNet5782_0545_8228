@@ -35,7 +35,7 @@ namespace BL
         public void DeleteStation(int ID)
         {
             if (dal.GetAllCharges()
-                    .Where(s => s.StationId == ID)
+                    .Where(s => s.stationId == ID)
                     .Any())
                 throw new OperationNotPossibleException("The station currently has drones charging at it");
             dal.DeleteStation(ID);

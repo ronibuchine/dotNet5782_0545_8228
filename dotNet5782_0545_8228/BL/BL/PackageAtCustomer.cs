@@ -49,7 +49,7 @@ namespace BL
         public override string ToString()
         {
             return String.Format("ID = {0}, Weight = {1}, Priority = {2}, Package Status = {3}, Other Party = {4}",
-                ID, weight, priority, status, senderReceiver.ToString());
+                ID, weight, priority, status, UTIL.PrintDebug.ToStringOrNull(senderReceiver));
         }
     }
 }

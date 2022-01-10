@@ -22,14 +22,16 @@ namespace BL
             this.receiverName = package.receiver.name;
             this.weightCategory = package.weightCategory;
             this.priority = package.priority;
-            if (package.delivered != null)
-                this.status = PackageStatuses.delivered;
-            if (package.pickedUp != null)
-                this.status = PackageStatuses.pickedUp;
+
+            // there is a smarter way to do this. there must be.
+            if (package.requested != null)
+                this.status = PackageStatuses.requested;
             if (package.scheduled != null)
                 this.status = PackageStatuses.scheduled;
-            else
-                this.status = PackageStatuses.requested;
+            if (package.pickedUp != null)
+                this.status = PackageStatuses.pickedUp;
+            if (package.delivered != null)
+                this.status = PackageStatuses.delivered;
         }
 
         public override string ToString()

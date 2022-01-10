@@ -50,7 +50,7 @@ namespace BL_TestSuite
             IBL.IBLInterface bl = new BL.BLOBject(null);
             for (int i = 0; i < 5; i++)
             {
-                bl.AddCustomer($"name_{i}", $"000000000{i}", new Location(i + 1, i + 1));
+                bl.AddCustomer($"name_{i}", $"000000000{i}", new Location(i + 1, i + 1), 123);
             }
             IEnumerable<CustomerToList> list = bl.GetCustomerList();
             int j = 0;
@@ -65,8 +65,8 @@ namespace BL_TestSuite
         public void GetPackageList()
         {
             IBL.IBLInterface bl = new BL.BLOBject(null);
-            Customer sender = bl.AddCustomer("roni", "0000000000", new Location(1, 1));
-            Customer receiver = bl.AddCustomer("eli", "1111111111", new Location(2, 2));
+            Customer sender = bl.AddCustomer("roni", "0000000000", new Location(1, 1), 123);
+            Customer receiver = bl.AddCustomer("eli", "1111111111", new Location(2, 2), 13);
             List<int> idList = new(5);
 
             for (int i = 0; i < 5; i++)
@@ -88,9 +88,9 @@ namespace BL_TestSuite
             IBL.IBLInterface bl = new BL.BLOBject(null);
             Station station = bl.AddStation("name", new(1, 1), 5);
             Drone drone = bl.AddDrone("model", WeightCategories.heavy, station.ID);
-            bl.ReleaseDroneFromCharge(drone.ID, 1);
-            Customer roni = bl.AddCustomer("roni", "00000000", new(1, 1));
-            Customer eli = bl.AddCustomer("eli", "00000000", new Location(2, 2));
+            bl.ReleaseDroneFromCharge(drone.ID);
+            Customer roni = bl.AddCustomer("roni", "00000000", new(1, 1), 123);
+            Customer eli = bl.AddCustomer("eli", "00000000", new Location(2, 2), 13);
             Package package1 = bl.AddPackage(roni.ID, eli.ID, WeightCategories.heavy, Priorities.emergency);
             bl.AssignPackageToDrone(drone.ID);
             Package package2 = bl.AddPackage(roni.ID, eli.ID, WeightCategories.heavy, Priorities.emergency);

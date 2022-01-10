@@ -45,11 +45,11 @@ namespace BL
         }
 
      
-        public Customer AddCustomer(string name, string phone, Location location, string password = null)
+        public Customer AddCustomer(string name, string phone, Location location, int ID, string password = null)
         {
             try
             {
-                Customer customer = new Customer(name, phone, location);
+                Customer customer = new Customer(ID, name, phone, location);
                 dal.AddCustomer(new DO.Customer(customer.ID, name, phone, location.longitude, location.latitude, password));
                 return customer;
             }

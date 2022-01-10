@@ -17,14 +17,14 @@ namespace BL_TestSuite
             Assert.Throws<InvalidBlObjectException>(() => bl.GetDrone(drone.ID));
 
             drone = bl.AddDrone("m1", WeightCategories.heavy, stationID);
-            bl.ReleaseDroneFromCharge(drone.ID, 1);
+            bl.ReleaseDroneFromCharge(drone.ID);
             bl.DeleteDrone(drone.ID);
             Assert.Throws<InvalidBlObjectException>(() => bl.GetDrone(drone.ID));
 
             drone = bl.AddDrone("m1", WeightCategories.heavy, stationID);
-            bl.ReleaseDroneFromCharge(drone.ID, 1);
-            int senderID = bl.AddCustomer("name1", "123", new Location(1, 1)).ID;
-            int receiverID = bl.AddCustomer("name2", "124", new Location(2, 2)).ID;
+            bl.ReleaseDroneFromCharge(drone.ID);
+            int senderID = bl.AddCustomer("name1", "123", new Location(1, 1), 123).ID;
+            int receiverID = bl.AddCustomer("name2", "124", new Location(2, 2), 13).ID;
             Package package = bl.AddPackage(senderID, receiverID, WeightCategories.light, Priorities.fast);
             bl.AssignPackageToDrone(drone.ID);
             Assert.Throws<OperationNotPossibleException>(() => bl.DeleteDrone(drone.ID));
@@ -40,16 +40,16 @@ namespace BL_TestSuite
         {
             IBL.IBLInterface bl = new BL.BLOBject(null);
             int stationID = bl.AddStation("name", new Location(1, 1), 5).ID;
-            int senderID = bl.AddCustomer("name1", "123", new Location(1, 1)).ID;
-            int receiverID = bl.AddCustomer("name2", "124", new Location(2, 2)).ID;
+            int senderID = bl.AddCustomer("name1", "123", new Location(1, 1), 123).ID;
+            int receiverID = bl.AddCustomer("name2", "124", new Location(2, 2), 12).ID;
             Drone drone = bl.AddDrone("m1", WeightCategories.heavy, stationID);
 
             bl.DeleteCustomer(senderID);
             Assert.Throws<InvalidBlObjectException>(() => bl.GetCustomer(senderID));
 
-            senderID = bl.AddCustomer("name1", "123", new Location(1, 1)).ID;
+            senderID = bl.AddCustomer("name1", "123", new Location(1, 1), 13).ID;
             int packageID = bl.AddPackage(senderID, receiverID, WeightCategories.heavy, Priorities.emergency).ID;
-            bl.ReleaseDroneFromCharge(drone.ID, 1);
+            bl.ReleaseDroneFromCharge(drone.ID);
             bl.AssignPackageToDrone(drone.ID);
             Assert.Throws<OperationNotPossibleException>(() => bl.DeleteCustomer(senderID));
             Assert.Throws<OperationNotPossibleException>(() => bl.DeleteCustomer(receiverID));
@@ -70,8 +70,8 @@ namespace BL_TestSuite
         {
             IBL.IBLInterface bl = new BL.BLOBject(null);
             int stationID = bl.AddStation("name", new Location(1, 1), 5).ID;
-            int senderID = bl.AddCustomer("name1", "123", new Location(1, 1)).ID;
-            int receiverID = bl.AddCustomer("name2", "124", new Location(2, 2)).ID;
+            int senderID = bl.AddCustomer("name1", "123", new Location(1, 1), 123).ID;
+            int receiverID = bl.AddCustomer("name2", "124", new Location(2, 2), 13).ID;
             Drone drone = bl.AddDrone("m1", WeightCategories.heavy, stationID);
             int packageID = bl.AddPackage(senderID, receiverID, WeightCategories.heavy, Priorities.emergency).ID;
 
@@ -79,7 +79,7 @@ namespace BL_TestSuite
             Assert.Throws<InvalidBlObjectException>(() => bl.GetPackage(senderID));
 
             packageID = bl.AddPackage(senderID, receiverID, WeightCategories.heavy, Priorities.emergency).ID;
-            bl.ReleaseDroneFromCharge(drone.ID, 1);
+            bl.ReleaseDroneFromCharge(drone.ID);
             bl.AssignPackageToDrone(drone.ID);
             Assert.Throws<OperationNotPossibleException>(() => bl.DeletePackage(packageID));
 

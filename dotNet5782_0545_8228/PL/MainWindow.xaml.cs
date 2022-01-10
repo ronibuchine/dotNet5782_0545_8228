@@ -45,14 +45,18 @@ namespace PL
             {
                 ID = 0;                
             }
-            string password = Password.Text;
+            string password = Password.Password;
             if (IsBusiness.IsChecked == true && bl.VerifyEmployeeCredentials(ID, password))
             {
-                new DroneListWindow(bl).Show();
+                new ListWindow(bl).Show();
+                Username.Text = "";
+                Password.Password = "";
             }
             else if (IsCustomer.IsChecked == true && bl.VerifyCustomerCredentials(ID, password)) 
             {
-                new DroneListWindow(bl).Show();
+                new ListWindow(bl).Show();
+                Username.Text = "";
+                Password.Password = "";
             }
             else
             {
@@ -65,5 +69,7 @@ namespace PL
         {
             new CreateAccountWindow(bl).Show();
         }
+
+        
     }
 }

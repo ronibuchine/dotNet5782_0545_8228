@@ -64,8 +64,12 @@ namespace DAL
         /// <param name="type">An instance of IdalDoType</param>
         public static DalEntity Insert(IdalDoType type)
         {
+
+            List<int> ids = new();
+            packages.ForEach(p => ids.Add(p.droneId));
+            List<Drone> unassignedDrones = drones.FindAll(d => !ids.Contains(d.ID));
             switch (type)
-            {
+            {               
                 case IdalDoType.DRONE:
                     return new Drone(nextID++);
                 case IdalDoType.STATION:
@@ -77,7 +81,7 @@ namespace DAL
                     int randY = RandomExceptX(customers.Count, randX, rand);
                     int senderID = customers[randX].ID;
                     int recieverID = customers[randY].ID;
-                    int droneID = drones[rand.Next(drones.Count)].ID;
+                    int droneID = rand.Next(2) == 0 ? 0 : unassignedDrones[rand.Next(unassignedDrones.Count-1)].ID;
                     return new Package(nextID++, senderID, recieverID, droneID);
                 case IdalDoType.EMPLOYEE:
                     return new Employee(nextID++, ADMIN_PASSWORD);

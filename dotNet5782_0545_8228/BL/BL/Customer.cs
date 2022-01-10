@@ -19,9 +19,19 @@ namespace BL
 
         public Customer(string name, string phone, Location location)
         {
+           
             this.name = name;
             this.phone = phone;
             this.currentLocation = location;
+        }
+
+        public Customer(int ID, string name, string phone, Location location)
+        {
+            this.ID = ID;
+            this.name = name;
+            this.phone = phone;
+            this.currentLocation = location;
+
         }
 
         public Customer(DO.Customer customer) : base(null)
