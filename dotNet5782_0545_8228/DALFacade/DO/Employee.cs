@@ -10,7 +10,7 @@ namespace DO
             this.password = password;
         }
 
-        private Employee() : base() {}
+        public Employee() : base() {}
 
         public override Employee Clone() => this.MemberwiseClone() as Employee;
 

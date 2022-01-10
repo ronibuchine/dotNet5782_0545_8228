@@ -11,6 +11,7 @@ namespace DALAPI
     {
         public static IDAL GetDal()
         {
+            /* System.Console.WriteLine(Directory.GetCurrentDirectory()); */
             string dalType = DalConfig.DalName;
             string dalPkg = DalConfig.DalPackages[dalType];
 
@@ -28,15 +29,16 @@ namespace DALAPI
             Assembly dalAssembly;
             try
             {
+                /* System.Console.WriteLine(path); */
+                /* System.Console.WriteLine(dalPkg); */
                 dalAssembly = Assembly.LoadFile(path + $"\\{dalPkg}\\bin\\Debug\\net5.0\\" + $"{dalPkg}.dll");
-                //Assembly.Load(dalPkg + ".dll"); 
             }
             catch (Exception)
             {
-                throw new DalConfigException("Failed to load the dal-config.xml file"); 
+                throw new DalConfigException("Failed to load the correct dll file"); 
             }
 
-            Type type = dalAssembly.GetType($"DAL.DalObject");
+            Type type = dalAssembly.GetType($"DAL.{dalPkg}");
 
             if (type == null) 
                 throw new DalConfigException($"Class {dalPkg} was not found in the {dalPkg}.dll");

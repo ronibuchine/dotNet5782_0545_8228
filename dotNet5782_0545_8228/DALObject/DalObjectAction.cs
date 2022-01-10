@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DAL
 {
-    public partial class DalObject : IDAL
+    public partial class DALObject : IDAL
     {
         public bool VerifyEmployeeCredentials(int ID, string password)
         {

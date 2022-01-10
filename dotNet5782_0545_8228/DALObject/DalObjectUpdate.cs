@@ -4,7 +4,7 @@ using System;
 
 namespace DAL
 {
-    public partial class DalObject : IDAL
+    public partial class DALObject : IDAL
     {
         public void UpdateDrone(int droneID, string newModel)
         {

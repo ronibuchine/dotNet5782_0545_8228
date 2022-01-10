@@ -16,7 +16,7 @@ namespace DO
                 string name,
                 string phone,
                 double longitude,
-                Double latitude,
+                double latitude,
                 string password)
             : base(ID)
         {
@@ -37,7 +37,7 @@ namespace DO
             password = null;
         }
 
-        private Customer() : base() {}
+        public Customer() : base() {}
 
         public override Customer Clone() => this.MemberwiseClone() as Customer;
 

@@ -14,7 +14,7 @@ namespace DO
             this.StationId = StationId;
         }
 
-        private DroneCharge() : base() {}
+        public DroneCharge() : base() {}
 
         public DroneCharge Clone() => this.MemberwiseClone() as DroneCharge;
 

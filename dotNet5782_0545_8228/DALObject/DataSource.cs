@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using static DAL.DalObject;
+using static DAL.DALObject;
 using DO;
 
 namespace DAL

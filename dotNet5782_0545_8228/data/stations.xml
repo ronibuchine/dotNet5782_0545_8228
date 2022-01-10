@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<list>
+  <station>
+    <ID>1</ID>
+    <IsActive>true</IsActive>
+    <name>name</name>
+    <chargeSlots>5</chargeSlots>
+    <longitude>1</longitude>
+    <latitude>1</latitude>
+  </station>
+</list>

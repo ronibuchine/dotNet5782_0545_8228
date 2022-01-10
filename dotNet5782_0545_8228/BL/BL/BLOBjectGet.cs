@@ -72,7 +72,7 @@ namespace BL
             {
                 return dal.GetEmployee(ID) != null;
             }
-            catch (DO.InvalidDalObjectException e) { return false; }
+            catch (DO.InvalidDalObjectException) { return false; }
         }
 
         public IEnumerable<StationToList> GetStationList()

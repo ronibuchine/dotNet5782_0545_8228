@@ -54,7 +54,7 @@ namespace DO
             this.delivered = null;
         }
 
-        private Package() : base() {}
+        public Package() : base() {}
 
         public override Package Clone() => this.MemberwiseClone() as Package;
 
