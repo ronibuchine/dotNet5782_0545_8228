@@ -54,7 +54,8 @@ namespace PL
             }
             else if (IsCustomer.IsChecked == true && bl.VerifyCustomerCredentials(ID, password)) 
             {
-                new ListWindow(bl).Show();
+                Customer customer = new(bl.GetCustomerList().Where(c => c.ID == int.Parse(Username.Text)).FirstOrDefault());
+                new CustomerViewWindow(bl, customer).Show();
                 Username.Text = "";
                 Password.Password = "";
             }

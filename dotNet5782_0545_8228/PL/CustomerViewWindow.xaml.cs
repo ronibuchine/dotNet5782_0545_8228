@@ -31,6 +31,8 @@ namespace PL
             InitializeComponent();
             this.bl = bl;
             this.customers = customers;
+            AddBorder.Visibility = Visibility.Visible;
+            AddCustomerImage.Visibility = Visibility.Visible;
 
         }
 
@@ -46,38 +48,34 @@ namespace PL
             DataContext = this.customer;
             SentPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesFromCustomer;
             ReceivedPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesToCustomer;
+            CustomerInfoBorder.Visibility = Visibility.Visible;
+            SentPackageList.Visibility = Visibility.Visible;
+            ReceivedPackageList.Visibility = Visibility.Visible;
+            OutgoingHeader.Visibility = Visibility.Visible;
+            IncomingHeader.Visibility = Visibility.Visible;
+            CustomerImage.Visibility = Visibility.Visible;
+            AddCustomerPackage.Visibility = Visibility.Visible;
 
-        }
-
+        } 
         
-
-        private void AddDrone_Click(object sender, RoutedEventArgs e)
+        internal CustomerViewWindow(IBLInterface bl, Customer customer)
         {
-            string model = ModelEntry.Text;
-            string weight = WeightSelection.Text;
-            WeightCategories trueWeight;
-            if (weight == "light")
-                trueWeight = WeightCategories.light;
-            else if (weight == "medium")
-                trueWeight = WeightCategories.medium;
-            else
-                trueWeight = WeightCategories.heavy;
-            int stationID = Int32.Parse(StationSelection.Text);
-            try
-            {
-                bl.AddDrone(model, trueWeight, stationID);
-                if (MessageBox.Show("Drone Added Successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK)
-                {
-                    ListWindow window = Application.Current.Windows.OfType<ListWindow>().FirstOrDefault();
-                    customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
-                    Close();
-                }
-            }
-            catch (InvalidBlObjectException except)
-            {
-                if (MessageBox.Show(except.Message, "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
-            }
+            InitializeComponent();
+            this.bl = bl;
+            this.customer = customer;
+            DataContext = this.customer;
+            SentPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesFromCustomer;
+            ReceivedPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesToCustomer;
+            CustomerInfoBorder.Visibility = Visibility.Visible;
+            SentPackageList.Visibility = Visibility.Visible;
+            ReceivedPackageList.Visibility = Visibility.Visible;
+            OutgoingHeader.Visibility = Visibility.Visible;
+            IncomingHeader.Visibility = Visibility.Visible;
+            CustomerImage.Visibility = Visibility.Visible;
+            AddCustomerPackage.Visibility = Visibility.Visible;
         }
+
+     
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -116,6 +114,28 @@ namespace PL
         {
             PackageAtCustomer package = (PackageAtCustomer)ReceivedPackageList.SelectedItem;
             new PackageViewWindow(bl, package, "received", customer.ID).Show();
+        }
+
+        private void AddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.AddCustomer(NameEntry.Text,
+                  PhoneEntry.Text,
+                  new Location(double.Parse(LatitudeEntry.Text),
+                  double.Parse(LongitudeEntry.Text)),
+                  int.Parse(IDEntry.Text));
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+           
+        }
+
+        private void AddCustomerPackage_Click(object sender, RoutedEventArgs e)
+        {
+            new PackageViewWindow(bl, customer).Show();
         }
     }
 }

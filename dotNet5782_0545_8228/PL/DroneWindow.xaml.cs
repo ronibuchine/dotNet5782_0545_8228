@@ -171,40 +171,18 @@ namespace PL
 
         private void ReleaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (drone.status == DroneStatuses.maintenance)
-            //{
-            //    ChargingReleaseButton.Visibility = Visibility.Visible;
-            //    ChargingAmount.Visibility = Visibility.Visible;
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Drone is not currently charging.");
-            //}
+            try
+            {
+                bl.ReleaseDroneFromCharge(drone.ID);
+                Synchronize();
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
 
-        private void ChargingReleaseButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            //try
-            //{
-            //    bl.ReleaseDroneFromCharge(drone.ID, Int32.Parse(ChargingAmount.Text));
-            //    Synchronize();
-            //    MessageBox.Show($"Drone has charged for {ChargingAmount.Text} hours.");
-
-            //}
-            //catch (InvalidBlObjectException i)
-            //{
-            //    MessageBox.Show(i.Message);
-            //}
-            //catch (InvalidOperationException i)
-            //{
-            //    MessageBox.Show(i.Message);
-            //}
-            //catch (Exception except)
-            //{
-            //    MessageBox.Show(except.Message);
-            //}
-        }
+       
 
         private void CollectPackageButton_Click(object sender, RoutedEventArgs e)
         {
@@ -250,9 +228,16 @@ namespace PL
             }
         }
 
-        private void DeletePackage_Click(object sender, RoutedEventArgs e)
+        private void DeleteDrone_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                bl.DeleteDrone(drone.ID);
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
     }
 }
