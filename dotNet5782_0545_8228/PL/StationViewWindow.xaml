@@ -1,0 +1,81 @@
+﻿<Window x:Class="PL.StationViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="StationViewWindow" Height="640" Width="800"
+        Background="{StaticResource WindowBrush}" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="300*"/>
+        </Grid.ColumnDefinitions>
+        <Image Name="StationBWImage" Visibility="Hidden" Source="/images/charging-station-bw.png" VerticalAlignment="Top" Width="150" Margin="0,50,0,0" Grid.ColumnSpan="2"/>
+        <Border Name="AddBorder" Visibility="Hidden" VerticalAlignment="Bottom" Margin="0,0,0,100" CornerRadius="10" Background="{StaticResource ButtonBrush}" Height="300" Width="250"  Grid.ColumnSpan="2">
+            <StackPanel>
+                <TextBlock Name="Name" Text="Enter the Station Name" FontStyle="Italic" Margin="30,10,0,0"/>
+                <TextBox Name="NameEntry" Width="180" Height="25" Margin="-10,0,0,0"/>
+                <TextBlock  Name="Latitude" Text="Latitude"  FontStyle="Italic" Margin="30,10,0,0" />
+                <TextBox Name="LatitudeEntry" Width="180" Height="25" Margin="-10,0,0,0"/>
+                <TextBlock Name="Longitude" Text="Longitude"  FontStyle="Italic" Margin="30,10,0,0"/>
+                <TextBox Name="LongitudeEntry" Width="180" Height="25" Margin="-10,0,0,0"/>
+                <TextBlock Name="Slots" Text="Number of Charge Slots"  FontStyle="Italic" Margin="30,10,0,0"/>
+                <TextBox Name="SlotsEntry" Width="180" Height="25" Margin="-10,0,0,0"/>
+                <Button Name="AddStation" 
+                    Content="+ Add Station" Width="136" 
+                    Height="20" Margin="0,30,0,0"
+                    FontFamily="Tw Cen MT" FontSize="12" Click="AddStation_Click"
+                    Visibility="Visible" Background="{StaticResource AddButtonBrush}"/>
+            </StackPanel>
+        </Border>
+        <Button x:Name="Cancel" 
+                Content="Cancel" Visibility="Visible"
+                HorizontalAlignment="Left"  
+                VerticalAlignment="Bottom" Width="60" Height="20" 
+                Click="Cancel_Click"  Margin="10,0,0,10" 
+                FontFamily="Tw Cen MT" FontSize="14" FontStretch="Expanded"
+                Background="{StaticResource ButtonBrush}"/>
+
+
+
+
+        <StackPanel Name="StationInfo" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="250" Margin="0,262,0,0" Height="230"  Visibility="Hidden">
+            <Label Name="IDBlock" Background="LightGray" Content="{Binding Path=ID, Mode=TwoWay, StringFormat=ID: {0:#}}" Width="150" Height="20" Margin="0,20,0,0"/>
+            <TextBox Name="NameBlock" Background="LightGray" Text="{Binding Path=name, Mode=TwoWay}" Width="150" Margin="0,20,0,0"/>
+            <TextBlock Name="AvailableSlotsBlock" Background="LightGray" Text="{Binding Path=availableChargeSlots, Mode=TwoWay}" Margin="0,20,0,0" Width="150"/>
+
+            <TextBlock Name="LatitudeBlock" Background="LightGray" Text="{Binding Path=latitude, Mode=TwoWay}" Width="150" Margin="0,20,0,0"/>
+            <TextBlock Name="LongitudeBlock" Background="LightGray" Text="{Binding Path=longitude, Mode=TwoWay}" Width="150" Margin="0,20,0,0"/>
+            <Button Name="DeleteStationButton"
+                Width="120"
+                Background="{StaticResource CancelButtonBrush}"
+                Click="DeleteStationButton_Click" 
+                Visibility="Visible" 
+                Content="✕ Delete Station"
+                FontFamily="Tw Cen MT" Foreground="LightGray" FontSize="10" Margin="0,20,0,0"
+                Height="19"/>
+        </StackPanel>
+        <ListView Name="ChargingDroneList" Visibility="Hidden" Height="200" Width="250" Grid.Column="1" Margin="0,0,0,0" ItemsSource="{Binding}" MouseDoubleClick="ChargingDroneList_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Drone ID" DisplayMemberBinding="{Binding Path=ID}" Width="75"/>
+                    <GridViewColumn Header="Battery Level" DisplayMemberBinding="{Binding Path=battery}" Width="150"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Name="LabelGrid"  Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="266" Width="200" Margin="80,0,0,120" Visibility="Hidden">
+            <StackPanel Margin="-15,0,35,0">
+               
+                <TextBlock Name="SID" Text="Station ID" FontStyle="Italic" Margin="0,30,10,0" />
+                <TextBlock Name="IName" Text="Station Name" FontStyle="Italic" Margin="0,20,0,0"/>
+                <TextBlock Name="Chargers" Text="Available Chargers" FontStyle="Italic" Margin="0,20,0,0" />
+                <TextBlock Name="ILatitude" Text="Latitude" FontStyle="Italic"   Margin="0,20,0,0"/>
+                <TextBlock Name="ILongitude" Text="Longitude" FontStyle="Italic"   Margin="0,20,0,0"/>
+            </StackPanel>
+        </Grid>
+        <Image Name="StationImage" Source="/images/charging-station.png" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Center" Width="120" Margin="0,80,0,0"/>
+        <TextBlock Name="Drones" Grid.Column="1" Text="Charging Drones" Margin="0,0,160,230" VerticalAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic" Visibility="Hidden" />
+    </Grid>
+</Window>

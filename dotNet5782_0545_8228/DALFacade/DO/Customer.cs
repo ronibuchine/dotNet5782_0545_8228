@@ -9,19 +9,22 @@ namespace DO
         public string phone { get; set; }
         public double longitude { get; set; }
         public double latitude { get; set; }
+        public string password { get; set; } = null;
 
         public Customer(
                 int ID,
                 string name,
                 string phone,
                 double longitude,
-                Double latitude) 
+                Double latitude,
+                string password)
             : base(ID)
         {
             this.name = name;
             this.phone = phone;
             this.longitude = longitude;
             this.latitude = latitude;
+            this.password = password;
         }
 
         public Customer(int ID) : base(ID)
@@ -31,6 +34,7 @@ namespace DO
             this.phone = (ID * rand.Next(1000000,9999999)).ToString();
             this.longitude = (rand.NextDouble() * 360) - 180;
             this.latitude = (rand.NextDouble() * 180) - 90;
+            password = null;
         }
 
         public override Customer Clone() => this.MemberwiseClone() as Customer;

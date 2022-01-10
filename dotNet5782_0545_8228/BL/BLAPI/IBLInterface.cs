@@ -31,8 +31,10 @@ namespace IBL
         /// <param name="name"></param>
         /// <param name="phone"></param>
         /// <param name="location"></param>
+        /// <param name="ID"></param>
         /// <returns>A reference to the customer that was added.</returns>
-        public Customer AddCustomer(string name, string phone, Location location);
+        /// <param name="password"></param>
+        public Customer AddCustomer(string name, string phone, Location location, int ID, string password = null);
 
         /// <summary>
         /// API call which adds a new package to the system.
@@ -43,6 +45,9 @@ namespace IBL
         /// <param name="priority"></param>
         /// <returns>A reference to the package that was added.</returns>
         public Package AddPackage(int senderID, int receiverID, WeightCategories weight, Priorities priority);
+
+
+        public void AddEmployee(int ID, string password);
 
         /// <summary>
         /// Updates a drone entity with a new model name
@@ -87,13 +92,22 @@ namespace IBL
         /// <param name="phone"></param>
         public void UpdateCustomerPhone(int ID, String phone);
 
+
+        /// <summary>
+        /// Updates the customers password
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="password"></param>
+        public void UpdateCustomerPassword(int ID, string password);
+
         /// <summary>
         /// Updates both the name and phone number of a given customer
         /// </summary>
         /// <param name="ID"></param>
         /// <param name="name"></param>
         /// <param name="phone"></param>
-        public void UpdateCustomer(int ID, string name, String phone);
+        /// <param name="password">defaults to null if not passed</param>
+        public void UpdateCustomer(int ID, string name, string phone, string password = null);
 
 
         /// <summary>
@@ -104,12 +118,11 @@ namespace IBL
         public void SendDroneToCharge(int droneID);
 
         /// <summary>
-        /// This API call will release a specified drone from charging. It is released after a certain amount of hours which is specified by the user of the system.
+        /// This API call will release a specified drone from charging. It is released after a certain amount of seconds which is specified by the user of the system.
         /// This call throws exceptions when the drone doesn't have the correct status, i.e. not in maintenance.
         /// </summary>
         /// <param name="droneID">the drone that is currently in charging to be released.</param>
-        /// <param name="hoursCharging">Number of hours the drone was charging for.</param>
-        public void ReleaseDroneFromCharge(int droneID, int hoursCharging);
+        public void ReleaseDroneFromCharge(int droneID);
 
         /// <summary>
         /// This API call will assign the best possible package to the drone that is supplied to the function call.
@@ -133,79 +146,166 @@ namespace IBL
         /// <param name="droneID">the drone to deliver the package</param>
         public void DeliverPackage(int droneID);
 
+        /// <summary>
+        /// This API call will verify if the employee inputted a valid ID and password
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="password"></param>
+        /// <returns>a boolean based on whether or not it is verified</returns>
+        public bool VerifyEmployeeCredentials(int ID, string password);
+
+        /// <summary>
+        /// This API call will verify if the customer inputted a valid ID and password
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="password"></param>
+        /// <returns>a boolean based on whether or not it is verified</returns>
+        public bool VerifyCustomerCredentials(int ID, string password);
+
 
         /// <summary>
         /// API call which retrieves a specified station entity.
         /// </summary>
         /// <param name="ID"></param>
-        /// <returns></returns>
+        /// <returns>a station</returns>
         public Station GetStation(int ID);
 
         /// <summary>
         /// API call which retrieves a specified drone entity.
         /// </summary>
         /// <param name="ID"></param>
-        /// <returns></returns>
+        /// <returns>a drone</returns>
         public Drone GetDrone(int ID);
 
         /// <summary>
         /// API call which gets the specified customer.
         /// </summary>
         /// <param name="ID"></param>
-        /// <returns></returns>
+        /// <returns> a customer</returns>
         public Customer GetCustomer(int ID);
 
         /// <summary>
         /// API call which retrieves a specified package via ID number
         /// </summary>
         /// <param name="ID"></param>
-        /// <returns></returns>
+        /// <returns>a package</returns>
         public Package GetPackage(int ID);
+
+        /// <summary>
+        /// API call which tells whether or not an employee exists in the system
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>a boolean value based on whether or not the employee exists</returns>
+        public bool GetEmployee(int ID);
 
 
         /// <summary>
         /// Retrieves all stations in ToList form.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All stations</returns>
         public IEnumerable<StationToList> GetStationList();
 
         /// <summary>
         /// Retrieves all drones in ToList form
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All drones</returns>
         public IEnumerable<DroneToList> GetDroneList();
 
         /// <summary>
         /// Retrieves all Customers in ToList form.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All customers</returns>
         public IEnumerable<CustomerToList> GetCustomerList();
 
         /// <summary>
         /// Retrieves all packages in ToList form
         /// </summary>
-        /// <returns></returns>
+        /// <returns> All packages</returns>
         public IEnumerable<PackageToList> GetPackageList();
 
         /// <summary>
         /// Retrieves all packages which aren't currently assigned to a Drone
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Packages that have not been assigned to drones</returns>
         public IEnumerable<Package> GetUnassignedPackages();
 
         /// <summary>
         /// Retrieves a list of all stations which are available
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Stations with available charge slots</returns>
         public IEnumerable<Station> GetAvailableStations();
 
         /// <summary>
         /// Retrieves a list of drones which fit some predicate function.
         /// </summary>
         /// <param name="pred"></param>
-        /// <returns></returns>
+        /// <returns>drones that match the given predicate</returns>
         public IEnumerable<DroneToList> GetSpecificDrones(Func<DroneToList, bool> pred);
 
+        ///<summary>
+        ///Delete a customer
+        ///</summary>
+        ///<param name="ID">
+        ///The ID of the customer to delete
+        ///</param>
+        ///<exception cref="OperationNotPossibleException">
+        ///If there is a package in the system that needs to be delivered to the customer
+        ///</exception>
+        ///<exception cref="InvalidBlObjectException">
+        ///If the customer does not exist in the system
+        ///</exception>
+        public void DeleteCustomer(int ID);
+
+        ///<summary>
+        ///Delete a drone
+        ///</summary>
+        ///<param name="ID">
+        ///The ID of the drone to delete
+        ///</param>
+        ///<exception cref="OperationNotPossibleException">
+        ///If the drone is in delivery status it cannot be deleted
+        ///</exception>
+        ///<exception cref="InvalidBlObjectException">
+        ///If the drone does not exist in the system
+        ///</exception>
+        public void DeleteDrone(int ID);
+
+        ///<summary>
+        ///Delete a package
+        ///</summary>
+        ///<param name="ID">
+        ///The ID of the drone to delete
+        ///</param>
+        ///<exception cref="OperationNotPossibleException">
+        ///The package can only be deleted if it has not be assigned yet, or if has already been delivered
+        ///</exception>
+        ///<exception cref="InvalidBlObjectException">
+        ///If the package does not exist in the system
+        ///</exception>
+        public void DeletePackage(int ID);
+
+        ///<summary>
+        ///Delete a package
+        ///</summary>
+        ///<remarks>
+        ///Be very careful when calling this.There may be drones that are counting on this station in the future and will be stranded if the station dissapears
+        ///</remarks>
+        ///<param name="ID">
+        ///The ID of the drone to delete
+        ///</param>
+        ///<exception cref="OperationNotPossibleException">
+        ///The station can only be deleted if there are no drones charging on it
+        ///</exception>
+        ///<exception cref="InvalidBlObjectException">
+        ///If the package does not exist in the system
+        ///</exception>
+        public void DeleteStation(int ID);
+
+        /// <summary>
+        /// This API call deactivates an employee account in the system
+        /// </summary>
+        /// <param name="ID"></param>
+        public void DeleteEmployee(int ID);
 
 
     }

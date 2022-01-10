@@ -30,7 +30,7 @@ namespace DAL
 
         public int GetNextID() => DataSource.nextID;
 
-        public enum IdalDoType { DRONE, STATION, CUSTOMER, PACKAGE };
+        public enum IdalDoType { DRONE, STATION, CUSTOMER, PACKAGE, EMPLOYEE };
 
         // Adding objects section
 
@@ -73,7 +73,7 @@ namespace DAL
             T ret = list.Find((t) => { return t.ID == ID && t.IsActive; });
             if (ret == null)
                 throw new InvalidDalObjectException("There was an issue retrieving the entity.");
-            return (T)ret;
+            return ret;
         }
 
         /// <summary>
@@ -94,8 +94,7 @@ namespace DAL
 
         private void AddDalItem<T>(
                 List<T> list,
-                T item,
-                IdalDoType type)
+                T item)
             where T : DalEntity
         {
             if (list.Count + 1 <= list.Capacity)

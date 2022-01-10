@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IBL;
 using BL;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
@@ -22,8 +23,9 @@ namespace PL
     public partial class DroneWindow : Window
     {
         IBLInterface bl;
-        DroneToList drone;
-        public DroneWindow(IBLInterface bl)
+        Drone drone;
+
+        internal DroneWindow(IBLInterface bl)
         {
             InitializeComponent();
             this.bl = bl;
@@ -33,6 +35,7 @@ namespace PL
             {
                 stationIds.Add(station.ID);
             }
+            AddGrid.Visibility = Visibility.Visible;
             StationSelection.ItemsSource = stationIds;
             ModelEntry.Visibility = Visibility.Visible;
             StationSelection.Visibility = Visibility.Visible;
@@ -43,22 +46,16 @@ namespace PL
         /// <summary>
         /// Drone Window ctor for actions
         /// </summary>
-        public DroneWindow(IBLInterface bl, DroneToList drone)
+        internal DroneWindow(IBLInterface bl, Drone drone)
         {
             InitializeComponent();
             this.bl = bl;
             this.drone = drone;
-            string packageString = drone.status == DroneStatuses.delivery ? drone.packageNumber.ToString() : "no assigned package";
-            DroneData.Visibility = Visibility.Visible;
-            DroneData.Text = $"What action would you like to perform on the drone?\n ID = {drone.ID}";
+            DataContext = this.drone;
+
+            TextEntries.Visibility = Visibility.Visible;            
             ButtonGrid.Visibility = Visibility.Visible;
             UpdateDroneButton.Visibility = Visibility.Visible;
-            CollectPackageButton.Visibility = Visibility.Visible;
-            DeliverPackageButton.Visibility = Visibility.Visible;
-            SendToChargeButton.Visibility = Visibility.Visible;
-            AssignPackageToDroneButton.Visibility = Visibility.Visible;
-            ReleaseDroneFromChargeButton.Visibility = Visibility.Visible;
-            DroneImage.Visibility = Visibility.Visible;
 
         }
 
@@ -79,15 +76,14 @@ namespace PL
                 bl.AddDrone(model, trueWeight, stationID);
                 if (MessageBox.Show("Drone Added Successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK)
                 {
-                    DroneListWindow window = Application.Current.Windows.OfType<DroneListWindow>().FirstOrDefault();
-                    window.DroneStatusSelector.SelectedItem = window.DroneWeightSelector.SelectedItem = "All Drones";
-                    window.DroneListView.ItemsSource = bl.GetDroneList();
+                    ListWindow window = Application.Current.Windows.OfType<ListWindow>().FirstOrDefault();
+                    //drones = new(bl.GetDroneList().Select(d => new Drone(d)));
                     Close();
                 }
             }
             catch (InvalidBlObjectException except)
             {
-                if (MessageBox.Show(except.Message, "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
+                MessageBox.Show(except.Message);
             }
         }
 
@@ -96,47 +92,45 @@ namespace PL
             Close();            
         }
 
-        private void RefreshAndClose()
-        {
-            DroneListWindow window = Application.Current.Windows.OfType<DroneListWindow>().FirstOrDefault();
-            window.DroneStatusSelector.SelectedItem = window.DroneWeightSelector.SelectedItem = "All Drones";
-            window.DroneListView.ItemsSource = bl.GetDroneList();
-            Close();
-        }
-
-      
-
         private void ModelUpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            if (UpdateDroneModelText.Text == "Enter Model")
+            try
             {
-                MessageBox.Show("Please enter a drone model.");
-                UpdateDroneModelText.Focus();
-                UpdateDroneModelText.FontWeight = FontWeights.Bold;
-                UpdateDroneModelText.Background = Brushes.Red;
+                if (UpdateDroneModelText.Text == "Enter Model" || UpdateDroneModelText.Text == "")
+                {
+                    MessageBox.Show("Please enter a drone model.");
+                    UpdateDroneModelText.Focus();
+                    UpdateDroneModelText.FontWeight = FontWeights.Bold;
+                    UpdateDroneModelText.Background = Brushes.Red;
+                }
+                else
+                {
+                    bl.UpdateDrone(drone.ID, UpdateDroneModelText.Text);
+                    Synchronize();
+                    MessageBox.Show("Drone Model Updated Successfully!");
+                }
             }
-            else
+            catch (Exception except)
             {
-                bl.UpdateDrone(drone.ID, UpdateDroneModelText.Text);
-                ModelUpdateButton.Visibility = Visibility.Hidden;
-                UpdateDroneModelText.Visibility = Visibility.Hidden;
-                if (MessageBox.Show("Drone Model Updated Successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK)
-                    RefreshAndClose();
-
+                MessageBox.Show(except.Message);
             }
+            
 
-        }
-      
-
-        private void ModelEntry_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ModelEntry.Text = "";
         }
 
         private void UpdateDroneButton_Click(object sender, RoutedEventArgs e)
         {
-            ModelUpdateButton.Visibility = Visibility.Visible;
+            UpdateDroneButton.Visibility = Visibility.Visible;
             UpdateDroneModelText.Visibility = Visibility.Visible;
+        }
+
+        private void Synchronize()
+        {
+            BL.Drone tempDrone = bl.GetDrone(drone.ID);
+            drone.status = tempDrone.status;
+            drone.location = tempDrone.currentLocation;
+            drone.battery = tempDrone.battery;
+            drone.packageNumber = tempDrone.packageInTransfer == null ? null : tempDrone.packageInTransfer.ID;   
         }
 
         private void SendToChargeButton_Click(object sender, RoutedEventArgs e)
@@ -144,8 +138,8 @@ namespace PL
             try
             {
                 bl.SendDroneToCharge(drone.ID);
-                if (MessageBox.Show("Drone is now charging -- status is set to maintenance.", "", MessageBoxButton.OK) == MessageBoxResult.OK)
-                    RefreshAndClose();
+                Synchronize();
+                MessageBox.Show("Drone is now charging -- status is set to maintenance.");
             }
             catch (InvalidBlObjectException i)
             {
@@ -166,8 +160,8 @@ namespace PL
             try
             {
                 bl.AssignPackageToDrone(drone.ID);
-                if (MessageBox.Show("Drone has now been assigned a package -- status set to delivery", "", MessageBoxButton.OK) == MessageBoxResult.OK)
-                    RefreshAndClose();
+                Synchronize();
+                MessageBox.Show("Drone has now been assigned a package -- status set to delivery");                
             }
             catch (InvalidBlObjectException i)
             {
@@ -185,39 +179,10 @@ namespace PL
 
         private void ReleaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (drone.status == DroneStatuses.maintenance)
-            {
-                ChargingReleaseButton.Visibility = Visibility.Visible;
-                ChargingAmount.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                MessageBox.Show("Drone is not currently charging.");
-            }
-        }
-
-        private void ChargingAmount_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ChargingAmount.Text = "";
-        }
-
-        private void ChargingReleaseButton_Click(object sender, RoutedEventArgs e)
-        {
-            
             try
             {
-                bl.ReleaseDroneFromCharge(drone.ID, Int32.Parse(ChargingAmount.Text));
-                if (MessageBox.Show($"Drone has charged for {ChargingAmount.Text} hours.", "", MessageBoxButton.OK) == MessageBoxResult.OK) 
-                    RefreshAndClose();
-
-            }
-            catch (InvalidBlObjectException i)
-            {
-                MessageBox.Show(i.Message);
-            }
-            catch (InvalidOperationException i)
-            {
-                MessageBox.Show(i.Message);
+                bl.ReleaseDroneFromCharge(drone.ID);
+                Synchronize();
             }
             catch (Exception except)
             {
@@ -225,13 +190,15 @@ namespace PL
             }
         }
 
+       
+
         private void CollectPackageButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 bl.CollectPackage(drone.ID);
-                if (MessageBox.Show("Drone has successfully collected a package -- status set to delivery.", "", MessageBoxButton.OK) == MessageBoxResult.OK)
-                    RefreshAndClose();
+                Synchronize();
+                MessageBox.Show("Drone has successfully collected a package -- status set to delivery.");
             }
             catch (InvalidBlObjectException i)
             {
@@ -252,8 +219,8 @@ namespace PL
             try
             {
                 bl.DeliverPackage(drone.ID);
-                if (MessageBox.Show("Drone delivered the package -- status set to free.", "", MessageBoxButton.OK) == MessageBoxResult.OK)
-                    RefreshAndClose();
+                Synchronize();
+                MessageBox.Show("Drone delivered the package -- status set to free.");
             }
             catch (InvalidBlObjectException i)
             {
@@ -262,6 +229,18 @@ namespace PL
             catch (InvalidOperationException i)
             {
                 MessageBox.Show(i.Message);
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+        }
+
+        private void DeleteDrone_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.DeleteDrone(drone.ID);
             }
             catch (Exception except)
             {

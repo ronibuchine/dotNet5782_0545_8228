@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 
 namespace BL
 {
-    partial class BLOBject : IBL.IBLInterface
+    public partial class BLOBject : IBL.IBLInterface
     {
       
         public Station AddStation(string name, Location location, int availableChargers)
@@ -46,12 +45,12 @@ namespace BL
         }
 
      
-        public Customer AddCustomer(string name, string phone, Location location)
+        public Customer AddCustomer(string name, string phone, Location location, int ID, string password = null)
         {
             try
             {
-                Customer customer = new Customer(name, phone, location);
-                dal.AddCustomer(new DO.Customer(customer.ID, name, phone, location.longitude, location.latitude));
+                Customer customer = new Customer(ID, name, phone, location);
+                dal.AddCustomer(new DO.Customer(customer.ID, name, phone, location.longitude, location.latitude, password));
                 return customer;
             }
             catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
@@ -64,7 +63,8 @@ namespace BL
             {
                 if (senderID == receiverID) throw new InvalidIDException("ERROR: Sender ID cannot be the same as the receiver ID");
                 Package package = new Package(senderID, receiverID, weight, priority);
-                package.delivered = package.scheduled = package.pickedUp = package.requested = null;
+                package.delivered = package.scheduled = package.pickedUp = null;
+                package.requested = DateTime.Now;
                 dal.AddPackage(new DO.Package(
                             package.ID,
                             senderID,
@@ -72,13 +72,30 @@ namespace BL
                             0,
                             (DO.WeightCategories)weight,
                             (DO.Priorities)priority,
-                            package.requested,
+                            DateTime.Now,
                             null,
                             null,
                             null));
                 return package;
             }
             catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
+        }
+
+        public void AddEmployee(int ID, string password)
+        {
+            try  // check to make sure the employee doesn't already exist
+            {
+                dal.GetEmployee(ID);
+                throw new OperationNotPossibleException("This employee already exists in the system.\nPlease contact a system administrator for valid credentials.");
+
+            }
+            catch (DO.InvalidDalObjectException except)
+            {
+                dal.AddEmployee(ID, password);
+                return;
+            }
+            
+            
         }
     }
 }

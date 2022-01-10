@@ -1,0 +1,75 @@
+﻿<Window x:Class="PL.PackageViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="PackageViewWindow" Height="640" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid Background="{StaticResource WindowBrush}">
+        
+
+
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300*"/>
+                <ColumnDefinition Width="300*"/>
+            </Grid.ColumnDefinitions>
+            <Image Name="AddPackageImage" Visibility="Hidden" Source="/images/box.png" Width="150" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,30,0,0"/>
+            <Border Name="AddBorder" Visibility="Hidden" 
+                    Background="{StaticResource ButtonBrush}" Grid.ColumnSpan="2" CornerRadius="10"
+                    Height="300" Width="250" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,120">
+                <StackPanel>
+                    <TextBlock Name="SenderText" Text="Choose Sender" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,20,0,0" FontStyle="Italic" Foreground="Gray"/>
+                    <ComboBox Name="SenderSelection" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150"/>
+                    <TextBlock Text="Choose Recipeint" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,10,0,0" FontStyle="Italic" Foreground="Gray"/>
+                    <ComboBox Name="ReceiverSelection"  HorizontalAlignment="Center" VerticalAlignment="Top" Width="150"/>
+                    <TextBlock Text="Select Package Weight" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,10,0,0" FontStyle="Italic" Foreground="Gray"/>
+                    <ComboBox Name="WeightSelection" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" />
+                    <TextBlock Text="Select Package Priority" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,10,0,0" FontStyle="Italic" Foreground="Gray"/>
+                    <ComboBox Name="PrioritySelection" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150"/>
+                    <Button Name="AddPackage" 
+                        Content="＋ Add Package" 
+                        HorizontalAlignment="Center"  
+                        VerticalAlignment="Top" Width="136" Background="{StaticResource AddButtonBrush}"
+                        Height="20"  Margin="0,30,0,0"
+                        FontFamily="Tw Cen MT" FontSize="13" Click="AddPackage_Click"/>
+                </StackPanel>
+            </Border>
+
+            <Image Name="PackageInfoImage" Visibility="Hidden" Source="/images/box.png" Margin="162,6,114,332"/>
+            <Button Name="ViewDrone" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Center" Width="150" Margin="0,47,0,0" Grid.Column="1" Background="{StaticResource AddButtonBrush}" Click="ViewDrone_Click">
+                <Image Source="/images/drone-package.png"/>
+            </Button>
+            <Button Name="Cancel" 
+                    Content="Cancel" 
+                    HorizontalAlignment="Left"  
+                    VerticalAlignment="Bottom" Width="60" Height="20" 
+                    Click="Cancel_Click"  Margin="10,0,0,10" 
+                    FontFamily="Tw Cen MT" FontSize="14" FontStretch="Expanded"
+                    Background="{StaticResource ButtonBrush}" />
+
+
+            <StackPanel Name="PackagePanel" Visibility="Hidden" Grid.Column="0" VerticalAlignment="Top" Height="277" Margin="100,195,52,0">
+                <TextBlock Name="IDBlock" Text="{Binding ID, Mode=TwoWay, StringFormat='ID: {0}'}" Width="150" Height="25" Margin="0,10,0,0" Background="LightGray"/>
+                <TextBlock Name="SenderBlock" Text="{Binding senderName, Mode=TwoWay}" Width="150" Margin="0,10,0,0"  Background="LightGray" Height="25"/>
+                <TextBlock Name="ReceiverBlock" Text="{Binding receiverName, Mode=TwoWay}" Width="150" Margin="0,10,0,0" Background="LightGray" Height="25"/>
+                <TextBlock Name="Status" Text="{Binding status, Mode=TwoWay}" Width="150" Margin="0,10,0,0"  Background="LightGray" Height="25"/>
+                <TextBlock Name="WeightBlock" Text="{Binding weightCategory, Mode=TwoWay}" Width="150" Margin="0,10,0,0"  Background="LightGray" Height="25"/>
+                <TextBlock Name="PriorityBlock" Text="{Binding priority, Mode=TwoWay}" Width="150" Margin="0,10,0,0"  Background="LightGray" Height="25"/>
+                <Button Name="DeletePackageButton" Width="120" Margin="0,20,0,0" Background="{StaticResource CancelButtonBrush}" Click="DeletePackageButton_Click"  Visibility="Visible" Content="✕ Delete Package" FontFamily="Tw Cen MT" Foreground="LightGray" FontSize="10" Height="20"/>
+            </StackPanel>
+
+            <StackPanel Name="DronePanel" Visibility="Hidden" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Height="200" Margin="0,250,0,0">
+                <TextBlock Name="DroneIDBlock" FontSize="10" Foreground="Gray" Text="{Binding ID, Mode=TwoWay, FallbackValue='No Content Available', StringFormat='ID: {0}'}" Width="150" Height="20" Margin="0,10,0,0" Background="LightGray"/>
+                <TextBlock Name="DroneWeightBlock" FontSize="10" Foreground="Gray" Text="{Binding weightCategory, FallbackValue='No Content Available', Mode=TwoWay}" Width="150" Margin="0,10,0,0"  Background="LightGray" Height="20"/>
+                <TextBlock Name="DroneLocationBlock" FontSize="10" Foreground="Gray" Text="{Binding location, FallbackValue='No Content Available', Mode=TwoWay}" Width="150" Margin="0,10,0,0" Background="LightGray" Height="40"/>
+                <TextBlock Name="DroneStatusBlock" FontSize="10" Foreground="Gray" Text="{Binding status, FallbackValue='No Content Available', Mode=TwoWay}" Width="150" Margin="0,10,0,0"  Background="LightGray" Height="20"/>
+            </StackPanel>
+
+
+
+
+        </Grid>
+    </Grid>
+</Window>

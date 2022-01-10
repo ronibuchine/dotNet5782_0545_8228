@@ -7,26 +7,35 @@ namespace DAL
 {
     public partial class DalObject : IDAL
     {
+        public bool VerifyEmployeeCredentials(int ID, string password)
+        {
+            return DataSource.employees.Find(e => ID == e.ID && password == e.password && e.IsActive) != null;
+        }
 
-       
-       
+        public bool VerifyCustomerCredentials(int ID, string password)
+        {
+            return DataSource.customers.Find(e => ID == e.ID && password == e.password && e.IsActive) != null;
+        }
+
+
 
         public void ProvidePackageToCustomer(int packageID)
         {
             GetActualPackage(packageID).delivered = DateTime.Now;
         }
 
+        // This only removes the droncharge from the list. It does not calculate time charged!
         public void ReleaseDroneFromCharge(int stationID, int droneID)
         {
             var temp = DataSource.droneCharges.ToList();
-            temp.Remove(temp.Find(dc => dc.DroneId == droneID));
+            temp.Remove(temp.Find(dc => dc.droneId == droneID));
             DataSource.droneCharges = temp;
             GetActualStation(stationID).chargeSlots++;
         }
 
         public void SendDroneToCharge(int stationID, int droneID)
         {
-            DataSource.droneCharges.Add(new DroneCharge(droneID, stationID));
+            DataSource.droneCharges.Add(new DroneCharge(droneID, stationID, DateTime.Now));
             GetActualStation(stationID).chargeSlots--;
         }
 

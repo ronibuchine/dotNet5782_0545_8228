@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using static DAL.DalObject;
 using DO;
@@ -8,22 +7,28 @@ namespace DAL
 {
     internal class DataSource
     {
+        // TODO make these numbers bigger... and better
         internal const int MIN_DRONES = 5;
         internal const int MIN_DRONE_STATIONS = 5;
         internal const int MIN_CUSTOMERS = 5;
         internal const int MIN_PACKAGES = 5;
+        internal const int MIN_EMPLOYEES = 1;
 
         internal const int MAX_DRONES = 10;
         internal const int MAX_STATIONS = 10;
         internal const int MAX_CUSTOMERS = 10;
         internal const int MAX_PACKAGES = 10;
         internal const int MAX_DRONE_CHARGES = MAX_DRONES;
+        internal const int MAX_EMPLOYEES = 5;
+
+        internal const string ADMIN_PASSWORD = "admin";
 
         internal static List<Drone> drones = new List<Drone>(MAX_DRONES);
         internal static List<Station> stations = new List<Station>(MAX_STATIONS);
         internal static List<Customer> customers = new List<Customer>(MAX_CUSTOMERS);
         internal static List<Package> packages = new List<Package>(MAX_PACKAGES);
         internal static List<DroneCharge> droneCharges = new List<DroneCharge>(MAX_DRONE_CHARGES);
+        internal static List<Employee> employees = new List<Employee>(MAX_EMPLOYEES);
 
         public static int nextID { get; set; } = 1;
 
@@ -42,6 +47,8 @@ namespace DAL
         public static void Initialize()
         {
             rand = new Random();
+            // employee accounts must be initialized first to recieve ID 1
+            InitializeList<Employee>(MIN_EMPLOYEES, MIN_EMPLOYEES, IdalDoType.EMPLOYEE, employees);
             InitializeList<Drone>(MIN_DRONES, MAX_DRONES, IdalDoType.DRONE, drones);
             InitializeList<Station>(MIN_DRONE_STATIONS, MAX_STATIONS, IdalDoType.STATION, stations);
             InitializeList<Customer>(MIN_CUSTOMERS, MAX_CUSTOMERS, IdalDoType.CUSTOMER, customers);
@@ -57,8 +64,12 @@ namespace DAL
         /// <param name="type">An instance of IdalDoType</param>
         public static DalEntity Insert(IdalDoType type)
         {
+
+            List<int> ids = new();
+            packages.ForEach(p => ids.Add(p.droneId));
+            List<Drone> unassignedDrones = drones.FindAll(d => !ids.Contains(d.ID));
             switch (type)
-            {
+            {               
                 case IdalDoType.DRONE:
                     return new Drone(nextID++);
                 case IdalDoType.STATION:
@@ -70,8 +81,10 @@ namespace DAL
                     int randY = RandomExceptX(customers.Count, randX, rand);
                     int senderID = customers[randX].ID;
                     int recieverID = customers[randY].ID;
-                    int droneID = drones[rand.Next(drones.Count)].ID;
+                    int droneID = rand.Next(2) == 0 ? 0 : unassignedDrones[rand.Next(unassignedDrones.Count)].ID;
                     return new Package(nextID++, senderID, recieverID, droneID);
+                case IdalDoType.EMPLOYEE:
+                    return new Employee(nextID++, ADMIN_PASSWORD);
                 default:
                     throw new InvalidDalObjectException();
             }
@@ -98,7 +111,7 @@ namespace DAL
         private static void InitializeList<T>(
                 int min,
                 int max,
-                IdalDoType type, 
+                IdalDoType type,
                 List<T> list)
             where T : DalEntity
         {
@@ -106,7 +119,7 @@ namespace DAL
             for (int i = 0; i < num; ++i)
             {
                 list.Add((T)Insert(type));
-            }            
+            }          
         }
     }
 }

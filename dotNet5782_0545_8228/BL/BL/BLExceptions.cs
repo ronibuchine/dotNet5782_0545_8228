@@ -41,5 +41,11 @@ namespace BL
         public OperationNotPossibleException(string message) : base(message) {}
         public OperationNotPossibleException() : base() {}
     }
+
+    public class InvalidCredentialsException : Exception
+    {
+        public InvalidCredentialsException(string message) : base(message) { }
+        public InvalidCredentialsException() : base() { }
+    }
 }
 

@@ -12,7 +12,7 @@ namespace BL
     /// This class is the class which controls the implementations of the BLAPI.
     /// The class contains Add, Update, Remove, Get and other various action calls.
     /// </summary>
-    partial class BLOBject : IBL.IBLInterface
+    public partial class BLOBject : IBL.IBLInterface
     {
         private static double chargingRate { get; set; }
         private static double free { get; set; }
@@ -75,7 +75,7 @@ namespace BL
                 {
                     package = packages.First(p => p.drone != null && p.drone.ID == drone.ID);
                 }
-                catch (InvalidOperationException e) 
+                catch (InvalidOperationException) 
                 {
 
                     int randChoice = rand.Next(2);
@@ -140,6 +140,7 @@ namespace BL
                 }
                 
             }
+            
         }
 
         /// <summary>
@@ -150,7 +151,7 @@ namespace BL
         {
             // for each drone charge record that data in station.chargingDrones
             foreach (var droneCharge in dal.GetAllCharges())
-                stations.First(s => s.ID == droneCharge.StationId).chargingDrones.Append(drones.First(d => d.ID == droneCharge.DroneId));
+                stations.First(s => s.ID == droneCharge.stationId).chargingDrones.Append(drones.First(d => d.ID == droneCharge.droneId));
         }
 
         /// <summary>

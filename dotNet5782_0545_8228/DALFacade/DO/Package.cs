@@ -48,8 +48,8 @@ namespace DO
             this.droneId = droneId;
             this.weight = (WeightCategories)rand.Next(Enum.GetNames(typeof(WeightCategories)).Length);
             this.priority = (Priorities)rand.Next(Enum.GetNames(typeof(Priorities)).Length);
-            this.requested = null;
-            this.scheduled = null;
+            this.requested = DateTime.Now;
+            this.scheduled = droneId == 0 ? null : DateTime.Now;
             this.pickedUp = null;
             this.delivered = null;
         }

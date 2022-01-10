@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IBL;
 using BL;
+using System.Globalization;
 
 namespace PL
 {
@@ -34,7 +35,42 @@ namespace PL
 
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneListWindow(bl).Show();
+            
+            int ID;
+            try
+            {
+                ID = Int32.Parse(Username.Text);                
+            }
+            catch (FormatException except)
+            {
+                ID = 0;                
+            }
+            string password = Password.Password;
+            if (IsBusiness.IsChecked == true && bl.VerifyEmployeeCredentials(ID, password))
+            {
+                new ListWindow(bl).Show();
+                Username.Text = "";
+                Password.Password = "";
+            }
+            else if (IsCustomer.IsChecked == true && bl.VerifyCustomerCredentials(ID, password)) 
+            {
+                Customer customer = new(bl.GetCustomerList().Where(c => c.ID == int.Parse(Username.Text)).FirstOrDefault());
+                new CustomerViewWindow(bl, customer).Show();
+                Username.Text = "";
+                Password.Password = "";
+            }
+            else
+            {
+                MessageBox.Show("One or more of the credentials provided were incorrect. Please try again.");
+            }
+            
         }
+
+        private void NewUser_Click(object sender, RoutedEventArgs e)
+        {
+            new CreateAccountWindow(bl).Show();
+        }
+
+        
     }
 }

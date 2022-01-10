@@ -1,11 +1,16 @@
-using System;
 using System.Collections.Generic;
 
 namespace DALAPI
 {
     public interface IDAL
     {
-        
+        /// <summary>
+        /// This issues an API call which adds a new employee to the DataSource
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="password"></param>
+        public void AddEmployee(int ID, string password);
+
         /// <summary>
         /// This issues an API call which adds a new drone to the DataSource.
         /// </summary>
@@ -74,12 +79,19 @@ namespace DALAPI
         public void UpdateCustomerPhone(int ID, string phone);
 
         /// <summary>
+        /// This API call will update a customer password in the DataSource
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="phone"></param>
+        public void UpdateCustomerPassword(int ID, string password);
+
+        /// <summary>
         /// This API call will update both the name and phone number of a customer in the DataSource
         /// </summary>
         /// <param name="ID"></param>
         /// <param name="name"></param>
         /// <param name="phone"></param>
-        public void UpdateCustomer(int ID, string name, string phone);
+        public void UpdateCustomer(int ID, string name, string phone, string password = null);
 
         /// <summary>
         /// This API call will return all the active drones which are in the system
@@ -110,6 +122,12 @@ namespace DALAPI
         /// </summary>
         /// <returns></returns>
         public IEnumerable<DO.DroneCharge> GetAllCharges();
+
+        /// <summary>
+        /// This API call will return all of the Employees in the system
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<DO.Employee> GetAllEmployees();
 
         /// <summary>
         /// This API call will retrieve all the unassigned packages in the system
@@ -153,6 +171,13 @@ namespace DALAPI
         public DO.Package GetPackage(int ID);
 
         /// <summary>
+        /// This API call retrieves a given employee based on it's ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>A copy of the employee object</returns>
+        public DO.Employee GetEmployee(int ID);
+
+        /// <summary>
         /// This API call retrieves a drone based on it's ID
         /// </summary>
         /// <param name="ID"></param>
@@ -179,6 +204,13 @@ namespace DALAPI
         /// <param name="ID"></param>
         /// <returns>A reference to the actual package</returns>
         public DO.Package GetActualPackage(int ID);
+
+        /// <summary>
+        /// This API call retrieves the employee from the system
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns>A reference to the actual employee</returns>
+        public DO.Employee GetActualEmployee(int ID);
 
         /// <summary>
         /// This API call will assign a given package to the specified drone in the system if it can
@@ -219,6 +251,23 @@ namespace DALAPI
         public void ReleaseDroneFromCharge(int stationID, int droneID);
 
         /// <summary>
+        /// This API call verifies the credentials of a given employee
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="password"></param>
+        /// <returns>a boolean value based on whether or not it was verified</returns>
+        public bool VerifyEmployeeCredentials(int ID, string password);
+
+
+        /// <summary>
+        /// This API call verifies the credentials of a given customer
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="password"></param>
+        /// <returns>a boolean value based on whether or not it was verified</returns>
+        public bool VerifyCustomerCredentials(int ID, string password);
+
+        /// <summary>
         /// This retrieves the power consumption of the different weight classes
         /// </summary>
         /// <returns></returns>
@@ -247,7 +296,22 @@ namespace DALAPI
         /// </summary>
         /// <param name="ID"></param>
         public void DeleteStation(int ID);
+
+        /// <summary>
+        /// Marks an employee as inactive in the system
+        /// </summary>
+        /// <param name="ID"></param>
+        public void DeleteEmployee(int ID);
+
+        /// <summary>
+        /// Get next ID of current running ID's
+        /// </summary>
         public int GetNextID();
+
+
+        /// <summary>
+        /// Delete entire contents of dal
+        /// </summary>
         public void Clear();
     }
 }

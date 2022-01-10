@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BL
 {
-    partial class BLOBject : IBL.IBLInterface
+    public partial class BLOBject : IBL.IBLInterface
     {
 
      
@@ -85,11 +85,23 @@ namespace BL
             }
         }
 
-       
-        public void UpdateCustomer(int ID, string name, String phone)
+        public void UpdateCustomerPassword(int ID, string password)
         {
-            UpdateCustomerName(ID, name);
-            UpdateCustomerPhone(ID, phone);
+            try
+            {
+                dal.UpdateCustomerPassword(ID, password);
+            }
+            catch (DO.InvalidDalObjectException e)
+            {
+                throw new InvalidBlObjectException(e.Message);
+            }
+
+        }
+
+
+        public void UpdateCustomer(int ID, string name, string phone, string password = null)
+        {
+            dal.UpdateCustomer(ID, name, phone, password);
         }
 
     }

@@ -56,7 +56,7 @@ namespace DAL
             }
             catch (ArgumentNullException)
             {
-                throw new DataSourceException("The item you requested does not exist in the system.");
+                throw new DataSourceException("The item you are trying to update does not exist in the system.");
             }
         }
 
@@ -68,14 +68,27 @@ namespace DAL
             }
             catch (ArgumentNullException)
             {
-                throw new DataSourceException("The item you requested does not exist in the system.");
+                throw new DataSourceException("The item you are trying to update does not exist in the system.");
             }
         }
 
-        public void UpdateCustomer(int ID, string name, string phone)
+        public void UpdateCustomerPassword(int ID, string password)
+        {
+            try
+            {
+                GetActualCustomer(ID).password = password;
+            }
+            catch (ArgumentNullException)
+            {
+                throw new DataSourceException("The item you are trying to update trying to update does not exist in the system.");
+            }
+        }
+
+        public void UpdateCustomer(int ID, string name, string phone, string password = null)
         {
             UpdateCustomerPhone(ID, phone);
             UpdateCustomerName(ID, name);
+            UpdateCustomerPassword(ID, password);
         }
 
     }
