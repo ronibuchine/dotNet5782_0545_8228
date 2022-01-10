@@ -83,7 +83,7 @@ namespace PL
             }
             catch (InvalidBlObjectException except)
             {
-                if (MessageBox.Show(except.Message, "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
+                MessageBox.Show(except.Message);
             }
         }
 
@@ -94,19 +94,27 @@ namespace PL
 
         private void ModelUpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            if (UpdateDroneModelText.Text == "Enter Model" || UpdateDroneModelText.Text == "")
+            try
             {
-                MessageBox.Show("Please enter a drone model.");
-                UpdateDroneModelText.Focus();
-                UpdateDroneModelText.FontWeight = FontWeights.Bold;
-                UpdateDroneModelText.Background = Brushes.Red;
+                if (UpdateDroneModelText.Text == "Enter Model" || UpdateDroneModelText.Text == "")
+                {
+                    MessageBox.Show("Please enter a drone model.");
+                    UpdateDroneModelText.Focus();
+                    UpdateDroneModelText.FontWeight = FontWeights.Bold;
+                    UpdateDroneModelText.Background = Brushes.Red;
+                }
+                else
+                {
+                    bl.UpdateDrone(drone.ID, UpdateDroneModelText.Text);
+                    Synchronize();
+                    MessageBox.Show("Drone Model Updated Successfully!");
+                }
             }
-            else
+            catch (Exception except)
             {
-                bl.UpdateDrone(drone.ID, UpdateDroneModelText.Text);
-                Synchronize();
-                MessageBox.Show("Drone Model Updated Successfully!");
+                MessageBox.Show(except.Message);
             }
+            
 
         }
 

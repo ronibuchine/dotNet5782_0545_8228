@@ -64,6 +64,7 @@ namespace PL
 
         }
 
+        #region Window Actions
         private void DroneStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             FilterDrones();
@@ -74,26 +75,55 @@ namespace PL
             FilterDrones();
         }
 
-        private void FilterDrones()
+                       
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DroneStatusSelector.SelectedItem == null && DroneWeightSelector.SelectedItem == null)
-                DroneListView.ItemsSource = drones;
-            else if (DroneStatusSelector.SelectedItem == null)
-                DroneListView.ItemsSource = drones.Where(d => d.weightCategory == GetDroneWeight());
-            else if (DroneWeightSelector.SelectedItem == null)
-                DroneListView.ItemsSource = drones.Where(d => d.status == GetDroneStatus());
-            else
-                DroneListView.ItemsSource = drones.Where(d => d.status == GetDroneStatus() && d.weightCategory == GetDroneWeight());
+            Close();
         }
 
-        private DroneStatuses GetDroneStatus()
-        {
-            return (DroneStatuses)DroneStatusSelector.SelectedItem;            
+        private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
+        {            
+            DroneStatusSelector.SelectedIndex = DroneWeightSelector.SelectedIndex = -1;            
+            PackagePrioritySelector.SelectedIndex = PackageWeightSelector.SelectedIndex = -1;
+            Refresh();
         }
 
-        private WeightCategories GetDroneWeight()
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            return (WeightCategories)DroneWeightSelector.SelectedItem;            
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+
+       
+       
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+        }
+
+        private void PackagePrioritySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FilterPackages();
+        }
+
+        private void PackageWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FilterPackages();
+        }
+        #endregion
+
+        #region New Windows
+        private void StationListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Station station = (Station)StationListView.SelectedItem;
+            new StationViewWindow(bl, station).Show();
+        }
+
+        private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Customer customer = (Customer)CustomerListView.SelectedItem;
+            new CustomerViewWindow(bl, customer, customers).Show();
         }
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
@@ -105,54 +135,6 @@ namespace PL
         {
             Drone drone = (Drone)DroneListView.SelectedItem;
             new DroneWindow(bl, drone).Show();
-        }
-
-       
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
-        {
-            DroneListView.ItemsSource = drones;
-            DroneStatusSelector.SelectedIndex = DroneWeightSelector.SelectedIndex = -1;
-            PackageListView.ItemsSource = packages;
-            PackagePrioritySelector.SelectedIndex = PackageWeightSelector.SelectedIndex = -1;
-        }
-
-        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
-        }
-
-        private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            Customer customer = (Customer)CustomerListView.SelectedItem;
-            new CustomerViewWindow(bl, customer, customers).Show();
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            drones = new(bl.GetDroneList().Select(d => new Drone(d)));
-            DroneListView.DataContext = drones;
-            stations = new(bl.GetStationList().Select(s => new Station(s)));
-            StationListView.DataContext = stations;
-            packages = new(bl.GetPackageList().Select(p => new Package(p)));
-            PackageListView.DataContext = packages;
-            customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
-            CustomerListView.DataContext = customers;
-            refreshed = false;
-        }
-
-        
-
-        private void StationListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            Station station = (Station)StationListView.SelectedItem;
-            new StationViewWindow(bl, station).Show();
         }
 
         private void AddStationButton_Click(object sender, RoutedEventArgs e)
@@ -175,30 +157,61 @@ namespace PL
         {
             new PackageViewWindow(bl, customers).Show();
         }
+        #endregion
 
-        private void PackagePrioritySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            FilterPackages();
-        }
-
-        private void PackageWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            FilterPackages();
-        }
+       
+        #region Helper Functions
 
         private void FilterPackages()
         {
             if (PackagePrioritySelector.SelectedItem == null && PackageWeightSelector.SelectedItem == null)
-                PackageListView.ItemsSource = packages;
+                return;
             else if (PackagePrioritySelector.SelectedItem == null)
-                PackageListView.ItemsSource = packages.Where(p => p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem);
+                packages = new(packages.Where(p => p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem));
             else if (DroneWeightSelector.SelectedItem == null)
-                PackageListView.ItemsSource = packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem);
+                packages = new(packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem));
             else
-                PackageListView.ItemsSource = packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem &&
-                    p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem);
+                packages = new(packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem &&
+                    p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem));
+            PackageListView.DataContext = packages;
+        }
+        private void Refresh()
+        {
+            drones = new(bl.GetDroneList().Select(d => new Drone(d)));
+            DroneListView.DataContext = drones;
+            stations = new(bl.GetStationList().Select(s => new Station(s)));
+            StationListView.DataContext = stations;
+            packages = new(bl.GetPackageList().Select(p => new Package(p)));
+            PackageListView.DataContext = packages;
+            customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
+            CustomerListView.DataContext = customers;
+            refreshed = false;
         }
 
-        
+        private DroneStatuses GetDroneStatus()
+        {
+            return (DroneStatuses)DroneStatusSelector.SelectedItem;
+        }
+
+        private WeightCategories GetDroneWeight()
+        {
+            return (WeightCategories)DroneWeightSelector.SelectedItem;
+        }
+
+        private void FilterDrones()
+        {
+            if (DroneStatusSelector.SelectedItem == null && DroneWeightSelector.SelectedItem == null)
+                return;
+            else if (DroneStatusSelector.SelectedItem == null)
+               drones = new(drones.Where(d => d.weightCategory == GetDroneWeight()));
+            else if (DroneWeightSelector.SelectedItem == null)
+                drones = new(drones.Where(d => d.status == GetDroneStatus()));
+            else
+                drones = new(drones.Where(d => d.status == GetDroneStatus() && d.weightCategory == GetDroneWeight()));
+            DroneListView.DataContext = drones;
+        }
+
+        #endregion
+
     }
 }

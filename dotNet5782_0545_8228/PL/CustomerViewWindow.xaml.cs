@@ -86,8 +86,11 @@ namespace PL
         {
             try
             {
-                bl.UpdateCustomer(customer.ID, NameBlock.Text, PhoneBlock.Text);
-                Synchronize();
+                bl.UpdateCustomer(customer.ID, NameBlock.Text, int.Parse(PhoneBlock.Text).ToString());                
+            }
+            catch (FormatException fExcept)
+            {
+                MessageBox.Show("Please enter a valid phone number.");
             }
             catch (Exception except)
             {

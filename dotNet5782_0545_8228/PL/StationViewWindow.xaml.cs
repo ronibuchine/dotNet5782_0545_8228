@@ -55,7 +55,15 @@ namespace PL
 
         private void DeleteStationButton_Click(object sender, RoutedEventArgs e)
         {
-            bl.DeleteStation(station.ID);
+            try
+            {
+                bl.DeleteStation(station.ID);
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+            
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
