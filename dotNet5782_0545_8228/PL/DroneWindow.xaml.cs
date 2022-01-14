@@ -24,6 +24,8 @@ namespace PL
     {
         IBLInterface bl;
         Drone drone;
+        // reference to a stations charging drone list if we need to have live updates
+        ObservableCollection<BL.Drone> chargingDrones;
 
         internal DroneWindow(IBLInterface bl)
         {
@@ -46,11 +48,12 @@ namespace PL
         /// <summary>
         /// Drone Window ctor for actions
         /// </summary>
-        internal DroneWindow(IBLInterface bl, Drone drone)
+        internal DroneWindow(IBLInterface bl, Drone drone, ObservableCollection<BL.Drone> chargingDrones = null)
         {
             InitializeComponent();
             this.bl = bl;
             this.drone = drone;
+            this.chargingDrones = chargingDrones;
             DataContext = this.drone;
 
             TextEntries.Visibility = Visibility.Visible;            
@@ -73,13 +76,11 @@ namespace PL
             int stationID = Int32.Parse(StationSelection.Text);
             try
             {
-                bl.AddDrone(model, trueWeight, stationID);
-                if (MessageBox.Show("Drone Added Successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK)
-                {
-                    ListWindow window = Application.Current.Windows.OfType<ListWindow>().FirstOrDefault();
-                    //drones = new(bl.GetDroneList().Select(d => new Drone(d)));
-                    Close();
-                }
+                int ID = bl.AddDrone(model, trueWeight, stationID).ID;
+                Drone drone = new(bl.GetDroneList().Where(d => d.ID == ID).FirstOrDefault());
+                CollectionManager.drones.Add(drone);
+                if (MessageBox.Show("Drone Added Successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
+                
             }
             catch (InvalidBlObjectException except)
             {
@@ -130,7 +131,16 @@ namespace PL
             drone.status = tempDrone.status;
             drone.location = tempDrone.currentLocation;
             drone.battery = tempDrone.battery;
-            drone.packageNumber = tempDrone.packageInTransfer == null ? null : tempDrone.packageInTransfer.ID;   
+            drone.packageNumber = tempDrone.packageInTransfer == null ? null : tempDrone.packageInTransfer.ID;
+            // removes old drone from list and adds the updated one
+            int index = CollectionManager.drones
+                .IndexOf(CollectionManager.drones
+                .FirstOrDefault(d => d.ID == drone.ID));
+            CollectionManager.drones[index] = drone;
+           
+            if (chargingDrones != null)            
+                chargingDrones.Remove(chargingDrones.FirstOrDefault(d => d.ID == drone.ID));
+            
         }
 
         private void SendToChargeButton_Click(object sender, RoutedEventArgs e)
@@ -139,7 +149,6 @@ namespace PL
             {
                 bl.SendDroneToCharge(drone.ID);
                 Synchronize();
-                MessageBox.Show("Drone is now charging -- status is set to maintenance.");
             }
             catch (InvalidBlObjectException i)
             {
@@ -241,6 +250,7 @@ namespace PL
             try
             {
                 bl.DeleteDrone(drone.ID);
+                if (MessageBox.Show("Drone successfully deactivated.", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
             }
             catch (Exception except)
             {

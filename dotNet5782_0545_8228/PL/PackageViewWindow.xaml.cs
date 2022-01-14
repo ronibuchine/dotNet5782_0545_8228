@@ -26,9 +26,8 @@ namespace PL
         IBLInterface bl;
         Package package;
         DroneToList drone;
-        ObservableCollection<Customer> customers;
+        Customer customer = null;
 
-        Customer customer;
         internal PackageViewWindow(IBLInterface bl, Package package)
         {
             InitializeComponent();
@@ -58,15 +57,14 @@ namespace PL
 
         }
 
-        internal PackageViewWindow(IBLInterface bl, ObservableCollection<Customer> customers)
+        internal PackageViewWindow(IBLInterface bl)
         {
             InitializeComponent();
             this.bl = bl;
-            this.customers = customers;
             AddBorder.Visibility = Visibility.Visible;
             AddPackageImage.Visibility = Visibility.Visible;
-            SenderSelection.ItemsSource = customers.Select(c => c.ID);
-            ReceiverSelection.ItemsSource = customers.Select(c => c.ID);
+            SenderSelection.ItemsSource = CollectionManager.customers.Select(c => c.ID);
+            ReceiverSelection.ItemsSource = CollectionManager.customers.Select(c => c.ID);
             WeightSelection.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PrioritySelection.ItemsSource = Enum.GetValues(typeof(Priorities));
         }
@@ -76,10 +74,10 @@ namespace PL
             InitializeComponent();
             this.bl = bl;
             this.customer = customer;
-            customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
+            CollectionManager.customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
             AddBorder.Visibility = Visibility.Visible;
             AddPackageImage.Visibility = Visibility.Visible;
-            ReceiverSelection.ItemsSource = customers.Select(c => c.ID);
+            ReceiverSelection.ItemsSource = CollectionManager.customers.Select(c => c.ID);
             WeightSelection.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PrioritySelection.ItemsSource = Enum.GetValues(typeof(Priorities));
             SenderText.Visibility = Visibility.Hidden;
@@ -91,8 +89,9 @@ namespace PL
             try
             {
                 bl.DeletePackage(package.ID);
-                MessageBox.Show("Package removed successfully.");
-                Close();
+                if (MessageBox.Show("Package removed successfully", "", MessageBoxButton.OK) == MessageBoxResult.OK)
+                    Close();
+                
             }
             catch (Exception except)
             {
@@ -108,7 +107,7 @@ namespace PL
 
         private void ViewDrone_Click(object sender, RoutedEventArgs e)
         {
-            if (drone != null)
+            if (drone != null && customer == null)
                 new DroneWindow(bl, new(drone)).Show();
             else
                 MessageBox.Show("There is no drone assigned to the selected package.");

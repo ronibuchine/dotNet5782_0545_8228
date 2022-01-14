@@ -24,13 +24,11 @@ namespace PL
     {
         IBLInterface bl;
         Customer customer;
-        ObservableCollection<Customer> customers;
 
-        internal CustomerViewWindow(IBLInterface bl, ObservableCollection<Customer> customers)
+        internal CustomerViewWindow(IBLInterface bl)
         {
             InitializeComponent();
             this.bl = bl;
-            this.customers = customers;
             AddBorder.Visibility = Visibility.Visible;
             AddCustomerImage.Visibility = Visibility.Visible;
 
@@ -39,25 +37,6 @@ namespace PL
         /// <summary>
         /// Drone Window ctor for actions
         /// </summary>
-        internal CustomerViewWindow(IBLInterface bl, Customer customer, ObservableCollection<Customer> customers)
-        {
-            InitializeComponent();
-            this.bl = bl;
-            this.customer = customer;
-            this.customers = customers;
-            DataContext = this.customer;
-            SentPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesFromCustomer;
-            ReceivedPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesToCustomer;
-            CustomerInfoBorder.Visibility = Visibility.Visible;
-            SentPackageList.Visibility = Visibility.Visible;
-            ReceivedPackageList.Visibility = Visibility.Visible;
-            OutgoingHeader.Visibility = Visibility.Visible;
-            IncomingHeader.Visibility = Visibility.Visible;
-            CustomerImage.Visibility = Visibility.Visible;
-            AddCustomerPackage.Visibility = Visibility.Visible;
-
-        } 
-        
         internal CustomerViewWindow(IBLInterface bl, Customer customer)
         {
             InitializeComponent();
@@ -73,7 +52,9 @@ namespace PL
             IncomingHeader.Visibility = Visibility.Visible;
             CustomerImage.Visibility = Visibility.Visible;
             AddCustomerPackage.Visibility = Visibility.Visible;
-        }
+
+        }        
+       
 
      
 
@@ -86,7 +67,8 @@ namespace PL
         {
             try
             {
-                bl.UpdateCustomer(customer.ID, NameBlock.Text, int.Parse(PhoneBlock.Text).ToString());                
+                bl.UpdateCustomer(customer.ID, NameBlock.Text, int.Parse(PhoneBlock.Text).ToString());
+                Synchronize();
             }
             catch (FormatException fExcept)
             {
@@ -101,10 +83,13 @@ namespace PL
         private void Synchronize()
         {
             BL.Customer tempCustomer = bl.GetCustomer(customer.ID);
+            
             customer.name = tempCustomer.name;
             customer.phoneNumber = tempCustomer.phone;
-            Customer temp = customers.Where(c => c.ID == customer.ID).FirstOrDefault();
-            customers[customers.IndexOf(temp)] = customer;
+            Customer temp = CollectionManager.customers.Where(c => c.ID == customer.ID).FirstOrDefault();
+            CollectionManager.customers[CollectionManager.customers.IndexOf(temp)] = customer;
+            
+
         }
 
         private void SentPackageList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -123,11 +108,15 @@ namespace PL
         {
             try
             {
-                bl.AddCustomer(NameEntry.Text,
+                BL.Customer temp = bl.AddCustomer(NameEntry.Text,
                   PhoneEntry.Text,
                   new Location(double.Parse(LatitudeEntry.Text),
                   double.Parse(LongitudeEntry.Text)),
                   int.Parse(IDEntry.Text));
+                customer = new(bl.GetCustomerList().First(c => c.ID == temp.ID));
+                Synchronize();
+                if (MessageBox.Show("Customer added successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK)
+                    Close();
             }
             catch (Exception except)
             {

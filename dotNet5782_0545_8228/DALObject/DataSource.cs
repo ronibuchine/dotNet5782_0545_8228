@@ -40,7 +40,7 @@ namespace DAL
             internal static double lightWeight = 1d/480;
             internal static double midWeight = 1d/450;
             internal static double heavyWeight = 1d/420;
-            internal static double chargingRate = 10; // in % per hour
+            internal static double chargingRate = 2; // in % per second
             internal static int packageCount = 0;
         }
 

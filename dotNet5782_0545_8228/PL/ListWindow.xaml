@@ -106,11 +106,21 @@
                         </Grid.ColumnDefinitions >
 
                         <Button Name="ClearFilterButton3" Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
-                        <ComboBox Name="StationStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
+                        <Button Name="CapacityGrouper" Click="CapacityGrouper_Click" Background="{StaticResource ButtonBrush}" Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/images/list-text.png" Margin="0,0,0,0"/>
+                                <TextBlock Text="Group by Capacity" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Button>
                         <Button Name="AddStationButton" Content="+ Add Station" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddStationButton_Click"  FontSize="18" FontFamily="Tw Cen MT" />
-                        <ComboBox Name="StationSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+                        <Button Name="AvailableChargersGrouper" Click="AvailableChargersGrouper_Click" Grid.Column="2" Background="{StaticResource ButtonBrush}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/images/list-text.png" Margin="0,0,0,0"/>
+                                <TextBlock Text="Group by Available Chargers" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Button>
 
-                    </Grid>
+                        </Grid>
 
                         <ListView Foreground="LightGray" Name="StationListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="StationListView_MouseDoubleClick">
                         <ListView.View>

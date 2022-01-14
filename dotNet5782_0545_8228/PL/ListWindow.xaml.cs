@@ -26,23 +26,15 @@ namespace PL
     {
 
         IBLInterface bl;
-        internal ObservableCollection<Drone> drones;
-        internal ObservableCollection<Station> stations;
-        internal ObservableCollection<Package> packages;
-        internal ObservableCollection<Customer> customers;
         internal bool refreshed = false;
         public ListWindow(IBLInterface bl)
         {
             InitializeComponent();
             this.bl = bl;
-            drones = new(bl.GetDroneList().Select(d => new Drone(d)));
-            DroneListView.DataContext = drones;
-            stations = new(bl.GetStationList().Select(s => new Station(s)));
-            StationListView.DataContext = stations;
-            packages = new(bl.GetPackageList().Select(p => new Package(p)));
-            PackageListView.DataContext = packages;
-            customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
-            CustomerListView.DataContext = customers;
+            DroneListView.DataContext = CollectionManager.drones;
+            StationListView.DataContext = CollectionManager.stations;
+            PackageListView.DataContext = CollectionManager.packages;
+            CustomerListView.DataContext = CollectionManager.customers;
             DroneStatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             DroneWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PackagePrioritySelector.ItemsSource = Enum.GetValues(typeof(Priorities));
@@ -123,7 +115,7 @@ namespace PL
         private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Customer customer = (Customer)CustomerListView.SelectedItem;
-            new CustomerViewWindow(bl, customer, customers).Show();
+            new CustomerViewWindow(bl, customer).Show();
         }
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
@@ -144,7 +136,7 @@ namespace PL
 
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerViewWindow(bl, customers).Show();
+            new CustomerViewWindow(bl).Show();
         }
 
         private void PackageListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -155,7 +147,7 @@ namespace PL
 
         private void AddPackageButton_Click(object sender, RoutedEventArgs e)
         {
-            new PackageViewWindow(bl, customers).Show();
+            new PackageViewWindow(bl).Show();
         }
         #endregion
 
@@ -167,24 +159,24 @@ namespace PL
             if (PackagePrioritySelector.SelectedItem == null && PackageWeightSelector.SelectedItem == null)
                 return;
             else if (PackagePrioritySelector.SelectedItem == null)
-                packages = new(packages.Where(p => p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem));
+                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem));
             else if (DroneWeightSelector.SelectedItem == null)
-                packages = new(packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem));
+                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem));
             else
-                packages = new(packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem &&
+                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem &&
                     p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem));
-            PackageListView.DataContext = packages;
+            PackageListView.DataContext = CollectionManager.packages;
         }
         private void Refresh()
         {
-            drones = new(bl.GetDroneList().Select(d => new Drone(d)));
-            DroneListView.DataContext = drones;
-            stations = new(bl.GetStationList().Select(s => new Station(s)));
-            StationListView.DataContext = stations;
-            packages = new(bl.GetPackageList().Select(p => new Package(p)));
-            PackageListView.DataContext = packages;
-            customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
-            CustomerListView.DataContext = customers;
+            CollectionManager.drones = new(bl.GetDroneList().Select(d => new Drone(d)));
+            DroneListView.DataContext = CollectionManager.drones;
+            CollectionManager.stations = new(bl.GetStationList().Select(s => new Station(s)));
+            StationListView.DataContext = CollectionManager.stations;
+            CollectionManager.packages = new(bl.GetPackageList().Select(p => new Package(p)));
+            PackageListView.DataContext = CollectionManager.packages;
+            CollectionManager.customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
+            CustomerListView.DataContext = CollectionManager.customers;
             refreshed = false;
         }
 
@@ -203,15 +195,26 @@ namespace PL
             if (DroneStatusSelector.SelectedItem == null && DroneWeightSelector.SelectedItem == null)
                 return;
             else if (DroneStatusSelector.SelectedItem == null)
-               drones = new(drones.Where(d => d.weightCategory == GetDroneWeight()));
+                CollectionManager.drones = new(CollectionManager.drones.Where(d => d.weightCategory == GetDroneWeight()));
             else if (DroneWeightSelector.SelectedItem == null)
-                drones = new(drones.Where(d => d.status == GetDroneStatus()));
+                CollectionManager.drones = new(CollectionManager.drones.Where(d => d.status == GetDroneStatus()));
             else
-                drones = new(drones.Where(d => d.status == GetDroneStatus() && d.weightCategory == GetDroneWeight()));
-            DroneListView.DataContext = drones;
+                CollectionManager.drones = new(CollectionManager.drones.Where(d => d.status == GetDroneStatus() && d.weightCategory == GetDroneWeight()));
+            DroneListView.DataContext = CollectionManager.drones;
         }
 
         #endregion
 
+        private void CapacityGrouper_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionManager.stations = new(CollectionManager.stations.OrderBy(s => s.occupiedSlots + s.availableChargeSlots));            
+            StationListView.DataContext = CollectionManager.stations;
+        }
+
+        private void AvailableChargersGrouper_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionManager.stations = new(CollectionManager.stations.OrderBy(s => s.availableChargeSlots));            
+            StationListView.DataContext = CollectionManager.stations;
+        }
     }
 }

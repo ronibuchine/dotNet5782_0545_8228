@@ -24,11 +24,13 @@ namespace PL
     public partial class MainWindow : Window
     {
         IBLInterface bl;
+        CollectionManager lists;
 
         public MainWindow()
         {
             InitializeComponent();
             bl = BLFactory.GetBL();
+            lists = new();
             Drone.Visibility = Visibility.Visible;
             XDS.Visibility = Visibility.Visible;
         }
