@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UTIL;
 using BL;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {
-       
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int droneID)
         {
             Drone drone = GetDrone(droneID);
@@ -21,7 +23,7 @@ namespace BL
             dal.SendDroneToCharge(closestAvailable.ID, droneID);
         }
 
-       
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromCharge(int droneID)
         {
             Drone drone = GetDrone(droneID);
@@ -38,7 +40,7 @@ namespace BL
             dal.ReleaseDroneFromCharge(stationID, droneID);
         }
 
-       
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssignPackageToDrone(int droneID)
         {
             Drone drone = GetDrone(droneID);
@@ -71,7 +73,7 @@ namespace BL
             }
         }
 
-       
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void CollectPackage(int droneID)
         {
             Drone drone = GetDrone(droneID);
@@ -88,7 +90,7 @@ namespace BL
             dal.CollectPackageToDrone(dalPackage.ID);
         }
 
-       
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliverPackage(int droneID)
         {
             Drone drone = GetDrone(droneID);
@@ -110,12 +112,13 @@ namespace BL
             dal.ProvidePackageToCustomer(dalPackage.ID);
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool VerifyEmployeeCredentials(int ID, string password)
         {
             return dal.VerifyEmployeeCredentials(ID, password);            
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool VerifyCustomerCredentials(int ID, string password)
         {
             return dal.VerifyCustomerCredentials(ID, password);

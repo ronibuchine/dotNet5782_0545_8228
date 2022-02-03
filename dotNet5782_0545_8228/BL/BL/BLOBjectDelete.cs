@@ -1,9 +1,11 @@
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(int ID)
         {
             var customer = GetCustomerList().First(p => p.ID == ID);
@@ -14,6 +16,7 @@ namespace BL
             dal.DeleteCustomer(ID);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(int ID)
         {
             if (GetDrone(ID).status == DroneStatuses.delivery)
@@ -22,6 +25,7 @@ namespace BL
             dal.DeleteDrone(ID);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeletePackage(int ID)
         {
             var package = dal.GetPackage(ID);
@@ -32,6 +36,7 @@ namespace BL
             
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(int ID)
         {
             if (dal.GetAllCharges()
@@ -41,6 +46,7 @@ namespace BL
             dal.DeleteStation(ID);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteEmployee(int ID)
         {
             dal.DeleteEmployee(ID);

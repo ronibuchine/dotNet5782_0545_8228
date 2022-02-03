@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {
-      
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int ID)
         {
             try
@@ -21,7 +23,7 @@ namespace BL
             catch (DO.InvalidDalObjectException e) {throw new InvalidBlObjectException(e.Message);}
         }
 
-       
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int ID)
         {
             Drone drone;
@@ -37,8 +39,8 @@ namespace BL
                 throw new InvalidBlObjectException("ERROR: This entity does not exist.");
             return drone;
         }
-         
-      
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int ID)
         {
             if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
@@ -52,6 +54,7 @@ namespace BL
             catch (DO.InvalidDalObjectException e) { throw new InvalidBlObjectException(e.Message); }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Package GetPackage(int ID)
         {
             if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
@@ -65,6 +68,7 @@ namespace BL
             catch (DO.InvalidDalObjectException e) { throw new InvalidBlObjectException(e.Message); }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool GetEmployee(int ID)
         {
             if (!IsValidID(ID)) throw new InvalidIDException("ERROR: The ID is invalid");
@@ -75,42 +79,43 @@ namespace BL
             catch (DO.InvalidDalObjectException e) { return false; }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationToList> GetStationList()
         {
             return dal.GetAllStations().Select(ds => new StationToList(new Station(ds)));
         }
 
-      
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> GetDroneList()
         {
             return drones.Select((d) => new DroneToList(d));
         }
 
-       
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustomerToList> GetCustomerList()
         {
             return dal.GetAllCustomers().Select((c) => new CustomerToList(new Customer(c)));
         }
 
-      
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<PackageToList> GetPackageList()
         {
             return dal.GetAllPackages().Select((p) => new PackageToList(new Package(p)));
         }
 
-    
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Package> GetUnassignedPackages()
         {
             return dal.GetAllUnassignedPackages().Select(p => new Package(p));
         }
 
-    
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetAvailableStations()
         {               
             return dal.GetAllUnoccupiedStations().Select(s => new Station(s));
         }
 
-       
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> GetSpecificDrones(Func<DroneToList, bool> pred)
         {
             return GetDroneList().Where(pred);

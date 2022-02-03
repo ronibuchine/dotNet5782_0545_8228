@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {
 
-     
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int ID, string newModel)
         {
             try
@@ -21,6 +23,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, string stationName) // either one of the last two parameters must be entered or both of them
         {
             try
@@ -33,7 +36,7 @@ namespace BL
             }
         }
 
-        
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, int numChargers)
         {
             Station s = GetStation(stationID);
@@ -51,14 +54,14 @@ namespace BL
             }
         }
 
-     
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, string stationName, int numChargers)
         {
             UpdateStation(stationID, stationName);
             UpdateStation(stationID, numChargers);
         }
 
-      
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerName(int ID, string name)
         {
             try
@@ -71,7 +74,7 @@ namespace BL
             }
         }
 
-      
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerPhone(int ID, String phone)
         {
             try
@@ -85,6 +88,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerPassword(int ID, string password)
         {
             try
@@ -98,7 +102,7 @@ namespace BL
 
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(int ID, string name, string phone, string password = null)
         {
             dal.UpdateCustomer(ID, name, phone, password);

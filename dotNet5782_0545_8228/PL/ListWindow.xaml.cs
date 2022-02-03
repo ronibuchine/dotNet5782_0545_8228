@@ -39,20 +39,7 @@ namespace PL
             DroneWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PackagePrioritySelector.ItemsSource = Enum.GetValues(typeof(Priorities));
             PackageWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            // will tell the user if there were changes to the list view           
-            //Thread detectChanges = new Thread(() =>
-            //{
-            //    while (true)
-            //    {
-            //        if (!drones.Select(d => d.ID).Equals(bl.GetDroneList().Select(dl => dl.ID)) && !refreshed)
-            //        {
-            //            MessageBox.Show("There have been changes detected, refresh the window to see the changes.");
-            //            refreshed = true;
-            //        }
-            //        Thread.Sleep(1000);
-            //    }
-            //});
-            //detectChanges.Start();
+          
 
         }
 
@@ -103,6 +90,19 @@ namespace PL
         {
             FilterPackages();
         }
+
+        private void CapacityGrouper_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionManager.stations = new(CollectionManager.stations.OrderBy(s => s.occupiedSlots + s.availableChargeSlots));
+            StationListView.DataContext = CollectionManager.stations;
+        }
+
+        private void AvailableChargersGrouper_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionManager.stations = new(CollectionManager.stations.OrderBy(s => s.availableChargeSlots));
+            StationListView.DataContext = CollectionManager.stations;
+        }
+
         #endregion
 
         #region New Windows
@@ -205,16 +205,6 @@ namespace PL
 
         #endregion
 
-        private void CapacityGrouper_Click(object sender, RoutedEventArgs e)
-        {
-            CollectionManager.stations = new(CollectionManager.stations.OrderBy(s => s.occupiedSlots + s.availableChargeSlots));            
-            StationListView.DataContext = CollectionManager.stations;
-        }
-
-        private void AvailableChargersGrouper_Click(object sender, RoutedEventArgs e)
-        {
-            CollectionManager.stations = new(CollectionManager.stations.OrderBy(s => s.availableChargeSlots));            
-            StationListView.DataContext = CollectionManager.stations;
-        }
+       
     }
 }

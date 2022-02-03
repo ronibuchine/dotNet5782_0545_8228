@@ -1,11 +1,13 @@
 ﻿using DO;
 using DALAPI;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace DAL
 {
     public partial class DalObject : IDAL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int droneID, string newModel)
         {
             try
@@ -18,6 +20,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, string stationName)
         {
             try
@@ -30,6 +33,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, int numChargers)
         {
             try
@@ -42,12 +46,14 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, string stationName, int numChargers)
         {
             UpdateStation(stationID, stationName);
             UpdateStation(stationID, numChargers);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerName(int ID, string name)
         {
             try
@@ -60,6 +66,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerPhone(int ID, string phone)
         {
             try
@@ -72,6 +79,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerPassword(int ID, string password)
         {
             try
@@ -84,6 +92,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(int ID, string name, string phone, string password = null)
         {
             UpdateCustomerPhone(ID, phone);

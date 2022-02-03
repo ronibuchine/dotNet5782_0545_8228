@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     public partial class BLOBject : IBL.IBLInterface
     {
-      
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station AddStation(string name, Location location, int availableChargers)
         {
             try
@@ -19,7 +21,7 @@ namespace BL
             }
         }
 
-     
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone AddDrone(string model, WeightCategories maxWeight, int stationID)
         {
             try
@@ -44,7 +46,7 @@ namespace BL
             catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
         }
 
-     
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer AddCustomer(string name, string phone, Location location, int ID, string password = null)
         {
             try
@@ -56,7 +58,7 @@ namespace BL
             catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
         }
 
-       
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Package AddPackage(int senderID, int receiverID, WeightCategories weight, Priorities priority)
         {
             try
@@ -81,6 +83,7 @@ namespace BL
             catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddEmployee(int ID, string password)
         {
             try  // check to make sure the employee doesn't already exist
