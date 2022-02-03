@@ -11,46 +11,55 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int ID, string newModel)
         {
-            try
+            lock (dal)
             {
-                dal.UpdateDrone(ID, newModel);
-                Drone drone = GetDrone(ID);
-                drone.model = newModel;
-            }
-            catch (DO.InvalidDalObjectException e)
-            {
-                throw new InvalidBlObjectException(e.Message);
+                try
+                {
+                    dal.UpdateDrone(ID, newModel);
+                    Drone drone = GetDrone(ID);
+                    drone.model = newModel;
+                }
+                catch (DO.InvalidDalObjectException e)
+                {
+                    throw new InvalidBlObjectException(e.Message);
+                }
             }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, string stationName) // either one of the last two parameters must be entered or both of them
         {
-            try
+            lock (dal)
             {
-                dal.UpdateStation(stationID, stationName);
-            }
-            catch (DO.InvalidDalObjectException e)
-            {
-                throw new InvalidBlObjectException(e.Message);
+                try
+                {
+                    dal.UpdateStation(stationID, stationName);
+                }
+                catch (DO.InvalidDalObjectException e)
+                {
+                    throw new InvalidBlObjectException(e.Message);
+                }
             }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, int numChargers)
         {
-            Station s = GetStation(stationID);
-            if (s.chargingDrones.Count() > numChargers)
+            lock (dal)
             {
-                throw new InvalidBlObjectException("There are currently more drones charging here than update request");
-            }
-            try
-            {
-                dal.UpdateStation(stationID, numChargers);
-            }
-            catch (DO.InvalidDalObjectException e)
-            {
-                throw new InvalidBlObjectException(e.Message);
+                Station s = GetStation(stationID);
+                if (s.chargingDrones.Count() > numChargers)
+                {
+                    throw new InvalidBlObjectException("There are currently more drones charging here than update request");
+                }
+                try
+                {
+                    dal.UpdateStation(stationID, numChargers);
+                }
+                catch (DO.InvalidDalObjectException e)
+                {
+                    throw new InvalidBlObjectException(e.Message);
+                }
             }
         }
 
@@ -64,40 +73,48 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerName(int ID, string name)
         {
-            try
+            lock (dal)
             {
-                dal.UpdateCustomerName(ID, name);
-            }
-            catch (DO.InvalidDalObjectException e)
-            {
-                throw new InvalidBlObjectException(e.Message);
+                try
+                {
+                    dal.UpdateCustomerName(ID, name);
+                }
+                catch (DO.InvalidDalObjectException e)
+                {
+                    throw new InvalidBlObjectException(e.Message);
+                }
             }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerPhone(int ID, String phone)
         {
-            try
+            lock (dal)
             {
-                // TODO validate phone number
-                dal.UpdateCustomerPhone(ID, phone);
-            }
-            catch (DO.InvalidDalObjectException e)
-            {
-                throw new InvalidBlObjectException(e.Message);
+                try
+                {
+                    dal.UpdateCustomerPhone(ID, phone);
+                }
+                catch (DO.InvalidDalObjectException e)
+                {
+                    throw new InvalidBlObjectException(e.Message);
+                }
             }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerPassword(int ID, string password)
         {
-            try
+            lock (dal)
             {
-                dal.UpdateCustomerPassword(ID, password);
-            }
-            catch (DO.InvalidDalObjectException e)
-            {
-                throw new InvalidBlObjectException(e.Message);
+                try
+                {
+                    dal.UpdateCustomerPassword(ID, password);
+                }
+                catch (DO.InvalidDalObjectException e)
+                {
+                    throw new InvalidBlObjectException(e.Message);
+                }
             }
 
         }
@@ -105,7 +122,10 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(int ID, string name, string phone, string password = null)
         {
-            dal.UpdateCustomer(ID, name, phone, password);
+            lock (dal)
+            {
+                dal.UpdateCustomer(ID, name, phone, password);
+            }
         }
 
     }
