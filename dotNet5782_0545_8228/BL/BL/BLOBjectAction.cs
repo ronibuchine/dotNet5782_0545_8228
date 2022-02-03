@@ -146,5 +146,11 @@ namespace BL
             }
         }
 
+        
+        public void ActivateSimulator(int droneID, Action action, Func<bool> stopCheck)
+        {
+            Simulator simulator = new Simulator(this, droneID, action, stopCheck);
+        }
+
     }
 }

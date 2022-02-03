@@ -58,6 +58,9 @@
                 VerticalAlignment="Top" HorizontalAlignment="Center" 
                 Margin="0,350,0,0" Width="166" Height="20"
                 Grid.Row="1" />
+        <Button Name="SimulationButton" Content="Run Simulation" Grid.Row="1" Background="{StaticResource AddButtonBrush}" 
+                HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,0,0,10" Width="100"  FontFamily="Tw Cen MT"
+                FontSize="13" Click="SimulationButton_Click"/>
         <StackPanel Name="ButtonGrid" HorizontalAlignment="Center" Visibility="Hidden" Orientation="Horizontal" Width="600">
             <Button Name="DeleteDrone" Width="80" Height="30" Margin="20,0,0,0" Background="{StaticResource CancelButtonBrush}" Click="DeleteDrone_Click"  Visibility="Visible" Content="✕ Delete Drone" Foreground="LightGray" FontFamily="Tw Cen MT" FontSize="11" />
             <Button Name="SendToChargeButton" Width="80" Height="30" Background="{StaticResource ButtonBrush}" Visibility="Visible" Click="SendToChargeButton_Click" Margin="20,0,0,0">

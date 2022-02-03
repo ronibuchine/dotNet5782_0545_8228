@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using IBL;
 using BL;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Threading;
 
 namespace PL
 {
@@ -26,6 +28,7 @@ namespace PL
         Drone drone;
         // reference to a stations charging drone list if we need to have live updates
         ObservableCollection<BL.Drone> chargingDrones;
+        BackgroundWorker worker;
 
         internal DroneWindow(IBLInterface bl)
         {
@@ -56,7 +59,7 @@ namespace PL
             this.chargingDrones = chargingDrones;
             DataContext = this.drone;
 
-            TextEntries.Visibility = Visibility.Visible;            
+            TextEntries.Visibility = Visibility.Visible;
             ButtonGrid.Visibility = Visibility.Visible;
             UpdateDroneButton.Visibility = Visibility.Visible;
 
@@ -67,11 +70,11 @@ namespace PL
             string model = ModelEntry.Text;
             string weight = WeightSelection.Text;
             WeightCategories trueWeight;
-            if (weight == "light") 
+            if (weight == "light")
                 trueWeight = WeightCategories.light;
             else if (weight == "medium")
                 trueWeight = WeightCategories.medium;
-            else  
+            else
                 trueWeight = WeightCategories.heavy;
             int stationID = Int32.Parse(StationSelection.Text);
             try
@@ -80,7 +83,7 @@ namespace PL
                 Drone drone = new(bl.GetDroneList().Where(d => d.ID == ID).FirstOrDefault());
                 CollectionManager.drones.Add(drone);
                 if (MessageBox.Show("Drone Added Successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
-                
+
             }
             catch (InvalidBlObjectException except)
             {
@@ -90,7 +93,7 @@ namespace PL
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            Close();            
+            Close();
         }
 
         private void ModelUpdateButton_Click(object sender, RoutedEventArgs e)
@@ -115,7 +118,7 @@ namespace PL
             {
                 MessageBox.Show(except.Message);
             }
-            
+
 
         }
 
@@ -137,10 +140,10 @@ namespace PL
                 .IndexOf(CollectionManager.drones
                 .FirstOrDefault(d => d.ID == drone.ID));
             CollectionManager.drones[index] = drone;
-           
-            if (chargingDrones != null)            
+
+            if (chargingDrones != null)
                 chargingDrones.Remove(chargingDrones.FirstOrDefault(d => d.ID == drone.ID));
-            
+
         }
 
         private void SendToChargeButton_Click(object sender, RoutedEventArgs e)
@@ -170,7 +173,7 @@ namespace PL
             {
                 bl.AssignPackageToDrone(drone.ID);
                 Synchronize();
-                MessageBox.Show("Drone has now been assigned a package -- status set to delivery");                
+                MessageBox.Show("Drone has now been assigned a package -- status set to delivery");
             }
             catch (InvalidBlObjectException i)
             {
@@ -199,7 +202,7 @@ namespace PL
             }
         }
 
-       
+
 
         private void CollectPackageButton_Click(object sender, RoutedEventArgs e)
         {
@@ -256,6 +259,72 @@ namespace PL
             {
                 MessageBox.Show(except.Message);
             }
+        }
+
+
+
+
+        public bool TryAssignPackage(int droneID)
+        {
+            try
+            {
+                bl.AssignPackageToDrone(drone.ID);
+                return false;
+            }
+            catch (OperationNotPossibleException except)
+            {
+                return true;
+            }
+        }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Action sim = new(Simulate);
+            bl.ActivateSimulator(drone.ID,
+                sim,
+                () => TryAssignPackage(drone.ID));
+        }        
+
+        public void Simulate()
+        {
+            worker.ReportProgress(1);
+        }       
+
+        private void SimulationButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (drone.status != DroneStatuses.free)
+            {
+                MessageBox.Show("The drone must be free in order to run the simulation.");
+            }
+            worker = new BackgroundWorker();
+            worker.DoWork += Worker_DoWork;
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+            worker.ProgressChanged += Worker_ProgressChanged;
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+
+            try
+            {
+                worker.RunWorkerAsync();                
+            }
+            catch (Exception except)
+            {
+                worker.CancelAsync();
+                MessageBox.Show(except.Message);
+            }
+
+           
+
+        }
+
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Simulation completed, no more packages to assign.");
+        }
+
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            Synchronize();
         }
     }
 }
