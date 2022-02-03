@@ -126,7 +126,6 @@ namespace DAL
                 }
                 SaveXml("drones");
 
-
                 stationsRoot = Create(stationsPath);
                 num = rand.Next(MIN_STATIONS, MAX_STATIONS + 1);
                 for (int i = 0; i < num; i++)
@@ -161,7 +160,7 @@ namespace DAL
                     int randY = RandomExceptX(customersRoot.Elements().Count(), randX, rand);
                     int senderID = Int32.Parse(customersRoot.Elements().ElementAt(randX).Element("ID").Value);
                     int recieverID = Int32.Parse(customersRoot.Elements().ElementAt(randY).Element("ID").Value);
-                    int droneID = rand.Next(2) == 0 ? 0 : Int32.Parse(unassignedDrones.Elements().ElementAt(rand.Next(unassignedDrones.Count() - 1)).Value);
+                    int droneID = rand.Next(2) == 0 ? 0 : Int32.Parse(unassignedDrones.Elements().ElementAt(rand.Next(unassignedDrones.Count() - 1)).Element("ID").Value);
                     packagesRoot.Add(PackageToXElement(new Package(nextID++, senderID, recieverID, droneID)));
                 }
                 SaveXml("packages");
