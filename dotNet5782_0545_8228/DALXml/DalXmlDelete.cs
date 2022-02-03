@@ -1,6 +1,8 @@
 
 using System;
+using System.Linq;
 using DO;
+
 using DALAPI;
 
 namespace DAL
@@ -9,27 +11,62 @@ namespace DAL
     {
         public void DeleteCustomer(int ID)
         {
-            throw new NotImplementedException();
+            customersRoot = LoadXml("customers");
+            customersRoot
+                .Elements()
+                .Where(c => Int32.Parse(c.Element("ID").Value) == ID)
+                .First()
+                .Element("IsActive")
+                .Value = "false";
+            SaveXml("customers");
         }
 
         public void DeleteDrone(int ID)
         {
-            throw new NotImplementedException();
+            dronesRoot = LoadXml("drones");
+            dronesRoot
+                .Elements()
+                .Where(d => Int32.Parse(d.Element("ID").Value) == ID)
+                .First()
+                .Element("IsActive")
+                .Value = "false";
+            SaveXml("drones");
         }
 
         public void DeleteEmployee(int ID)
         {
-            throw new NotImplementedException();
+            employeesRoot = LoadXml("employees");
+            employeesRoot
+                .Elements()
+                .Where(c => Int32.Parse(c.Element("ID").Value) == ID)
+                .First()
+                .Element("IsActive")
+                .Value = "false";
+            SaveXml("employees");
         }
 
         public void DeletePackage(int ID)
         {
-            throw new NotImplementedException();
+            packagesRoot = LoadXml("packages");
+            packagesRoot
+                .Elements()
+                .Where(c => Int32.Parse(c.Element("ID").Value) == ID)
+                .First()
+                .Element("IsActive")
+                .Value = "false";
+            SaveXml("packages");
         }
 
         public void DeleteStation(int ID)
         {
-            throw new NotImplementedException();
+            stationsRoot = LoadXml("stations");
+            stationsRoot
+                .Elements()
+                .Where(c => Int32.Parse(c.Element("ID").Value) == ID)
+                .First()
+                .Element("IsActive")
+                .Value = "false";
+            SaveXml("stations");
         }
 
     }

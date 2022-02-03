@@ -3,31 +3,7 @@
   <drone>
     <ID>2</ID>
     <IsActive>true</IsActive>
-    <model>model1</model>
-    <maxWeight>heavy</maxWeight>
-  </drone>
-  <drone>
-    <ID>3</ID>
-    <IsActive>true</IsActive>
-    <model>model1_1</model>
-    <maxWeight>heavy</maxWeight>
-  </drone>
-  <drone>
-    <ID>4</ID>
-    <IsActive>true</IsActive>
-    <model>model1_2</model>
-    <maxWeight>heavy</maxWeight>
-  </drone>
-  <drone>
-    <ID>5</ID>
-    <IsActive>true</IsActive>
-    <model>model1_3</model>
-    <maxWeight>heavy</maxWeight>
-  </drone>
-  <drone>
-    <ID>6</ID>
-    <IsActive>true</IsActive>
-    <model>model1_4</model>
+    <model>droneModel</model>
     <maxWeight>heavy</maxWeight>
   </drone>
 </list>

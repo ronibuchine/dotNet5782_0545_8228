@@ -9,7 +9,8 @@ namespace DAL
     {
         public void AddCustomer(Customer customer)
         {
-            int count = LoadXml("customers").Elements().Count();
+            customersRoot = LoadXml("customers");
+            int count = customersRoot.Elements().Count();
             if (count + 1 <= MAX_CUSTOMERS)
                 customersRoot.Add(CustomerToXElement(customer));
             else
@@ -19,7 +20,8 @@ namespace DAL
 
         public void AddDrone(Drone drone)
         {
-            int count = LoadXml("drones").Elements().Count();
+            dronesRoot = LoadXml("drones");
+            int count = dronesRoot.Elements().Count();
             if (count + 1 <= MAX_DRONES)
                 dronesRoot.Add(DroneToXElement(drone));
             else
@@ -29,7 +31,8 @@ namespace DAL
 
         public void AddEmployee(int ID, string password)
         {
-            int count = LoadXml("employees").Elements().Count();
+            employeesRoot = LoadXml("employees");
+            int count = employeesRoot.Elements().Count();
             if (count + 1 <= MAX_EMPLOYEES)
                 employeesRoot.Add(EmployeeToXElement(new Employee(ID, password)));
             else
@@ -39,9 +42,10 @@ namespace DAL
 
         public void AddPackage(Package package)
         {
-            int count = LoadXml("packages").Elements().Count();
+            packagesRoot = LoadXml("packages");
+            int count = packagesRoot.Elements().Count();
             if (count + 1 <= MAX_PACKAGES)
-                employeesRoot.Add(PackageToXElement(package));
+                packagesRoot.Add(PackageToXElement(package));
             else
                 throw new DataSourceException("The entity could not be added to the system.");
             SaveXml("packages");
@@ -49,7 +53,8 @@ namespace DAL
 
         public void AddStation(Station droneStation)
         {
-            int count = LoadXml("stations").Elements().Count();
+            stationsRoot = LoadXml("stations");
+            int count = stationsRoot.Elements().Count();
             if (count + 1 <= MAX_STATIONS)
                 stationsRoot.Add(StationToXElement(droneStation));
             else
@@ -97,7 +102,8 @@ namespace DAL
         {
             return new XElement("droneCharge",
                     new XElement("DroneId", droneCharge.droneId),
-                    new XElement("StationId", droneCharge.stationId));
+                    new XElement("StationId", droneCharge.stationId),
+                    new XElement("beganCharge", droneCharge.beganCharge.ToString()));
         }
 
         private XElement EmployeeToXElement(Employee employee)

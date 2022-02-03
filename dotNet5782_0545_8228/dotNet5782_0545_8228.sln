@@ -22,8 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{22DFC022-031
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALXml", "DALXml\DALXml.csproj", "{AA1D35BA-0543-4708-8CC3-3232016D86B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALUtils", "DALUtils\DALUtils.csproj", "{6F3992A9-F068-486E-931D-E12D46C219A6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

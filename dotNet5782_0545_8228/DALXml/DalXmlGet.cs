@@ -19,6 +19,7 @@ namespace DAL
                            {
                                droneId = Int32.Parse(c.Element("DroneId").Value),
                                stationId = Int32.Parse(c.Element("StationId").Value),
+                               beganCharge = DateTime.Parse(c.Element("beganCharge").Value),
                            });
                 if (charges == null)
                     throw new InvalidDalObjectException();
@@ -35,17 +36,17 @@ namespace DAL
             IEnumerable<Customer> customers;
             try
             {
-                customers = (from p in LoadXml("customers").Elements()
-                             where p.Element("IsActive").Value == "true"
+                customers = (from c in LoadXml("customers").Elements()
+                             where c.Element("IsActive").Value == "true"
                              select new Customer
                              {
-                                 ID = Int32.Parse(p.Element("ID").Value),
-                                 IsActive = p.Element("IsActive").Value == "true" ? true : false,
-                                 name = p.Element("name").Value,
-                                 phone = p.Element("phone").Value,
-                                 longitude = Double.Parse(p.Element("longitude").Value),
-                                 latitude = Double.Parse(p.Element("latitude").Value),
-                                 password = p.Element("password").Value,
+                                 ID = Int32.Parse(c.Element("ID").Value),
+                                 IsActive = c.Element("IsActive").Value == "true" ? true : false,
+                                 name = c.Element("name").Value,
+                                 phone = c.Element("phone").Value,
+                                 longitude = Double.Parse(c.Element("longitude").Value),
+                                 latitude = Double.Parse(c.Element("latitude").Value),
+                                 password = c.Element("password").Value,
                              });
                 if (customers == null)
                     throw new InvalidDalObjectException();
@@ -103,7 +104,7 @@ namespace DAL
                                 senderId = Int32.Parse(p.Element("senderId").Value),
                                 recieverId = Int32.Parse(p.Element("recieverId").Value),
                                 droneId = Int32.Parse(p.Element("droneId").Value),
-                                weight = ParseWeightCategory(p.Element("droneId").Value),
+                                weight = ParseWeightCategory(p.Element("weight").Value),
                                 priority = ParsePriorityCategory(p.Element("priority").Value),
                                 requested = p.Element("requested").Value == "null" ? null : DateTime.Parse(p.Element("requested").Value),
                                 scheduled = p.Element("scheduled").Value == "null" ? null : DateTime.Parse(p.Element("scheduled").Value),
@@ -161,7 +162,7 @@ namespace DAL
                                 senderId = Int32.Parse(p.Element("senderId").Value),
                                 recieverId = Int32.Parse(p.Element("recieverId").Value),
                                 droneId = Int32.Parse(p.Element("droneId").Value),
-                                weight = ParseWeightCategory(p.Element("droneId").Value),
+                                weight = ParseWeightCategory(p.Element("weight").Value),
                                 priority = ParsePriorityCategory(p.Element("priority").Value),
                                 requested = p.Element("requested").Value == "null" ? null : DateTime.Parse(p.Element("requested").Value),
                                 scheduled = p.Element("scheduled").Value == "null" ? null : DateTime.Parse(p.Element("scheduled").Value),
@@ -209,7 +210,7 @@ namespace DAL
             try
             {
                 var drone = (from c in LoadXml("customers").Elements()
-                             where Int32.Parse(c.Element("ID").Value) == ID
+                             where Int32.Parse(c.Element("ID").Value) == ID && c.Element("IsActive").Value == "true"
                              select new Customer
                              {
                                  ID = Int32.Parse(c.Element("ID").Value),
@@ -237,7 +238,7 @@ namespace DAL
             {
                 LoadXml("drones");
                 var drone = (from d in LoadXml("drones").Elements()
-                             where Int32.Parse(d.Element("ID").Value) == ID
+                             where Int32.Parse(d.Element("ID").Value) == ID && d.Element("IsActive").Value == "true"
                              select new Drone
                              {
                                  ID = Int32.Parse(d.Element("ID").Value),
@@ -261,7 +262,7 @@ namespace DAL
             try
             {
                 var employee = (from d in LoadXml("employees").Elements()
-                                where Int32.Parse(d.Element("ID").Value) == ID
+                                where Int32.Parse(d.Element("ID").Value) == ID && d.Element("IsActive").Value == "true"
                                 select new Employee
                                 {
                                     ID = Int32.Parse(d.Element("ID").Value),
@@ -284,7 +285,7 @@ namespace DAL
             try
             {
                 var package = (from p in LoadXml("packages").Elements()
-                               where Int32.Parse(p.Element("ID").Value) == ID
+                               where Int32.Parse(p.Element("ID").Value) == ID && p.Element("IsActive").Value == "true"
                                select new Package
                                {
                                    ID = Int32.Parse(p.Element("ID").Value),
@@ -315,7 +316,7 @@ namespace DAL
             try
             {
                 var station = (from s in LoadXml("stations").Elements()
-                               where Int32.Parse(s.Element("ID").Value) == ID
+                               where Int32.Parse(s.Element("ID").Value) == ID && s.Element("IsActive").Value == "true"
                                select new Station
                                {
                                    ID = Int32.Parse(s.Element("ID").Value),

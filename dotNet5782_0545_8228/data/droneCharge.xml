@@ -1,23 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <list>
   <droneCharge>
-    <DroneId>1</DroneId>
-    <StationId>2</StationId>
-  </droneCharge>
-  <droneCharge>
-    <DroneId>1</DroneId>
-    <StationId>3</StationId>
-  </droneCharge>
-  <droneCharge>
-    <DroneId>1</DroneId>
-    <StationId>4</StationId>
-  </droneCharge>
-  <droneCharge>
-    <DroneId>1</DroneId>
-    <StationId>5</StationId>
-  </droneCharge>
-  <droneCharge>
-    <DroneId>1</DroneId>
-    <StationId>6</StationId>
+    <DroneId>2</DroneId>
+    <StationId>1</StationId>
+    <beganCharge>2/3/2022 11:31:50 PM</beganCharge>
   </droneCharge>
 </list>

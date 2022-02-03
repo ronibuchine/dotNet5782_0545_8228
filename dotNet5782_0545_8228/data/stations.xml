@@ -4,7 +4,7 @@
     <ID>1</ID>
     <IsActive>true</IsActive>
     <name>name</name>
-    <chargeSlots>0</chargeSlots>
+    <chargeSlots>3</chargeSlots>
     <longitude>1</longitude>
     <latitude>1</latitude>
   </station>

@@ -11,6 +11,7 @@ namespace DAL
         public void DeletePackage(int ID) => GetActualPackage(ID).IsActive = false;
 
         public void DeleteStation(int ID) => GetActualStation(ID).IsActive = false;
+
         public void DeleteEmployee(int ID) => GetActualEmployee(ID).IsActive = false;
     }
 }
