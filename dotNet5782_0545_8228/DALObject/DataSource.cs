@@ -9,15 +9,15 @@ namespace DAL
     {
         // TODO make these numbers bigger... and better
         internal const int MIN_DRONES = 5;
-        internal const int MIN_DRONE_STATIONS = 5;
+        internal const int MIN_DRONE_STATIONS = 10;
         internal const int MIN_CUSTOMERS = 5;
-        internal const int MIN_PACKAGES = 5;
+        internal const int MIN_PACKAGES = 50;
         internal const int MIN_EMPLOYEES = 1;
 
-        internal const int MAX_DRONES = 10;
-        internal const int MAX_STATIONS = 10;
-        internal const int MAX_CUSTOMERS = 10;
-        internal const int MAX_PACKAGES = 10;
+        internal const int MAX_DRONES = 20;
+        internal const int MAX_STATIONS = 20;
+        internal const int MAX_CUSTOMERS = 100;
+        internal const int MAX_PACKAGES = 100;
         internal const int MAX_DRONE_CHARGES = MAX_DRONES;
         internal const int MAX_EMPLOYEES = 5;
 
@@ -81,7 +81,7 @@ namespace DAL
                     int randY = RandomExceptX(customers.Count, randX, rand);
                     int senderID = customers[randX].ID;
                     int recieverID = customers[randY].ID;
-                    int droneID = rand.Next(2) == 0 ? 0 : unassignedDrones[rand.Next(unassignedDrones.Count)].ID;
+                    int droneID = rand.Next(2) == 0 || unassignedDrones.Count == 0 ? 0 : unassignedDrones[rand.Next(unassignedDrones.Count)].ID;
                     return new Package(nextID++, senderID, recieverID, droneID);
                 case IdalDoType.EMPLOYEE:
                     return new Employee(nextID++, ADMIN_PASSWORD);
