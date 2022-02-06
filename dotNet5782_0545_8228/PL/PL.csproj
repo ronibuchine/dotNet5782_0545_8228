@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="fonts\ShareTechMono-Regular.ttf" />
     <None Remove="images\box.png" />
     <None Remove="images\charging-station-bw.png" />
     <None Remove="images\charging-station.png" />
@@ -25,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="fonts\ShareTechMono-Regular.ttf" />
     <Resource Include="images\box.png" />
     <Resource Include="images\charging-station-bw.png" />
     <Resource Include="images\charging-station.png" />

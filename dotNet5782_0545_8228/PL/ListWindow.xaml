@@ -43,7 +43,7 @@
 
                         </Grid>
 
-                        <ListView  Foreground="LightGray" Name="DroneListView" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow" Grid.ColumnSpan="2" Margin="0,24,0,0" Grid.RowSpan="2" >
+                        <ListView  Foreground="LightGray" Name="DroneListView"  ItemContainerStyle="{StaticResource CustomListViewItem}" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow" Grid.ColumnSpan="2" Margin="0,24,0,0" Grid.RowSpan="2" >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -79,7 +79,7 @@
 
                         </Grid>
 
-                        <ListView Foreground="LightGray" Name="PackageListView" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="PackageListView_MouseDoubleClick"  >
+                        <ListView Foreground="LightGray" Name="PackageListView" ItemContainerStyle="{StaticResource CustomListViewItem}" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="PackageListView_MouseDoubleClick"  >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -126,7 +126,7 @@
 
                         </Grid>
 
-                        <ListView Foreground="LightGray" Name="StationListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="StationListView_MouseDoubleClick">
+                        <ListView Foreground="LightGray" Name="StationListView" ItemContainerStyle="{StaticResource CustomListViewItem}" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="StationListView_MouseDoubleClick">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -171,7 +171,7 @@
                                 </StackPanel>
                             </Button>
                         </Grid>
-                        <ListView Foreground="LightGray" Name="CustomerListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="CustomerListView_MouseDoubleClick"  >
+                        <ListView Foreground="LightGray" Name="CustomerListView" ItemContainerStyle="{StaticResource CustomListViewItem}" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="CustomerListView_MouseDoubleClick"  >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>

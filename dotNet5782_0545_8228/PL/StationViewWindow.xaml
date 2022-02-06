@@ -66,7 +66,7 @@
             </StackPanel>
            
         </StackPanel>
-        <ListView Name="ChargingDroneList" Visibility="Hidden" Height="200" Width="250" Grid.Column="1" Margin="0,0,0,0" ItemsSource="{Binding}" MouseDoubleClick="ChargingDroneList_MouseDoubleClick">
+        <ListView Name="ChargingDroneList" Background="{StaticResource WindowBrush}" ItemContainerStyle="{StaticResource CustomListViewItem}" Visibility="Hidden" Height="200" Width="250" Grid.Column="1" Margin="0,0,0,0" ItemsSource="{Binding}" MouseDoubleClick="ChargingDroneList_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Drone ID" DisplayMemberBinding="{Binding Path=ID}" Width="75"/>
