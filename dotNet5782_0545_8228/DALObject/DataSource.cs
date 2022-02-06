@@ -16,8 +16,8 @@ namespace DAL
 
         internal const int MAX_DRONES = 20;
         internal const int MAX_STATIONS = 20;
-        internal const int MAX_CUSTOMERS = 100;
-        internal const int MAX_PACKAGES = 100;
+        internal const int MAX_CUSTOMERS = 50;
+        internal const int MAX_PACKAGES = 50;
         internal const int MAX_DRONE_CHARGES = MAX_DRONES;
         internal const int MAX_EMPLOYEES = 5;
 

@@ -24,6 +24,8 @@ namespace PL
     {
         IBLInterface bl;
         Customer customer;
+        ObservableCollection<Package> incomingPackages = new();
+        ObservableCollection<Package> outgoingPackages = new();
 
         internal CustomerViewWindow(IBLInterface bl)
         {
@@ -43,8 +45,12 @@ namespace PL
             this.bl = bl;
             this.customer = customer;
             DataContext = this.customer;
-            SentPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesFromCustomer;
-            ReceivedPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesToCustomer;
+
+            outgoingPackages = new(bl.GetCustomer(customer.ID).packagesFromCustomer.Select(p => new Package(p, "sent", customer.ID)));
+            incomingPackages = new(bl.GetCustomer(customer.ID).packagesToCustomer.Select(p => new Package(p, "received", customer.ID)));
+            SentPackageList.DataContext = outgoingPackages;
+            ReceivedPackageList.DataContext = incomingPackages;
+
             CustomerInfoBorder.Visibility = Visibility.Visible;
             SentPackageList.Visibility = Visibility.Visible;
             ReceivedPackageList.Visibility = Visibility.Visible;
@@ -52,7 +58,6 @@ namespace PL
             IncomingHeader.Visibility = Visibility.Visible;
             CustomerImage.Visibility = Visibility.Visible;
             AddCustomerPackage.Visibility = Visibility.Visible;
-
         }        
        
 
@@ -94,13 +99,13 @@ namespace PL
 
         private void SentPackageList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            PackageAtCustomer package = (PackageAtCustomer)SentPackageList.SelectedItem;
+            Package package = (Package)SentPackageList.SelectedItem;
             new PackageViewWindow(bl, package, "sent", customer.ID).Show();
         }
 
         private void ReceivedPackageList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            PackageAtCustomer package = (PackageAtCustomer)ReceivedPackageList.SelectedItem;
+            Package package = (Package)ReceivedPackageList.SelectedItem;
             new PackageViewWindow(bl, package, "received", customer.ID).Show();
         }
 
@@ -127,7 +132,7 @@ namespace PL
 
         private void AddCustomerPackage_Click(object sender, RoutedEventArgs e)
         {
-            new PackageViewWindow(bl, customer).Show();
+            new PackageViewWindow(bl, customer, outgoingPackages).Show();
         }
     }
 }

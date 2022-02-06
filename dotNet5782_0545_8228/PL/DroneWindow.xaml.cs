@@ -62,9 +62,29 @@ namespace PL
             TextEntries.Visibility = Visibility.Visible;
             ButtonGrid.Visibility = Visibility.Visible;
             UpdateDroneButton.Visibility = Visibility.Visible;
+            SimulationButton.Visibility = Visibility.Visible;
 
         }
 
+        private void Synchronize()
+        {
+            BL.Drone tempDrone = bl.GetDrone(drone.ID);
+            drone.status = tempDrone.status;
+            drone.location = tempDrone.currentLocation;
+            drone.battery = tempDrone.battery;
+            drone.packageNumber = tempDrone.packageInTransfer == null ? null : tempDrone.packageInTransfer.ID;
+            // removes old drone from list and adds the updated one
+            int index = CollectionManager.drones
+                .IndexOf(CollectionManager.drones
+                .FirstOrDefault(d => d.ID == drone.ID));
+            CollectionManager.drones[index] = drone;
+
+            if (chargingDrones != null)
+                chargingDrones.Remove(chargingDrones.FirstOrDefault(d => d.ID == drone.ID));
+
+        }
+
+        #region UI Elements
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             string model = ModelEntry.Text;
@@ -128,24 +148,10 @@ namespace PL
             UpdateDroneModelText.Visibility = Visibility.Visible;
         }
 
-        private void Synchronize()
-        {
-            BL.Drone tempDrone = bl.GetDrone(drone.ID);
-            drone.status = tempDrone.status;
-            drone.location = tempDrone.currentLocation;
-            drone.battery = tempDrone.battery;
-            drone.packageNumber = tempDrone.packageInTransfer == null ? null : tempDrone.packageInTransfer.ID;
-            // removes old drone from list and adds the updated one
-            int index = CollectionManager.drones
-                .IndexOf(CollectionManager.drones
-                .FirstOrDefault(d => d.ID == drone.ID));
-            CollectionManager.drones[index] = drone;
+        #endregion
+              
 
-            if (chargingDrones != null)
-                chargingDrones.Remove(chargingDrones.FirstOrDefault(d => d.ID == drone.ID));
-
-        }
-
+        #region StackPanel Actions
         private void SendToChargeButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -253,6 +259,7 @@ namespace PL
             try
             {
                 bl.DeleteDrone(drone.ID);
+                CollectionManager.drones.Remove(CollectionManager.drones.First(d => d.ID == drone.ID));
                 if (MessageBox.Show("Drone successfully deactivated.", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
             }
             catch (Exception except)
@@ -260,16 +267,21 @@ namespace PL
                 MessageBox.Show(except.Message);
             }
         }
+        #endregion
 
 
-
-
+        #region Simulator
         public bool TryAssignPackage(int droneID)
         {
             try
             {
-                bl.AssignPackageToDrone(drone.ID);
-                return false;
+                if (bl.GetDrone(droneID).status == DroneStatuses.free)
+                {
+                    bl.AssignPackageToDrone(drone.ID);
+                    return false;
+                }               
+                else
+                    return true;
             }
             catch (OperationNotPossibleException except)
             {
@@ -282,49 +294,63 @@ namespace PL
             Action sim = new(Simulate);
             bl.ActivateSimulator(drone.ID,
                 sim,
-                () => TryAssignPackage(drone.ID));
-        }        
+                () => worker.CancellationPending || TryAssignPackage(drone.ID));
+        }
 
         public void Simulate()
         {
             worker.ReportProgress(1);
-        }       
+        }
 
         private void SimulationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (drone.status != DroneStatuses.free)
+            if (!(drone.status == DroneStatuses.free ||
+                (drone.status == DroneStatuses.delivery && bl.GetPackage(bl.GetDrone(drone.ID).packageInTransfer.ID).pickedUp == null)))
             {
-                MessageBox.Show("The drone must be free in order to run the simulation.");
-            }
-            worker = new BackgroundWorker();
-            worker.DoWork += Worker_DoWork;
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
-            worker.ProgressChanged += Worker_ProgressChanged;
-            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-
-            try
+                MessageBox.Show("The drone must be free or assigned a package in order to run the simulation.");
+            }   
+            else
             {
-                worker.RunWorkerAsync();                
-            }
-            catch (Exception except)
-            {
-                worker.CancelAsync();
-                MessageBox.Show(except.Message);
-            }
+                ButtonGrid.Visibility = Visibility.Hidden;
+                StopSimulationButton.Visibility = Visibility.Visible;
+                SimulationButton.Visibility = Visibility.Hidden;
+                worker = new BackgroundWorker();
+                worker.DoWork += Worker_DoWork;
+                worker.WorkerReportsProgress = true;
+                worker.WorkerSupportsCancellation = true;
+                worker.ProgressChanged += Worker_ProgressChanged;
+                worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
 
-           
-
+                try
+                {
+                    worker.RunWorkerAsync();                
+                }
+                catch (Exception except)
+                {
+                    worker.CancelAsync();
+                    MessageBox.Show(except.Message);
+                }
+            }
         }
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show("Simulation completed, no more packages to assign.");
+            MessageBox.Show("Simulation completed,\nno longer assigning packages");
+            ButtonGrid.Visibility = Visibility.Visible;
+            SimulationButton.Visibility = Visibility.Visible;
+            StopSimulationButton.Visibility = Visibility.Hidden;
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             Synchronize();
         }
+
+        private void StopSimulationButton_Click(object sender, RoutedEventArgs e)
+        {
+            worker.CancelAsync();
+            MessageBox.Show("Cancelation request recevied,\nsimulation will stop once the drone is fully charged.");
+        }
+        #endregion
     }
 }

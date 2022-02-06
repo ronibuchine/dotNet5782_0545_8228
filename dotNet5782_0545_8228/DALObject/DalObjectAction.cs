@@ -25,6 +25,7 @@ namespace DAL
         public void ProvidePackageToCustomer(int packageID)
         {
             GetActualPackage(packageID).delivered = DateTime.Now;
+            GetActualPackage(packageID).droneId = 0;
         }
 
         // This only removes the droncharge from the list. It does not calculate time charged!
