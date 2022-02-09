@@ -2,7 +2,7 @@ using DALAPI;
 
 namespace DAL
 {
-    public partial class DalObject : IDAL
+    public partial class DALObject : IDAL
     {
         public void DeleteCustomer(int ID) => GetActualCustomer(ID).IsActive = false;
 
@@ -11,6 +11,7 @@ namespace DAL
         public void DeletePackage(int ID) => GetActualPackage(ID).IsActive = false;
 
         public void DeleteStation(int ID) => GetActualStation(ID).IsActive = false;
+
         public void DeleteEmployee(int ID) => GetActualEmployee(ID).IsActive = false;
     }
 }

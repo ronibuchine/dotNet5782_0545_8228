@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<list>
+  <station>
+    <ID>1</ID>
+    <IsActive>true</IsActive>
+    <name>star destroyer</name>
+    <chargeSlots>4</chargeSlots>
+    <longitude>1</longitude>
+    <latitude>1</latitude>
+  </station>
+</list>

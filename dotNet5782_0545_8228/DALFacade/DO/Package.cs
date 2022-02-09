@@ -54,6 +54,8 @@ namespace DO
             this.delivered = null;
         }
 
+        public Package() : base() {}
+
         public override Package Clone() => this.MemberwiseClone() as Package;
 
         public override string ToString()

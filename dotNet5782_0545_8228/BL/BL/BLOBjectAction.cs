@@ -26,9 +26,12 @@ namespace BL
         {
             Drone drone = GetDrone(droneID);
             if (drone.status != DroneStatuses.maintenance) // is this always initialized?
-                throw new OperationNotPossibleException("Drone is not currently in maintenance"); 
+                throw new OperationNotPossibleException("Drone is not currently in maintenance");
+            var t = dal.GetAllCharges().ToList();
             TimeSpan timeCharged = DateTime.Now.Subtract(dal.GetAllCharges()
-                                 .First((dc) => dc.droneId == droneID).beganCharge);
+                                 .Where(dc => dc.droneId == droneID)
+                                 .First()
+                                 .beganCharge);
             drone.battery += timeCharged.Seconds * chargingRate;
             if (drone.battery > 100)
                 drone.battery = 100;

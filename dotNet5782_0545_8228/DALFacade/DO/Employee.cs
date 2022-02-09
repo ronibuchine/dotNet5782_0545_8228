@@ -9,6 +9,9 @@ namespace DO
         {
             this.password = password;
         }
+
+        public Employee() : base() {}
+
         public override Employee Clone() => this.MemberwiseClone() as Employee;
 
         public override string ToString()

@@ -177,40 +177,40 @@ namespace DALAPI
         /// <returns>A copy of the employee object</returns>
         public DO.Employee GetEmployee(int ID);
 
-        /// <summary>
-        /// This API call retrieves a drone based on it's ID
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns>A reference to the actual drone</returns>
-        public DO.Drone GetActualDrone(int ID);
+        /* /// <summary> */
+        /* /// This API call retrieves a drone based on it's ID */
+        /* /// </summary> */
+        /* /// <param name="ID"></param> */
+        /* /// <returns>A reference to the actual drone</returns> */
+        /* public DO.Drone GetActualDrone(int ID); */
 
-        /// <summary>
-        /// This API call retrieves a station from the system
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns>A referecne to the actual station</returns>
-        public DO.Station GetActualStation(int ID);
+        /* /// <summary> */
+        /* /// This API call retrieves a station from the system */
+        /* /// </summary> */
+        /* /// <param name="ID"></param> */
+        /* /// <returns>A referecne to the actual station</returns> */
+        /* public DO.Station GetActualStation(int ID); */
 
-        /// <summary>
-        /// This API call retrieves a customer from the system
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns>A reference of the actual customer</returns>
-        public DO.Customer GetActualCustomer(int ID);
+        /* /// <summary> */
+        /* /// This API call retrieves a customer from the system */
+        /* /// </summary> */
+        /* /// <param name="ID"></param> */
+        /* /// <returns>A reference of the actual customer</returns> */
+        /* public DO.Customer GetActualCustomer(int ID); */
 
-        /// <summary>
-        /// This API call retrieves a package from the system
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns>A reference to the actual package</returns>
-        public DO.Package GetActualPackage(int ID);
+        /* /// <summary> */
+        /* /// This API call retrieves a package from the system */
+        /* /// </summary> */
+        /* /// <param name="ID"></param> */
+        /* /// <returns>A reference to the actual package</returns> */
+        /* public DO.Package GetActualPackage(int ID); */
 
-        /// <summary>
-        /// This API call retrieves the employee from the system
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns>A reference to the actual employee</returns>
-        public DO.Employee GetActualEmployee(int ID);
+        /* /// <summary> */
+        /* /// This API call retrieves the employee from the system */
+        /* /// </summary> */
+        /* /// <param name="ID"></param> */
+        /* /// <returns>A reference to the actual employee</returns> */
+        /* public DO.Employee GetActualEmployee(int ID); */
 
         /// <summary>
         /// This API call will assign a given package to the specified drone in the system if it can

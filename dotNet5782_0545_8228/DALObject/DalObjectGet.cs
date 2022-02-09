@@ -4,7 +4,7 @@ using DALAPI;
 
 namespace DAL
 {
-    public partial class DalObject : IDAL
+    public partial class DALObject : IDAL
     {
 
         //Regular getters -- These returns copies
