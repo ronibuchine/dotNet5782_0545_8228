@@ -1,13 +1,15 @@
-
 using System;
 using DO;
 using DALAPI;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace DAL
 {
     public partial class DALXml : IDAL
     {
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssignPackageToDrone(int packageID, int droneID)
         {
             packagesRoot = LoadXml("packages");
@@ -20,6 +22,7 @@ namespace DAL
             SaveXml("packages");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void CollectPackageToDrone(int packageID)
         {
             packagesRoot = LoadXml("packages");
@@ -31,6 +34,7 @@ namespace DAL
             SaveXml("packages");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ProvidePackageToCustomer(int packageID)
         {
             packagesRoot = LoadXml("packages");
@@ -42,6 +46,7 @@ namespace DAL
             SaveXml("packages");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromCharge(int stationID, int droneID)
         {
             droneChargesRoot = LoadXml("droneCharges");
@@ -62,6 +67,7 @@ namespace DAL
             SaveXml("stations");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int stationID, int droneID)
         {
             droneChargesRoot = LoadXml("droneCharges");

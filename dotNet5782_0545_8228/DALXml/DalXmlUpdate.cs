@@ -1,14 +1,15 @@
-
 using System;
 using System.Linq;
 using DO;
 using DALAPI;
+using System.Runtime.CompilerServices;
 
 namespace DAL
 {
     public partial class DALXml : IDAL
     {
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(int ID, string name, string phone, string password = null)
         {
             UpdateCustomerName(ID, name);
@@ -16,6 +17,7 @@ namespace DAL
             UpdateCustomerPassword(ID, password);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerName(int ID, string name)
         {
             customersRoot = LoadXml("customers");
@@ -29,6 +31,7 @@ namespace DAL
             SaveXml("customers");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerPassword(int ID, string password)
         {
             customersRoot = LoadXml("customers");
@@ -42,6 +45,7 @@ namespace DAL
             SaveXml("customers");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerPhone(int ID, string phone)
         {
             customersRoot = LoadXml("customers");
@@ -55,6 +59,7 @@ namespace DAL
             SaveXml("customers");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int ID, string newModel)
         {
             dronesRoot = LoadXml("drones");
@@ -68,6 +73,7 @@ namespace DAL
             SaveXml("drones");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, string stationName)
         {
             stationsRoot = LoadXml("stations");
@@ -81,6 +87,7 @@ namespace DAL
             SaveXml("stations");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, int numChargers)
         {
             stationsRoot = LoadXml("stations");
@@ -94,6 +101,7 @@ namespace DAL
             SaveXml("stations");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationID, string stationName, int numChargers)
         {
             UpdateStation(stationID, stationName);

@@ -1,14 +1,15 @@
-
 using System;
 using DO;
 using DALAPI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace DAL
 {
     public partial class DALXml : IDAL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetAllCharges()
         {
             IEnumerable<DroneCharge> charges;
@@ -31,6 +32,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetAllCustomers()
         {
             IEnumerable<Customer> customers;
@@ -58,6 +60,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetAllDrones()
         {
             IEnumerable<Drone> drones;
@@ -85,11 +88,13 @@ namespace DAL
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Employee> GetAllEmployees()
         {
             throw new NotImplementedException();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Package> GetAllPackages()
         {
             IEnumerable<Package> packages;
@@ -121,6 +126,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetAllStations()
         {
             IEnumerable<Station> stations;
@@ -148,6 +154,7 @@ namespace DAL
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Package> GetAllUnassignedPackages()
         {
             IEnumerable<Package> packages;
@@ -179,6 +186,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetAllUnoccupiedStations()
         {
             IEnumerable<Station> stations;
@@ -205,6 +213,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int ID)
         {
             try
@@ -232,6 +241,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int ID)
         {
             try
@@ -257,6 +267,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Employee GetEmployee(int ID)
         {
             try
@@ -280,6 +291,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Package GetPackage(int ID)
         {
             try
@@ -311,6 +323,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int ID)
         {
             try
@@ -337,6 +350,7 @@ namespace DAL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         static private WeightCategories ParseWeightCategory(string weight) =>
             weight switch
             {
@@ -346,6 +360,7 @@ namespace DAL
                 _ => throw new Exception("not valid weight")
             };
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         static private Priorities ParsePriorityCategory(string priority) =>
             priority switch
             {

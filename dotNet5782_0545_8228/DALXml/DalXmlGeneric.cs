@@ -5,6 +5,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace DAL
 {
@@ -44,6 +45,7 @@ namespace DAL
         internal XElement customersRoot;
         internal XElement configRoot;
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         static private Drone XelementToDrone(XElement el)
         {
             IEnumerable<XElement> details = el.Elements();
@@ -83,6 +85,7 @@ namespace DAL
             Initialize();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void Initialize()
         {
             try
@@ -179,6 +182,7 @@ namespace DAL
             return (result + 1) % n;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private XElement LoadXml(String choice)
         {
             return choice switch
@@ -195,6 +199,7 @@ namespace DAL
         }
 
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void SaveXml(String choice)
         {
             switch (choice)
@@ -239,15 +244,6 @@ namespace DAL
             return xmlFile.Element("list");
         }
 
-        /* private XElement RandomlyPopulateList(String choice, XElement list) */
-        /* { */
-        /*     Random rand = new(); */
-        /*     switch (choice) */
-        /*     { */
-        /*         case "drones": */
-        /*             break; */
-        /*     } */
-        /* } */
 
 
         private Drone XElementToDroneList()
@@ -255,6 +251,7 @@ namespace DAL
             throw new NotImplementedException();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Clear()
         {
             dronesRoot = new XElement("list", "");
@@ -281,11 +278,13 @@ namespace DAL
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int GetNextID()
         {
             return Int32.Parse(XElement.Load(configPath).Element("nextID").Value);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] PowerConsumptionRequest()
         {
             XElement powerConsumption = XElement.Load(configPath).Element("powerConsumption");
@@ -298,11 +297,13 @@ namespace DAL
             return ret;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool VerifyCustomerCredentials(int ID, string password)
         {
             throw new NotImplementedException();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool VerifyEmployeeCredentials(int ID, string password)
         {
             throw new NotImplementedException();

@@ -2,11 +2,13 @@ using DO;
 using DALAPI;
 using System.Linq;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 
 namespace DAL
 {
     public partial class DALXml : IDAL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer customer)
         {
             customersRoot = LoadXml("customers");
@@ -18,6 +20,7 @@ namespace DAL
             SaveXml("customers");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone)
         {
             dronesRoot = LoadXml("drones");
@@ -29,6 +32,7 @@ namespace DAL
             SaveXml("drones");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddEmployee(int ID, string password)
         {
             employeesRoot = LoadXml("employees");
@@ -40,6 +44,7 @@ namespace DAL
             SaveXml("employees");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddPackage(Package package)
         {
             packagesRoot = LoadXml("packages");
@@ -51,6 +56,7 @@ namespace DAL
             SaveXml("packages");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station droneStation)
         {
             stationsRoot = LoadXml("stations");
@@ -62,6 +68,7 @@ namespace DAL
             SaveXml("stations");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private XElement DroneToXElement(Drone drone)
         {
             return new XElement("drone",
@@ -71,6 +78,7 @@ namespace DAL
                     new XElement("maxWeight", drone.maxWeight));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private XElement PackageToXElement(Package package)
         {
             return new XElement("package",
@@ -87,6 +95,7 @@ namespace DAL
                     new XElement("delivered", package.delivered != null ? package.delivered.ToString() : "null"));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private XElement StationToXElement(Station station)
         {
             return new XElement("station",
@@ -98,6 +107,7 @@ namespace DAL
                     new XElement("latitude", station.latitude));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private XElement DroneChargeToXElement(DroneCharge droneCharge)
         {
             return new XElement("droneCharge",
@@ -106,6 +116,7 @@ namespace DAL
                     new XElement("beganCharge", droneCharge.beganCharge.ToString()));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private XElement EmployeeToXElement(Employee employee)
         {
             return new XElement("employee",
@@ -114,6 +125,7 @@ namespace DAL
                     new XElement("password", employee.password));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private XElement CustomerToXElement(Customer customer)
         {
             return new XElement("customer",

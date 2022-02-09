@@ -3,8 +3,8 @@
   <station>
     <ID>1</ID>
     <IsActive>true</IsActive>
-    <name>name</name>
-    <chargeSlots>3</chargeSlots>
+    <name>star destroyer</name>
+    <chargeSlots>4</chargeSlots>
     <longitude>1</longitude>
     <latitude>1</latitude>
   </station>

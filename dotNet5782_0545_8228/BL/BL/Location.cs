@@ -25,8 +25,8 @@ namespace BL
         public override bool Equals(object obj)
         {
             return obj is Location location &&
-                    longitude == location.longitude &&
-                    latitude == location.latitude;
+                    this.longitude == location.longitude &&
+                    this.latitude == location.latitude;
         }
 
         public override int GetHashCode()

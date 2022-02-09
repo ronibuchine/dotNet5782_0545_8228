@@ -1,14 +1,13 @@
-
 using System;
 using System.Linq;
-using DO;
-
 using DALAPI;
+using System.Runtime.CompilerServices;
 
 namespace DAL
 {
     public partial class DALXml : IDAL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(int ID)
         {
             customersRoot = LoadXml("customers");
@@ -21,6 +20,7 @@ namespace DAL
             SaveXml("customers");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(int ID)
         {
             dronesRoot = LoadXml("drones");
@@ -33,6 +33,7 @@ namespace DAL
             SaveXml("drones");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteEmployee(int ID)
         {
             employeesRoot = LoadXml("employees");
@@ -45,6 +46,7 @@ namespace DAL
             SaveXml("employees");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeletePackage(int ID)
         {
             packagesRoot = LoadXml("packages");
@@ -57,6 +59,7 @@ namespace DAL
             SaveXml("packages");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(int ID)
         {
             stationsRoot = LoadXml("stations");
