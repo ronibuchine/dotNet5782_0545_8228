@@ -24,11 +24,13 @@ namespace PL
     public partial class MainWindow : Window
     {
         IBLInterface bl;
+        CollectionManager lists;
 
         public MainWindow()
         {
             InitializeComponent();
             bl = BLFactory.GetBL();
+            lists = new();
             Drone.Visibility = Visibility.Visible;
             XDS.Visibility = Visibility.Visible;
         }
@@ -54,7 +56,8 @@ namespace PL
             }
             else if (IsCustomer.IsChecked == true && bl.VerifyCustomerCredentials(ID, password)) 
             {
-                new ListWindow(bl).Show();
+                Customer customer = new(bl.GetCustomerList().Where(c => c.ID == int.Parse(Username.Text)).FirstOrDefault());
+                new CustomerViewWindow(bl, customer).Show();
                 Username.Text = "";
                 Password.Password = "";
             }

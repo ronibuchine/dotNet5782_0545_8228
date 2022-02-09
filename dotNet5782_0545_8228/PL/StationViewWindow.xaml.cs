@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IBL;
 using BL;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
@@ -23,6 +24,7 @@ namespace PL
     {
         IBLInterface bl;
         Station station;
+        ObservableCollection<BL.Drone> chargingDrones;
 
         internal StationViewWindow(IBLInterface bl, Station station)
         {
@@ -30,7 +32,7 @@ namespace PL
             this.bl = bl;
             this.station = station;
             DataContext = station;
-            ChargingDroneList.DataContext = bl.GetStation(station.ID).chargingDrones;
+            ChargingDroneList.DataContext = chargingDrones = new(bl.GetStation(station.ID).chargingDrones);
             ChargingDroneList.Visibility = Visibility.Visible;
             StationInfo.Visibility = Visibility.Visible;
             StationImage.Visibility = Visibility.Visible;
@@ -55,7 +57,15 @@ namespace PL
 
         private void DeleteStationButton_Click(object sender, RoutedEventArgs e)
         {
-            bl.DeleteStation(station.ID);
+            try
+            {
+                bl.DeleteStation(station.ID);
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+            
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -67,7 +77,7 @@ namespace PL
         {
             BL.Drone temp = (BL.Drone)ChargingDroneList.SelectedItem;
             Drone drone = new(bl.GetDroneList().Where(d => d.ID == temp.ID).FirstOrDefault());
-            new DroneWindow(bl, drone).Show();
+            new DroneWindow(bl, drone, chargingDrones).Show();
         }
 
         private void AddStation_Click(object sender, RoutedEventArgs e)

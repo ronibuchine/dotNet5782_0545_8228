@@ -7,41 +7,50 @@
         mc:Ignorable="d"
         Title="PackageViewWindow" Height="640" Width="800" WindowStartupLocation="CenterScreen">
     <Grid Background="{StaticResource WindowBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="300*"/>
-        </Grid.RowDefinitions>
+        
 
 
-        <Grid Grid.Row="1">
+        <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300*"/>
                 <ColumnDefinition Width="300*"/>
             </Grid.ColumnDefinitions>
+            <Image Name="AddPackageImage" Visibility="Hidden" Source="/images/box.png" Width="150" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,30,0,0"/>
+            <Border Name="AddBorder" Visibility="Hidden" 
+                    Background="{StaticResource ButtonBrush}" Grid.ColumnSpan="2" CornerRadius="10"
+                    Height="300" Width="250" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,120">
+                <StackPanel>
+                    <TextBlock Name="SenderText" Text="Choose Sender" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,20,0,0" FontStyle="Italic" Foreground="Gray"/>
+                    <ComboBox Name="SenderSelection" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150"/>
+                    <TextBlock Text="Choose Recipeint" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,10,0,0" FontStyle="Italic" Foreground="Gray"/>
+                    <ComboBox Name="ReceiverSelection"  HorizontalAlignment="Center" VerticalAlignment="Top" Width="150"/>
+                    <TextBlock Text="Select Package Weight" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,10,0,0" FontStyle="Italic" Foreground="Gray"/>
+                    <ComboBox Name="WeightSelection" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" />
+                    <TextBlock Text="Select Package Priority" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,10,0,0" FontStyle="Italic" Foreground="Gray"/>
+                    <ComboBox Name="PrioritySelection" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150"/>
+                    <Button Name="AddPackage" 
+                        Content="＋ Add Package" 
+                        HorizontalAlignment="Center"  
+                        VerticalAlignment="Top" Width="136" Background="{StaticResource AddButtonBrush}"
+                        Height="20"  Margin="0,30,0,0"
+                        FontFamily="Tw Cen MT" FontSize="13" Click="AddPackage_Click"/>
+                </StackPanel>
+            </Border>
 
-            <Button Name="AddPackage" 
-                Content="Add Package" 
-                HorizontalAlignment="Left"  
-                VerticalAlignment="Top" Width="136" 
-                Height="20" Margin="232,237,0,0" 
-                FontFamily="Tw Cen MT" FontSize="12"
-                Visibility="Hidden" Grid.ColumnSpan="2"/>
-            <ComboBox Name="WeightSelection" HorizontalAlignment="Left" Margin="232,195,0,0" VerticalAlignment="Top" Width="136" Visibility="Hidden" Grid.ColumnSpan="2" />
-            <ComboBox Name="StationSelection" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" Margin="232,155,0,0" Visibility="Hidden" Grid.ColumnSpan="2"/>
-            <Button x:Name="Cancel" 
-                Content="Cancel" 
-                HorizontalAlignment="Left"  
-                VerticalAlignment="Bottom" Width="60" Height="20" 
-                Click="Cancel_Click"  Margin="10,0,0,10" 
-                FontFamily="Tw Cen MT" FontSize="14" FontStretch="Expanded"
-                Background="{StaticResource ButtonBrush}" Grid.Row="1"/>
-            <Image Source="/images/box.png" Margin="162,6,114,332"/>
-            <Button Name="ViewDrone" Margin="118,47,158,369" Grid.Column="1" Background="{StaticResource AddButtonBrush}" Click="ViewDrone_Click">
+            <Image Name="PackageInfoImage" Visibility="Hidden" Source="/images/box.png" Margin="162,6,114,332"/>
+            <Button Name="ViewDrone" Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Center" Width="150" Margin="0,47,0,0" Grid.Column="1" Background="{StaticResource AddButtonBrush}" Click="ViewDrone_Click">
                 <Image Source="/images/drone-package.png"/>
             </Button>
+            <Button Name="Cancel" 
+                    Content="Cancel" 
+                    HorizontalAlignment="Left"  
+                    VerticalAlignment="Bottom" Width="60" Height="20" 
+                    Click="Cancel_Click"  Margin="10,0,0,10" 
+                    FontFamily="Tw Cen MT" FontSize="14" FontStretch="Expanded"
+                    Background="{StaticResource ButtonBrush}" />
 
 
-            <StackPanel Name="PackagePanel" Grid.Column="0" VerticalAlignment="Top" Height="277" Margin="100,195,52,0">
+            <StackPanel Name="PackagePanel" Visibility="Hidden" Grid.Column="0" VerticalAlignment="Top" Height="277" Margin="100,195,52,0">
                 <TextBlock Name="IDBlock" Text="{Binding ID, Mode=TwoWay, StringFormat='ID: {0}'}" Width="150" Height="25" Margin="0,10,0,0" Background="LightGray"/>
                 <TextBlock Name="SenderBlock" Text="{Binding senderName, Mode=TwoWay}" Width="150" Margin="0,10,0,0"  Background="LightGray" Height="25"/>
                 <TextBlock Name="ReceiverBlock" Text="{Binding receiverName, Mode=TwoWay}" Width="150" Margin="0,10,0,0" Background="LightGray" Height="25"/>
@@ -51,7 +60,7 @@
                 <Button Name="DeletePackageButton" Width="120" Margin="0,20,0,0" Background="{StaticResource CancelButtonBrush}" Click="DeletePackageButton_Click"  Visibility="Visible" Content="✕ Delete Package" FontFamily="Tw Cen MT" Foreground="LightGray" FontSize="10" Height="20"/>
             </StackPanel>
 
-            <StackPanel Name="DronePanel" Grid.Column="1" VerticalAlignment="Top" Height="200" Margin="92,206,132,0">
+            <StackPanel Name="DronePanel" Visibility="Hidden" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Height="200" Margin="0,250,0,0">
                 <TextBlock Name="DroneIDBlock" FontSize="10" Foreground="Gray" Text="{Binding ID, Mode=TwoWay, FallbackValue='No Content Available', StringFormat='ID: {0}'}" Width="150" Height="20" Margin="0,10,0,0" Background="LightGray"/>
                 <TextBlock Name="DroneWeightBlock" FontSize="10" Foreground="Gray" Text="{Binding weightCategory, FallbackValue='No Content Available', Mode=TwoWay}" Width="150" Margin="0,10,0,0"  Background="LightGray" Height="20"/>
                 <TextBlock Name="DroneLocationBlock" FontSize="10" Foreground="Gray" Text="{Binding location, FallbackValue='No Content Available', Mode=TwoWay}" Width="150" Margin="0,10,0,0" Background="LightGray" Height="40"/>

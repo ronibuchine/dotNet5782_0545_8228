@@ -60,7 +60,7 @@ namespace PL
                         PasswordBox.Text);
                     if (MessageBox.Show("Account Created Successfully", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
                 }
-                catch (FormatException fExcept)
+                catch (Exception fExcept)
                 {
                     MessageBox.Show("Please enter a valid ID/Phone Number");
                 }

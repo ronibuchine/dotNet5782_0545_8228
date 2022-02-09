@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using IBL;
 using BL;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Threading;
 
 namespace PL
 {
@@ -24,56 +26,96 @@ namespace PL
     {
 
         IBLInterface bl;
-        internal ObservableCollection<Drone> drones;
-        internal ObservableCollection<Station> stations;
-        internal ObservableCollection<Package> packages;
-        internal ObservableCollection<Customer> customers;
+        internal bool refreshed = false;
         public ListWindow(IBLInterface bl)
         {
             InitializeComponent();
             this.bl = bl;
-            drones = new(bl.GetDroneList().Select(d => new Drone(d)));
-            DroneListView.DataContext = drones;
-            stations = new(bl.GetStationList().Select(s => new Station(s)));
-            StationListView.DataContext = stations;
-            packages = new(bl.GetPackageList().Select(p => new Package(p)));
-            PackageListView.DataContext = packages;
-            customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
-            CustomerListView.DataContext = customers;
+            DroneListView.DataContext = CollectionManager.drones;
+            StationListView.DataContext = CollectionManager.stations;
+            PackageListView.DataContext = CollectionManager.packages;
+            CustomerListView.DataContext = CollectionManager.customers;
             DroneStatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            DroneWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));           
+            DroneWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            PackagePrioritySelector.ItemsSource = Enum.GetValues(typeof(Priorities));
+            PackageWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            // will tell the user if there were changes to the list view           
+            //Thread detectChanges = new Thread(() =>
+            //{
+            //    while (true)
+            //    {
+            //        if (!drones.Select(d => d.ID).Equals(bl.GetDroneList().Select(dl => dl.ID)) && !refreshed)
+            //        {
+            //            MessageBox.Show("There have been changes detected, refresh the window to see the changes.");
+            //            refreshed = true;
+            //        }
+            //        Thread.Sleep(1000);
+            //    }
+            //});
+            //detectChanges.Start();
+
         }
 
+        #region Window Actions
         private void DroneStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Filter();
+            FilterDrones();
         }
 
         private void DroneWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Filter();
+            FilterDrones();
         }
 
-        private void Filter()
+                       
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DroneStatusSelector.SelectedItem == null && DroneWeightSelector.SelectedItem == null)
-                DroneListView.ItemsSource = drones;
-            else if (DroneStatusSelector.SelectedItem == null)
-                DroneListView.ItemsSource = drones.Where(d => d.weightCategory == GetWeight());
-            else if (DroneWeightSelector.SelectedItem == null)
-                DroneListView.ItemsSource = drones.Where(d => d.status == GetStatus());
-            else
-                DroneListView.ItemsSource = drones.Where(d => d.status == GetStatus() && d.weightCategory == GetWeight());
+            Close();
         }
 
-        private DroneStatuses GetStatus()
-        {
-            return (DroneStatuses)DroneStatusSelector.SelectedItem;            
+        private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
+        {            
+            DroneStatusSelector.SelectedIndex = DroneWeightSelector.SelectedIndex = -1;            
+            PackagePrioritySelector.SelectedIndex = PackageWeightSelector.SelectedIndex = -1;
+            Refresh();
         }
 
-        private WeightCategories GetWeight()
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            return (WeightCategories)DroneWeightSelector.SelectedItem;            
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+
+       
+       
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+        }
+
+        private void PackagePrioritySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FilterPackages();
+        }
+
+        private void PackageWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FilterPackages();
+        }
+        #endregion
+
+        #region New Windows
+        private void StationListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Station station = (Station)StationListView.SelectedItem;
+            new StationViewWindow(bl, station).Show();
+        }
+
+        private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Customer customer = (Customer)CustomerListView.SelectedItem;
+            new CustomerViewWindow(bl, customer).Show();
         }
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
@@ -87,41 +129,14 @@ namespace PL
             new DroneWindow(bl, drone).Show();
         }
 
-       
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void AddStationButton_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            new StationViewWindow(bl).Show();
         }
 
-        private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
+        private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
         {
-            DroneListView.ItemsSource = drones;
-            DroneStatusSelector.SelectedIndex = DroneWeightSelector.SelectedIndex = -1;
-        }
-
-        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
-        }
-
-        private void CustomerListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            Customer customer = (Customer)CustomerListView.SelectedItem;
-            new CustomerViewWindow(bl, customer, customers).Show();
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            drones = new(bl.GetDroneList().Select(d => new Drone(d)));
-            DroneListView.DataContext = drones;
-            stations = new(bl.GetStationList().Select(s => new Station(s)));
-            StationListView.DataContext = stations;
-            packages = new(bl.GetPackageList().Select(p => new Package(p)));
-            PackageListView.DataContext = packages;
-            customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
-            CustomerListView.DataContext = customers;
+            new CustomerViewWindow(bl).Show();
         }
 
         private void PackageListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -130,15 +145,76 @@ namespace PL
             new PackageViewWindow(bl, package).Show();
         }
 
-        private void StationListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void AddPackageButton_Click(object sender, RoutedEventArgs e)
         {
-            Station station = (Station)StationListView.SelectedItem;
-            new StationViewWindow(bl, station).Show();
+            new PackageViewWindow(bl).Show();
+        }
+        #endregion
+
+       
+        #region Helper Functions
+
+        private void FilterPackages()
+        {
+            if (PackagePrioritySelector.SelectedItem == null && PackageWeightSelector.SelectedItem == null)
+                return;
+            else if (PackagePrioritySelector.SelectedItem == null)
+                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem));
+            else if (DroneWeightSelector.SelectedItem == null)
+                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem));
+            else
+                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem &&
+                    p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem));
+            PackageListView.DataContext = CollectionManager.packages;
+        }
+        private void Refresh()
+        {
+            CollectionManager.drones = new(bl.GetDroneList().Select(d => new Drone(d)));
+            DroneListView.DataContext = CollectionManager.drones;
+            CollectionManager.stations = new(bl.GetStationList().Select(s => new Station(s)));
+            StationListView.DataContext = CollectionManager.stations;
+            CollectionManager.packages = new(bl.GetPackageList().Select(p => new Package(p)));
+            PackageListView.DataContext = CollectionManager.packages;
+            CollectionManager.customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
+            CustomerListView.DataContext = CollectionManager.customers;
+            refreshed = false;
         }
 
-        private void AddStationButton_Click(object sender, RoutedEventArgs e)
+        private DroneStatuses GetDroneStatus()
         {
-            new StationViewWindow(bl).Show();
+            return (DroneStatuses)DroneStatusSelector.SelectedItem;
+        }
+
+        private WeightCategories GetDroneWeight()
+        {
+            return (WeightCategories)DroneWeightSelector.SelectedItem;
+        }
+
+        private void FilterDrones()
+        {
+            if (DroneStatusSelector.SelectedItem == null && DroneWeightSelector.SelectedItem == null)
+                return;
+            else if (DroneStatusSelector.SelectedItem == null)
+                CollectionManager.drones = new(CollectionManager.drones.Where(d => d.weightCategory == GetDroneWeight()));
+            else if (DroneWeightSelector.SelectedItem == null)
+                CollectionManager.drones = new(CollectionManager.drones.Where(d => d.status == GetDroneStatus()));
+            else
+                CollectionManager.drones = new(CollectionManager.drones.Where(d => d.status == GetDroneStatus() && d.weightCategory == GetDroneWeight()));
+            DroneListView.DataContext = CollectionManager.drones;
+        }
+
+        #endregion
+
+        private void CapacityGrouper_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionManager.stations = new(CollectionManager.stations.OrderBy(s => s.occupiedSlots + s.availableChargeSlots));            
+            StationListView.DataContext = CollectionManager.stations;
+        }
+
+        private void AvailableChargersGrouper_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionManager.stations = new(CollectionManager.stations.OrderBy(s => s.availableChargeSlots));            
+            StationListView.DataContext = CollectionManager.stations;
         }
     }
 }

@@ -24,60 +24,39 @@ namespace PL
     {
         IBLInterface bl;
         Customer customer;
-        ObservableCollection<Customer> customers;
 
-        internal CustomerViewWindow(IBLInterface bl, ObservableCollection<Customer> customers)
+        internal CustomerViewWindow(IBLInterface bl)
         {
             InitializeComponent();
             this.bl = bl;
-            this.customers = customers;
+            AddBorder.Visibility = Visibility.Visible;
+            AddCustomerImage.Visibility = Visibility.Visible;
 
         }
 
         /// <summary>
         /// Drone Window ctor for actions
         /// </summary>
-        internal CustomerViewWindow(IBLInterface bl, Customer customer, ObservableCollection<Customer> customers)
+        internal CustomerViewWindow(IBLInterface bl, Customer customer)
         {
             InitializeComponent();
             this.bl = bl;
             this.customer = customer;
-            this.customers = customers;
             DataContext = this.customer;
             SentPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesFromCustomer;
             ReceivedPackageList.ItemsSource = bl.GetCustomer(customer.ID).packagesToCustomer;
+            CustomerInfoBorder.Visibility = Visibility.Visible;
+            SentPackageList.Visibility = Visibility.Visible;
+            ReceivedPackageList.Visibility = Visibility.Visible;
+            OutgoingHeader.Visibility = Visibility.Visible;
+            IncomingHeader.Visibility = Visibility.Visible;
+            CustomerImage.Visibility = Visibility.Visible;
+            AddCustomerPackage.Visibility = Visibility.Visible;
 
-        }
+        }        
+       
 
-        
-
-        private void AddDrone_Click(object sender, RoutedEventArgs e)
-        {
-            string model = ModelEntry.Text;
-            string weight = WeightSelection.Text;
-            WeightCategories trueWeight;
-            if (weight == "light")
-                trueWeight = WeightCategories.light;
-            else if (weight == "medium")
-                trueWeight = WeightCategories.medium;
-            else
-                trueWeight = WeightCategories.heavy;
-            int stationID = Int32.Parse(StationSelection.Text);
-            try
-            {
-                bl.AddDrone(model, trueWeight, stationID);
-                if (MessageBox.Show("Drone Added Successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK)
-                {
-                    ListWindow window = Application.Current.Windows.OfType<ListWindow>().FirstOrDefault();
-                    customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
-                    Close();
-                }
-            }
-            catch (InvalidBlObjectException except)
-            {
-                if (MessageBox.Show(except.Message, "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
-            }
-        }
+     
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -88,8 +67,12 @@ namespace PL
         {
             try
             {
-                bl.UpdateCustomer(customer.ID, NameBlock.Text, PhoneBlock.Text);
+                bl.UpdateCustomer(customer.ID, NameBlock.Text, int.Parse(PhoneBlock.Text).ToString());
                 Synchronize();
+            }
+            catch (FormatException fExcept)
+            {
+                MessageBox.Show("Please enter a valid phone number.");
             }
             catch (Exception except)
             {
@@ -100,10 +83,13 @@ namespace PL
         private void Synchronize()
         {
             BL.Customer tempCustomer = bl.GetCustomer(customer.ID);
+            
             customer.name = tempCustomer.name;
             customer.phoneNumber = tempCustomer.phone;
-            Customer temp = customers.Where(c => c.ID == customer.ID).FirstOrDefault();
-            customers[customers.IndexOf(temp)] = customer;
+            Customer temp = CollectionManager.customers.Where(c => c.ID == customer.ID).FirstOrDefault();
+            CollectionManager.customers[CollectionManager.customers.IndexOf(temp)] = customer;
+            
+
         }
 
         private void SentPackageList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -116,6 +102,32 @@ namespace PL
         {
             PackageAtCustomer package = (PackageAtCustomer)ReceivedPackageList.SelectedItem;
             new PackageViewWindow(bl, package, "received", customer.ID).Show();
+        }
+
+        private void AddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BL.Customer temp = bl.AddCustomer(NameEntry.Text,
+                  PhoneEntry.Text,
+                  new Location(double.Parse(LatitudeEntry.Text),
+                  double.Parse(LongitudeEntry.Text)),
+                  int.Parse(IDEntry.Text));
+                customer = new(bl.GetCustomerList().First(c => c.ID == temp.ID));
+                Synchronize();
+                if (MessageBox.Show("Customer added successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK)
+                    Close();
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+           
+        }
+
+        private void AddCustomerPackage_Click(object sender, RoutedEventArgs e)
+        {
+            new PackageViewWindow(bl, customer).Show();
         }
     }
 }

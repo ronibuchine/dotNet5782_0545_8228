@@ -21,6 +21,7 @@ namespace DAL
         public static int nextID;
 
         private DALObject()
+
         {
             DataSource.Initialize();
             nextID = DataSource.nextID;
@@ -80,16 +81,16 @@ namespace DAL
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="rand">A Random object</param>
-        /* private void AddDalItem<T>( */
-        /*         List<T> list, */
-        /*         IdalDoType type) */
-        /*     where T : DalEntity */
-        /* { */
-        /*     if (list.Count + 1 <= list.Capacity) */
-        /*         list.Add((T)DataSource.Insert(type)); */
-        /*     else */
-        /*         throw new DataSourceException("The entity could not be added to the system."); */
-        /* } */
+        private void AddDalItem<T>(
+                List<T> list,
+                IdalDoType type)
+            where T : DalEntity
+        {
+            if (list.Count + 1 <= list.Capacity)
+                list.Add((T)DataSource.Insert(type));
+            else
+                throw new DataSourceException("The entity could not be added to the system.");
+        }
 
         private void AddDalItem<T>(
                 List<T> list,

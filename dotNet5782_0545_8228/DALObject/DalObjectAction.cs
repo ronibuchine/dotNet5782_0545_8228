@@ -24,11 +24,13 @@ namespace DAL
             GetActualPackage(packageID).delivered = DateTime.Now;
         }
 
+
         // This only removes the dronecharge from the list. It does not calculate time charged!
         public void ReleaseDroneFromCharge(int stationID, int droneID)
         {
             var removeMe = DataSource.droneCharges.Find(dc => dc.droneId == droneID);
             DataSource.droneCharges.Remove(removeMe);
+
             GetActualStation(stationID).chargeSlots++;
         }
 

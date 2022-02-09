@@ -40,7 +40,7 @@ namespace DAL
             internal static double lightWeight = 1d/480;
             internal static double midWeight = 1d/450;
             internal static double heavyWeight = 1d/420;
-            internal static double chargingRate = 10; // in % per hour
+            internal static double chargingRate = 2; // in % per second
             internal static int packageCount = 0;
         }
 
@@ -81,7 +81,7 @@ namespace DAL
                     int randY = RandomExceptX(customers.Count, randX, rand);
                     int senderID = customers[randX].ID;
                     int recieverID = customers[randY].ID;
-                    int droneID = rand.Next(2) == 0 ? 0 : unassignedDrones[rand.Next(unassignedDrones.Count-1)].ID;
+                    int droneID = rand.Next(2) == 0 ? 0 : unassignedDrones[rand.Next(unassignedDrones.Count)].ID;
                     return new Package(nextID++, senderID, recieverID, droneID);
                 case IdalDoType.EMPLOYEE:
                     return new Employee(nextID++, ADMIN_PASSWORD);

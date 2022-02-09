@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IBL;
 using BL;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
@@ -25,6 +26,8 @@ namespace PL
         IBLInterface bl;
         Package package;
         DroneToList drone;
+        Customer customer = null;
+
         internal PackageViewWindow(IBLInterface bl, Package package)
         {
             InitializeComponent();
@@ -33,6 +36,10 @@ namespace PL
             this.drone = bl.GetDroneList().Where(d => d.packageNumber == package.ID).FirstOrDefault();
             DataContext = package;
             DronePanel.DataContext = drone;
+            PackageInfoImage.Visibility = Visibility.Visible;
+            ViewDrone.Visibility = Visibility.Visible;
+            PackagePanel.Visibility = Visibility.Visible;
+            DronePanel.Visibility = Visibility.Visible;
         }
 
         internal PackageViewWindow(IBLInterface bl, PackageAtCustomer package, string sendReceiveValue, int customerID)
@@ -43,12 +50,54 @@ namespace PL
             drone = bl.GetDroneList().Where(d => d.packageNumber == package.ID).FirstOrDefault();
             DataContext = package; 
             DronePanel.DataContext = drone;
-            
+            PackageInfoImage.Visibility = Visibility.Visible;
+            ViewDrone.Visibility = Visibility.Visible;
+            PackagePanel.Visibility = Visibility.Visible;
+            DronePanel.Visibility = Visibility.Visible;
+
+        }
+
+        internal PackageViewWindow(IBLInterface bl)
+        {
+            InitializeComponent();
+            this.bl = bl;
+            AddBorder.Visibility = Visibility.Visible;
+            AddPackageImage.Visibility = Visibility.Visible;
+            SenderSelection.ItemsSource = CollectionManager.customers.Select(c => c.ID);
+            ReceiverSelection.ItemsSource = CollectionManager.customers.Select(c => c.ID);
+            WeightSelection.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            PrioritySelection.ItemsSource = Enum.GetValues(typeof(Priorities));
+        }
+
+        internal PackageViewWindow(IBLInterface bl, Customer customer)
+        {
+            InitializeComponent();
+            this.bl = bl;
+            this.customer = customer;
+            CollectionManager.customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
+            AddBorder.Visibility = Visibility.Visible;
+            AddPackageImage.Visibility = Visibility.Visible;
+            ReceiverSelection.ItemsSource = CollectionManager.customers.Select(c => c.ID);
+            WeightSelection.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            PrioritySelection.ItemsSource = Enum.GetValues(typeof(Priorities));
+            SenderText.Visibility = Visibility.Hidden;
+            SenderSelection.Visibility = Visibility.Hidden;
         }
 
         private void DeletePackageButton_Click(object sender, RoutedEventArgs e)
         {
-            bl.DeletePackage(package.ID);
+            try
+            {
+                bl.DeletePackage(package.ID);
+                if (MessageBox.Show("Package removed successfully", "", MessageBoxButton.OK) == MessageBoxResult.OK)
+                    Close();
+                
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
+            
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -58,10 +107,37 @@ namespace PL
 
         private void ViewDrone_Click(object sender, RoutedEventArgs e)
         {
-            if (drone != null)
+            if (drone != null && customer == null)
                 new DroneWindow(bl, new(drone)).Show();
             else
                 MessageBox.Show("There is no drone assigned to the selected package.");
+        }
+
+        private void AddPackage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {              
+                int senderID;
+                if (customer != null)
+                    senderID = customer.ID;
+                else
+                    senderID = (int)SenderSelection.SelectedItem;
+                if (senderID == (int)ReceiverSelection.SelectedItem)
+                    throw new OperationNotPossibleException("The sender and receiver cannot be the same person.\nPlease try again.");
+                bl.AddPackage(senderID,
+                    (int)ReceiverSelection.SelectedItem,
+                    (WeightCategories)WeightSelection.SelectedItem,
+                    (Priorities)PrioritySelection.SelectedItem);
+                
+                if (MessageBox.Show("Package added successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK) 
+                    Close();
+                
+
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
+            }
         }
     }
 }
