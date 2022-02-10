@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace DAL
 {
-    public partial class DalObject : IDAL
+    public partial class DALObject : IDAL
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool VerifyEmployeeCredentials(int ID, string password)
@@ -28,13 +28,15 @@ namespace DAL
             GetActualPackage(packageID).droneId = 0;
         }
 
+
         // This only removes the droncharge from the list. It does not calculate time charged!
         [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void ReleaseDroneFromCharge(int stationID, int droneID)
         {
-            var temp = DataSource.droneCharges.ToList();
-            temp.Remove(temp.Find(dc => dc.droneId == droneID));
-            DataSource.droneCharges = temp;
+            var removeMe = DataSource.droneCharges.Find(dc => dc.droneId == droneID);
+            DataSource.droneCharges.Remove(removeMe);
+
             GetActualStation(stationID).chargeSlots++;
         }
 

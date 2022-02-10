@@ -1,13 +1,12 @@
-using System.Collections.Generic;
+
 using DO;
 using DALAPI;
 using System.Runtime.CompilerServices;
 
 namespace DAL
 {
-    public partial class DalObject : IDAL
+    public partial class DALObject : IDAL
     {
-
         // Add objects section
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddEmployee(int ID, string password) =>

@@ -16,7 +16,7 @@ namespace DO
                 string name,
                 string phone,
                 double longitude,
-                Double latitude,
+                double latitude,
                 string password)
             : base(ID)
         {
@@ -36,6 +36,8 @@ namespace DO
             this.latitude = (rand.NextDouble() * 180) - 90;
             password = null;
         }
+
+        public Customer() : base() {}
 
         public override Customer Clone() => this.MemberwiseClone() as Customer;
 

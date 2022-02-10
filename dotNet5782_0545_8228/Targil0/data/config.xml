@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <nextID>1</nextID>
+  <powerConsumption>
+    <free>0</free>
+    <lightWeight>0.0020833333333333333</lightWeight>
+    <midWeight>0.0022222222222222222</midWeight>
+    <heavyWeight>0.002380952380952381</heavyWeight>
+    <chargingRate>10</chargingRate>
+  </powerConsumption>
+  <packageCount>0</packageCount>
+</config>

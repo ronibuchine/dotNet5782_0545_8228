@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<list>
+  <drone>
+    <ID>2</ID>
+    <IsActive>true</IsActive>
+    <model>Drone_3</model>
+    <maxWeight>medium</maxWeight>
+  </drone>
+  <drone>
+    <ID>3</ID>
+    <IsActive>true</IsActive>
+    <model>Drone_4</model>
+    <maxWeight>light</maxWeight>
+  </drone>
+  <drone>
+    <ID>4</ID>
+    <IsActive>true</IsActive>
+    <model>Drone_5</model>
+    <maxWeight>light</maxWeight>
+  </drone>
+  <drone>
+    <ID>5</ID>
+    <IsActive>true</IsActive>
+    <model>Drone_6</model>
+    <maxWeight>light</maxWeight>
+  </drone>
+  <drone>
+    <ID>6</ID>
+    <IsActive>true</IsActive>
+    <model>Drone_7</model>
+    <maxWeight>light</maxWeight>
+  </drone>
+</list>

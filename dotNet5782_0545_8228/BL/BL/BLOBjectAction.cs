@@ -45,6 +45,7 @@ namespace BL
                                     .First((dc) => dc.droneId == droneID).stationId;
                 dal.ReleaseDroneFromCharge(stationID, droneID);
             }
+
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

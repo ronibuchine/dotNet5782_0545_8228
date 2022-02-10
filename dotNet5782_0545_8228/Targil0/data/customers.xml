@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<list>
+  <customer>
+    <ID>17</ID>
+    <IsActive>true</IsActive>
+    <name>custName_17</name>
+    <phone>28477227</phone>
+    <longitude>-95.21874135137477</longitude>
+    <latitude>-31.73420632338813</latitude>
+    <password />
+  </customer>
+  <customer>
+    <ID>18</ID>
+    <IsActive>true</IsActive>
+    <name>custName_18</name>
+    <phone>50197230</phone>
+    <longitude>113.63428386563169</longitude>
+    <latitude>-49.21461024285043</latitude>
+    <password />
+  </customer>
+  <customer>
+    <ID>19</ID>
+    <IsActive>true</IsActive>
+    <name>custName_19</name>
+    <phone>32504592</phone>
+    <longitude>10.585534773108321</longitude>
+    <latitude>-51.1971711559208</latitude>
+    <password />
+  </customer>
+  <customer>
+    <ID>20</ID>
+    <IsActive>true</IsActive>
+    <name>custName_20</name>
+    <phone>119351340</phone>
+    <longitude>-4.681920811851484</longitude>
+    <latitude>-75.72822080260525</latitude>
+    <password />
+  </customer>
+  <customer>
+    <ID>21</ID>
+    <IsActive>true</IsActive>
+    <name>custName_21</name>
+    <phone>126087528</phone>
+    <longitude>-174.06814288071735</longitude>
+    <latitude>-53.516789098976545</latitude>
+    <password />
+  </customer>
+</list>

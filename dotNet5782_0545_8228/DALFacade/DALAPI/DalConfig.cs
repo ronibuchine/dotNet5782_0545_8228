@@ -9,9 +9,9 @@ namespace DALAPI
     /// <summary>
     /// This class is a configuration class for the data layer of our system
     /// </summary>
-    class DalConfig
+    public class DalConfig
     {
-        internal static string DalName;
+        public static string DalName;
 
         internal static Dictionary<string, string> DalPackages;
 

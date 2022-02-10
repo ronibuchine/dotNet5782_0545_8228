@@ -12,17 +12,17 @@ namespace DAL
     /// singlton will be already be constructed and the previous intance
     /// will be returned
     /// </summary>
-    public sealed partial class DalObject : IDAL
+    public sealed partial class DALObject : IDAL
     {
-
        
-        private static readonly Lazy<DalObject> lazy = new Lazy<DalObject>(() => new DalObject());
+        private static readonly Lazy<DALObject> lazy = new Lazy<DALObject>(() => new DALObject());
 
-        public static DalObject Instance { get { return lazy.Value; } }
+        public static DALObject Instance { get { return lazy.Value; } }
 
         public static int nextID;
 
-        private DalObject()
+        private DALObject()
+
         {
             DataSource.Initialize();
             nextID = DataSource.nextID;

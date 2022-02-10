@@ -1,8 +1,7 @@
-﻿
+﻿using System;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("DALObject")]
-/* [assembly: InternalsVisibleTo("DALXml")] */
 namespace DO
 {
     public abstract class DalEntity
@@ -15,8 +14,16 @@ namespace DO
         {
             this.ID = ID;
         }
+
+        // needed for serialization
+        protected DalEntity(){}
         
         public abstract object Clone();
+
+        public override string ToString()
+        {
+            return String.Format("ID ={0}, IsActive = {1}", ID, IsActive);
+        }
     }
 
 }

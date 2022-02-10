@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace DAL
 {
-    public partial class DalObject : IDAL
+    public partial class DALObject : IDAL
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(int ID) => GetActualCustomer(ID).IsActive = false;
@@ -17,7 +17,9 @@ namespace DAL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteStation(int ID) => GetActualStation(ID).IsActive = false;
 
+
         [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void DeleteEmployee(int ID) => GetActualEmployee(ID).IsActive = false;
     }
 }

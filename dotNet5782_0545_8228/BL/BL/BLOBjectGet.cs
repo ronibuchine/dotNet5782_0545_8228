@@ -97,6 +97,7 @@ namespace BL
                 }
                 catch (DO.InvalidDalObjectException e) { return false; }
             }
+
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

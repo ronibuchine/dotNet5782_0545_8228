@@ -25,12 +25,14 @@ namespace DO
             this.maxWeight = (DO.WeightCategories) rand.Next(Enum.GetNames(typeof(DO.WeightCategories)).Length - 1);
         }
 
+        public Drone() : base() {}
+
         public override Drone Clone() => this.MemberwiseClone() as Drone;
 
         public override string ToString()
         {
-            return String.Format("Drone(ID = {0}, Model = {1}, Battery = {2}, MaxWeight = {3}, Status = {4})",
-                    ID, model, maxWeight.ToString());
+            return String.Format("Drone({0}, Model = {1}, maxWeight = {2})",
+                    base.ToString(), model, maxWeight.ToString());
         }
 
     }
