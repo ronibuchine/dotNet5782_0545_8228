@@ -39,20 +39,7 @@ namespace PL
             DroneWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PackagePrioritySelector.ItemsSource = Enum.GetValues(typeof(Priorities));
             PackageWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            // will tell the user if there were changes to the list view           
-            //Thread detectChanges = new Thread(() =>
-            //{
-            //    while (true)
-            //    {
-            //        if (!drones.Select(d => d.ID).Equals(bl.GetDroneList().Select(dl => dl.ID)) && !refreshed)
-            //        {
-            //            MessageBox.Show("There have been changes detected, refresh the window to see the changes.");
-            //            refreshed = true;
-            //        }
-            //        Thread.Sleep(1000);
-            //    }
-            //});
-            //detectChanges.Start();
+          
 
         }
 
@@ -103,6 +90,31 @@ namespace PL
         {
             FilterPackages();
         }
+
+        private void CapacityGrouper_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionManager.stations = new(CollectionManager.stations.OrderByDescending(s => s.occupiedSlots + s.availableChargeSlots));
+            StationListView.DataContext = CollectionManager.stations;
+        }
+
+        private void AvailableChargersGrouper_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionManager.stations = new(CollectionManager.stations.OrderByDescending(s => s.availableChargeSlots));
+            StationListView.DataContext = CollectionManager.stations;
+        }
+
+        private void IncomingPackageGrouping_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionManager.customers = new(CollectionManager.customers.OrderByDescending(c => c.numberExpectedPackages + c.numberReceivedPackages));
+            CustomerListView.DataContext = CollectionManager.customers;
+        }
+
+        private void OutgoingPackageGrouping_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionManager.customers = new(CollectionManager.customers.OrderByDescending(c => c.numberPackagesDelivered + c.numberPackagesUndelivered));
+            CustomerListView.DataContext = CollectionManager.customers;
+        }
+
         #endregion
 
         #region New Windows
@@ -154,19 +166,26 @@ namespace PL
        
         #region Helper Functions
 
+        /// <summary>
+        /// Filters the packages according to the combobox selections
+        /// </summary>
         private void FilterPackages()
         {
+            CollectionManager.packages = new(bl.GetPackageList().Select(p => new Package(p)));
             if (PackagePrioritySelector.SelectedItem == null && PackageWeightSelector.SelectedItem == null)
                 return;
             else if (PackagePrioritySelector.SelectedItem == null)
-                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem));
-            else if (DroneWeightSelector.SelectedItem == null)
-                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem));
+                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.weightCategory == GetPackageWeight()));
+            else if (PackageWeightSelector.SelectedItem == null)
+                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.priority == GetPackagePriority()));
             else
-                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.priority == (Priorities)PackagePrioritySelector.SelectedItem &&
-                    p.weightCategory == (WeightCategories)PackageWeightSelector.SelectedItem));
+                CollectionManager.packages = new(CollectionManager.packages.Where(p => p.priority == GetPackagePriority() && p.weightCategory == GetPackageWeight()));
             PackageListView.DataContext = CollectionManager.packages;
         }
+
+        /// <summary>
+        /// Refreshes all the observable collections
+        /// </summary>
         private void Refresh()
         {
             CollectionManager.drones = new(bl.GetDroneList().Select(d => new Drone(d)));
@@ -180,18 +199,17 @@ namespace PL
             refreshed = false;
         }
 
-        private DroneStatuses GetDroneStatus()
-        {
-            return (DroneStatuses)DroneStatusSelector.SelectedItem;
-        }
+        private WeightCategories GetPackageWeight() => (WeightCategories)PackageWeightSelector.SelectedItem;
 
-        private WeightCategories GetDroneWeight()
-        {
-            return (WeightCategories)DroneWeightSelector.SelectedItem;
-        }
+        private Priorities GetPackagePriority() => (Priorities)PackagePrioritySelector.SelectedItem;
 
+        private DroneStatuses GetDroneStatus() => (DroneStatuses)DroneStatusSelector.SelectedItem;        
+
+        private WeightCategories GetDroneWeight() => (WeightCategories)DroneWeightSelector.SelectedItem;
+        
         private void FilterDrones()
         {
+            CollectionManager.drones = new(bl.GetDroneList().Select(d => new Drone(d)));
             if (DroneStatusSelector.SelectedItem == null && DroneWeightSelector.SelectedItem == null)
                 return;
             else if (DroneStatusSelector.SelectedItem == null)
@@ -203,18 +221,9 @@ namespace PL
             DroneListView.DataContext = CollectionManager.drones;
         }
 
+
         #endregion
 
-        private void CapacityGrouper_Click(object sender, RoutedEventArgs e)
-        {
-            CollectionManager.stations = new(CollectionManager.stations.OrderBy(s => s.occupiedSlots + s.availableChargeSlots));            
-            StationListView.DataContext = CollectionManager.stations;
-        }
-
-        private void AvailableChargersGrouper_Click(object sender, RoutedEventArgs e)
-        {
-            CollectionManager.stations = new(CollectionManager.stations.OrderBy(s => s.availableChargeSlots));            
-            StationListView.DataContext = CollectionManager.stations;
-        }
+       
     }
 }

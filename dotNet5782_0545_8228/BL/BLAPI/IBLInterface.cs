@@ -307,6 +307,14 @@ namespace IBL
         /// <param name="ID"></param>
         public void DeleteEmployee(int ID);
 
+        /// <summary>
+        /// API call to activate the simlation engine
+        /// </summary>
+        /// <param name="droneID"></param>
+        /// <param name="action"></param>
+        /// <param name="stopCheck"></param>
+        public void ActivateSimulator(int droneID, Action action, Func<bool> stopCheck);
+
 
     }
 }

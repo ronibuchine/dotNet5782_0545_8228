@@ -19,7 +19,7 @@ namespace BL
         private static double lightWeight { get; set; }
         private static double midWeight { get; set; }
         private static double heavyWeight { get; set; }
-        private IDAL dal { get; }
+        internal IDAL dal { get; }
         private List<Drone> drones;
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace BL
         /// </summary>
         /// <param name="weight"></param>
         /// <returns>Consumption rate per hour of use</returns>
-        private double GetConsumptionRate(WeightCategories weight)
+        internal double GetConsumptionRate(WeightCategories weight)
         {
             if (weight == WeightCategories.light)
             {

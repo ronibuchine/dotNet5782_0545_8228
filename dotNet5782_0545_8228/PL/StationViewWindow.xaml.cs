@@ -43,6 +43,7 @@ namespace PL
             ILatitude.Visibility = Visibility.Visible;
             ILongitude.Visibility = Visibility.Visible;
             DeleteStationButton.Visibility = Visibility.Visible;
+            TotalSlots.Text = (station.availableChargeSlots + station.occupiedSlots).ToString();
         }
 
         internal StationViewWindow(IBLInterface bl)
@@ -51,8 +52,6 @@ namespace PL
             this.bl = bl;
             AddBorder.Visibility = Visibility.Visible;
             StationBWImage.Visibility = Visibility.Visible;
-
-
         }
 
         private void DeleteStationButton_Click(object sender, RoutedEventArgs e)
@@ -60,6 +59,8 @@ namespace PL
             try
             {
                 bl.DeleteStation(station.ID);
+                CollectionManager.stations.Remove(CollectionManager.stations.First(s => s.ID == station.ID));
+                if (MessageBox.Show("Station has been decomissioned.", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
             }
             catch (Exception except)
             {
@@ -85,7 +86,9 @@ namespace PL
             try
             {
                 Location location = new(Double.Parse(LatitudeEntry.Text), Double.Parse(LongitudeEntry.Text));
-                bl.AddStation(NameEntry.Text, location, Int32.Parse(SlotsEntry.Text));
+                int stationID = bl.AddStation(NameEntry.Text, location, Int32.Parse(SlotsEntry.Text)).ID;
+                Station station = new(bl.GetStationList().Where(s => s.ID == stationID).FirstOrDefault());
+                CollectionManager.stations.Add(station);
             }
             catch (InvalidBlObjectException except)
             {
@@ -94,6 +97,28 @@ namespace PL
             catch (FormatException except)
             {
                 MessageBox.Show("Please enter acceeptable numbers for location and charge slot entries.");
+            }
+        }
+
+        private void UpdateStationButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int totalSlots = int.Parse(TotalSlots.Text);
+                string stationName = NameBlock.Text;
+                bl.UpdateStation(station.ID, stationName, totalSlots);
+                // on success, update the UI
+                CollectionManager.stations.First(s => s.ID == station.ID).availableChargeSlots = totalSlots - station.occupiedSlots;
+                CollectionManager.stations.First(s => s.ID == station.ID).name = stationName;
+                MessageBox.Show("Station updated succesfully");
+            }
+            catch (FormatException fExcept)
+            {
+                MessageBox.Show("Please enter a valid number for the charging slots.");
+            }
+            catch (Exception except)
+            {
+                MessageBox.Show(except.Message);
             }
         }
     }

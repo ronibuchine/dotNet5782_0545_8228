@@ -3,27 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
+   
     <Application.Resources>
-        <LinearGradientBrush x:Key="ButtonBrush" EndPoint="0.5,0"  StartPoint="0.5,1">
-            <GradientStop Color="#757f9a" Offset="0"/>
-            <GradientStop Color="#d7dde8" Offset=".5"/>
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="WindowBrush" EndPoint="0,0.5" StartPoint="1,0.5">
-            <GradientStop Color="#4ca1af" Offset="0"/>
-            <GradientStop Color="#2c3e50" Offset="1"/>
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="AddButtonBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="LightBlue" Offset="0"/>
-            <GradientStop Color="#24A0ED" Offset="1"/>
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="CancelButtonBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="PaleVioletRed" Offset="0"/>
-            <GradientStop Color="DarkRed" Offset="1"/>
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="RefreshButtonBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="LightGreen" Offset="0"/>
-            <GradientStop Color="DarkGreen" Offset="1"/>
-        </LinearGradientBrush>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ListViewResource.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <LinearGradientBrush x:Key="ButtonBrush" EndPoint="0.5,0"  StartPoint="0.5,1">
+                <GradientStop Color="#757f9a" Offset="0"/>
+                <GradientStop Color="#d7dde8" Offset=".5"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="WindowBrush" EndPoint="0,0.5" StartPoint="1,0.5">
+                <GradientStop Color="#283048" Offset="0"/>
+                <GradientStop Color="#859398" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="AddButtonBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="LightBlue" Offset="0"/>
+                <GradientStop Color="#24A0ED" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="CancelButtonBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="PaleVioletRed" Offset="0"/>
+                <GradientStop Color="DarkRed" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="RefreshButtonBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="LightGreen" Offset="0"/>
+                <GradientStop Color="DarkGreen" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ListViewBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#292e49" Offset="0"/>
+                <GradientStop Color="#536976" Offset="1"/>
+            </LinearGradientBrush>
+        </ResourceDictionary>       
         
         
 

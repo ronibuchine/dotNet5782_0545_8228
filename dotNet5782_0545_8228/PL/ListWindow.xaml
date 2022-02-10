@@ -9,141 +9,145 @@
         Background="{StaticResource WindowBrush}"
         WindowStyle="None"
         AllowsTransparency="True" WindowStartupLocation="CenterScreen">
-    
+
     <Border CornerRadius="10" MouseDown="Border_MouseDown">
-    <Grid Name="MainGrid">
+        <Grid Name="MainGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Height="620*"/>
                 <RowDefinition Height="20*"/>
+                <RowDefinition Height="620*"/>
             </Grid.RowDefinitions>
-        <TabControl Grid.Row="0">
-            <TabItem Header="Drones">
-                <Grid Background="Gray">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="20*"></RowDefinition>
-                        <RowDefinition Height="480*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                   
-                    <Grid Name="DroneGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
+            <TabControl Grid.RowSpan="2">
+                <TabItem Header="Drones">
+                    <Grid Background="Gray">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="301*"/>
+                            <ColumnDefinition Width="96*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20*"></RowDefinition>
+                            <RowDefinition Height="480*"></RowDefinition>
+                        </Grid.RowDefinitions>
 
-                        <Button Name="ClearFilterButton1" Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
-                        <ComboBox Name="DroneStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
-                        <Button Name="AddDroneButton" Content="+ Add Drone" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
-                        <ComboBox Name="DroneWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+                        <Grid Name="DroneGrid" VerticalAlignment="Center" Height="auto" Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions >
 
-                    </Grid>
-
-                    <ListView  Foreground="LightGray" Name="DroneListView" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow" >
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
-                                <GridViewColumn Header="Model" Width="75" DisplayMemberBinding="{Binding Path=model}"/>
-                                <GridViewColumn Header="Status" Width="75" DisplayMemberBinding="{Binding Path=status}"/>
-                                <GridViewColumn Header="Weight" Width="75" DisplayMemberBinding="{Binding Path=weightCategory}"/>
-                                <GridViewColumn Header="Battery" Width="100" DisplayMemberBinding="{Binding Path=battery}"/>
-                                <GridViewColumn Header="Location" Width="200" DisplayMemberBinding="{Binding Path=location}"/>
-                                <GridViewColumn Header="Package" Width="50" DisplayMemberBinding="{Binding Path=packageNumber}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Packages">
-                <Grid DataContext="{Binding Path=packages}" Background="Gray">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="20*"></RowDefinition>
-                        <RowDefinition Height="480*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                   
-                    <Grid Name="PackageGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions >
-                        <Button Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
-                        <ComboBox Name="PackagePrioritySelector" Background="{StaticResource ButtonBrush}" SelectionChanged="PackagePrioritySelector_SelectionChanged"  Grid.Column="1" />
-                        <Button Name="AddPackageButton" Content="+ Add Package" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddPackageButton_Click"  FontSize="18" FontFamily="Tw Cen MT" />
-                        <ComboBox Name="PackageWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="PackageWeightSelector_SelectionChanged"/>
-
-                    </Grid>
-
-                        <ListView Foreground="LightGray" Name="PackageListView" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="PackageListView_MouseDoubleClick"  >
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
-                                <GridViewColumn Header="Sender Name" Width="125" DisplayMemberBinding="{Binding Path=senderName}"/>
-                                <GridViewColumn Header="Receiver Name" Width="125" DisplayMemberBinding="{Binding  Path=receiverName}"/>
-                                <GridViewColumn Header="Weight" Width="75" DisplayMemberBinding="{Binding Path=weightCategory}"/>
-                                <GridViewColumn Header="Priority" Width="200" DisplayMemberBinding="{Binding Path=priority}"/>
-                                <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding Path=status}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-
-            </TabItem>
-            <TabItem Header="Stations">
-                <Grid DataContext="{Binding Path=stations}" Background="Gray">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="20*"></RowDefinition>
-                        <RowDefinition Height="480*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                   
-                    <Grid Name="StationGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions >
-
-                        <Button Name="ClearFilterButton3" Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
-                        <Button Name="CapacityGrouper" Click="CapacityGrouper_Click" Background="{StaticResource ButtonBrush}" Grid.Column="1">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="/images/list-text.png" Margin="0,0,0,0"/>
-                                <TextBlock Text="Group by Capacity" Margin="8,0,0,0"/>
-                            </StackPanel>
-                        </Button>
-                        <Button Name="AddStationButton" Content="+ Add Station" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddStationButton_Click"  FontSize="18" FontFamily="Tw Cen MT" />
-                        <Button Name="AvailableChargersGrouper" Click="AvailableChargersGrouper_Click" Grid.Column="2" Background="{StaticResource ButtonBrush}">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="/images/list-text.png" Margin="0,0,0,0"/>
-                                <TextBlock Text="Group by Available Chargers" Margin="8,0,0,0"/>
-                            </StackPanel>
-                        </Button>
+                            <Button Name="ClearFilterButton1" Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
+                            <ComboBox Name="DroneStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
+                            <Button Name="AddDroneButton" Content="+ Add Drone" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddDroneButton_Click" FontSize="18" FontFamily="Tw Cen MT" />
+                            <ComboBox Name="DroneWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
 
                         </Grid>
 
-                        <ListView Foreground="LightGray" Name="StationListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="StationListView_MouseDoubleClick">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
-                                <GridViewColumn Header="name" Width="125" DisplayMemberBinding="{Binding Path=name}"/>
-                                <GridViewColumn Header="Available" Width="125" DisplayMemberBinding="{Binding Path=availableChargeSlots}"/>
-                                <GridViewColumn Header="Occupied" Width="75" DisplayMemberBinding="{Binding Path=occupiedSlots}"/>
-                                <GridViewColumn Header="Latitude" Width="125" DisplayMemberBinding="{Binding Path=latitude}"/>
-                                <GridViewColumn Header="Longitude" Width="125" DisplayMemberBinding="{Binding Path=longitude}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
+                        <ListView  Foreground="LightGray" Name="DroneListView"  ItemContainerStyle="{StaticResource CustomListViewItem}" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="DroneActionWindow" Grid.ColumnSpan="2" Margin="0,24,0,0" Grid.RowSpan="2" >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
+                                    <GridViewColumn Header="Model" Width="75" DisplayMemberBinding="{Binding Path=model}"/>
+                                    <GridViewColumn Header="Status" Width="75" DisplayMemberBinding="{Binding Path=status}"/>
+                                    <GridViewColumn Header="Weight" Width="75" DisplayMemberBinding="{Binding Path=weightCategory}"/>
+                                    <GridViewColumn Header="Battery" Width="100" DisplayMemberBinding="{Binding Path=battery}"/>
+                                    <GridViewColumn Header="Location" Width="200" DisplayMemberBinding="{Binding Path=location}"/>
+                                    <GridViewColumn Header="Package" Width="50" DisplayMemberBinding="{Binding Path=packageNumber}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Packages">
+                    <Grid DataContext="{Binding Path=packages}" Background="Gray">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20*"></RowDefinition>
+                            <RowDefinition Height="480*"></RowDefinition>
+                        </Grid.RowDefinitions>
 
-            </TabItem>
-            <TabItem Header="Customers">
+                        <Grid Name="PackageGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions >
+                            <Button Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
+                            <ComboBox Name="PackagePrioritySelector" Background="{StaticResource ButtonBrush}" SelectionChanged="PackagePrioritySelector_SelectionChanged"  Grid.Column="1" />
+                            <Button Name="AddPackageButton" Content="+ Add Package" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddPackageButton_Click"  FontSize="18" FontFamily="Tw Cen MT" />
+                            <ComboBox Name="PackageWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="PackageWeightSelector_SelectionChanged"/>
+
+                        </Grid>
+
+                        <ListView Foreground="LightGray" Name="PackageListView" ItemContainerStyle="{StaticResource CustomListViewItem}" Grid.Row="1" ItemsSource="{Binding}" Background="{StaticResource WindowBrush}" MouseDoubleClick="PackageListView_MouseDoubleClick"  >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
+                                    <GridViewColumn Header="Sender Name" Width="125" DisplayMemberBinding="{Binding Path=senderName}"/>
+                                    <GridViewColumn Header="Receiver Name" Width="125" DisplayMemberBinding="{Binding  Path=receiverName}"/>
+                                    <GridViewColumn Header="Weight" Width="75" DisplayMemberBinding="{Binding Path=weightCategory}"/>
+                                    <GridViewColumn Header="Priority" Width="200" DisplayMemberBinding="{Binding Path=priority}"/>
+                                    <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding Path=status}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+
+                </TabItem>
+                <TabItem Header="Stations">
+                    <Grid DataContext="{Binding Path=stations}" Background="Gray">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20*"></RowDefinition>
+                            <RowDefinition Height="480*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid Name="StationGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions >
+
+                            <Button Name="ClearFilterButton3" Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
+                            <Button Name="CapacityGrouper" Click="CapacityGrouper_Click" Background="{StaticResource ButtonBrush}" Grid.Column="1">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/images/list-text.png" Margin="0,0,0,0"/>
+                                    <TextBlock Text="Group by Capacity" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Name="AddStationButton" Content="+ Add Station" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddStationButton_Click"  FontSize="18" FontFamily="Tw Cen MT" />
+                            <Button Name="AvailableChargersGrouper" Click="AvailableChargersGrouper_Click" Grid.Column="2" Background="{StaticResource ButtonBrush}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/images/list-text.png" Margin="0,0,0,0"/>
+                                    <TextBlock Text="Group by Available Chargers" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+
+                        </Grid>
+
+                        <ListView Foreground="LightGray" Name="StationListView" ItemContainerStyle="{StaticResource CustomListViewItem}" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="StationListView_MouseDoubleClick">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
+                                    <GridViewColumn Header="name" Width="125" DisplayMemberBinding="{Binding Path=name}"/>
+                                    <GridViewColumn Header="Available" Width="125" DisplayMemberBinding="{Binding Path=availableChargeSlots}"/>
+                                    <GridViewColumn Header="Occupied" Width="75" DisplayMemberBinding="{Binding Path=occupiedSlots}"/>
+                                    <GridViewColumn Header="Latitude" Width="125" DisplayMemberBinding="{Binding Path=latitude}"/>
+                                    <GridViewColumn Header="Longitude" Width="125" DisplayMemberBinding="{Binding Path=longitude}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+
+                </TabItem>
+                <TabItem Header="Customers">
                     <Grid DataContext="{Binding Path=customers}" Background="Gray">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20*"></RowDefinition>
                             <RowDefinition Height="480*"></RowDefinition>
                         </Grid.RowDefinitions>
-                       
+
                         <Grid Name="CustomerGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="auto" Grid.Row="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -153,11 +157,21 @@
                             </Grid.ColumnDefinitions >
 
                             <Button Name="ClearFilterButton4" Content="Clear Filters" FontSize="18" FontFamily="Tw Cen MT"  Grid.Column="0" Background="{StaticResource ButtonBrush}" Click="ClearFilterButton_Click"/>
-                            <ComboBox Name="CustomerStatusSelector" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneStatusSelector_SelectionChanged" Grid.Column="1" />
+                            <Button Name="IncomingPackageGrouping" Background="{StaticResource ButtonBrush}" Click="IncomingPackageGrouping_Click" Grid.Column="1">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/images/list-text.png" Margin="0,0,0,0"/>
+                                    <TextBlock Text="Group by Incoming" Margin="8,0,0,0"/>
+                                </StackPanel>
+                            </Button>
                             <Button Name="AddCustomerButton" Content="+ Add Customer" Background="{StaticResource AddButtonBrush}" Grid.Column="3" Click="AddCustomerButton_Click"  FontSize="18" FontFamily="Tw Cen MT" />
-                            <ComboBox Name="CustomerWeightSelector" Grid.Column="2" Background="{StaticResource ButtonBrush}" SelectionChanged="DroneWeightSelector_SelectionChanged"/>
+                            <Button Name="OutgoingPackageGrouping" Grid.Column="2" Background="{StaticResource ButtonBrush}" Click="OutgoingPackageGrouping_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/images/list-text.png" Margin="0,0,0,0"/>
+                                    <TextBlock Text="Group by Outgoing" Margin="8,0,0,0"/>                                    
+                                </StackPanel>
+                            </Button>
                         </Grid>
-                        <ListView Foreground="LightGray" Name="CustomerListView" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="CustomerListView_MouseDoubleClick"  >
+                        <ListView Foreground="LightGray" Name="CustomerListView" ItemContainerStyle="{StaticResource CustomListViewItem}" ItemsSource="{Binding}" Grid.Row="1" Background="{StaticResource WindowBrush}" MouseDoubleClick="CustomerListView_MouseDoubleClick"  >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Path=ID}"/>
@@ -177,24 +191,24 @@
 
 
 
-        </TabControl>
-            <Button Name="LogoutButton4" Grid.Row="1"
+            </TabControl>
+            <Button Name="LogoutButton4" Grid.RowSpan="2"
                     Content="✕ Logout"
                     Background="{StaticResource ButtonBrush}"
                     Click="CloseButton_Click"
                     FontSize="12" FontFamily="Tw Cen MT" 
-                    Margin="10,0,0,0"
-                    HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                    Width="100"/>
-            <Button Name="RefreshButton" Grid.Row="1"
+                    Margin="0,3,20,0"
+                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Width="100" Height="15"/>
+            <Button Name="RefreshButton" Grid.RowSpan="2"
                     Content="🗘 Refresh"
                     Foreground="White"
                     Background="{StaticResource RefreshButtonBrush}"
                     Click="RefreshButton_Click"
                     FontSize="12" FontFamily="Tw Cen MT" 
-                    Margin="150,0,0,0"
-                    HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                    Width="100"/>
+                    Margin="0,3,150,0"
+                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Width="100" Height="15"/>
 
 
 

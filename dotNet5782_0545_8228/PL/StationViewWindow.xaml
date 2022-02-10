@@ -41,23 +41,32 @@
 
 
 
-        <StackPanel Name="StationInfo" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="250" Margin="0,262,0,0" Height="230"  Visibility="Hidden">
-            <Label Name="IDBlock" Background="LightGray" Content="{Binding Path=ID, Mode=TwoWay, StringFormat=ID: {0:#}}" Width="150" Height="20" Margin="0,20,0,0"/>
-            <TextBox Name="NameBlock" Background="LightGray" Text="{Binding Path=name, Mode=TwoWay}" Width="150" Margin="0,20,0,0"/>
-            <TextBlock Name="AvailableSlotsBlock" Background="LightGray" Text="{Binding Path=availableChargeSlots, Mode=TwoWay}" Margin="0,20,0,0" Width="150"/>
+        <StackPanel Name="StationInfo" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="250" Margin="0,262,0,0" Height="300"  Visibility="Hidden">
+            <Label Name="IDBlock" Background="LightGray" Content="{Binding Path=ID, Mode=TwoWay, StringFormat=ID: {0:#}}" Width="150" Height="25" Margin="0,20,0,0"/>
+            <TextBox Name="NameBlock" Background="LightGray" Text="{Binding Path=name, Mode=TwoWay}" Width="150" Height="25" Margin="0,20,0,0"/>
+            <TextBox Name="TotalSlots" Background="LightGray" Margin="0,20,0,0" Height="25" Width="150"/>
 
-            <TextBlock Name="LatitudeBlock" Background="LightGray" Text="{Binding Path=latitude, Mode=TwoWay}" Width="150" Margin="0,20,0,0"/>
-            <TextBlock Name="LongitudeBlock" Background="LightGray" Text="{Binding Path=longitude, Mode=TwoWay}" Width="150" Margin="0,20,0,0"/>
-            <Button Name="DeleteStationButton"
-                Width="120"
-                Background="{StaticResource CancelButtonBrush}"
-                Click="DeleteStationButton_Click" 
-                Visibility="Visible" 
-                Content="✕ Delete Station"
-                FontFamily="Tw Cen MT" Foreground="LightGray" FontSize="10" Margin="0,20,0,0"
-                Height="19"/>
+            <TextBlock Name="LatitudeBlock" Background="LightGray" Text="{Binding Path=latitude, Mode=TwoWay}" Width="150" Height="25" Margin="0,20,0,0"/>
+            <TextBlock Name="LongitudeBlock" Background="LightGray" Text="{Binding Path=longitude, Mode=TwoWay}" Width="150" Height="25" Margin="0,20,0,0"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="DeleteStationButton"
+                    Width="80"
+                    Background="{StaticResource CancelButtonBrush}"
+                    Click="DeleteStationButton_Click" 
+                    Content="✕ Delete Station"
+                    FontFamily="Tw Cen MT" Foreground="LightGray" FontSize="10" Margin="35,20,0,0"
+                    Height="19"/>
+                <Button Name="UpdateStationButton" 
+                    Width="80"
+                    Background="{StaticResource AddButtonBrush}"
+                    Click="UpdateStationButton_Click" 
+                    Content="✓ Save Changes"
+                    FontFamily="Tw Cen MT" FontSize="10" Margin="20,20,0,0"
+                    Height="19"/>
+            </StackPanel>
+           
         </StackPanel>
-        <ListView Name="ChargingDroneList" Visibility="Hidden" Height="200" Width="250" Grid.Column="1" Margin="0,0,0,0" ItemsSource="{Binding}" MouseDoubleClick="ChargingDroneList_MouseDoubleClick">
+        <ListView Name="ChargingDroneList" Background="{StaticResource WindowBrush}" ItemContainerStyle="{StaticResource CustomListViewItem}" Visibility="Hidden" Height="200" Width="250" Grid.Column="1" Margin="0,0,0,0" ItemsSource="{Binding}" MouseDoubleClick="ChargingDroneList_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Drone ID" DisplayMemberBinding="{Binding Path=ID}" Width="75"/>
