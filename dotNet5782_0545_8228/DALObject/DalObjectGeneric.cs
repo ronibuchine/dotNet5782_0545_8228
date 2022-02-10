@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DO;
 using DALAPI;
+using System.Runtime.CompilerServices;
 
 namespace DAL
 {
@@ -39,6 +40,7 @@ namespace DAL
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="pred">A predicate taking an item of the same type as list, that returns whether or not it should be displayed</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private IEnumerable<T> GetAllItems<T>(List<T> list, Predicate<T> pred) where T : DalEntity
         {
             return list.FindAll(t => t.IsActive && pred(t)).ConvertAll(t => (T)t.Clone());
@@ -48,6 +50,7 @@ namespace DAL
         /// Displays all the items in the array unconditionally
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private IEnumerable<T> GetAllItems<T>(List<T> list) where T : DalEntity => GetAllItems(list, x => true);
 
         // Displaying one object section
@@ -57,6 +60,7 @@ namespace DAL
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="ID">The index of which item to display</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private T GetOneItem<T>(List<T> list, int ID) where T : DalEntity => (T)GetActualOneItem<T>(list, ID).Clone();
 
         /// <summary>
@@ -66,6 +70,7 @@ namespace DAL
         /// <param name="list"></param>
         /// <param name="ID"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private T GetActualOneItem<T>(List<T> list, int ID) where T : DalEntity
         {
             if (ID == 0)
@@ -81,6 +86,7 @@ namespace DAL
         /// </summary>
         /// <param name="list">An array of IdalDoStructs</param>
         /// <param name="rand">A Random object</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void AddDalItem<T>(
                 List<T> list,
                 IdalDoType type)
@@ -92,6 +98,7 @@ namespace DAL
                 throw new DataSourceException("The entity could not be added to the system.");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void AddDalItem<T>(
                 List<T> list,
                 T item)
@@ -103,6 +110,7 @@ namespace DAL
                 throw new DataSourceException("The entity could not be added to the system.");
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] PowerConsumptionRequest()
         {
             double[] ret = {
@@ -114,6 +122,7 @@ namespace DAL
             return ret;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Clear()
         {
             DataSource.customers.Clear();

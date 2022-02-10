@@ -85,21 +85,21 @@
             </Border>
 
 
-            <ListView Name="SentPackageList" Visibility="Hidden" Grid.Column="1" HorizontalAlignment="Center" Height="219" Width="292" Margin="0,352,0,0" VerticalAlignment="Top" MouseDoubleClick="SentPackageList_MouseDoubleClick">
+            <ListView Name="SentPackageList" Background="{StaticResource WindowBrush}" ItemContainerStyle="{StaticResource CustomListViewItem}" ItemsSource="{Binding}" Visibility="Hidden" Grid.Column="1" HorizontalAlignment="Center" Height="219" Width="292" Margin="0,352,0,0" VerticalAlignment="Top" MouseDoubleClick="SentPackageList_MouseDoubleClick">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Package #" DisplayMemberBinding="{Binding Path=ID}"/>
-                        <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Path=weight}"/>
+                        <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Path=weightCategory}"/>
                         <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=status}"/>
                         <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Path=priority}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <ListView Name="ReceivedPackageList" Visibility="Hidden" Grid.Column="1"  HorizontalAlignment="Center" Height="231" Width="292" Margin="0,58,0,0" VerticalAlignment="Top" MouseDoubleClick="ReceivedPackageList_MouseDoubleClick">
+            <ListView Name="ReceivedPackageList" Background="{StaticResource WindowBrush}" ItemContainerStyle="{StaticResource CustomListViewItem}" ItemsSource="{Binding}" Visibility="Hidden" Grid.Column="1"  HorizontalAlignment="Center" Height="231" Width="292" Margin="0,58,0,0" VerticalAlignment="Top" MouseDoubleClick="ReceivedPackageList_MouseDoubleClick">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Package #" DisplayMemberBinding="{Binding Path=ID}"/>
-                        <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Path=weight}"/>
+                        <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Path=weightCategory}"/>
                         <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=status}"/>
                         <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Path=priority}"/>
                     </GridView>

@@ -27,6 +27,7 @@ namespace PL
         Package package;
         DroneToList drone;
         Customer customer = null;
+        ObservableCollection<Package> customersOutgoingPackages = null;
 
         internal PackageViewWindow(IBLInterface bl, Package package)
         {
@@ -42,11 +43,11 @@ namespace PL
             DronePanel.Visibility = Visibility.Visible;
         }
 
-        internal PackageViewWindow(IBLInterface bl, PackageAtCustomer package, string sendReceiveValue, int customerID)
+        internal PackageViewWindow(IBLInterface bl, Package package, string sendReceiveValue, int customerID)
         {
             InitializeComponent();
             this.bl = bl;
-            this.package = new(package, sendReceiveValue, customerID);
+            this.package = package;
             drone = bl.GetDroneList().Where(d => d.packageNumber == package.ID).FirstOrDefault();
             DataContext = package; 
             DronePanel.DataContext = drone;
@@ -69,11 +70,12 @@ namespace PL
             PrioritySelection.ItemsSource = Enum.GetValues(typeof(Priorities));
         }
 
-        internal PackageViewWindow(IBLInterface bl, Customer customer)
+        internal PackageViewWindow(IBLInterface bl, Customer customer, ObservableCollection<Package> outgoingPackages)
         {
             InitializeComponent();
             this.bl = bl;
             this.customer = customer;
+            this.customersOutgoingPackages = outgoingPackages;
             CollectionManager.customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
             AddBorder.Visibility = Visibility.Visible;
             AddPackageImage.Visibility = Visibility.Visible;
@@ -89,6 +91,7 @@ namespace PL
             try
             {
                 bl.DeletePackage(package.ID);
+                CollectionManager.packages.Remove(CollectionManager.packages.First(p => p.ID == package.ID));
                 if (MessageBox.Show("Package removed successfully", "", MessageBoxButton.OK) == MessageBoxResult.OK)
                     Close();
                 
@@ -112,6 +115,7 @@ namespace PL
             else
                 MessageBox.Show("There is no drone assigned to the selected package.");
         }
+       
 
         private void AddPackage_Click(object sender, RoutedEventArgs e)
         {
@@ -124,10 +128,16 @@ namespace PL
                     senderID = (int)SenderSelection.SelectedItem;
                 if (senderID == (int)ReceiverSelection.SelectedItem)
                     throw new OperationNotPossibleException("The sender and receiver cannot be the same person.\nPlease try again.");
-                bl.AddPackage(senderID,
+                int packageID = bl.AddPackage(senderID,
                     (int)ReceiverSelection.SelectedItem,
                     (WeightCategories)WeightSelection.SelectedItem,
-                    (Priorities)PrioritySelection.SelectedItem);
+                    (Priorities)PrioritySelection.SelectedItem).ID;
+                Package package = new(bl.GetPackageList().Where(p => p.ID == packageID).FirstOrDefault());
+                if (customersOutgoingPackages != null)
+                {                    
+                    customersOutgoingPackages.Add(package);
+                }
+                CollectionManager.packages.Add(package);
                 
                 if (MessageBox.Show("Package added successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK) 
                     Close();
