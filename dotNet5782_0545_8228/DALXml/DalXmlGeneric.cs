@@ -297,16 +297,5 @@ namespace DAL
             return ret;
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public bool VerifyCustomerCredentials(int ID, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public bool VerifyEmployeeCredentials(int ID, string password)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -82,5 +82,23 @@ namespace DAL
             SaveXml("droneCharges");
             SaveXml("stations");
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public bool VerifyCustomerCredentials(int ID, string password)
+        {
+            customersRoot = LoadXml("customers");
+            return customersRoot
+                .Elements()
+                .First(c => Int32.Parse(c.Element("ID").Value) == ID && c.Element("password").Value == password) != null;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public bool VerifyEmployeeCredentials(int ID, string password)
+        {
+            customersRoot = LoadXml("employees");
+            return employeesRoot
+                .Elements()
+                .First(c => Int32.Parse(c.Element("ID").Value) == ID && c.Element("password").Value == password) != null;
+        }
     }
 }

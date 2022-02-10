@@ -3,7 +3,7 @@
   <drone>
     <ID>2</ID>
     <IsActive>true</IsActive>
-    <model>model_a</model>
+    <model>droneModel</model>
     <maxWeight>heavy</maxWeight>
   </drone>
 </list>
