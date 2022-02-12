@@ -218,7 +218,9 @@ namespace DAL
         {
             try
             {
-                var drone = (from c in LoadXml("customers").Elements()
+                customersRoot = LoadXml("customers");
+                var customer = (from c in customersRoot
+                             .Elements()
                              where Int32.Parse(c.Element("ID").Value) == ID && c.Element("IsActive").Value == "true"
                              select new Customer
                              {
@@ -226,18 +228,18 @@ namespace DAL
                                  IsActive = c.Element("IsActive").Value == "true" ? true : false,
                                  name = c.Element("name").Value,
                                  phone = c.Element("phone").Value,
-                                 longitude = Int32.Parse(c.Element("longitude").Value),
-                                 latitude = Int32.Parse(c.Element("latitude").Value),
+                                 longitude = Double.Parse(c.Element("longitude").Value),
+                                 latitude = Double.Parse(c.Element("latitude").Value),
                                  password = c.Element("password").Value,
                              }
                         ).First();
-                if (drone == null)
+                if (customer == null)
                     throw new InvalidDalObjectException("There was an issue retrieving the entity.");
-                return drone;
+                return customer;
             }
-            catch
+            catch(Exception e)
             {
-                throw new InvalidDalObjectException("There was an issue retrieving the entity.");
+                throw new InvalidDalObjectException(e.Message + "There was an issue retrieving the entity.");
             }
         }
 
@@ -336,8 +338,8 @@ namespace DAL
                                    IsActive = s.Element("IsActive").Value == "true" ? true : false,
                                    name = s.Element("name").Value,
                                    chargeSlots = Int32.Parse(s.Element("chargeSlots").Value),
-                                   longitude = Int32.Parse(s.Element("longitude").Value),
-                                   latitude = Int32.Parse(s.Element("latitude").Value),
+                                   longitude = Double.Parse(s.Element("longitude").Value),
+                                   latitude = Double.Parse(s.Element("latitude").Value),
                                }
                         ).First();
                 if (station == null)

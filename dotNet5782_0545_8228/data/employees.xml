@@ -1,2 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<list></list>
+<list>
+  <employee>
+    <ID>1</ID>
+    <IsActive>true</IsActive>
+    <password>admin</password>
+  </employee>
+</list>

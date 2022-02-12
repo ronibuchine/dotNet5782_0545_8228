@@ -71,7 +71,7 @@ namespace BL
             foreach (Drone drone in drones)
             {
                 Package package;
-                try 
+                try
                 {
                     package = packages.First(p => p.drone != null && p.drone.ID == drone.ID);
                 }
@@ -107,37 +107,48 @@ namespace BL
                     }
                     continue;
                 }
-                PackageInTransfer packageInTransfer = new(package);
-                drone.packageInTransfer = packageInTransfer;
-                if (package.delivered == null)
                 {
-                    drone.status = DroneStatuses.delivery;
+
+                    PackageInTransfer packageInTransfer = new(package);
+                    drone.packageInTransfer = packageInTransfer;
 
                     Location senderLocation = customers.First(c => c.ID == package.sender.ID).currentLocation;
+                    Location reciverLocation = customers.First(c => c.ID == package.receiver.ID).currentLocation;
                     Location closestStationLoc = GetClosestStationLocation(senderLocation, stations);
+                    Location closestStationToDelivery = GetClosestStationLocation(packageInTransfer.deliveringLocation, dal.GetAllStations().Select(s => new Station(s)));
 
-                    Location closestStationToDelivery = GetClosestStationLocation(packageInTransfer.deliveringLocation,
-                            dal.GetAllStations().Select(s => new Station(s)));
-                    double distanceRequired = packageInTransfer.deliveryDistance;
-                    distanceRequired += GetDistance(packageInTransfer.deliveringLocation,closestStationToDelivery);
-
-                    if (package.pickedUp == null) // not collected
+                    if (package.delivered == null)
                     {
-                        drone.currentLocation = closestStationLoc;
-                        distanceRequired += GetDistance(closestStationLoc, packageInTransfer.collectionLocation);
+                        drone.status = DroneStatuses.delivery;
+                        double distanceRequired = packageInTransfer.deliveryDistance;
+                        distanceRequired += GetDistance(packageInTransfer.deliveringLocation, closestStationToDelivery);
+
+                        if (package.pickedUp == null) // not collected
+                        {
+                            drone.currentLocation = closestStationLoc;
+                            distanceRequired += GetDistance(closestStationLoc, packageInTransfer.collectionLocation);
+                        }
+                        else //collected
+                        {
+                            drone.currentLocation = senderLocation;
+                        }
+
+                        double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
+
+                        if (batteryRequired > 100)
+                            throw new OperationNotPossibleException("battery required is greater than 100. Battery required was " + batteryRequired);
+
+                        drone.battery = rand.NextDouble() * (100 - batteryRequired) + batteryRequired;
                     }
-                    else //collected
+                    else // post delivery
                     {
-                        drone.currentLocation = senderLocation;
+                        drone.status = DroneStatuses.free;
+                        drone.currentLocation = reciverLocation;
+                        drone.battery = GetDistance(reciverLocation, closestStationToDelivery) * GetConsumptionRate(drone.weightCategory) + 0.1;
                     }
 
-                    double batteryRequired = GetConsumptionRate(drone.weightCategory) * distanceRequired;
-
-                    if (batteryRequired > 100)
-                        throw new OperationNotPossibleException("battery required is greater than 100. Battery required was " + batteryRequired);
-
-                    drone.battery = rand.NextDouble() * (100 - batteryRequired) + batteryRequired;
                 }
+                
                 
             }
             
