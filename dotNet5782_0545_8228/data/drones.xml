@@ -10,36 +10,42 @@
     <ID>3</ID>
     <IsActive>true</IsActive>
     <model>Drone_4</model>
-    <maxWeight>light</maxWeight>
+    <maxWeight>medium</maxWeight>
   </drone>
   <drone>
     <ID>4</ID>
     <IsActive>true</IsActive>
     <model>Drone_5</model>
-    <maxWeight>light</maxWeight>
+    <maxWeight>medium</maxWeight>
   </drone>
   <drone>
     <ID>5</ID>
     <IsActive>true</IsActive>
     <model>Drone_6</model>
-    <maxWeight>light</maxWeight>
+    <maxWeight>medium</maxWeight>
   </drone>
   <drone>
     <ID>6</ID>
     <IsActive>true</IsActive>
     <model>Drone_7</model>
-    <maxWeight>medium</maxWeight>
+    <maxWeight>light</maxWeight>
   </drone>
   <drone>
     <ID>7</ID>
     <IsActive>true</IsActive>
     <model>Drone_8</model>
-    <maxWeight>light</maxWeight>
+    <maxWeight>medium</maxWeight>
   </drone>
   <drone>
     <ID>8</ID>
     <IsActive>true</IsActive>
     <model>Drone_9</model>
     <maxWeight>light</maxWeight>
+  </drone>
+  <drone>
+    <ID>34</ID>
+    <IsActive>true</IsActive>
+    <model>asdfasdf</model>
+    <maxWeight>heavy</maxWeight>
   </drone>
 </list>

@@ -49,6 +49,8 @@ namespace BL
             collectionLocation = new Location(dalSender.longitude, dalSender.latitude);
             deliveringLocation = new Location(dalReciever.longitude, dalReciever.latitude);
             deliveryDistance = UTIL.Distances.GetDistance(collectionLocation, deliveringLocation);
+            if (package.delivered != null)
+                this.delivered = true;
         }
 
         public PackageInTransfer(DO.Package package)
@@ -56,7 +58,6 @@ namespace BL
             ID = package.ID;
             weightCategory = (WeightCategories)package.weight;
             priority = (Priorities)package.priority;
-            /* delivered????? */
 
             DALAPI.IDAL dal = DALAPI.DalFactory.GetDal();
             DO.Customer dalSender = dal.GetCustomer(package.senderId);
@@ -67,6 +68,8 @@ namespace BL
             collectionLocation = new Location(dalSender.longitude, dalSender.latitude);
             deliveringLocation = new Location(dalReciever.longitude, dalReciever.latitude);
             deliveryDistance = UTIL.Distances.GetDistance(collectionLocation, deliveringLocation);
+            if (package.delivered != null)
+                this.delivered = true;
         }
 
     }

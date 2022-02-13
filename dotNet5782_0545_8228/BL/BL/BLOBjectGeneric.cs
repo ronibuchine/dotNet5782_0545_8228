@@ -70,12 +70,8 @@ namespace BL
             Random rand = new Random();
             foreach (Drone drone in drones)
             {
-                Package package;
-                try
-                {
-                    package = packages.First(p => p.drone != null && p.drone.ID == drone.ID);
-                }
-                catch (InvalidOperationException) 
+                Package package = packages.FirstOrDefault(p => p.drone != null && p.drone.ID == drone.ID);                
+                if (package == null) 
                 {
 
                     int randChoice = rand.Next(2);
@@ -104,13 +100,13 @@ namespace BL
                         drone.currentLocation = station.location;
                         dal.SendDroneToCharge(station.ID, drone.ID);
                         drone.battery = rand.NextDouble() * 20;
-                    }
-                    continue;
+                    }                    
                 }
+                else
                 {
-
                     PackageInTransfer packageInTransfer = new(package);
-                    drone.packageInTransfer = packageInTransfer;
+                    if (!packageInTransfer.delivered)
+                        drone.packageInTransfer = packageInTransfer;
 
                     Location senderLocation = customers.First(c => c.ID == package.sender.ID).currentLocation;
                     Location reciverLocation = customers.First(c => c.ID == package.receiver.ID).currentLocation;

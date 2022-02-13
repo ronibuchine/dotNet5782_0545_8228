@@ -1,57 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <list>
   <customer>
+    <ID>16</ID>
+    <IsActive>true</IsActive>
+    <name>custName_16</name>
+    <phone>24265056</phone>
+    <longitude>-44.06792543086593</longitude>
+    <latitude>-31.62548574694687</latitude>
+    <password />
+  </customer>
+  <customer>
     <ID>17</ID>
     <IsActive>true</IsActive>
     <name>custName_17</name>
-    <phone>143904473</phone>
-    <longitude>-165.37233944301136</longitude>
-    <latitude>-70.29569251476586</latitude>
+    <phone>163133836</phone>
+    <longitude>55.508412232393596</longitude>
+    <latitude>26.651904963260463</latitude>
     <password />
   </customer>
   <customer>
     <ID>18</ID>
     <IsActive>true</IsActive>
     <name>custName_18</name>
-    <phone>71696466</phone>
-    <longitude>-43.210346933086555</longitude>
-    <latitude>64.22041767939012</latitude>
+    <phone>49244814</phone>
+    <longitude>103.85214084938735</longitude>
+    <latitude>-53.958144161830724</latitude>
     <password />
   </customer>
   <customer>
     <ID>19</ID>
     <IsActive>true</IsActive>
     <name>custName_19</name>
-    <phone>108524637</phone>
-    <longitude>-122.01581622567764</longitude>
-    <latitude>68.40367752984338</latitude>
+    <phone>58044506</phone>
+    <longitude>-59.282728749924686</longitude>
+    <latitude>-20.858672955473267</latitude>
     <password />
   </customer>
   <customer>
     <ID>20</ID>
     <IsActive>true</IsActive>
     <name>custName_20</name>
-    <phone>65456140</phone>
-    <longitude>115.09396514626872</longitude>
-    <latitude>-28.420733128870246</latitude>
+    <phone>159348700</phone>
+    <longitude>-102.05304060226914</longitude>
+    <latitude>-8.495495691194904</latitude>
     <password />
   </customer>
   <customer>
     <ID>21</ID>
     <IsActive>true</IsActive>
     <name>custName_21</name>
-    <phone>97566735</phone>
-    <longitude>62.173577752976485</longitude>
-    <latitude>4.035671089792473</latitude>
+    <phone>175104195</phone>
+    <longitude>39.807555088683785</longitude>
+    <latitude>59.70597735126782</latitude>
     <password />
   </customer>
   <customer>
     <ID>22</ID>
     <IsActive>true</IsActive>
     <name>custName_22</name>
-    <phone>135812226</phone>
-    <longitude>160.02756456845793</longitude>
-    <latitude>19.239495372976876</latitude>
+    <phone>94485028</phone>
+    <longitude>-117.88214757008578</longitude>
+    <latitude>54.37981113995417</latitude>
+    <password />
+  </customer>
+  <customer>
+    <ID>23</ID>
+    <IsActive>true</IsActive>
+    <name>custName_23</name>
+    <phone>225860207</phone>
+    <longitude>129.2219900103388</longitude>
+    <latitude>32.15098086844709</latitude>
+    <password />
+  </customer>
+  <customer>
+    <ID>24</ID>
+    <IsActive>true</IsActive>
+    <name>custName_24</name>
+    <phone>163414848</phone>
+    <longitude>-88.53659627425326</longitude>
+    <latitude>74.33234265275874</latitude>
     <password />
   </customer>
 </list>

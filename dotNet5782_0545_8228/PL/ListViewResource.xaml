@@ -6,6 +6,9 @@
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="#292b2f"/>
             </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#292b2f"/>
+            </Trigger>
         </Style.Triggers>
 
         <Setter Property="Background">

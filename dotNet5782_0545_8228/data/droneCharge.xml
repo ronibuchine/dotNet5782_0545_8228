@@ -1,48 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <list>
   <droneCharge>
-    <DroneId>5</DroneId>
-    <StationId>12</StationId>
-    <beganCharge>2/11/2022 1:06:01 AM</beganCharge>
-  </droneCharge>
-  <droneCharge>
     <DroneId>2</DroneId>
-    <StationId>12</StationId>
-    <beganCharge>2/11/2022 1:10:23 AM</beganCharge>
-  </droneCharge>
-  <droneCharge>
-    <DroneId>5</DroneId>
-    <StationId>11</StationId>
-    <beganCharge>2/11/2022 1:10:23 AM</beganCharge>
-  </droneCharge>
-  <droneCharge>
-    <DroneId>8</DroneId>
-    <StationId>12</StationId>
-    <beganCharge>2/11/2022 1:10:23 AM</beganCharge>
+    <StationId>10</StationId>
+    <beganCharge>2/13/2022 2:22:43 PM</beganCharge>
   </droneCharge>
   <droneCharge>
     <DroneId>3</DroneId>
-    <StationId>16</StationId>
-    <beganCharge>2/11/2022 1:12:04 AM</beganCharge>
+    <StationId>14</StationId>
+    <beganCharge>2/13/2022 2:24:38 PM</beganCharge>
   </droneCharge>
   <droneCharge>
     <DroneId>2</DroneId>
     <StationId>12</StationId>
-    <beganCharge>2/11/2022 1:13:21 AM</beganCharge>
+    <beganCharge>2/13/2022 2:25:11 PM</beganCharge>
   </droneCharge>
   <droneCharge>
-    <DroneId>5</DroneId>
-    <StationId>9</StationId>
-    <beganCharge>2/11/2022 1:13:21 AM</beganCharge>
-  </droneCharge>
-  <droneCharge>
-    <DroneId>2</DroneId>
-    <StationId>14</StationId>
-    <beganCharge>2/11/2022 1:16:42 AM</beganCharge>
-  </droneCharge>
-  <droneCharge>
-    <DroneId>2</DroneId>
-    <StationId>15</StationId>
-    <beganCharge>2/11/2022 1:44:51 AM</beganCharge>
+    <DroneId>8</DroneId>
+    <StationId>11</StationId>
+    <beganCharge>2/13/2022 2:25:12 PM</beganCharge>
   </droneCharge>
 </list>

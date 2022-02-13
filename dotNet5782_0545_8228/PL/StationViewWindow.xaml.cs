@@ -89,6 +89,7 @@ namespace PL
                 int stationID = bl.AddStation(NameEntry.Text, location, Int32.Parse(SlotsEntry.Text)).ID;
                 Station station = new(bl.GetStationList().Where(s => s.ID == stationID).FirstOrDefault());
                 CollectionManager.stations.Add(station);
+                if (MessageBox.Show("Station has been added successfully.", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
             }
             catch (InvalidBlObjectException except)
             {

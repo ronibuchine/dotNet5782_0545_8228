@@ -43,6 +43,7 @@ namespace DAL
                 .Where(s => Int32.Parse(s.Element("ID").Value) == packageID)
                 .First();
             package.Element("delivered").Value = DateTime.Now.ToString();
+            package.Element("droneId").Value = 0.ToString();
             SaveXml("packages");
         }
 

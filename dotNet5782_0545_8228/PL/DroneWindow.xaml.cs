@@ -82,7 +82,7 @@ namespace PL
             if (chargingDrones != null)
                 chargingDrones.Remove(chargingDrones.FirstOrDefault(d => d.ID == drone.ID));
 
-        }
+        }       
 
         #region UI Elements
         private void AddDrone_Click(object sender, RoutedEventArgs e)

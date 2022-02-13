@@ -5,7 +5,6 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.csproj", "{4D5DB847-EBDB-4EC5-A3C6-0705DAD585D9}"
 EndProject
-
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{29214D91-2EAF-4B43-A629-269F8081588B}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
@@ -27,6 +26,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{22DFC022-031
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DALXml", "DALXml\DALXml.csproj", "{AA1D35BA-0543-4708-8CC3-3232016D86B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{1DF8537A-68AC-4C06-A8F4-2868DD75843F}"
+	ProjectSection(SolutionItems) = preProject
+		data\config.xml = data\config.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,10 +66,6 @@ Global
 		{AA1D35BA-0543-4708-8CC3-3232016D86B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA1D35BA-0543-4708-8CC3-3232016D86B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA1D35BA-0543-4708-8CC3-3232016D86B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F3992A9-F068-486E-931D-E12D46C219A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F3992A9-F068-486E-931D-E12D46C219A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F3992A9-F068-486E-931D-E12D46C219A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F3992A9-F068-486E-931D-E12D46C219A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

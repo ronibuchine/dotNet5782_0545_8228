@@ -26,7 +26,6 @@ namespace PL
     {
 
         IBLInterface bl;
-        internal bool refreshed = false;
         public ListWindow(IBLInterface bl)
         {
             InitializeComponent();
@@ -196,7 +195,6 @@ namespace PL
             PackageListView.DataContext = CollectionManager.packages;
             CollectionManager.customers = new(bl.GetCustomerList().Select(c => new Customer(c)));
             CustomerListView.DataContext = CollectionManager.customers;
-            refreshed = false;
         }
 
         private WeightCategories GetPackageWeight() => (WeightCategories)PackageWeightSelector.SelectedItem;
