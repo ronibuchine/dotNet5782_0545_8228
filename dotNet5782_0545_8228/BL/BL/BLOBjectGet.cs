@@ -164,5 +164,21 @@ namespace BL
                 return GetDroneList().Where(pred);
             }
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public int GetChargingStation(int droneID)
+        {
+            lock (dal)
+            {                
+                var charge = dal.GetAllCharges().FirstOrDefault(dc => dc.droneId == droneID);
+                if (charge != null)
+                {
+                    return charge.stationId;
+                }
+                else
+                    return 0;                
+               
+            }
+        }
     }
 }

@@ -74,6 +74,13 @@ namespace PL
             drone.location = tempDrone.currentLocation;
             drone.battery = tempDrone.battery;
             drone.packageNumber = tempDrone.packageInTransfer == null ? null : tempDrone.packageInTransfer.ID;
+
+            int stationID = bl.GetChargingStation(drone.ID);
+            if (stationID != 0)
+            {
+                drone.location.longitude = CollectionManager.stations.FirstOrDefault(s => s.ID == stationID).longitude;
+                drone.location.latitude = CollectionManager.stations.FirstOrDefault(s => s.ID == stationID).latitude;
+            }
             // removes old drone from list and adds the updated one
             int index = CollectionManager.drones
                 .IndexOf(CollectionManager.drones
@@ -158,7 +165,10 @@ namespace PL
             try
             {
                 bl.SendDroneToCharge(drone.ID);
+                int stationID = bl.GetChargingStation(drone.ID);
                 Synchronize();
+                CollectionManager.stations.FirstOrDefault(s => s.ID == stationID).availableChargeSlots--;
+                CollectionManager.stations.FirstOrDefault(s => s.ID == stationID).occupiedSlots++;                
             }
             catch (InvalidBlObjectException i)
             {
@@ -179,8 +189,8 @@ namespace PL
             try
             {
                 bl.AssignPackageToDrone(drone.ID);
-                CollectionManager.packages.FirstOrDefault(p => p.ID == drone.packageNumber).status = PackageStatuses.scheduled;
                 Synchronize();
+                CollectionManager.packages.FirstOrDefault(p => p.ID == drone.packageNumber).status = PackageStatuses.scheduled;                
                 MessageBox.Show("Drone has now been assigned a package -- status set to delivery");
             }
             catch (InvalidBlObjectException i)
@@ -200,9 +210,13 @@ namespace PL
         private void ReleaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
             try
-            {                
+            {
+                int stationID = bl.GetChargingStation(drone.ID);
                 bl.ReleaseDroneFromCharge(drone.ID);
                 Synchronize();
+                CollectionManager.stations.FirstOrDefault(s => s.ID == stationID).availableChargeSlots++;
+                CollectionManager.stations.FirstOrDefault(s => s.ID == stationID).occupiedSlots--;
+               
             }
             catch (Exception except)
             {
@@ -217,8 +231,8 @@ namespace PL
             try
             {
                 bl.CollectPackage(drone.ID);
-                CollectionManager.packages.FirstOrDefault(p => p.ID == drone.packageNumber).status = PackageStatuses.pickedUp;
                 Synchronize();
+                CollectionManager.packages.FirstOrDefault(p => p.ID == drone.packageNumber).status = PackageStatuses.pickedUp;                
                 MessageBox.Show("Drone has successfully collected a package -- status set to delivery.");
             }
             catch (InvalidBlObjectException i)
@@ -240,6 +254,7 @@ namespace PL
             try
             {
                 bl.DeliverPackage(drone.ID);
+                
                 CollectionManager.packages.FirstOrDefault(p => p.ID == drone.packageNumber).status = PackageStatuses.delivered;
                 Synchronize();
                 MessageBox.Show("Drone delivered the package -- status set to free.");
@@ -349,7 +364,7 @@ namespace PL
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            Synchronize();
+            Synchronize();            
             if (drone.packageNumber != null) // update package status
             {
                 simulatedPackage.status = bl.GetPackageList().FirstOrDefault(p => p.ID == drone.packageNumber).status;
@@ -357,7 +372,6 @@ namespace PL
             else if (simulatedPackage != null)
             {
                 simulatedPackage.status = PackageStatuses.delivered;
-                simulatedPackage = null;
             }
         }
 

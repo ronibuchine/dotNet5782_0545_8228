@@ -315,6 +315,13 @@ namespace IBL
         /// <param name="stopCheck"></param>
         public void ActivateSimulator(int droneID, Action action, Func<bool> stopCheck);
 
+        /// <summary>
+        /// API call to get a station ID for a charging drone. Returns 0 if non-existent.
+        /// </summary>
+        /// <param name="droneID"></param>
+        /// <returns></returns>
+        public int GetChargingStation(int droneID);
+
 
     }
 }
