@@ -95,7 +95,7 @@ namespace DAL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool VerifyEmployeeCredentials(int ID, string password)
         {
-            customersRoot = LoadXml("employees");
+            employeesRoot = LoadXml("employees");
             return employeesRoot
                 .Elements()
                 .First(c => Int32.Parse(c.Element("ID").Value) == ID && c.Element("password").Value == password) != null;

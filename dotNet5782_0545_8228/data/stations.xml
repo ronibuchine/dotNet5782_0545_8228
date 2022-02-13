@@ -1,11 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <list>
   <station>
-    <ID>1</ID>
+    <ID>9</ID>
     <IsActive>true</IsActive>
-    <name>name</name>
-    <chargeSlots>3</chargeSlots>
-    <longitude>1</longitude>
-    <latitude>1</latitude>
+    <name>station_Name_9</name>
+    <chargeSlots>4</chargeSlots>
+    <longitude>50.735911964781536</longitude>
+    <latitude>-58.116904966587626</latitude>
+  </station>
+  <station>
+    <ID>10</ID>
+    <IsActive>true</IsActive>
+    <name>station_Name_10</name>
+    <chargeSlots>5</chargeSlots>
+    <longitude>87.7335940244298</longitude>
+    <latitude>66.44575077874853</latitude>
+  </station>
+  <station>
+    <ID>11</ID>
+    <IsActive>true</IsActive>
+    <name>station_Name_11</name>
+    <chargeSlots>4</chargeSlots>
+    <longitude>60.545113105580754</longitude>
+    <latitude>-45.23111905680556</latitude>
+  </station>
+  <station>
+    <ID>12</ID>
+    <IsActive>true</IsActive>
+    <name>station_Name_12</name>
+    <chargeSlots>1</chargeSlots>
+    <longitude>-69.26243003889101</longitude>
+    <latitude>-64.62050972255902</latitude>
+  </station>
+  <station>
+    <ID>13</ID>
+    <IsActive>true</IsActive>
+    <name>station_Name_13</name>
+    <chargeSlots>5</chargeSlots>
+    <longitude>35.188523277262476</longitude>
+    <latitude>69.12528940435746</latitude>
+  </station>
+  <station>
+    <ID>14</ID>
+    <IsActive>true</IsActive>
+    <name>station_Name_14</name>
+    <chargeSlots>4</chargeSlots>
+    <longitude>-156.0691589936936</longitude>
+    <latitude>41.35620729595246</latitude>
+  </station>
+  <station>
+    <ID>15</ID>
+    <IsActive>true</IsActive>
+    <name>station_Name_15</name>
+    <chargeSlots>4</chargeSlots>
+    <longitude>128.48568055242566</longitude>
+    <latitude>-18.16849040247895</latitude>
+  </station>
+  <station>
+    <ID>16</ID>
+    <IsActive>true</IsActive>
+    <name>station_Name_16</name>
+    <chargeSlots>4</chargeSlots>
+    <longitude>-86.6502248247388</longitude>
+    <latitude>83.56128559147999</latitude>
   </station>
 </list>
