@@ -1,59 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <list>
   <station>
+    <ID>8</ID>
+    <IsActive>true</IsActive>
+    <name>station_Name_8</name>
+    <chargeSlots>5</chargeSlots>
+    <longitude>79.9941094126525</longitude>
+    <latitude>2.5591011124472516</latitude>
+  </station>
+  <station>
     <ID>9</ID>
     <IsActive>true</IsActive>
     <name>station_Name_9</name>
     <chargeSlots>5</chargeSlots>
-    <longitude>-112.45636076315137</longitude>
-    <latitude>-24.888529225666332</latitude>
+    <longitude>50.460912618069386</longitude>
+    <latitude>86.83279688322583</latitude>
   </station>
   <station>
     <ID>10</ID>
     <IsActive>true</IsActive>
     <name>station_Name_10</name>
-    <chargeSlots>4</chargeSlots>
-    <longitude>-176.60993272280783</longitude>
-    <latitude>-74.65560474649799</latitude>
+    <chargeSlots>5</chargeSlots>
+    <longitude>134.8518153069782</longitude>
+    <latitude>4.677371240536402</latitude>
   </station>
   <station>
     <ID>11</ID>
     <IsActive>true</IsActive>
     <name>station_Name_11</name>
-    <chargeSlots>4</chargeSlots>
-    <longitude>-136.3233206031487</longitude>
-    <latitude>-78.90059387725806</latitude>
+    <chargeSlots>5</chargeSlots>
+    <longitude>-1.9158699651788424</longitude>
+    <latitude>79.29774194457462</latitude>
   </station>
   <station>
     <ID>12</ID>
     <IsActive>true</IsActive>
     <name>station_Name_12</name>
-    <chargeSlots>4</chargeSlots>
-    <longitude>161.64803455660496</longitude>
-    <latitude>-6.1944208648961165</latitude>
+    <chargeSlots>5</chargeSlots>
+    <longitude>69.72449083334044</longitude>
+    <latitude>45.20136799439851</latitude>
   </station>
   <station>
     <ID>13</ID>
     <IsActive>true</IsActive>
     <name>station_Name_13</name>
     <chargeSlots>5</chargeSlots>
-    <longitude>-33.31794869774856</longitude>
-    <latitude>-26.305433128171337</latitude>
-  </station>
-  <station>
-    <ID>14</ID>
-    <IsActive>true</IsActive>
-    <name>station_Name_14</name>
-    <chargeSlots>4</chargeSlots>
-    <longitude>72.85407353791129</longitude>
-    <latitude>72.28356294440272</latitude>
-  </station>
-  <station>
-    <ID>15</ID>
-    <IsActive>true</IsActive>
-    <name>station_Name_15</name>
-    <chargeSlots>5</chargeSlots>
-    <longitude>135.142052115473</longitude>
-    <latitude>80.9289951673378</latitude>
+    <longitude>-133.28092360556167</longitude>
+    <latitude>-31.328263208888593</latitude>
   </station>
 </list>

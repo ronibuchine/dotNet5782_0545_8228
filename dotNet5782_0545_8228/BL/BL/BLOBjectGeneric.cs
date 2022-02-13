@@ -75,7 +75,15 @@ namespace BL
                 {
 
                     int randChoice = rand.Next(2);
-                    if (randChoice == 0) // free
+                    var droneCharge = dal.GetAllCharges().FirstOrDefault(dc => dc.droneId == drone.ID);
+                    if (droneCharge != null) // for existing drones from DALXml
+                    {
+                        drone.status = DroneStatuses.maintenance;
+                        var station = stations.FirstOrDefault(s => s.ID == droneCharge.stationId);
+                        drone.currentLocation = station.location;
+                        drone.battery = rand.NextDouble() * 20;
+                    }
+                    else if (randChoice == 0) // free
                     {
                         drone.status = DroneStatuses.free;
                         IEnumerable<Customer> recievingCustomers = customers.Where(c => c.packagesToCustomer.Count() != 0);

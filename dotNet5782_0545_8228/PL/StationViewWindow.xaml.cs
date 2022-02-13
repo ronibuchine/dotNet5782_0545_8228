@@ -85,7 +85,7 @@ namespace PL
         {
             try
             {
-                Location location = new(Double.Parse(LatitudeEntry.Text), Double.Parse(LongitudeEntry.Text));
+                Location location = new(Double.Parse(LatitudeEntry.Text) % 90, Double.Parse(LongitudeEntry.Text) % 180);
                 int stationID = bl.AddStation(NameEntry.Text, location, Int32.Parse(SlotsEntry.Text)).ID;
                 Station station = new(bl.GetStationList().Where(s => s.ID == stationID).FirstOrDefault());
                 CollectionManager.stations.Add(station);

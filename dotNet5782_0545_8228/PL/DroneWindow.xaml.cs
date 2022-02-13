@@ -26,6 +26,7 @@ namespace PL
     {
         IBLInterface bl;
         Drone drone;
+        Package simulatedPackage = null;
         // reference to a stations charging drone list if we need to have live updates
         ObservableCollection<BL.Drone> chargingDrones;
         BackgroundWorker worker;
@@ -178,6 +179,7 @@ namespace PL
             try
             {
                 bl.AssignPackageToDrone(drone.ID);
+                CollectionManager.packages.FirstOrDefault(p => p.ID == drone.packageNumber).status = PackageStatuses.scheduled;
                 Synchronize();
                 MessageBox.Show("Drone has now been assigned a package -- status set to delivery");
             }
@@ -198,7 +200,7 @@ namespace PL
         private void ReleaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
+            {                
                 bl.ReleaseDroneFromCharge(drone.ID);
                 Synchronize();
             }
@@ -215,6 +217,7 @@ namespace PL
             try
             {
                 bl.CollectPackage(drone.ID);
+                CollectionManager.packages.FirstOrDefault(p => p.ID == drone.packageNumber).status = PackageStatuses.pickedUp;
                 Synchronize();
                 MessageBox.Show("Drone has successfully collected a package -- status set to delivery.");
             }
@@ -237,6 +240,7 @@ namespace PL
             try
             {
                 bl.DeliverPackage(drone.ID);
+                CollectionManager.packages.FirstOrDefault(p => p.ID == drone.packageNumber).status = PackageStatuses.delivered;
                 Synchronize();
                 MessageBox.Show("Drone delivered the package -- status set to free.");
             }
@@ -278,6 +282,8 @@ namespace PL
                 if (bl.GetDrone(droneID).status == DroneStatuses.free)
                 {
                     bl.AssignPackageToDrone(drone.ID);
+                    int packageNumber = bl.GetDrone(drone.ID).packageInTransfer.ID;
+                    simulatedPackage = CollectionManager.packages.FirstOrDefault(p => p.ID == packageNumber);
                     return false;
                 }               
                 else
@@ -344,6 +350,15 @@ namespace PL
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             Synchronize();
+            if (drone.packageNumber != null) // update package status
+            {
+                simulatedPackage.status = bl.GetPackageList().FirstOrDefault(p => p.ID == drone.packageNumber).status;
+            }
+            else if (simulatedPackage != null)
+            {
+                simulatedPackage.status = PackageStatuses.delivered;
+                simulatedPackage = null;
+            }
         }
 
         private void StopSimulationButton_Click(object sender, RoutedEventArgs e)

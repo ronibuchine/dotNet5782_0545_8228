@@ -88,13 +88,10 @@ namespace PL
         private void Synchronize()
         {
             BL.Customer tempCustomer = bl.GetCustomer(customer.ID);
-            
             customer.name = tempCustomer.name;
             customer.phoneNumber = tempCustomer.phone;
             Customer temp = CollectionManager.customers.Where(c => c.ID == customer.ID).FirstOrDefault();
             CollectionManager.customers[CollectionManager.customers.IndexOf(temp)] = customer;
-            
-
         }
 
         private void SentPackageList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -115,11 +112,11 @@ namespace PL
             {
                 BL.Customer temp = bl.AddCustomer(NameEntry.Text,
                   PhoneEntry.Text,
-                  new Location(double.Parse(LatitudeEntry.Text),
-                  double.Parse(LongitudeEntry.Text)),
+                  new Location(double.Parse(LatitudeEntry.Text) % 90,
+                  double.Parse(LongitudeEntry.Text) % 180),
                   int.Parse(IDEntry.Text));
                 customer = new(bl.GetCustomerList().First(c => c.ID == temp.ID));
-                Synchronize();
+                CollectionManager.customers.Add(customer);
                 if (MessageBox.Show("Customer added successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK)
                     Close();
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace BL
@@ -60,10 +61,16 @@ namespace BL
                 try
                 {
                     Customer customer = new Customer(ID, name, phone, location);
-                    dal.AddCustomer(new DO.Customer(customer.ID, name, phone, location.longitude, location.latitude, password));
-                    return customer;
+                    if (!(GetCustomerList().Select(c => c.ID).Contains(ID)))
+                    {
+                        dal.AddCustomer(new DO.Customer(customer.ID, name, phone, location.longitude, location.latitude, password));
+                        return customer;
+                    }
+                    else
+                        throw new InvalidBlObjectException("Customer already exists in the system.");
                 }
                 catch (Exception e) { throw new InvalidBlObjectException(e.Message); }
+                
             }
         }
 
