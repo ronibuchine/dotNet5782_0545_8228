@@ -108,6 +108,8 @@ namespace PL
             try
             {
                 int ID = bl.AddDrone(model, trueWeight, stationID).ID;
+                CollectionManager.stations.FirstOrDefault(s => s.ID == stationID).availableChargeSlots--;
+                CollectionManager.stations.FirstOrDefault(s => s.ID == stationID).occupiedSlots++;
                 Drone drone = new(bl.GetDroneList().Where(d => d.ID == ID).FirstOrDefault());
                 CollectionManager.drones.Add(drone);
                 if (MessageBox.Show("Drone Added Successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();

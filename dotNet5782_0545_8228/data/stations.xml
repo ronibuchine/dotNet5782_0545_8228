@@ -48,4 +48,12 @@
     <longitude>-133.28092360556167</longitude>
     <latitude>-31.328263208888593</latitude>
   </station>
+  <station>
+    <ID>28</ID>
+    <IsActive>false</IsActive>
+    <name>dope station</name>
+    <chargeSlots>14</chargeSlots>
+    <longitude>54</longitude>
+    <latitude>55</latitude>
+  </station>
 </list>
