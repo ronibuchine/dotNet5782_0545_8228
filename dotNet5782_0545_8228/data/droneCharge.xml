@@ -1,2 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<list />
+<list>
+  <droneCharge>
+    <DroneId>2</DroneId>
+    <StationId>12</StationId>
+    <beganCharge>2/17/2022 7:19:21 PM</beganCharge>
+  </droneCharge>
+  <droneCharge>
+    <DroneId>7</DroneId>
+    <StationId>10</StationId>
+    <beganCharge>2/17/2022 7:19:21 PM</beganCharge>
+  </droneCharge>
+</list>

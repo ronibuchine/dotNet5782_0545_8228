@@ -41,7 +41,8 @@ namespace DAL
                 .FirstOrDefault();
             if (customer == null)
                 throw new DataSourceException("The item you are trying to update does not exist in the system.");
-            customer.Element("password").Value = password;
+            if (password != null)
+                customer.Element("password").Value = password;
             SaveXml("customers");
         }
 

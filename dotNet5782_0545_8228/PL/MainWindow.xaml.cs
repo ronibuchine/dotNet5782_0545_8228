@@ -47,23 +47,30 @@ namespace PL
             {
                 ID = 0;                
             }
-            string password = Password.Password;
-            if (IsBusiness.IsChecked == true && bl.VerifyEmployeeCredentials(ID, password))
+            try
             {
-                new ListWindow(bl).Show();
-                Username.Text = "";
-                Password.Password = "";
+                string password = Password.Password;
+                if (IsBusiness.IsChecked == true && bl.VerifyEmployeeCredentials(ID, password))
+                {
+                    new ListWindow(bl).Show();
+                    Username.Text = "";
+                    Password.Password = "";
+                }
+                else if (IsCustomer.IsChecked == true && bl.VerifyCustomerCredentials(ID, password)) 
+                {
+                    Customer customer = new(bl.GetCustomerList().Where(c => c.ID == int.Parse(Username.Text)).FirstOrDefault());
+                    new CustomerViewWindow(bl, customer).Show();
+                    Username.Text = "";
+                    Password.Password = "";
+                }
+                else
+                {
+                    MessageBox.Show("One or more of the credentials provided were incorrect. Please try again.");
+                }
             }
-            else if (IsCustomer.IsChecked == true && bl.VerifyCustomerCredentials(ID, password)) 
+            catch (Exception except)
             {
-                Customer customer = new(bl.GetCustomerList().Where(c => c.ID == int.Parse(Username.Text)).FirstOrDefault());
-                new CustomerViewWindow(bl, customer).Show();
-                Username.Text = "";
-                Password.Password = "";
-            }
-            else
-            {
-                MessageBox.Show("One or more of the credentials provided were incorrect. Please try again.");
+                MessageBox.Show(except.Message);
             }
             
         }

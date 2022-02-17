@@ -1,94 +1,107 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <list>
   <package>
-    <ID>21</ID>
-    <IsActive>true</IsActive>
-    <senderId>19</senderId>
-    <recieverId>17</recieverId>
-    <droneId>0</droneId>
-    <weight>medium</weight>
-    <priority>regular</priority>
-    <requested>2/13/2022 2:47:25 PM</requested>
-    <scheduled>2/13/2022 2:47:25 PM</scheduled>
-    <pickedUp>2/13/2022 6:46:06 PM</pickedUp>
-    <delivered>2/13/2022 6:46:08 PM</delivered>
-  </package>
-  <package>
-    <ID>22</ID>
-    <IsActive>true</IsActive>
-    <senderId>18</senderId>
-    <recieverId>20</recieverId>
-    <droneId>0</droneId>
-    <weight>medium</weight>
-    <priority>fast</priority>
-    <requested>2/13/2022 2:47:25 PM</requested>
-    <scheduled>2/13/2022 6:47:10 PM</scheduled>
-    <pickedUp>2/13/2022 6:47:11 PM</pickedUp>
-    <delivered>2/13/2022 6:47:12 PM</delivered>
-  </package>
-  <package>
     <ID>23</ID>
     <IsActive>true</IsActive>
-    <senderId>17</senderId>
-    <recieverId>20</recieverId>
-    <droneId>0</droneId>
-    <weight>medium</weight>
+    <senderId>19</senderId>
+    <recieverId>22</recieverId>
+    <droneId>3</droneId>
+    <weight>heavy</weight>
     <priority>fast</priority>
-    <requested>2/13/2022 2:47:25 PM</requested>
-    <scheduled>2/13/2022 6:47:18 PM</scheduled>
-    <pickedUp>2/13/2022 6:47:19 PM</pickedUp>
-    <delivered>2/13/2022 6:47:20 PM</delivered>
+    <requested>2/17/2022 7:19:20 PM</requested>
+    <scheduled>2/17/2022 7:19:20 PM</scheduled>
+    <pickedUp>null</pickedUp>
+    <delivered>null</delivered>
   </package>
   <package>
     <ID>24</ID>
     <IsActive>true</IsActive>
-    <senderId>14</senderId>
-    <recieverId>20</recieverId>
+    <senderId>17</senderId>
+    <recieverId>16</recieverId>
     <droneId>0</droneId>
-    <weight>medium</weight>
+    <weight>heavy</weight>
     <priority>regular</priority>
-    <requested>2/13/2022 2:47:25 PM</requested>
-    <scheduled>2/13/2022 2:47:25 PM</scheduled>
-    <pickedUp>2/13/2022 6:48:30 PM</pickedUp>
-    <delivered>2/13/2022 6:48:31 PM</delivered>
+    <requested>2/17/2022 7:19:20 PM</requested>
+    <scheduled>null</scheduled>
+    <pickedUp>null</pickedUp>
+    <delivered>null</delivered>
   </package>
   <package>
     <ID>25</ID>
     <IsActive>true</IsActive>
-    <senderId>18</senderId>
-    <recieverId>15</recieverId>
-    <droneId>0</droneId>
-    <weight>light</weight>
-    <priority>emergency</priority>
-    <requested>2/13/2022 2:47:25 PM</requested>
-    <scheduled>2/13/2022 6:46:29 PM</scheduled>
-    <pickedUp>2/13/2022 6:46:30 PM</pickedUp>
-    <delivered>2/13/2022 6:46:31 PM</delivered>
+    <senderId>19</senderId>
+    <recieverId>18</recieverId>
+    <droneId>4</droneId>
+    <weight>heavy</weight>
+    <priority>regular</priority>
+    <requested>2/17/2022 7:19:20 PM</requested>
+    <scheduled>2/17/2022 7:19:20 PM</scheduled>
+    <pickedUp>null</pickedUp>
+    <delivered>null</delivered>
   </package>
   <package>
     <ID>26</ID>
     <IsActive>true</IsActive>
-    <senderId>14</senderId>
-    <recieverId>15</recieverId>
-    <droneId>0</droneId>
-    <weight>heavy</weight>
+    <senderId>18</senderId>
+    <recieverId>20</recieverId>
+    <droneId>5</droneId>
+    <weight>medium</weight>
     <priority>emergency</priority>
-    <requested>2/13/2022 2:47:25 PM</requested>
-    <scheduled>2/13/2022 2:47:25 PM</scheduled>
-    <pickedUp>2/13/2022 6:46:49 PM</pickedUp>
-    <delivered>2/13/2022 6:46:51 PM</delivered>
+    <requested>2/17/2022 7:19:20 PM</requested>
+    <scheduled>2/17/2022 7:19:20 PM</scheduled>
+    <pickedUp>null</pickedUp>
+    <delivered>null</delivered>
   </package>
   <package>
     <ID>27</ID>
     <IsActive>true</IsActive>
-    <senderId>17</senderId>
-    <recieverId>16</recieverId>
+    <senderId>18</senderId>
+    <recieverId>20</recieverId>
     <droneId>0</droneId>
     <weight>light</weight>
+    <priority>regular</priority>
+    <requested>2/17/2022 7:19:20 PM</requested>
+    <scheduled>null</scheduled>
+    <pickedUp>null</pickedUp>
+    <delivered>null</delivered>
+  </package>
+  <package>
+    <ID>28</ID>
+    <IsActive>true</IsActive>
+    <senderId>18</senderId>
+    <recieverId>16</recieverId>
+    <droneId>0</droneId>
+    <weight>medium</weight>
     <priority>fast</priority>
-    <requested>2/13/2022 2:47:25 PM</requested>
-    <scheduled>2/13/2022 2:47:25 PM</scheduled>
-    <pickedUp>2/13/2022 6:48:07 PM</pickedUp>
-    <delivered>2/13/2022 6:48:09 PM</delivered>
+    <requested>2/17/2022 7:19:20 PM</requested>
+    <scheduled>null</scheduled>
+    <pickedUp>null</pickedUp>
+    <delivered>null</delivered>
+  </package>
+  <package>
+    <ID>29</ID>
+    <IsActive>true</IsActive>
+    <senderId>18</senderId>
+    <recieverId>17</recieverId>
+    <droneId>6</droneId>
+    <weight>light</weight>
+    <priority>regular</priority>
+    <requested>2/17/2022 7:19:20 PM</requested>
+    <scheduled>2/17/2022 7:19:20 PM</scheduled>
+    <pickedUp>null</pickedUp>
+    <delivered>null</delivered>
+  </package>
+  <package>
+    <ID>30</ID>
+    <IsActive>true</IsActive>
+    <senderId>17</senderId>
+    <recieverId>19</recieverId>
+    <droneId>0</droneId>
+    <weight>light</weight>
+    <priority>emergency</priority>
+    <requested>2/17/2022 7:19:40 PM</requested>
+    <scheduled>null</scheduled>
+    <pickedUp>null</pickedUp>
+    <delivered>null</delivered>
   </package>
 </list>

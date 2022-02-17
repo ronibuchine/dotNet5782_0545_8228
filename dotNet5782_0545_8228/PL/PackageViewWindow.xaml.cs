@@ -132,15 +132,15 @@ namespace PL
                     (int)ReceiverSelection.SelectedItem,
                     (WeightCategories)WeightSelection.SelectedItem,
                     (Priorities)PrioritySelection.SelectedItem).ID;
-                Package package = new(bl.GetPackageList().Where(p => p.ID == packageID).FirstOrDefault());
-                CollectionManager.packages.Add(package);
+                Package package = new(bl.GetPackageList().Where(p => p.ID == packageID).FirstOrDefault());               
                 if (customersOutgoingPackages != null && customer != null)
                 {                    
                     customersOutgoingPackages.Add(package);                    
                     customer.numberPackagesUndelivered++;
                 }
                 CollectionManager.packages.Add(package);
-                
+
+
                 if (MessageBox.Show("Package added successfully!", "", MessageBoxButton.OK) == MessageBoxResult.OK) 
                     Close();
                 

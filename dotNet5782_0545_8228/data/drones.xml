@@ -4,13 +4,13 @@
     <ID>2</ID>
     <IsActive>true</IsActive>
     <model>Drone_3</model>
-    <maxWeight>medium</maxWeight>
+    <maxWeight>light</maxWeight>
   </drone>
   <drone>
     <ID>3</ID>
     <IsActive>true</IsActive>
     <model>Drone_4</model>
-    <maxWeight>medium</maxWeight>
+    <maxWeight>light</maxWeight>
   </drone>
   <drone>
     <ID>4</ID>
@@ -34,6 +34,6 @@
     <ID>7</ID>
     <IsActive>true</IsActive>
     <model>Drone_8</model>
-    <maxWeight>medium</maxWeight>
+    <maxWeight>light</maxWeight>
   </drone>
 </list>

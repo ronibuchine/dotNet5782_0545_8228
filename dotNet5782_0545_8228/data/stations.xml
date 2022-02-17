@@ -5,55 +5,63 @@
     <IsActive>true</IsActive>
     <name>station_Name_8</name>
     <chargeSlots>5</chargeSlots>
-    <longitude>79.9941094126525</longitude>
-    <latitude>2.5591011124472516</latitude>
+    <longitude>78.47441839914507</longitude>
+    <latitude>61.937608445034186</latitude>
   </station>
   <station>
     <ID>9</ID>
     <IsActive>true</IsActive>
     <name>station_Name_9</name>
     <chargeSlots>5</chargeSlots>
-    <longitude>50.460912618069386</longitude>
-    <latitude>86.83279688322583</latitude>
+    <longitude>-129.01275524357928</longitude>
+    <latitude>-62.8138862982457</latitude>
   </station>
   <station>
     <ID>10</ID>
     <IsActive>true</IsActive>
     <name>station_Name_10</name>
-    <chargeSlots>5</chargeSlots>
-    <longitude>134.8518153069782</longitude>
-    <latitude>4.677371240536402</latitude>
+    <chargeSlots>4</chargeSlots>
+    <longitude>19.857800919496356</longitude>
+    <latitude>18.516903653981586</latitude>
   </station>
   <station>
     <ID>11</ID>
     <IsActive>true</IsActive>
     <name>station_Name_11</name>
     <chargeSlots>5</chargeSlots>
-    <longitude>-1.9158699651788424</longitude>
-    <latitude>79.29774194457462</latitude>
+    <longitude>41.14251549408888</longitude>
+    <latitude>46.49658527062115</latitude>
   </station>
   <station>
     <ID>12</ID>
     <IsActive>true</IsActive>
     <name>station_Name_12</name>
-    <chargeSlots>5</chargeSlots>
-    <longitude>69.72449083334044</longitude>
-    <latitude>45.20136799439851</latitude>
+    <chargeSlots>4</chargeSlots>
+    <longitude>123.4637294818944</longitude>
+    <latitude>-46.44554006701593</latitude>
   </station>
   <station>
     <ID>13</ID>
     <IsActive>true</IsActive>
     <name>station_Name_13</name>
     <chargeSlots>5</chargeSlots>
-    <longitude>-133.28092360556167</longitude>
-    <latitude>-31.328263208888593</latitude>
+    <longitude>-111.32867744720014</longitude>
+    <latitude>-43.12990710750683</latitude>
   </station>
   <station>
-    <ID>28</ID>
-    <IsActive>false</IsActive>
-    <name>dope station</name>
-    <chargeSlots>14</chargeSlots>
-    <longitude>54</longitude>
-    <latitude>55</latitude>
+    <ID>14</ID>
+    <IsActive>true</IsActive>
+    <name>station_Name_14</name>
+    <chargeSlots>5</chargeSlots>
+    <longitude>-42.61750380630488</longitude>
+    <latitude>43.01637179824354</latitude>
+  </station>
+  <station>
+    <ID>15</ID>
+    <IsActive>true</IsActive>
+    <name>station_Name_15</name>
+    <chargeSlots>5</chargeSlots>
+    <longitude>45.021378987013065</longitude>
+    <latitude>2.5282992946581544</latitude>
   </station>
 </list>
