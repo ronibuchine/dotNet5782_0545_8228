@@ -133,9 +133,11 @@ namespace PL
                     (WeightCategories)WeightSelection.SelectedItem,
                     (Priorities)PrioritySelection.SelectedItem).ID;
                 Package package = new(bl.GetPackageList().Where(p => p.ID == packageID).FirstOrDefault());
-                if (customersOutgoingPackages != null)
+                CollectionManager.packages.Add(package);
+                if (customersOutgoingPackages != null && customer != null)
                 {                    
-                    customersOutgoingPackages.Add(package);
+                    customersOutgoingPackages.Add(package);                    
+                    customer.numberPackagesUndelivered++;
                 }
                 CollectionManager.packages.Add(package);
                 
