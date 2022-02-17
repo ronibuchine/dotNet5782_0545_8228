@@ -73,7 +73,9 @@ namespace PL
             try
             {
                 bl.UpdateCustomer(customer.ID, NameBlock.Text, int.Parse(PhoneBlock.Text).ToString());
-                Synchronize();
+                CollectionManager.customers.FirstOrDefault(c => c.ID == customer.ID).name = NameBlock.Text;
+                CollectionManager.customers.FirstOrDefault(c => c.ID == customer.ID).phoneNumber = int.Parse(PhoneBlock.Text).ToString();
+                MessageBox.Show("Customer Details Updated Successfully");
             }
             catch (FormatException fExcept)
             {
@@ -83,16 +85,7 @@ namespace PL
             {
                 MessageBox.Show(except.Message);
             }
-        }
-
-        private void Synchronize()
-        {
-            BL.Customer tempCustomer = bl.GetCustomer(customer.ID);
-            customer.name = tempCustomer.name;
-            customer.phoneNumber = tempCustomer.phone;
-            Customer temp = CollectionManager.customers.Where(c => c.ID == customer.ID).FirstOrDefault();
-            CollectionManager.customers[CollectionManager.customers.IndexOf(temp)] = customer;
-        }
+        }       
 
         private void SentPackageList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

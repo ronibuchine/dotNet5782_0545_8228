@@ -40,6 +40,9 @@ namespace PL
                 {
                     BL.Customer customer = bl.GetCustomer(Int32.Parse(IDBox.Text));
                     bl.UpdateCustomer(Int32.Parse(IDBox.Text), NameBox.Text, PhoneBox.Text, PasswordBox.Text);
+                    CollectionManager.customers.FirstOrDefault(c => c.ID == int.Parse(IDBox.Text)).name = NameBox.Text;
+                    CollectionManager.customers.FirstOrDefault(c => c.ID == int.Parse(IDBox.Text)).phoneNumber = PhoneBox.Text;
+                    if (MessageBox.Show("Account Created Successfully", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
                 }
                 else //employee is checked
                 {
@@ -58,6 +61,7 @@ namespace PL
                         new Location(new Random().NextDouble() * 360, new Random().NextDouble() * 180),
                         Int32.Parse(IDBox.Text),
                         PasswordBox.Text);
+                    CollectionManager.customers.Add(new Customer(bl.GetCustomerList().FirstOrDefault(c => c.ID == Int32.Parse(IDBox.Text))));
                     if (MessageBox.Show("Account Created Successfully", "", MessageBoxButton.OK) == MessageBoxResult.OK) Close();
                 }
                 catch (Exception fExcept)
